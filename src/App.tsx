@@ -36,7 +36,6 @@ export default App
 
 const AppLayout = () => {
 
-
   return (
     <main className='overflow-y-auto overflow-x-hidden h-screen w-screen flex flex-col'>
       <Navbar />

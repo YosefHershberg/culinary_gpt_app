@@ -1,15 +1,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+import LoadingSpinner from "./LaodingSpinner";
 
 export function PlaceholdersAndVanishInput({
   placeholders,
-  onChange,
   onSubmit,
+  isLoading,
+  value,
+  setValue
 }: {
   placeholders: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  isLoading: boolean,
+  value: string
+  setValue: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
@@ -27,7 +32,6 @@ export function PlaceholdersAndVanishInput({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const newDataRef = useRef<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
 
   const draw = useCallback(() => {
@@ -175,7 +179,6 @@ export function PlaceholdersAndVanishInput({
         onChange={(e) => {
           if (!animating) {
             setValue(e.target.value);
-            onChange && onChange(e);
           }
         }}
         onKeyDown={handleKeyDown}
@@ -189,40 +192,44 @@ export function PlaceholdersAndVanishInput({
       />
 
       <button
-        disabled={!value}
+        disabled={!value || isLoading}
         type="submit"
         className="absolute right-2 top-1/2 z-50 -translate-y-1/2 h-8 w-8 rounded-full disabled:bg-gray-100 bg-black dark:bg-zinc-900 dark:disabled:bg-zinc-800 transition duration-200 flex items-center justify-center"
       >
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="text-gray-300 h-4 w-4"
-        >
-          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-          <motion.path
-            d="M5 12l14 0"
-            initial={{
-              strokeDasharray: "50%",
-              strokeDashoffset: "50%",
-            }}
-            animate={{
-              strokeDashoffset: value ? 0 : "50%",
-            }}
-            transition={{
-              duration: 0.3,
-              ease: "linear",
-            }}
-          />
-          <path d="M13 18l6 -6" />
-          <path d="M13 6l6 6" />
-        </motion.svg>
+        {isLoading ?
+          <LoadingSpinner className="size-4" />
+          :
+          <motion.svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-gray-300 h-4 w-4"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <motion.path
+              d="M5 12l14 0"
+              initial={{
+                strokeDasharray: "50%",
+                strokeDashoffset: "50%",
+              }}
+              animate={{
+                strokeDashoffset: value ? 0 : "50%",
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "linear",
+              }}
+            />
+            <path d="M13 18l6 -6" />
+            <path d="M13 6l6 6" />
+          </motion.svg>
+        }
       </button>
 
       <div className="absolute inset-0 flex items-center rounded-full pointer-events-none">

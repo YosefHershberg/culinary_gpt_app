@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useQuery } from '@tanstack/react-query';
-import { getCommonIngredients, getDairyIngredients, getSpicesSuggestions, getVegetablesIngredients } from '@/lib/api';
+import { getIngredientSuggestions } from '@/lib/api';
 import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
 import LoadingSpinner from "@/components/ui/LaodingSpinner";
 import { toast } from "@/components/ui/use-toast"
@@ -10,9 +10,18 @@ import { createContext, useState } from "react";
 
 export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>(undefined as any)
 
+enum ActiveTab {
+    TheUsuals = 'the-usuals',
+    Dairy = 'dairy',
+    Vegetables = 'vegetables',
+    Spices = 'spices',
+    Carbs = 'carbs',
+    Meat = 'meat',
+}
+
 const IngredientsTabs = () => {
     const { addUserIngredient, removeUserIngredient, userIngredients } = useUserIngredients()
-    const [activeTab, setActiveTab] = useState("the-usuals")
+    const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.TheUsuals)
 
     const handleClicked = (ingredient: Ingredient) => {
         if (!!userIngredients.find(item => item.name === ingredient.name)) {
@@ -24,54 +33,67 @@ const IngredientsTabs = () => {
 
     return (
         <HanldeIngredientClickContext.Provider value={{ handleClicked }}>
-            <Tabs defaultValue={activeTab} className="w-[40rem] flex-1 flex flex-col">
-                <TabsList className="flex">
-                    <TabsTrigger onClick={() => setActiveTab('the-usuals')} className="flex-1" value="the-usuals">The Usuals</TabsTrigger>
-                    <TabsTrigger onClick={() => setActiveTab('dairy')} className="flex-1" value="dairy">Dairy</TabsTrigger>
-                    <TabsTrigger onClick={() => setActiveTab('vegetables')} className="flex-1" value="vegetables">Vegetables & Greens</TabsTrigger>
-                    <TabsTrigger onClick={() => setActiveTab('spices')} className="flex-1" value="spices">Spices</TabsTrigger>
+            <Tabs defaultValue={activeTab} className="max-w-[60rem] flex-1 flex flex-col">
+                <TabsList>
+                    <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.TheUsuals)} className="flex-1" value={ActiveTab.TheUsuals}>The Usuals</TabsTrigger>
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.Dairy)} className="flex-1" value={ActiveTab.Dairy}>Dairy</TabsTrigger>
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.Vegetables)} className="flex-1" value={ActiveTab.Vegetables}>Vegetables & Greens</TabsTrigger>
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.Spices)} className="flex-1" value={ActiveTab.Spices}>Spices</TabsTrigger>
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.Carbs)} className="flex-1" value={ActiveTab.Carbs}>Carbs</TabsTrigger>
+                        <TabsTrigger onClick={() => setActiveTab(ActiveTab.Meat)} className="flex-1" value={ActiveTab.Meat}>Meat</TabsTrigger>
+                    </div>
                 </TabsList>
-                {activeTab === 'the-usuals' &&
-                    <TabsContent value="the-usuals" className="flex flex-col flex-1">
+                {activeTab === ActiveTab.TheUsuals &&
+                    <TabsContent value={ActiveTab.TheUsuals} className="flex flex-col flex-1">
                         <IngredientsList
                             queryKey="common-ingredient-suggestions"
-                            queryFn={getCommonIngredients}
+                            queryFn={() => getIngredientSuggestions(ActiveTab.TheUsuals)}
                         />
                     </TabsContent>
                 }
-                {activeTab === 'dairy' &&
-                    <TabsContent value="dairy" className="flex-1 flex flex-col">
+                {activeTab === ActiveTab.Dairy &&
+                    <TabsContent value={ActiveTab.Dairy} className="flex-1 flex flex-col">
                         <IngredientsList
                             queryKey="dairy-ingredient-suggestions"
-                            queryFn={getDairyIngredients}
+                            queryFn={() => getIngredientSuggestions(ActiveTab.Dairy)}
                         />
                     </TabsContent>
                 }
-                {activeTab === 'vegetables' &&
-                    <TabsContent value="vegetables" className="flex-1 flex flex-col">
+                {activeTab === ActiveTab.Vegetables &&
+                    <TabsContent value={ActiveTab.Vegetables} className="flex-1 flex flex-col">
                         <IngredientsList
                             queryKey="vegetables-ingredient-suggestions"
-                            queryFn={getVegetablesIngredients}
+                            queryFn={() => getIngredientSuggestions(ActiveTab.Vegetables)}
                         />
                     </TabsContent>
                 }
-                {activeTab === 'spices' &&
-                    <TabsContent value="spices" className="flex-1 flex flex-col">
+                {activeTab === ActiveTab.Spices &&
+                    <TabsContent value={ActiveTab.Spices} className="flex-1 flex flex-col">
                         <IngredientsList
                             queryKey="spices-suggestions"
-                            queryFn={getSpicesSuggestions}
+                            queryFn={() => getIngredientSuggestions(ActiveTab.Spices)}
                         />
                     </TabsContent>
                 }
-                {activeTab === 'vegetables' &&
-                    <TabsContent value="vegetables" className="flex-1 flex flex-col">
+                {activeTab === ActiveTab.Carbs &&
+                    <TabsContent value={ActiveTab.Carbs} className="flex-1 flex flex-col">
                         <IngredientsList
-                            queryKey="vegetables-ingredient-suggestions"
-                            queryFn={getVegetablesIngredients}
+                            queryKey="carbs-ingredient-suggestions"
+                            queryFn={() => getIngredientSuggestions(ActiveTab.Carbs)}
+                        />
+                    </TabsContent>
+                }
+                {activeTab === ActiveTab.Meat &&
+                    <TabsContent value={ActiveTab.Meat} className="flex-1 flex flex-col">
+                        <IngredientsList
+                            queryKey="meat-ingredient-suggestions"
+                            queryFn={() => getIngredientSuggestions(ActiveTab.Meat)}
                         />
                     </TabsContent>
                 }
             </Tabs>
+
         </HanldeIngredientClickContext.Provider>
     )
 }

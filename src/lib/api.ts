@@ -1,33 +1,13 @@
 import axiosClient from "./axiosClient"
 import { Ingredient } from "./types"
 
-export const getCommonIngredients = async () => {
-    const { data } = await axiosClient.get('/common-ingredient-suggestions')
-    return data
-}
-
-export const getDairyIngredients = async () => {
-    const { data } = await axiosClient.get('/dairy-ingredient-suggestions')
-    return data
-}
-
-export const getVegetablesIngredients = async () => {
-    const { data } = await axiosClient.get('/vegetables-suggestions')
-    return data
-}
-
-export const getSpicesSuggestions = async () => {
-    const { data } = await axiosClient.get('/spices-suggestions')
-    return data
-}
-
-export const getCarbSuggestions = async () => {
-    const { data } = await axiosClient.get('/carb-suggestions')
+export const getIngredientSuggestions = async (category: string) => {
+    const { data } = await axiosClient.get(`/ingredient-suggestions/${category}`)
     return data
 }
 
 export const getUserIngredients = async (token: string) => {
-    const { data } = await axiosClient.get('/get-user-ingredients', {
+    const { data } = await axiosClient.get('/user-ingredients', {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -36,11 +16,11 @@ export const getUserIngredients = async (token: string) => {
 }
 
 export const addUserIngredient = async (ingredient: Ingredient) => {
-    const { data } = await axiosClient.post('/add-user-ingredient', ingredient)
+    const { data } = await axiosClient.post('/user-ingredients', ingredient)
     return data
 }
 
 export const removeUserIngredient = async (ingredient: Ingredient) => {
-    const { data } = await axiosClient.delete(`/remove-user-ingredient/${ingredient.id}`)
+    const { data } = await axiosClient.delete(`/user-ingredients/${ingredient.id}`)
     return data
 }
