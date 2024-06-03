@@ -66,7 +66,7 @@ const MobileNavMenu = () => {
                             <span>Theme</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
+                            <DropdownMenuSubContent className='dark:bg-zinc-700'>
                                 <DropdownMenuItem onClick={() => setTheme('dark')}>
                                     <Moon className='mr-2 size-4' />
                                     Dark

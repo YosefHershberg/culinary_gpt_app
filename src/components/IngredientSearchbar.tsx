@@ -21,7 +21,7 @@ const IngredientSearchbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<any>()
     const addUserIngredientmutation = useOptAddUserIngredient()
-    
+
     const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/search',
         method: 'GET',
@@ -89,7 +89,10 @@ const IngredientSearchbar = () => {
                     ref={dropdownRef}
                 >
                     {results?.map((item: Ingredient) => (
-                        <DropdownMenuItem onSelect={() => handleSelected(item)}> 
+                        <DropdownMenuItem
+                            onSelect={() => handleSelected(item)}
+                            key={item.id}
+                        >
                             {item.name}
                         </DropdownMenuItem>
                     ))}

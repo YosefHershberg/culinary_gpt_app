@@ -80,7 +80,7 @@ const Navbar = () => {
                             }
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent className='dark:bg-zinc-700'>
                         <DropdownMenuItem className='flex gap-2' onClick={() => setTheme('light')}>
                             <Sun className='size-5' /> Light
                         </DropdownMenuItem>

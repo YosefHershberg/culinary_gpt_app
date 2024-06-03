@@ -14,9 +14,6 @@ const useOptAddUserIngredient = () => {
             const previousIngredients = queryClient.getQueryData(['userIngredients'])
 
             //@ts-expect-error
-            console.log(previousIngredients.length);
-
-            //@ts-expect-error
             queryClient.setQueryData(['userIngredients'], [...previousIngredients, ingredient])
             return { previousIngredients }
         },
