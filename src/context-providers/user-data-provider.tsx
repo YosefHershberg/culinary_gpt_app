@@ -1,5 +1,5 @@
-import { getUserIngredients } from '@/lib/api'
-import { useQueryClient, useQuery } from '@tanstack/react-query'
+import { getUserIngredients, getUserKitchenUtils } from '@/lib/api'
+import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
 import { useAuth } from '@/context-providers/auth-provider'
 import { useCookies } from 'react-cookie'
@@ -7,6 +7,8 @@ import { Ingredient } from '@/lib/types'
 import LoadingPage from '@/pages/LoadingPage'
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
 import useOptRemoveUserIngredient from '@/hooks/useOptRemoveUserIngredient'
+import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
+import useOptRemoveKitchenUtil from '@/hooks/useRemoveKitchenUtil'
 
 type UserIngredientsState = {
   userIngredients: Ingredient[] //TODO: change to correct type
@@ -22,9 +24,10 @@ export const UserDataContext = createContext<UserIngredientsState>(undefined as 
 const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
-  const queryClient = useQueryClient()
   const addUserIngredientmutation = useOptAddUserIngredient()
   const removeUserIngredientMutation = useOptRemoveUserIngredient()
+  const addKitchenUtil = useOptAddkitchenUtil()
+  const removeKitchenUtil = useOptRemoveKitchenUtil()
 
   const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
     queryKey: ['userIngredients'],
@@ -34,7 +37,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
     queryKey: ['userKitchenUtils'],
-    queryFn: () => getUserIngredients(cookies.__session),
+    queryFn: () => getUserKitchenUtils(cookies.__session),
     enabled: !!isSignedIn
   })
 
@@ -44,7 +47,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
       addUserIngredientmutation.mutate(ingredient)
     }
   }
-  
+
   const removeUserIngredient = (ingredient: Ingredient) => {
     console.log('removing ingredient', ingredient);
     if (userIngredients) {
@@ -54,18 +57,24 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addKithcenUtil = (util: string) => {
     console.log('adding kitchen util', util);
+    if (userKitchenUtils) {
+      addKitchenUtil.mutate(util)
+    }
   }
 
   const removeKithcenUtil = (util: string) => {
     console.log('removing kitchen util', util);
-  } 
+    if (userKitchenUtils) {
+      removeKitchenUtil.mutate(util)
+    }
+  }
 
   return (
     <UserDataContext.Provider value={{
-      userIngredients: queryClient.getQueryData(['userIngredients']) || [],
+      userIngredients: userIngredients || [],
       addUserIngredient,
       removeUserIngredient,
-      kithchenUtils: queryClient.getQueryData(['userKitchenUtils']) || kitchenUtils,
+      kithchenUtils: userKitchenUtils || emptykitchenUtils,
       addKithcenUtil,
       removeKithcenUtil,
     }}>
@@ -86,7 +95,7 @@ export const useUserData = () => {
   return context
 }
 
-const kitchenUtils: { [key: string]: boolean } = {
+const emptykitchenUtils: { [key: string]: boolean } = {
   "Stove Top": false,
   "Oven": false,
   "Microwave": false,

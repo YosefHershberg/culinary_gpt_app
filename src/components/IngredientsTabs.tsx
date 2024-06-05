@@ -7,8 +7,6 @@ import { toast } from "@/components/ui/use-toast"
 import { useUserData } from "@/context-providers/user-data-provider";
 import { Ingredient } from "@/lib/types";
 import { createContext, useState } from "react";
-import useOptAddUserIngredient from "@/hooks/useOptAddUserIngredient";
-import useOptRemoveUserIngredient from "@/hooks/useOptRemoveUserIngredient";
 
 export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>(undefined as any)
 

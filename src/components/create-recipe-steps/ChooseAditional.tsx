@@ -1,31 +1,14 @@
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { useState } from "react";
-
-const kitchenUtils: { [key: string]: boolean } = {
-    "Stove Top": false,
-    "Oven": false,
-    "Microwave": false,
-    "Air Fryer": false,
-    "Blender": false,
-    "Food Processor": false,
-    "Slow Cooker": false,
-    "BBQ": false,
-    "Grill": false
-}
+import { useUserData } from "@/context-providers/user-data-provider";
 
 const ChooseAditional = () => {
+    const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
     const [mealSelected, setMealSelected] = useState<string>('lunch')
-    const [kitchenUtilsSelected, setKitchenUtilsSelected] = useState<Record<string, boolean>>(kitchenUtils)
     const [timeSelected, setTimeSelected] = useState<number>(50)
 
     const handleMealSelected = (value: string) => {
@@ -37,10 +20,11 @@ const ChooseAditional = () => {
     }
 
     const handleKitchenUtilsSelected = (key: string) => {
-        setKitchenUtilsSelected(prevState => ({
-            ...prevState,
-            [key]: !prevState[key]
-        }))
+        if (kithchenUtils[key] === false) {
+            return addKithcenUtil(key)
+        } else {
+            return removeKithcenUtil(key)
+        }
     }
 
     return (
@@ -66,11 +50,11 @@ const ChooseAditional = () => {
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
                     <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
-                        {Object.keys(kitchenUtilsSelected).map(key => (
+                        {Object.keys(kithchenUtils).map(key => (
                             <div key={key} className="flex items-center gap-3 start">
                                 <Switch
                                     id={key}
-                                    checked={kitchenUtilsSelected[key]}
+                                    checked={kithchenUtils[key]}
                                     onCheckedChange={() => handleKitchenUtilsSelected(key)}
                                 />
                                 <Label htmlFor={key}>{key}</Label>
