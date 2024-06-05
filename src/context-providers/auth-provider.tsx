@@ -4,7 +4,7 @@ import { UserResource } from '@clerk/types';
 import axiosClient from '@/lib/axiosClient';
 
 type ThemeProviderState = {
-    user: UserResource | null | undefined,
+    user: UserResource | null | undefined | any, //NOTO: properly type this
     isSignedIn: boolean | undefined,
     isLoaded: boolean
 }
@@ -32,8 +32,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 (error: Error) => error,
             );
         }
-
-        console.log('auth running');
         
         isSignedIn && addInterceptors();
 

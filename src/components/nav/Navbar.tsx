@@ -8,14 +8,14 @@ import MobileNavMenu from './MobileNavMenu'
 import { useAuth } from '@/context-providers/auth-provider'
 import LoadingSpinner from '@/components/ui/LaodingSpinner'
 import Logo from '@/components/Logo'
-import { useUserIngredients } from '@/context-providers/user-ingredients-provider'
+import { useUserData } from '@/context-providers/user-data-provider'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme()
     const navigate = useNavigate()
     const { isSignedIn, isLoaded } = useAuth()
-    const { userIngredients } = useUserIngredients()
+    const { userIngredients } = useUserData()
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {

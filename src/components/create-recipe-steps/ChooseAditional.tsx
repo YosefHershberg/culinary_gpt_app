@@ -9,45 +9,43 @@ import { Separator } from '@/components/ui/separator';
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const kitchenUtils = [
-    { name: "Stove Top", value: false },
-    { name: "Oven", value: false },
-    { name: "Microwave", value: false },
-    { name: "Air Fryer", value: false },
-    { name: "Blender", value: false },
-    { name: "Food Processor", value: false },
-    { name: "Slow Cooker", value: false },
-    { name: "BBQ", value: false },
-    { name: "Grill", value: false }
-]
+const kitchenUtils: { [key: string]: boolean } = {
+    "Stove Top": false,
+    "Oven": false,
+    "Microwave": false,
+    "Air Fryer": false,
+    "Blender": false,
+    "Food Processor": false,
+    "Slow Cooker": false,
+    "BBQ": false,
+    "Grill": false
+}
 
 const ChooseAditional = () => {
     const [mealSelected, setMealSelected] = useState<string>('lunch')
-    const [kitchenUtilsSelected, setKitchenUtilsSelected] = useState(kitchenUtils)
+    const [kitchenUtilsSelected, setKitchenUtilsSelected] = useState<Record<string, boolean>>(kitchenUtils)
+    const [timeSelected, setTimeSelected] = useState<number>(50)
 
     const handleMealSelected = (value: string) => {
         setMealSelected(value)
     }
 
-    const handleKitchenUtilsSelected = (key: string) => {
-        const newKitchenUtils = kitchenUtilsSelected.map(kitchenUtil => {
-            if (kitchenUtil.name === key) {
-                return {
-                    ...kitchenUtil,
-                    value: !kitchenUtil.value
-                }
-            }
-            return kitchenUtil
-        })
+    const handleSliderChange = (value: number[]) => {
+        setTimeSelected(value[0] + 5)
+    }
 
-        setKitchenUtilsSelected(newKitchenUtils)
+    const handleKitchenUtilsSelected = (key: string) => {
+        setKitchenUtilsSelected(prevState => ({
+            ...prevState,
+            [key]: !prevState[key]
+        }))
     }
 
     return (
-        <div className='flex-1 flex flex-col items-center py-10'>
-            <div className='max-w-[50rem] w-full'>
+        <div className='flex-1 flex flex-col items-center'>
+            <div className='max-w-[50rem] w-full flex-[1_1_0] overflow-y-auto sm:pt-5 pt-2'>
                 <div className='flex md:flex-row flex-col justify-between items-center md:items start'>
                     <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>What meal you want to cook?</p>
                     <Select onValueChange={handleMealSelected}>
@@ -56,7 +54,7 @@ const ChooseAditional = () => {
                         </SelectTrigger>
                         <SelectContent className='dark:bg-zinc-700'>
                             <SelectItem value="breakfast">Breakfast</SelectItem>
-                            <SelectItem value="lunch">lunch</SelectItem>
+                            <SelectItem value="lunch">Lunch</SelectItem>
                             <SelectItem value="dinner">Dinner</SelectItem>
                             <SelectItem value="snack">Snack</SelectItem>
                             <SelectItem value="dessert">Dessert</SelectItem>
@@ -65,18 +63,17 @@ const ChooseAditional = () => {
                 </div>
 
                 <Separator className='my-6' />
-
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
-                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
+                    <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
-                        {kitchenUtilsSelected.map(kitchenUtil => (
-                            <div key={kitchenUtil.name} className="flex items-center gap-3 start">
+                        {Object.keys(kitchenUtilsSelected).map(key => (
+                            <div key={key} className="flex items-center gap-3 start">
                                 <Switch
-                                    id={kitchenUtil.name}
-                                    checked={kitchenUtil.value}
-                                    onCheckedChange={() => handleKitchenUtilsSelected(kitchenUtil.name)}
+                                    id={key}
+                                    checked={kitchenUtilsSelected[key]}
+                                    onCheckedChange={() => handleKitchenUtilsSelected(key)}
                                 />
-                                <Label htmlFor={kitchenUtil.name}>{kitchenUtil.name}</Label>
+                                <Label htmlFor={key}>{key}</Label>
                             </div>
                         ))}
                     </div>
@@ -84,13 +81,19 @@ const ChooseAditional = () => {
 
                 <Separator className='my-6' />
 
-                <div className='flex md:flex-row flex-col justify-between items-center md:items start'>
+                <div className='flex md:flex-row flex-col justify-between items-center md:items-start'>
                     <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>How much time do you have?</p>
-                    <div className="w-[25rem] max-w-[80vw]">
-                        <Slider defaultValue={[50]} max={120} step={10} onValueChange={(e) => console.log(e[0])}/>
+                    <div className="w-[25rem] max-w-[80vw] flex flex-col items-center">
+                        <Slider
+                            className="h-7"
+                            defaultValue={[timeSelected - 5]}
+                            max={120}
+                            step={10}
+                            onValueChange={handleSliderChange}
+                        />
+                        <p>{timeSelected > 120 ? '120+' : timeSelected} {' minutes'}</p>
                     </div>
                 </div>
-
             </div>
         </div>
     )

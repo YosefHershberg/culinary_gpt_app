@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
 import ChooseAditional from '@/components/create-recipe-steps/ChooseAditional';
+import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
 const steps = [
   { label: 'Ingredients', icon: ShoppingCartRoundedIcon },
-  { label: 'In review', icon: ContactsRoundedIcon },
-  { label: 'Approved', icon: LocalShippingRoundedIcon },
+  { label: 'Your kitchen', icon: ContactsRoundedIcon },
+  { label: 'Final step', icon: LocalShippingRoundedIcon },
 ]
 
 const CreateNewRecipe = () => {
@@ -35,6 +36,9 @@ const CreateNewRecipe = () => {
           }
           {activeStep === 1 &&
             <ChooseAditional />
+          }
+          {activeStep === 2 &&
+            <FinalStep />
           }
         </div>
 

@@ -4,9 +4,11 @@ import { getIngredientSuggestions } from '@/lib/api';
 import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
 import LoadingSpinner from "@/components/ui/LaodingSpinner";
 import { toast } from "@/components/ui/use-toast"
-import { useUserIngredients } from "@/context-providers/user-ingredients-provider";
+import { useUserData } from "@/context-providers/user-data-provider";
 import { Ingredient } from "@/lib/types";
 import { createContext, useState } from "react";
+import useOptAddUserIngredient from "@/hooks/useOptAddUserIngredient";
+import useOptRemoveUserIngredient from "@/hooks/useOptRemoveUserIngredient";
 
 export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>(undefined as any)
 
@@ -20,13 +22,13 @@ enum ActiveTab {
 }
 
 const IngredientsTabs = () => {
-    const { addUserIngredient, removeUserIngredient, userIngredients } = useUserIngredients()
+    const { addUserIngredient, removeUserIngredient, userIngredients } = useUserData()
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.TheUsuals)
 
     const handleClicked = (ingredient: Ingredient) => {
         if (!!userIngredients.find(item => item.name === ingredient.name)) {
             removeUserIngredient(ingredient)
-        } else {
+        } else {            
             addUserIngredient(ingredient)
         }
     }

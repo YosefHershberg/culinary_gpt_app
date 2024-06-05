@@ -1,6 +1,6 @@
 import { getUserIngredients } from '@/lib/api'
 import { useQueryClient, useQuery } from '@tanstack/react-query'
-import React, { createContext, useContext, useLayoutEffect } from 'react'
+import React, { createContext, useContext } from 'react'
 import { useAuth } from '@/context-providers/auth-provider'
 import { useCookies } from 'react-cookie'
 import { Ingredient } from '@/lib/types'
@@ -10,36 +10,33 @@ import useOptRemoveUserIngredient from '@/hooks/useOptRemoveUserIngredient'
 
 type UserIngredientsState = {
   userIngredients: Ingredient[] //TODO: change to correct type
+  kithchenUtils: { [key: string]: boolean }
   addUserIngredient: (ingredient: Ingredient) => void
   removeUserIngredient: (ingredient: Ingredient) => void
-  clearUserIngredients: () => void
+  addKithcenUtil: (util: string) => void
+  removeKithcenUtil: (util: string) => void
 }
 
-export const UserIngredientsContext = createContext<UserIngredientsState>(undefined as any)
+export const UserDataContext = createContext<UserIngredientsState>(undefined as any)
 
-const UserIngredientsProvider = ({ children }: { children: React.ReactNode }) => {
+const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
   const queryClient = useQueryClient()
   const addUserIngredientmutation = useOptAddUserIngredient()
   const removeUserIngredientMutation = useOptRemoveUserIngredient()
 
-  const { data: userIngredients, isLoading } = useQuery({
+  const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
     queryKey: ['userIngredients'],
     queryFn: () => getUserIngredients(cookies.__session),
     enabled: !!isSignedIn
   })
 
-  useLayoutEffect(() => {
-    if (userIngredients) {
-      const uniqueIngredients = userIngredients.filter((ingredient: Ingredient, index: number, self: Ingredient[]) => {
-        return index === self.findIndex((i: Ingredient) => (
-          i.id === ingredient.id
-        ));
-      });
-      queryClient.setQueryData(['userIngredients'], uniqueIngredients);
-    }
-  }, [userIngredients, queryClient]);
+  const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
+    queryKey: ['userKitchenUtils'],
+    queryFn: () => getUserIngredients(cookies.__session),
+    enabled: !!isSignedIn
+  })
 
   const addUserIngredient = (ingredient: Ingredient) => {
     console.log('adding ingredient', ingredient);
@@ -55,30 +52,48 @@ const UserIngredientsProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }
 
-  const clearUserIngredients = () => {
-    queryClient.setQueryData(['userIngredients'], [])
+  const addKithcenUtil = (util: string) => {
+    console.log('adding kitchen util', util);
   }
 
+  const removeKithcenUtil = (util: string) => {
+    console.log('removing kitchen util', util);
+  } 
+
   return (
-    <UserIngredientsContext.Provider value={{
+    <UserDataContext.Provider value={{
       userIngredients: queryClient.getQueryData(['userIngredients']) || [],
       addUserIngredient,
       removeUserIngredient,
-      clearUserIngredients
+      kithchenUtils: queryClient.getQueryData(['userKitchenUtils']) || kitchenUtils,
+      addKithcenUtil,
+      removeKithcenUtil,
     }}>
-      {isLoading ? <LoadingPage /> : children}
-    </UserIngredientsContext.Provider>
+      {(isLoadingUserUtils || isLoadingUserIngrdts) ? <LoadingPage /> : children}
+    </UserDataContext.Provider>
   )
 }
 
-export default UserIngredientsProvider
+export default UserDataProvider
 
-export const useUserIngredients = () => {
-  const context = useContext(UserIngredientsContext)
+export const useUserData = () => {
+  const context = useContext(UserDataContext)
 
   if (context === undefined) {
-    throw new Error('useUserIngredients must be used within a UserIngredientsProvider')
+    throw new Error('useUserData must be used within a UserDataProvider')
   }
 
   return context
+}
+
+const kitchenUtils: { [key: string]: boolean } = {
+  "Stove Top": false,
+  "Oven": false,
+  "Microwave": false,
+  "Air Fryer": false,
+  "Blender": false,
+  "Food Processor": false,
+  "Slow Cooker": false,
+  "BBQ": false,
+  "Grill": false
 }

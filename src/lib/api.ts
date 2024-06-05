@@ -7,7 +7,16 @@ export const getIngredientSuggestions = async (category: string) => {
 }
 
 export const getUserIngredients = async (token: string) => {
-    const { data } = await axiosClient.get('/user-ingredients', {
+    const { data } = await axiosClient.get('/user/ingredients', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    return data
+}
+
+export const getUserKitchenUtils = async (token: string) => {
+    const { data } = await axiosClient.get('/user/kitchen-utils', {
         headers: {
             Authorization: `Bearer ${token}`
         }
@@ -16,11 +25,11 @@ export const getUserIngredients = async (token: string) => {
 }
 
 export const addUserIngredient = async (ingredient: Ingredient) => {
-    const { data } = await axiosClient.post('/user-ingredients', ingredient)
+    const { data } = await axiosClient.post('/user/ingredients', ingredient)
     return data
 }
 
 export const removeUserIngredient = async (ingredient: Ingredient) => {
-    const { data } = await axiosClient.delete(`/user-ingredients/${ingredient.id}`)
+    const { data } = await axiosClient.delete(`/user/ingredients/${ingredient.id}`)
     return data
 }
