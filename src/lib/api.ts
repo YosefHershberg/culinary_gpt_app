@@ -6,7 +6,9 @@ export const getIngredientSuggestions = async (category: string) => {
     return data
 }
 
+
 //USER INGREDIENTS --------------------------------------------------------------
+
 
 export const getUserIngredients = async (token: string) => {
     const { data } = await axiosClient.get('/user/ingredients', {
@@ -26,6 +28,7 @@ export const removeUserIngredient = async (ingredient: Ingredient) => {
     const { data } = await axiosClient.delete(`/user/ingredients/${ingredient.id}`)
     return data
 }
+
 
 //USER KITCHEN UTILS --------------------------------------------------------------
 

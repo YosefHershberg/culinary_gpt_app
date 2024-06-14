@@ -3,8 +3,8 @@ import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-van
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient } from '@/lib/types';
-import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient';
 import { toast } from '@/components/ui/use-toast';
+import { useUserData } from '@/context-providers/user-data-provider';
 
 const placeholders = [
     "Whole Wheat Bread",
@@ -20,7 +20,7 @@ const IngredientSearchbar = () => {
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<any>()
-    const addUserIngredientmutation = useOptAddUserIngredient()
+    const { addUserIngredient } = useUserData()
 
     const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/search',
@@ -67,8 +67,8 @@ const IngredientSearchbar = () => {
         triggerHttpReq()
     };
 
-    const handleSelected = (item: Ingredient) => {
-        addUserIngredientmutation.mutate(item)
+    const handleSelected = (ingredient: Ingredient) => {
+        addUserIngredient(ingredient)
         setIsDropdownOpen(false);
     }
 
@@ -92,8 +92,13 @@ const IngredientSearchbar = () => {
                         <DropdownMenuItem
                             onSelect={() => handleSelected(item)}
                             key={item.id}
+                            className='flex items-center justify-between h-10 px-3'
                         >
-                            {item.name}
+                            <p>{item.name}</p>
+
+                            <span className='text-md text-zinc-400 italic'>
+                                Click to add
+                            </span>
                         </DropdownMenuItem>
                     ))}
                 </DropdownMenuContent>

@@ -1,23 +1,20 @@
+import { useUserData } from "@/context-providers/user-data-provider";
+import { Meals } from "@/pages/CreateNewRecipe";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { useState } from "react";
-import { useUserData } from "@/context-providers/user-data-provider";
 
-const ChooseAditional = () => {
+type ChooseAditionalProps = {
+    handleMealSelected: (meal: Meals) => void,
+    handleTimeChange: (value: number[]) => void,
+    selectedTime: number
+}
+
+const ChooseAditional = ({ handleMealSelected, handleTimeChange, selectedTime }: ChooseAditionalProps) => {
     const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
-    const [mealSelected, setMealSelected] = useState<string>('lunch')
-    const [timeSelected, setTimeSelected] = useState<number>(50)
-
-    const handleMealSelected = (value: string) => {
-        setMealSelected(value)
-    }
-
-    const handleSliderChange = (value: number[]) => {
-        setTimeSelected(value[0] + 5)
-    }
 
     const handleKitchenUtilsSelected = (key: string) => {
         if (kithchenUtils[key] === false) {
@@ -70,12 +67,12 @@ const ChooseAditional = () => {
                     <div className="w-[25rem] max-w-[80vw] flex flex-col items-center">
                         <Slider
                             className="h-7"
-                            defaultValue={[timeSelected - 5]}
+                            defaultValue={[selectedTime - 5]}
                             max={120}
                             step={10}
-                            onValueChange={handleSliderChange}
+                            onValueChange={handleTimeChange}
                         />
-                        <p>{timeSelected > 120 ? '120+' : timeSelected} {' minutes'}</p>
+                        <p>{selectedTime > 120 ? '120+' : selectedTime} {' minutes'}</p>
                     </div>
                 </div>
             </div>

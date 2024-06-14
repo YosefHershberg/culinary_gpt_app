@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@/lib/types";
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { HanldeIngredientClickContext } from "../IngredientsTabs";
 import { useUserData } from "@/context-providers/user-data-provider";
 
@@ -19,7 +19,7 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
       <Checkbox
         onCheckedChange={() => handleClicked(ingredient)}
         id={ingredient.name.toLowerCase().replace(/\s/g, '_')}
-        checked={!!userIngredients.find(item => item.name === ingredient.name)}
+        checked={!!userIngredients?.find(item => item.name === ingredient.name)}
       />
       <label
         htmlFor={ingredient.name.toLowerCase().replace(/\s/g, '_')}

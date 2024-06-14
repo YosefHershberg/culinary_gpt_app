@@ -12,7 +12,7 @@ import useOptRemoveKitchenUtil from '@/hooks/useRemoveKitchenUtil'
 
 type UserIngredientsState = {
   userIngredients: Ingredient[] //TODO: change to correct type
-  kithchenUtils: { [key: string]: boolean }
+  kithchenUtils: { [key: string]: boolean } | null
   addUserIngredient: (ingredient: Ingredient) => void
   removeUserIngredient: (ingredient: Ingredient) => void
   addKithcenUtil: (util: string) => void
@@ -33,7 +33,7 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
     queryKey: ['userIngredients'],
     queryFn: () => getUserIngredients(cookies.__session),
     enabled: !!isSignedIn
-  })
+  })  
 
   const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
     queryKey: ['userKitchenUtils'],
