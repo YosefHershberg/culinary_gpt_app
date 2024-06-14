@@ -14,6 +14,7 @@ const FinalStep = () => {
           <p className="mt-7 text-center">Write a message about anything else you would like th AI to know about!</p>
           <div className="mt-7">
             <Textarea
+              className="dark:bg-zinc-600 bg-zinc-100"
               value={prompt}
               placeholder="Type your prompt here."
               id="message-2"

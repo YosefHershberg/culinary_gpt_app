@@ -1,17 +1,20 @@
-import { ThemeProvider } from "@/context-providers/theme-provider"
-import ClerkProvider from "@/context-providers/clerk-provider"
-import { AuthProvider } from "@/context-providers/auth-provider"
-import { Suspense } from "react"
-import LoadingPage from "@/pages/LoadingPage"
-import { ErrorBoundary } from "react-error-boundary"
-import ErrorPage from "@/pages/ErrorPage"
-import { Toaster } from "@/components/ui/toaster"
 import { BrowserRouter as Router } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import UserDataProvider from "@/context-providers/user-data-provider"
+import { Suspense } from "react"
+import { ErrorBoundary } from "react-error-boundary"
+
+import { ThemeProvider } from "@/context-providers/theme-provider"
+import { AuthProvider } from "@/context-providers/auth-provider"
 import { CookiesProvider } from 'react-cookie'
 import { CreateRecipeProvider } from "@/context-providers/create-recipe-provider"
+import { UserDataProvider } from "@/context-providers/user-data-provider"
+import ClerkProvider from "@/context-providers/clerk-provider"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+import LoadingPage from "@/pages/LoadingPage"
+import ErrorPage from "@/pages/ErrorPage"
+
+import { Toaster } from "@/components/ui/toaster"
 
 const queryClient = new QueryClient({
   defaultOptions: {

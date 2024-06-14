@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
 import ChooseAditional from '@/components/create-recipe-steps/ChooseAditional';
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
-// import LoadingPage from './LoadingPage';
 
 import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
@@ -18,11 +17,8 @@ const steps = [
   { label: 'Final step', icon: LocalShippingRoundedIcon },
 ]
 
-const CreateNewRecipe = () => {
+const CreateNewRecipePage = () => {
   const [activeStep, setActiveStep] = useState(0);
-
-
-  // if (isLoading) return <LoadingPage />;
 
   return (
     <div className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
@@ -73,4 +69,4 @@ const CreateNewRecipe = () => {
   )
 }
 
-export default CreateNewRecipe
+export default CreateNewRecipePage

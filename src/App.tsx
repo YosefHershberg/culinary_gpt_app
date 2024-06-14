@@ -1,7 +1,7 @@
 import { Routes, Route, Outlet } from 'react-router-dom'
 import { lazy } from 'react'
 import NotFoundPage from '@/pages/NotFoundPage'
-import CreateNewRecipe from '@/pages/CreateNewRecipe'
+import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
 
 const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
 const Signup = lazy(() => import('@/pages/Signup'))
@@ -19,9 +19,10 @@ const App = () => {
       <Route path='/' element={<AppLayout />}>
         <Route index element={<WelcomePage />} />
         <Route element={<ProtectedRoutes />}>
-          <Route path="create-new-recipe" element={<CreateNewRecipe />} />
+          <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
           <Route path='my-ingredients' element={<MyIngredients />}/>
           <Route path='my-recipes' element={<MyRecipes />} />
+          <Route path='recipe/*' element={<></>} />
         </Route>
       </Route>
       <Route path='signup/*' element={<Signup />} />

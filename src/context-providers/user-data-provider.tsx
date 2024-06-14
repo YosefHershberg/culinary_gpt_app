@@ -21,7 +21,7 @@ type UserDataState = {
 
 export const UserDataContext = createContext<UserDataState>(undefined as any)
 
-const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
   const addUserIngredientmutation = useOptAddUserIngredient()
@@ -82,8 +82,6 @@ const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
     </UserDataContext.Provider>
   )
 }
-
-export default UserDataProvider
 
 export const useUserData = () => {
   const context = useContext(UserDataContext)
