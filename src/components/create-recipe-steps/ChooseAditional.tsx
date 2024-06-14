@@ -1,22 +1,17 @@
 import { useUserData } from "@/context-providers/user-data-provider";
-import { Meals } from "@/pages/CreateNewRecipe";
-
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
+import { useCreateRecipe } from "@/context-providers/create-recipe-provider";
 
-type ChooseAditionalProps = {
-    handleMealSelected: (meal: Meals) => void,
-    handleTimeChange: (value: number[]) => void,
-    selectedTime: number
-}
-
-const ChooseAditional = ({ handleMealSelected, handleTimeChange, selectedTime }: ChooseAditionalProps) => {
+const ChooseAditional = () => {
     const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
+    const { selectedTime, handleTimeChange, handleMealSelected } = useCreateRecipe()
 
     const handleKitchenUtilsSelected = (key: string) => {
+        //@ts-ignore
         if (kithchenUtils[key] === false) {
             return addKithcenUtil(key)
         } else {
@@ -47,7 +42,7 @@ const ChooseAditional = ({ handleMealSelected, handleTimeChange, selectedTime }:
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
                     <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
-                        {Object.keys(kithchenUtils).map(key => (
+                        {kithchenUtils && Object.keys(kithchenUtils).map(key => (
                             <div key={key} className="flex items-center gap-3 start">
                                 <Switch
                                     id={key}

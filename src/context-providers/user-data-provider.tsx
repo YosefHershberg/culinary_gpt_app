@@ -10,7 +10,7 @@ import useOptRemoveUserIngredient from '@/hooks/useOptRemoveUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
 import useOptRemoveKitchenUtil from '@/hooks/useRemoveKitchenUtil'
 
-type UserIngredientsState = {
+type UserDataState = {
   userIngredients: Ingredient[] //TODO: change to correct type
   kithchenUtils: { [key: string]: boolean } | null
   addUserIngredient: (ingredient: Ingredient) => void
@@ -19,7 +19,7 @@ type UserIngredientsState = {
   removeKithcenUtil: (util: string) => void
 }
 
-export const UserDataContext = createContext<UserIngredientsState>(undefined as any)
+export const UserDataContext = createContext<UserDataState>(undefined as any)
 
 const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()

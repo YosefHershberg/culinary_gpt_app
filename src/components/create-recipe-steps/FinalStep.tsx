@@ -1,13 +1,9 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+import { useCreateRecipe } from "@/context-providers/create-recipe-provider"
 
-type FinalStepProps = {
-  prompt: string,
-  handlePromptChange: (value: string) => void,
-  handleSubmit: () => void
-}
-
-const FinalStep = ({ prompt, handlePromptChange, handleSubmit }: FinalStepProps) => {
+const FinalStep = () => {
+  const { prompt, handlePromptChange, handleSubmit } = useCreateRecipe()
 
   return (
     <div className='flex-1 flex flex-col items-center'>
