@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
-import { set } from "zod";
+import { Recipe } from "@/lib/types";
 
 type CreateRecipeState = {
     mealSelected: Meals,
@@ -13,7 +13,8 @@ type CreateRecipeState = {
     handleMealSelected: (value: Meals) => void,
     handleTimeChange: (value: number[]) => void,
     handlePromptChange: (value: string) => void,
-    handleSubmit: () => void
+    handleSubmit: () => void,
+    createdRecipe: Recipe
 }
 
 export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as any);
@@ -21,13 +22,14 @@ export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }) => {
+    const [createdRecipe, setCreatedRecipe] = useState<Recipe>({} as Recipe)
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
     const [prompt, setPrompt] = useState<string>('')
 
     const navigate = useNavigate()
 
-    const { data: createdRecipe, isLoading, error, responseStatus ,triggerHttpReq } = useHttpClient({
+    const { data: response, isLoading, error, responseStatus ,triggerHttpReq } = useHttpClient({
         endpoint: '/create-recipe',
         method: 'POST',
         body: {
@@ -36,11 +38,12 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
     })
 
     useEffect(() => {
-        if (responseStatus === 200 && createdRecipe) {
+        if (responseStatus === 200 && response) {
             setPrompt('')
             setSelectedTime(50)
             setMealSelected('lunch')
-            console.log('createdRecipe', createdRecipe);
+            setCreatedRecipe(response)
+            console.log('createdRecipe', response);
             navigate('/recipe')
         }
     }, [responseStatus]);
@@ -82,7 +85,8 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
             handleMealSelected,
             handleTimeChange,
             handlePromptChange,
-            handleSubmit
+            handleSubmit,
+            createdRecipe
         }}>
             {children}
         </CreateRecipeContext.Provider>
