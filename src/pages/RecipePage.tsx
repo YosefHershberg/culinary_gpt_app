@@ -1,39 +1,11 @@
-import { useEffect } from 'react'
-import { useCreateRecipe } from '@/context-providers/create-recipe-provider'
-import { useNavigate } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
-import useHttpClient from '@/hooks/useHttpClient'
-import LoadingSpinner from '@/components/ui/LaodingSpinner'
-import { toast } from '@/components/ui/use-toast'
+import { Recipe } from '@/lib/types'
 
-const RecipePage = () => {
-    const { createdRecipe } = useCreateRecipe()
-    const navigate = useNavigate()
+interface RecipePageProps {
+    createdRecipe: Recipe
+    buttonComponent?: JSX.Element
+}
 
-    const { responseStatus, isLoading, error, triggerHttpReq } = useHttpClient({
-        endpoint: '/user/recipes',
-        method: 'POST',
-        body: createdRecipe
-    })
-
-    useEffect(() => {
-        if (responseStatus === 200) {
-            navigate('/my-recipes')
-        }
-        if (error) {
-            toast({
-                variant: 'destructive',
-                title: 'Oops! Something went wrong!',
-                //@ts-ignore
-                description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
-            })
-        }
-    }, [responseStatus, error])
-
-    const handleAddToMyRecipes = () => {
-        triggerHttpReq()
-        // navigate('/create-new-recipe')
-    }
+const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
 
     return (
         <main className='flex flex-col w-screen items-center bg-amber-100 pb-5'>
@@ -71,15 +43,7 @@ const RecipePage = () => {
             <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800'>
                 Bon Apetite!
             </h1>
-            <Button
-                onClick={handleAddToMyRecipes}
-                variant='secondary'
-                className='absolute bottom-5 sm:left-5 left-1/2 transform sm:-translate-x-0 -translate-x-1/2 w-42 h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
-            >
-                {
-                    isLoading ? <LoadingSpinner /> : 'Add to My Recipes'
-                }
-            </Button>
+            {buttonComponent}
         </main>
     )
 }

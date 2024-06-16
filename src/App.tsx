@@ -8,7 +8,8 @@ const Signup = lazy(() => import('@/pages/Signup'))
 const Signin = lazy(() => import('@/pages/Signin'))
 const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
 const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
-const RecipePage = lazy(() => import('@/pages/RecipePage'))
+const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
+const UserRecipe = lazy(() => import('@/components/UserRecipe'))
 
 import Navbar from '@/components/nav/Navbar'
 import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
@@ -23,7 +24,8 @@ const App = () => {
           <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
           <Route path='my-ingredients' element={<MyIngredients />}/>
           <Route path='my-recipes' element={<MyRecipes />} />
-          <Route path='recipe/*' element={<RecipePage />} />
+          <Route path='recipe' element={<CreatedRecipe />} />
+          <Route path='recipe/:id' element={<UserRecipe />} />
         </Route>
       </Route>
       <Route path='signup/*' element={<Signup />} />

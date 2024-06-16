@@ -55,12 +55,12 @@ export const getUserRecipes = async () => {
     return data
 }
 
-export const deleteRecipe = async (id: string) => {
+export const deleteUserRecipe = async (id: string) => {
     const { data } = await axiosClient.delete(`/user/recipes/${id}`)
     return data
 }
 
-export const getRecipe = async (id: string) => {
+export const getUserRecipe = async (id: string) => {
     const { data } = await axiosClient.get(`/user/recipes/${id}`)
     return data
 }
