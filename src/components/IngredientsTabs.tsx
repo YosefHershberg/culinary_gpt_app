@@ -20,12 +20,12 @@ enum ActiveTab {
 }
 
 const IngredientsTabs = () => {
-    const { addUserIngredient, removeUserIngredient, userIngredients } = useUserData()
+    const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
     const handleClicked = (ingredient: Ingredient) => {
         if (!!userIngredients?.find(item => item.name === ingredient.name)) {
-            removeUserIngredient(ingredient)
+            deleteUserIngredient(ingredient)
         } else {            
             addUserIngredient(ingredient)
         }

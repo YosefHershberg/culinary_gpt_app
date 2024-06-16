@@ -1,12 +1,12 @@
 import { toast } from "@/components/ui/use-toast"
-import { removeUserKitchenUtil } from "@/lib/api"
+import { deleteUserKitchenUtil } from "@/lib/api"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 
-const useOptRemoveKitchenUtil = () => {
+const useOptDeleteKitchenUtil = () => {
     const queryClient = useQueryClient()
 
-    const AddkitchenUtil = useMutation({
-        mutationFn: (util: string) => removeUserKitchenUtil(util),
+    const deletekitchenUtilMutation = useMutation({
+        mutationFn: (util: string) => deleteUserKitchenUtil(util),
 
         onMutate: async (util: string) => {
             await queryClient.cancelQueries({ queryKey: ['userKitchenUtils']})
@@ -36,7 +36,7 @@ const useOptRemoveKitchenUtil = () => {
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils']})
     })
 
-    return AddkitchenUtil
+    return deletekitchenUtilMutation
 }
 
-export default useOptRemoveKitchenUtil
+export default useOptDeleteKitchenUtil

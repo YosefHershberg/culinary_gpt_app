@@ -19,9 +19,7 @@ import { Toaster } from "@/components/ui/toaster"
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 0,
-      staleTime: Infinity,
-      refetchOnWindowFocus: false,
+      retry: 2,
     },
   },
 })
@@ -29,7 +27,7 @@ const queryClient = new QueryClient({
 // NOTE: the order of the wrappers are precise!
 // Router has to wrap ClerkProvider
 // AuthProvider has to wrap any Component that trigger a fetch req that requires authentication (axoisCLient)
-// Theme provider has to wrap Suspense
+// Theme provider & AuthProvider has to wrap Suspense
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
 
@@ -39,19 +37,19 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
         <Router>
           <CookiesProvider>
             <ThemeProvider>
-              <Suspense fallback={<LoadingPage />}>
-                <ClerkProvider>
-                  <AuthProvider>
-                    <UserDataProvider>
-                      <CreateRecipeProvider>
+              <ClerkProvider>
+                <AuthProvider>
+                  <UserDataProvider>
+                    <CreateRecipeProvider>
+                      <Suspense fallback={<LoadingPage />}>
                         {children}
                         <Toaster />
                         <ReactQueryDevtools initialIsOpen={false} />
-                      </CreateRecipeProvider>
-                    </UserDataProvider>
-                  </AuthProvider>
-                </ClerkProvider>
-              </Suspense>
+                      </Suspense>
+                    </CreateRecipeProvider>
+                  </UserDataProvider>
+                </AuthProvider>
+              </ClerkProvider>
             </ThemeProvider>
           </CookiesProvider>
         </Router>

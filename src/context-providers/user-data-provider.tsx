@@ -6,15 +6,15 @@ import { useCookies } from 'react-cookie'
 import { Ingredient } from '@/lib/types'
 import LoadingPage from '@/pages/LoadingPage'
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
-import useOptRemoveUserIngredient from '@/hooks/useOptRemoveUserIngredient'
+import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
-import useOptRemoveKitchenUtil from '@/hooks/useRemoveKitchenUtil'
+import useOptDeleteKitchenUtil from '@/hooks/useDeleteKitchenUtil'
 
 type UserDataState = {
   userIngredients: Ingredient[] //TODO: change to correct type
   kithchenUtils: { [key: string]: boolean } | null
   addUserIngredient: (ingredient: Ingredient) => void
-  removeUserIngredient: (ingredient: Ingredient) => void
+  deleteUserIngredient: (ingredient: Ingredient) => void
   addKithcenUtil: (util: string) => void
   removeKithcenUtil: (util: string) => void
 }
@@ -24,10 +24,10 @@ export const UserDataContext = createContext<UserDataState>(undefined as any)
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
-  const addUserIngredientmutation = useOptAddUserIngredient()
-  const removeUserIngredientMutation = useOptRemoveUserIngredient()
-  const addKitchenUtil = useOptAddkitchenUtil()
-  const removeKitchenUtil = useOptRemoveKitchenUtil()
+  const addUserIngredientMutation = useOptAddUserIngredient()
+  const deleteUserIngredientMutation = useOptDeleteUserIngredient()
+  const addKitchenUtilMutation = useOptAddkitchenUtil()
+  const removeKitchenUtilMutation = useOptDeleteKitchenUtil()
 
   const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
     queryKey: ['userIngredients'],
@@ -44,28 +44,28 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
   const addUserIngredient = (ingredient: Ingredient) => {
     console.log('adding ingredient', ingredient);
     if (userIngredients) {
-      addUserIngredientmutation.mutate(ingredient)
+      addUserIngredientMutation.mutate(ingredient)
     }
   }
 
-  const removeUserIngredient = (ingredient: Ingredient) => {
+  const deleteUserIngredient = (ingredient: Ingredient) => {
     console.log('removing ingredient', ingredient);
     if (userIngredients) {
-      removeUserIngredientMutation.mutate(ingredient)
+      deleteUserIngredientMutation.mutate(ingredient)
     }
   }
 
   const addKithcenUtil = (util: string) => {
     console.log('adding kitchen util', util);
     if (userKitchenUtils) {
-      addKitchenUtil.mutate(util)
+      addKitchenUtilMutation.mutate(util)
     }
   }
 
   const removeKithcenUtil = (util: string) => {
     console.log('removing kitchen util', util);
     if (userKitchenUtils) {
-      removeKitchenUtil.mutate(util)
+      removeKitchenUtilMutation.mutate(util)
     }
   }
 
@@ -73,7 +73,7 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
     <UserDataContext.Provider value={{
       userIngredients: userIngredients || [],
       addUserIngredient,
-      removeUserIngredient,
+      deleteUserIngredient,
       kithchenUtils: userKitchenUtils || emptykitchenUtils,
       addKithcenUtil,
       removeKithcenUtil,

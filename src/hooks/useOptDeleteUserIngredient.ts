@@ -1,13 +1,13 @@
 import { toast } from "@/components/ui/use-toast"
-import { removeUserIngredient } from "@/lib/api"
+import { deleteUserIngredient } from "@/lib/api"
 import { Ingredient } from "@/lib/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
-const useOptRemoveUserIngredient = () => {
+const useOptdeleteUserIngredient = () => {
     const queryClient = useQueryClient()
 
-    const removeUserIngredientMutation = useMutation({
-        mutationFn: (ingredient: Ingredient) => removeUserIngredient(ingredient),
+    const deleteUserIngredientMutation = useMutation({
+        mutationFn: (ingredient: Ingredient) => deleteUserIngredient(ingredient),
 
         onMutate: async (ingredient: any) => {
             await queryClient.cancelQueries({ queryKey: ['userIngredients'] })
@@ -31,7 +31,7 @@ const useOptRemoveUserIngredient = () => {
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['userIngredients']})
     })
 
-    return removeUserIngredientMutation
+    return deleteUserIngredientMutation
 }
 
-export default useOptRemoveUserIngredient
+export default useOptdeleteUserIngredient

@@ -5,7 +5,7 @@ import { useQueryClient, useMutation } from "@tanstack/react-query"
 const useOptAddkitchenUtil = () => {
     const queryClient = useQueryClient()
 
-    const AddkitchenUtil = useMutation({
+    const addkitchenUtilMutation = useMutation({
         mutationFn: (util: string) => addUserKitchenUtil(util),
 
         onMutate: async (util: string) => {
@@ -36,7 +36,7 @@ const useOptAddkitchenUtil = () => {
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils']})
     })
 
-    return AddkitchenUtil
+    return addkitchenUtilMutation
 }
 
 export default useOptAddkitchenUtil

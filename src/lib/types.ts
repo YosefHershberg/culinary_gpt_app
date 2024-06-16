@@ -14,6 +14,10 @@ export type Recipe = {
             step: string,
             time: string,
         }[],
+        time: string,
+        level: string,
     },
     image_url: string,
+    id?: number | string,
+
 }
