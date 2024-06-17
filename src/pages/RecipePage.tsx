@@ -8,7 +8,7 @@ interface RecipePageProps {
 const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
 
     return (
-        <main className='flex flex-col w-screen items-center bg-amber-100 pb-5'>
+        <main className='flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
             <div className='max-w-[50rem] flex flex-col items-center bg-orange/20 py-5 px-10 rounded-2xl m-5'>
 
                 <div className='flex flex-col items-center '>
@@ -40,7 +40,7 @@ const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
                 </div>
 
             </div>
-            <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800'>
+            <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
                 Bon Apetite!
             </h1>
             {buttonComponent}
