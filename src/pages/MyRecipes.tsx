@@ -29,6 +29,19 @@ const MyRecipes = () => {
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
       <div className="my-8 flex flex-col items-center w-full max-w-[40rem]">
         <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+        {recipes?.length === 0 &&
+        <div className="flex flex-col items-center">
+          <p className="text-center text-xl mt-10">You have no recipes yet!</p>
+          <Button
+            variant='secondary'
+            onClick={() => navigate('/create-new-recipe')}
+            className="mt-6 w-fit"
+          >
+            Create a new recipe
+          </Button>
+        </div>
+        }
+
         {recipes?.map((item: Recipe) => (
           <div
             onClick={() => handleClick(item)}
