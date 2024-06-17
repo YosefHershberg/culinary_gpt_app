@@ -51,7 +51,7 @@ const ChooseAditional = () => {
                 <Separator className='my-6' />
 
                 <div className='flex md:flex-row flex-col justify-between items-center'>
-                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>How many people are you cooking for?</p>
+                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0 text-center'>How many people are you cooking for?</p>
                     <div className="relative flex flex-col md:items-end w-full items-center">
                         <Input
                             className="max-w-[20rem]"
