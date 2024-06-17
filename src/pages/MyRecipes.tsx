@@ -20,6 +20,11 @@ const MyRecipes = () => {
     navigate(`/recipe/${recipe.id}`, { state: recipe })
   }
 
+  const handleDelete = (recipe: Recipe, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation()
+    deleteUserRecipeMutation.mutate(recipe)
+  }
+
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 px-4">
       <div className="my-8 flex flex-col items-center w-full max-w-[40rem]">
@@ -27,7 +32,7 @@ const MyRecipes = () => {
         {recipes?.map((item: Recipe) => (
           <div
             onClick={() => handleClick(item)}
-            className="relative mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
+            className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
             key={item.id}
           >
             <img
@@ -50,7 +55,7 @@ const MyRecipes = () => {
               </div>
             </div>
             <Button
-              onClick={() => deleteUserRecipeMutation.mutate(item)}
+              onClick={(e) => handleDelete(item, e)}
               className="absolute top-2 right-2 size-7 bg-transparent hover:bg-orange/40"
               variant='unstyled'
               size='icon'

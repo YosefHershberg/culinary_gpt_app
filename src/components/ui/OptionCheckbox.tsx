@@ -14,7 +14,7 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
 
   return (
     <div
-      className={"flex items-center h-10 px-3 bg-zinc-200 dark:bg-zinc-700 rounded shadow-md"}
+      className={"cursor-pointer flex items-center h-10 px-3 bg-zinc-200 dark:bg-zinc-700 rounded shadow-md"}
     >
       <Checkbox
         onCheckedChange={() => handleClicked(ingredient)}
@@ -23,7 +23,7 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
       />
       <label
         htmlFor={ingredient.name.toLowerCase().replace(/\s/g, '_')}
-        className="pl-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        className="cursor-pointer pl-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {ingredient.name}
       </label>

@@ -1,14 +1,24 @@
+import { z } from "zod";
+
 import { useUserData } from "@/context-providers/user-data-provider";
+import { useCreateRecipe } from "@/context-providers/create-recipe-provider";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
-import { useCreateRecipe } from "@/context-providers/create-recipe-provider";
+import { Input } from "@/components/ui/input"
+
 
 const ChooseAditional = () => {
     const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
-    const { selectedTime, handleTimeChange, handleMealSelected } = useCreateRecipe()
+    const { selectedTime,
+        numOfPeople,
+        handleTimeChange,
+        handleMealSelected,
+        handleNumOfPeopleChange,
+    } = useCreateRecipe()
 
     const handleKitchenUtilsSelected = (key: string) => {
         //@ts-ignore
@@ -21,8 +31,8 @@ const ChooseAditional = () => {
 
     return (
         <div className='flex-1 flex flex-col items-center'>
-            <div className='max-w-[50rem] w-full flex-[1_1_0] overflow-y-auto sm:pt-5 pt-2'>
-                <div className='flex md:flex-row flex-col justify-between items-center md:items start'>
+            <div className='max-w-[50rem] w-full flex-[1_1_0] overflow-y-auto sm:p-5 p-2'>
+                <div className='flex md:flex-row flex-col justify-between items-center'>
                     <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>What meal you want to cook?</p>
                     <Select onValueChange={handleMealSelected}>
                         <SelectTrigger className="max-w-[20rem] dark:bg-zinc-700">
@@ -39,6 +49,26 @@ const ChooseAditional = () => {
                 </div>
 
                 <Separator className='my-6' />
+
+                <div className='flex md:flex-row flex-col justify-between items-center'>
+                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>How many people are you cooking for?</p>
+                    <div className="relative flex flex-col md:items-end w-full items-center">
+                        <Input
+                            className="max-w-[20rem]"
+                            type='number'
+                            value={numOfPeople}
+                            onChange={(e) => handleNumOfPeopleChange(Number(e.target.value))}
+                        />
+                        {!inputSchema.safeParse(numOfPeople).success && (
+                            <p className='text-red-500 text-sm absolute bottom-[-1.3rem] right-0'>
+                                {inputSchema.safeParse(numOfPeople).error?.errors[0].message}
+                            </p>
+                        )}
+                    </div>
+                </div>
+
+                <Separator className='my-6' />
+
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
                     <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
@@ -76,3 +106,5 @@ const ChooseAditional = () => {
 }
 
 export default ChooseAditional
+
+const inputSchema = z.number().int().positive().min(1).max(99)

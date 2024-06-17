@@ -11,7 +11,7 @@ const UserRecipe = () => {
     const { data: recipe, isLoading } = useQuery({
         queryKey: ['userRecipe'],
         queryFn: () => getUserRecipe(id as string),
-        enabled: !location.state
+        enabled: !location.state,
     })
 
     if (location.state) {

@@ -10,11 +10,13 @@ type CreateRecipeState = {
     mealSelected: Meals,
     selectedTime: number,
     prompt: string,
+    numOfPeople: number,
+    createdRecipe: Recipe,
     handleMealSelected: (value: Meals) => void,
     handleTimeChange: (value: number[]) => void,
     handlePromptChange: (value: string) => void,
     handleSubmit: () => void,
-    createdRecipe: Recipe
+    handleNumOfPeopleChange: (value: number) => void,
 }
 
 export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as any);
@@ -25,6 +27,7 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
     const [createdRecipe, setCreatedRecipe] = useState<Recipe>({} as Recipe)
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
+    const [numOfPeople, setNumOfPeople] = useState<number>(2)
     const [prompt, setPrompt] = useState<string>('')
 
     const navigate = useNavigate()
@@ -33,7 +36,7 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
         endpoint: '/create-recipe',
         method: 'POST',
         body: {
-            mealSelected, selectedTime, prompt
+            mealSelected, selectedTime, prompt, numOfPeople
         }
     })
 
@@ -58,6 +61,10 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
             })
         }
     }, [error]);
+
+    const handleNumOfPeopleChange = (value: number) => {
+        setNumOfPeople(value)
+    }
 
     const handleMealSelected = (value: Meals) => {
         setMealSelected(value)
@@ -86,6 +93,8 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
             handleTimeChange,
             handlePromptChange,
             handleSubmit,
+            handleNumOfPeopleChange,
+            numOfPeople,
             createdRecipe
         }}>
             {children}
