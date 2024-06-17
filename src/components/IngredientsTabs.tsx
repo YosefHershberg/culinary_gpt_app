@@ -131,9 +131,9 @@ const IngredientsList = ({ queryKey, queryFn }: UsualIngredientsContent) => {
 
     return (
         <div className="flex-[1_1_0] flex gap-3 flex-wrap overflow-y-auto">
-            {ingredients?.map((ingredient: Ingredient) => ( //TODO: Fix any type
+            {ingredients?.map((ingredient: Ingredient) => (
                 <OptionCheckbox
-                    key={ingredient.name}
+                    key={ingredient.id}
                     ingredient={ingredient}
                 />
             ))}
