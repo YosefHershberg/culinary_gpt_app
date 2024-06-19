@@ -6,15 +6,13 @@ import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredient
 import ChooseAditional from '@/components/create-recipe-steps/ChooseAditional';
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
-import LocalShippingRoundedIcon from '@mui/icons-material/LocalShippingRounded';
-import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded';
+import { CookingPot, Soup, Milk } from 'lucide-react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const steps = [
-  { label: 'Ingredients', icon: ShoppingCartRoundedIcon },
-  { label: 'Your kitchen', icon: ContactsRoundedIcon },
-  { label: 'Final step', icon: LocalShippingRoundedIcon },
+  { label: 'Ingredients', icon: Milk },
+  { label: 'Your kitchen', icon: CookingPot },
+  { label: 'Final step', icon: Soup },
 ]
 
 const CreateNewRecipePage = () => {
