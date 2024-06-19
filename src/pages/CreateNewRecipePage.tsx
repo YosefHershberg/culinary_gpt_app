@@ -6,8 +6,7 @@ import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredient
 import ChooseAditional from '@/components/create-recipe-steps/ChooseAditional';
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
-import { CookingPot, Soup, Milk } from 'lucide-react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const steps = [
   { label: 'Ingredients', icon: Milk },
