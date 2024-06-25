@@ -18,6 +18,8 @@ const useOptAddUserIngredient = () => {
             return { previousIngredients }
         },
 
+        retry: 2,
+
         onError: (error: Error, _ingredient: Ingredient, context: any) => {
             queryClient.setQueryData(['userIngredients'], context?.previousIngredients)
             console.log(error);
