@@ -1,14 +1,17 @@
-import { getUserIngredients, getUserKitchenUtils } from '@/lib/api'
 import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
 import { useAuth } from '@/context-providers/auth-provider'
 import { useCookies } from 'react-cookie'
-import { Ingredient } from '@/lib/types'
+
 import LoadingPage from '@/pages/LoadingPage'
+
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
 import useOptDeleteKitchenUtil from '@/hooks/useDeleteKitchenUtil'
+
+import { getUserIngredients, getUserKitchenUtils } from '@/lib/api'
+import { Ingredient } from '@/lib/types'
 
 type UserDataState = {
   userIngredients: Ingredient[] //TODO: change to correct type
