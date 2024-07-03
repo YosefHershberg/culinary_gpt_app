@@ -53,7 +53,7 @@ const MyRecipes = () => {
               alt={item.recipe.title}
               className="sm:w-[7rem] w-[15rem] aspect-square object-cover rounded-lg"
             />
-            <div className="ml-4 flex flex-col sm:justify-around sm:h-full gap-2">
+            <div className="sm:mt-0 mt-4 ml-4 flex flex-col sm:justify-around sm:h-full gap-2">
               <h2 className="text-lg font-semibold sm:text-start text-center">{item.recipe.title}</h2>
               <p className="text-sm sm:text-start text-center">{item.recipe.description}</p>
               <div className="flex gap-10 sm:justify-start justify-center">

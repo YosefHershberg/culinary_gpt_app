@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient } from '@/lib/types';
 import { toast } from '@/components/ui/use-toast';
-import { useUserData } from '@/context-providers/user-data-provider';
+import { useUserData } from '@/context/user-data-provider';
 
 const placeholders = [
     "Whole Wheat Bread",

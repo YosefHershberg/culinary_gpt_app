@@ -1,4 +1,4 @@
-import { useCreateRecipe } from '@/context-providers/create-recipe-provider';
+import { useCreateRecipe } from '@/context/create-recipe-provider';
 import useHttpClient from '@/hooks/useHttpClient';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';

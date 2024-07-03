@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button'
-import { useTheme } from '@/context-providers/theme-provider'
+import { useTheme } from '@/context/theme-provider'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { LaptopMinimal, Moon, Sun } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { UserButton } from '@clerk/clerk-react'
 import MobileNavMenu from './MobileNavMenu'
-import { useAuth } from '@/context-providers/auth-provider'
+import { useAuth } from '@/context/auth-provider'
 import LoadingSpinner from '@/components/ui/LaodingSpinner'
 import Logo from '@/components/Logo'
-import { useUserData } from '@/context-providers/user-data-provider'
+import { useUserData } from '@/context/user-data-provider'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {

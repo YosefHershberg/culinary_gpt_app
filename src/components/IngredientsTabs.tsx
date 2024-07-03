@@ -4,7 +4,7 @@ import { getIngredientSuggestions } from '@/lib/api';
 import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
 import LoadingSpinner from "@/components/ui/LaodingSpinner";
 import { toast } from "@/components/ui/use-toast"
-import { useUserData } from "@/context-providers/user-data-provider";
+import { useUserData } from "@/context/user-data-provider";
 import { Ingredient } from "@/lib/types";
 import { createContext, useState } from "react";
 

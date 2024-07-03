@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { useUserData } from "@/context-providers/user-data-provider";
-import { useCreateRecipe } from "@/context-providers/create-recipe-provider";
+import { useUserData } from "@/context/user-data-provider";
+import { useCreateRecipe } from "@/context/create-recipe-provider";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
@@ -56,7 +56,7 @@ const ChooseAditional = () => {
                         <Input
                             className="max-w-[20rem]"
                             type='number'
-                            value={numOfPeople}
+                            value={numOfPeople.toString()}
                             onChange={(e) => handleNumOfPeopleChange(Number(e.target.value))}
                         />
                         {!inputSchema.safeParse(numOfPeople).success && (
