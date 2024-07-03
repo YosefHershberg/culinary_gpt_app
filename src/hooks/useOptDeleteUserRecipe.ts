@@ -20,6 +20,14 @@ const useOptDeleteUserRecipe = () => {
             return { previousCachedData }
         },
 
+        onSuccess: () => {
+            toast({
+                variant: "default",
+                title: "Recipe deleted successfully",
+            })
+
+        },
+
         onError: (error: Error, _recipe: Recipe, context: any) => {
             queryClient.setQueryData(['userRecipes'], context?.previousCachedData)
             console.log(error);

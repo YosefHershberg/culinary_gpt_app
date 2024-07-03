@@ -2,12 +2,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 
-import { ThemeProvider } from "@/context-providers/theme-provider"
-import { AuthProvider } from "@/context-providers/auth-provider"
+import { ThemeProvider } from "@/context/theme-provider"
+import { AuthProvider } from "@/context/auth-provider"
 import { CookiesProvider } from 'react-cookie'
-import { CreateRecipeProvider } from "@/context-providers/create-recipe-provider"
-import { UserDataProvider } from "@/context-providers/user-data-provider"
-import ClerkProvider from "@/context-providers/clerk-provider"
+import { CreateRecipeProvider } from "@/context/create-recipe-provider"
+import { UserDataProvider } from "@/context/user-data-provider"
+import ClerkProvider from "@/context/clerk-provider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 

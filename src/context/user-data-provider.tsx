@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
-import { useAuth } from '@/context-providers/auth-provider'
+import { useAuth } from '@/context/auth-provider'
 import { useCookies } from 'react-cookie'
 
 import LoadingPage from '@/pages/LoadingPage'

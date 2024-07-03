@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@/lib/types";
 import { useContext } from "react";
 import { HanldeIngredientClickContext } from "../IngredientsTabs";
-import { useUserData } from "@/context-providers/user-data-provider";
+import { useUserData } from "@/context/user-data-provider";
 
 type OptionCheckboxProps = {
   ingredient: Ingredient,

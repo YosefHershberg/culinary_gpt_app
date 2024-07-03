@@ -1,9 +1,9 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus } from 'lucide-react';
-import { useTheme } from '@/context-providers/theme-provider';
+import { useTheme } from '@/context/theme-provider';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context-providers/auth-provider';
+import { useAuth } from '@/context/auth-provider';
 import { UserButton } from '@clerk/clerk-react';
 import LoadingSpinner from '@/components/ui/LaodingSpinner';
 

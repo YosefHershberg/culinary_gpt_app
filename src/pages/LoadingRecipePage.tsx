@@ -1,14 +1,43 @@
-import Lottie from 'lottie-react'
-import loadingrecipe from '@/assets/animations/loading-recipe-animation.json'
+// import Lottie from 'lottie-react'
+// import loadingrecipe from '@/assets/animations/loading-recipe-animation.json'
+
+import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+
+const loadingStates = [
+  {
+    text: "Sending your recipe request",
+  },
+  {
+    text: "Your request has been received by the AI chef",
+  },
+  {
+    text: "proccecing your ingedients & kitchen tools etc..",
+  },
+  {
+    text: "The AI chef is creating the recipe",
+  },
+  {
+    text: "Our AI artists are designing the recipe picture",
+  },
+  {
+    text: "Duble checking the recipe for you",
+  },
+  {
+    text: "Almost done...",
+  },
+  {
+    text: "Your recipe is ready",
+  },
+  {
+    text: "Sending your recipe to you",
+  }
+];
 
 const LoadingRecipePage = () => {
   
   return (
-    <div className='h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-3'>
-        <Lottie animationData={loadingrecipe} className='size-[20rem]'/>
-        <p className='text-center text-3xl font-bold font-century-gothic'>The AI chef is creating the recipe !</p>
-        <p className='text-center text-xl font-bold font-century-gothic mt-3'>This takes about 25 seconds.</p>
-        <p className='text-center text-xl font-bold font-century-gothic mt-3'>{`Good time to set the table ;)`}</p>
+    <div className="h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5">
+       <Loader loadingStates={loadingStates} loading={true} duration={4000} />
     </div>
   )
 }
