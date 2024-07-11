@@ -27,7 +27,7 @@ const Navbar = () => {
     }, [userIngredients]);
 
     return (
-        <nav className='flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>
+        <nav className=' nt flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>
             <div className='flex items-center gap-4'>
                 <a href="/">
                     <Logo />

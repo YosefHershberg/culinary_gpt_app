@@ -26,14 +26,14 @@ const IngredientsTabs = () => {
     const handleClicked = (ingredient: Ingredient) => {
         if (!!userIngredients?.find(item => item.name === ingredient.name)) {
             deleteUserIngredient(ingredient)
-        } else {            
+        } else {
             addUserIngredient(ingredient)
         }
     }
 
     return (
         <HanldeIngredientClickContext.Provider value={{ handleClicked }}>
-            <Tabs defaultValue={activeTab} className="max-w-[60rem] flex-1 flex flex-col">
+            <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
                 <TabsList>
                     <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
                         <TabsTrigger onClick={() => setActiveTab(ActiveTab.Common)} className="flex-1" value={ActiveTab.Common}>The Usuals</TabsTrigger>
