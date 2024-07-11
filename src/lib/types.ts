@@ -19,5 +19,4 @@ export type Recipe = {
     },
     image_url: string,
     id?: number | string,
-
 }

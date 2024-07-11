@@ -16,7 +16,7 @@ export const getUserIngredients = async (token: string) => {
     })
     return data
 }
-
+    
 export const addUserIngredient = async (ingredient: Ingredient) => {
     const { data } = await axiosClient.post('/user/ingredients', ingredient)
     return data

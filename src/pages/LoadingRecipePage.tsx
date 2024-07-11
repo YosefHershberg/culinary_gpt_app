@@ -1,5 +1,4 @@
-// import Lottie from 'lottie-react'
-// import loadingrecipe from '@/assets/animations/loading-recipe-animation.json'
+import bgimage from '@/assets/sign-up-background.jpg'
 
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 
@@ -34,11 +33,14 @@ const loadingStates = [
 ];
 
 const LoadingRecipePage = () => {
-  
+
   return (
-    <div className="h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5">
-       <Loader loadingStates={loadingStates} loading={true} duration={4000} />
-    </div>
+    <section
+      className="bg-cover bg-center h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5"
+      style={{backgroundImage: `url(${bgimage})`}}
+    >
+      <Loader loadingStates={loadingStates} loading={true} duration={4000} />
+    </section>
   )
 }
 

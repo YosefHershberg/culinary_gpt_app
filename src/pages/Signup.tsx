@@ -3,7 +3,7 @@ import bgimage from '@/assets/sign-up-background.jpg'
 
 const Signup = () => {
     return (
-        <div
+        <section
             className='bg-cover bg-center flex h-screen w-screen justify-center items-center'
             style={{ backgroundImage: `url(${bgimage})` }}
         >
@@ -12,7 +12,7 @@ const Signup = () => {
                 path="/signup"
                 signInUrl='signin'
             />
-        </div>
+        </section>
     )
 }
 
