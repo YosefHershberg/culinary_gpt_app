@@ -1,7 +1,8 @@
-import { toast } from "@/components/ui/use-toast"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteUserIngredient } from "@/lib/api"
 import { Ingredient } from "@/lib/types"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+
+import { toast } from "@/components/ui/use-toast"
 
 const useOptdeleteUserIngredient = () => {
     const queryClient = useQueryClient()

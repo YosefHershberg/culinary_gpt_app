@@ -1,12 +1,14 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { createContext, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import { getIngredientSuggestions } from '@/lib/api';
-import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LoadingSpinner from "@/components/ui/LaodingSpinner";
+import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
 import { toast } from "@/components/ui/use-toast"
+import { getIngredientSuggestions } from '@/lib/api';
+
 import { useUserData } from "@/context/user-data-provider";
 import { Ingredient } from "@/lib/types";
-import { createContext, useState } from "react";
 
 export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>(undefined as any)
 

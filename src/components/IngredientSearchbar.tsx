@@ -1,10 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+
+import { useUserData } from '@/context/user-data-provider';
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { toast } from '@/components/ui/use-toast';
+
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient } from '@/lib/types';
-import { toast } from '@/components/ui/use-toast';
-import { useUserData } from '@/context/user-data-provider';
 
 const placeholders = [
     "Whole Wheat Bread",

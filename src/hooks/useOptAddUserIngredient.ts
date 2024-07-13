@@ -1,7 +1,8 @@
-import { toast } from "@/components/ui/use-toast"
-import { addUserIngredient } from "@/lib/api"
-import { Ingredient } from "@/lib/types"
 import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { Ingredient } from "@/lib/types"
+import { addUserIngredient } from "@/lib/api"
+
+import { toast } from "@/components/ui/use-toast"
 
 const useOptAddUserIngredient = () => {
     const queryClient = useQueryClient()

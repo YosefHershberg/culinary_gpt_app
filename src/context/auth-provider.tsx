@@ -1,6 +1,7 @@
 import { createContext, useContext, useLayoutEffect } from 'react'
 import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { UserResource } from '@clerk/types';
+
 import axiosClient from '@/lib/axiosClient';
 
 type AuthProviderState = {

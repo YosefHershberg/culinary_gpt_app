@@ -1,11 +1,13 @@
-import { useCreateRecipe } from '@/context/create-recipe-provider';
-import useHttpClient from '@/hooks/useHttpClient';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from './ui/use-toast';
+
+import { toast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
+import LoadingSpinner from '@/components/ui/LaodingSpinner';
+
+import { useCreateRecipe } from '@/context/create-recipe-provider';
+import useHttpClient from '@/hooks/useHttpClient';
 import RecipePage from '@/pages/RecipePage';
-import { Button } from './ui/button';
-import LoadingSpinner from './ui/LaodingSpinner';
 
 const CreatedRecipe: React.FC = () => {
     const { createdRecipe } = useCreateRecipe()
@@ -18,9 +20,10 @@ const CreatedRecipe: React.FC = () => {
     })
 
     useEffect(() => {
-        if (responseStatus === 200) {
-            navigate('/my-recipes')
-        }
+        if (!createdRecipe) navigate('/')
+
+        if (responseStatus === 200)  navigate('/my-recipes')
+
         if (error) {
             toast({
                 variant: 'destructive',

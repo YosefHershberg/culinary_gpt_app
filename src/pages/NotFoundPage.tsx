@@ -1,5 +1,5 @@
-import ErrorPage from '@/pages/ErrorPage'
 import { useNavigate } from 'react-router-dom'
+import ErrorPage from '@/pages/ErrorPage'
 
 const NotFoundPage = () => {
     const navigate = useNavigate()
