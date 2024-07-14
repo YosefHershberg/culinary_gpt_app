@@ -1,4 +1,9 @@
+import { useState } from 'react'
+
+import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
+import { Button } from '@/components/ui/button'
 import { Recipe } from '@/lib/types'
+import { Share2 } from 'lucide-react'
 
 interface RecipePageProps {
     createdRecipe: Recipe
@@ -6,6 +11,7 @@ interface RecipePageProps {
 }
 
 const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+    const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false)
 
     return (
         <main className=' flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
@@ -43,7 +49,21 @@ const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
             <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
                 Bon Apetite!
             </h1>
-            {buttonComponent}
+            <div className='absolute w-full px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
+                <Button
+                    onClick={() => setIsShareModalOpen(true)}
+                    variant='secondary'
+                    className='min-w-[8rem] flex items-center gap-2 h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
+                >
+                    Share <Share2 className='size-4' />
+                </Button>
+                {buttonComponent}
+            </div>
+            <ShareRecipeModal
+                url={window.location.href}
+                isOpen={isShareModalOpen}
+                close={() => setIsShareModalOpen(false)}
+            />
         </main>
     )
 }

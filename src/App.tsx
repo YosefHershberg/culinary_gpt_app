@@ -22,7 +22,7 @@ const App = () => {
         <Route index element={<WelcomePage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
-          <Route path='my-ingredients' element={<MyIngredients />}/>
+          <Route path='my-ingredients' element={<MyIngredients />} />
           <Route path='my-recipes' element={<MyRecipes />} />
           <Route path='recipe' element={<CreatedRecipe />} />
           <Route path='recipe/:id' element={<UserRecipe />} />
@@ -30,7 +30,7 @@ const App = () => {
       </Route>
       <Route path='signup/*' element={<Signup />} />
       <Route path='signin/*' element={<Signin />} />
-      
+
       <Route path="/*" element={<NotFoundPage />} />
     </Routes>
   )

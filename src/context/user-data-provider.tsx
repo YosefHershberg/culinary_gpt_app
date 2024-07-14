@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
-import { useAuth } from '@/context/auth-provider'
 import { useCookies } from 'react-cookie'
 
+import { useAuth } from '@/context/auth-provider'
 import LoadingPage from '@/pages/LoadingPage'
 
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
@@ -14,7 +14,7 @@ import { getUserIngredients, getUserKitchenUtils } from '@/lib/api'
 import { Ingredient } from '@/lib/types'
 
 type UserDataState = {
-  userIngredients: Ingredient[] //TODO: change to correct type
+  userIngredients: Ingredient[]
   kithchenUtils: { [key: string]: boolean } | null
   addUserIngredient: (ingredient: Ingredient) => void
   deleteUserIngredient: (ingredient: Ingredient) => void
@@ -27,7 +27,7 @@ export const UserDataContext = createContext<UserDataState>(undefined as any)
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
-  
+
   const addUserIngredientMutation = useOptAddUserIngredient()
   const deleteUserIngredientMutation = useOptDeleteUserIngredient()
   const addKitchenUtilMutation = useOptAddkitchenUtil()
@@ -37,7 +37,7 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
     queryKey: ['userIngredients'],
     queryFn: () => getUserIngredients(cookies.__session),
     enabled: !!isSignedIn
-  })  
+  })
 
   const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
     queryKey: ['userKitchenUtils'],
