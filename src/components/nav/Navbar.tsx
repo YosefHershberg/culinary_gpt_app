@@ -13,8 +13,6 @@ import Logo from '@/components/Logo'
 
 import { UserButton } from '@clerk/clerk-react'
 import { LaptopMinimal, Moon, Sun } from 'lucide-react'
-import { cn } from '@/lib/utils'
-
 
 const Navbar = () => {
     const navigate = useNavigate()
