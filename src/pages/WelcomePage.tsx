@@ -7,9 +7,11 @@ import Footer from '@/components/Footer'
 
 import { ArrowRight } from 'lucide-react'
 import kitchentools from '@/assets/kitchen-tools.png'
+import { useUser } from '@clerk/clerk-react'
 
 const WelcomePage = () => {
   const navigate = useNavigate()
+  const { isSignedIn } = useUser()
 
   return (
     <main>
@@ -29,7 +31,7 @@ const WelcomePage = () => {
               Say goodbye to boring meals, with AI-powered recipe recommendations, meal plans creation and more... 100,000+ dinners saved so far.
             </p>
             <Button
-              onClick={() => navigate('/create-new-recipe')}
+              onClick={() => navigate(isSignedIn ? '/create-new-recipe': '/signup')}
               variant='secondary'
               className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
             >
