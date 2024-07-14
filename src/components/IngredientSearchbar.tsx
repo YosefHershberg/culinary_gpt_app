@@ -19,10 +19,11 @@ const placeholders = [
 //NOTE: Should I devide the logic into hook?
 
 const IngredientSearchbar = () => {
+    const { addUserIngredient } = useUserData()
+
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<any>()
-    const { addUserIngredient } = useUserData()
 
     const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/search',
@@ -84,12 +85,19 @@ const IngredientSearchbar = () => {
                 setValue={setSearchValue}
             />
             <DropdownMenu open={isDropdownOpen}>
+                {/* <DropdownMenu open={true}> */}
                 <DropdownMenuTrigger></DropdownMenuTrigger>
                 {/* NOTE: NEED THIS ^^^ */}
                 <DropdownMenuContent
                     className='max-w-[30rem] w-[95vw] dark:bg-zinc-700 max-h-[25rem] overflow-y-auto'
                     ref={dropdownRef}
                 >
+                    {results?.length === 0 && (
+                        <div className='w-full flex flex-col gap-2 justify-center items-center h-20 text-primary'>
+                            <p className='text-lg'>No results found :/</p>
+                            <p>Try searching for somehting else</p>
+                        </div>
+                    )}
                     {results?.map((item: Ingredient) => (
                         <DropdownMenuItem
                             onSelect={() => handleSelected(item)}

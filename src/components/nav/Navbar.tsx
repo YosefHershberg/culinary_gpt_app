@@ -16,10 +16,11 @@ import { LaptopMinimal, Moon, Sun } from 'lucide-react'
 
 
 const Navbar = () => {
-    const { theme, setTheme } = useTheme()
     const navigate = useNavigate()
+    const { theme, setTheme } = useTheme()
     const { isSignedIn, isLoaded } = useAuth()
     const { userIngredients } = useUserData()
+
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {

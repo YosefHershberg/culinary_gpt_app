@@ -23,6 +23,7 @@ enum ActiveTab {
 
 const IngredientsTabs = () => {
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
+    
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
     const handleClicked = (ingredient: Ingredient) => {
