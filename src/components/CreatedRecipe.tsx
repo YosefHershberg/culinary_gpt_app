@@ -8,7 +8,6 @@ import LoadingSpinner from '@/components/ui/LaodingSpinner';
 import { useCreateRecipe } from '@/context/create-recipe-provider';
 import useHttpClient from '@/hooks/useHttpClient';
 import RecipePage from '@/pages/RecipePage';
-import { Share2 } from 'lucide-react';
 
 const CreatedRecipe: React.FC = () => {
     const { createdRecipe } = useCreateRecipe()
@@ -41,25 +40,17 @@ const CreatedRecipe: React.FC = () => {
         <RecipePage
             //@ts-ignore
             createdRecipe={createdRecipe}
-            buttonComponent={
-                <div>
-                    <Button
-                        className=''
-                        variant='secondary'
-                    >
-                        Share <Share2 />
-                    </Button>
-                    <Button
-                        onClick={handleAddToMyRecipes}
-                        variant='secondary'
-                        className='absolute bottom-5 sm:left-5 left-1/2 transform sm:-translate-x-0 -translate-x-1/2 min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
-                    >
-                        {isLoading ?
-                            <LoadingSpinner className='size-5' />
-                            : 'Add to My Recipes'
-                        }
-                    </Button>
-                </div>
+            addToRecipesbuttonComponent={
+                <Button
+                    onClick={handleAddToMyRecipes}
+                    variant='secondary'
+                    className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
+                >
+                    {isLoading ?
+                        <LoadingSpinner className='size-5' />
+                        : 'Add to My Recipes'
+                    }
+                </Button>
             }
         />
     );

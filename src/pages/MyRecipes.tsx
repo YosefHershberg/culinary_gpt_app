@@ -18,7 +18,7 @@ const MyRecipes = () => {
   })
 
   const handleClick = (recipe: Recipe) => {
-    navigate(`/recipe/${recipe.id}`, { state: recipe })
+    navigate(`/user-recipe/${recipe.id}`, { state: recipe })
   }
 
   const handleDelete = (recipe: Recipe, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -31,16 +31,16 @@ const MyRecipes = () => {
       <div className="my-8 flex flex-col items-center w-full max-w-[40rem]">
         <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
         {recipes?.length === 0 &&
-        <div className="flex flex-col items-center">
-          <p className="text-center text-xl mt-10">You have no recipes yet!</p>
-          <Button
-            variant='secondary'
-            onClick={() => navigate('/create-new-recipe')}
-            className="mt-6 w-fit"
-          >
-            Create a new recipe
-          </Button>
-        </div>
+          <div className="flex flex-col items-center">
+            <p className="text-center text-xl mt-10">You have no recipes yet!</p>
+            <Button
+              variant='secondary'
+              onClick={() => navigate('/create-new-recipe')}
+              className="mt-6 w-fit"
+            >
+              Create a new recipe
+            </Button>
+          </div>
         }
 
         {recipes?.map((item: Recipe) => (

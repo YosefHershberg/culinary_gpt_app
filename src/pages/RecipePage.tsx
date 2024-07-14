@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { toast } from '@/components/ui/use-toast'
 import { Recipe } from '@/lib/types'
 import { Share2 } from 'lucide-react'
 import { useLayoutEffect } from 'react'
@@ -6,15 +7,23 @@ import { useNavigate } from 'react-router-dom'
 
 interface RecipePageProps {
     createdRecipe: Recipe
-    buttonComponent?: JSX.Element
+    addToRecipesbuttonComponent?: JSX.Element
 }
 
-const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+const RecipePage = ({ createdRecipe, addToRecipesbuttonComponent }: RecipePageProps) => {
     const navigate = useNavigate()
 
     useLayoutEffect(() => {
         if (!createdRecipe) navigate('/')
     }, [createdRecipe])
+
+    const copyToClipboard = async () => {
+        await navigator.clipboard.writeText(window.location.href)
+        toast({
+            title: 'Copied to Clipboard',
+            description: 'Now you can share this recipe.',
+        })
+    }
 
     return (
         <main className=' flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
@@ -54,21 +63,16 @@ const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
             </h1>
 
             {/* This is the buttons that appear in the created recipe view */}
-            {/* {buttonComponent} */}
+            {/* {addToRecipesbuttonComponent} */}
             <div className='absolute bottom-5 flex gap-5 w-full sm:justify-between justify-center px-5'>
                 <Button
+                    onClick={copyToClipboard}
                     className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 flex items-center gap-2'
                     variant='secondary'
                 >
                     Share <Share2 className='size-4'/>
                 </Button>
-                <Button
-                    variant='secondary'
-                    // className='absolute bottom-5 sm:left-5 left-1/2 transform sm:-translate-x-0 -translate-x-1/2 min-w-[8rem] h-12 rounded-full px-5 hover:scale-105'
-                    className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105'
-                >
-                    Add to My Recipes
-                </Button>
+                {addToRecipesbuttonComponent}
             </div>
         </main>
     )
