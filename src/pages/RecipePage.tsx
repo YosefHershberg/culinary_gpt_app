@@ -1,29 +1,17 @@
+import { useState } from 'react'
+
+import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/use-toast'
 import { Recipe } from '@/lib/types'
 import { Share2 } from 'lucide-react'
-import { useLayoutEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 interface RecipePageProps {
     createdRecipe: Recipe
-    addToRecipesbuttonComponent?: JSX.Element
+    buttonComponent?: JSX.Element
 }
 
-const RecipePage = ({ createdRecipe, addToRecipesbuttonComponent }: RecipePageProps) => {
-    const navigate = useNavigate()
-
-    useLayoutEffect(() => {
-        if (!createdRecipe) navigate('/')
-    }, [createdRecipe])
-
-    const copyToClipboard = async () => {
-        await navigator.clipboard.writeText(window.location.href)
-        toast({
-            title: 'Copied to Clipboard',
-            description: 'Now you can share this recipe.',
-        })
-    }
+const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+    const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false)
 
     return (
         <main className=' flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
@@ -61,19 +49,21 @@ const RecipePage = ({ createdRecipe, addToRecipesbuttonComponent }: RecipePagePr
             <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
                 Bon Apetite!
             </h1>
-
-            {/* This is the buttons that appear in the created recipe view */}
-            {/* {addToRecipesbuttonComponent} */}
-            <div className='absolute bottom-5 flex gap-5 w-full sm:justify-between justify-center px-5'>
+            <div className='absolute w-full px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
                 <Button
-                    onClick={copyToClipboard}
-                    className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 flex items-center gap-2'
+                    onClick={() => setIsShareModalOpen(true)}
                     variant='secondary'
+                    className='min-w-[8rem] flex items-center gap-2 h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
                 >
-                    Share <Share2 className='size-4'/>
+                    Share <Share2 className='size-4' />
                 </Button>
-                {addToRecipesbuttonComponent}
+                {buttonComponent}
             </div>
+            <ShareRecipeModal
+                url={window.location.href}
+                isOpen={isShareModalOpen}
+                close={() => setIsShareModalOpen(false)}
+            />
         </main>
     )
 }
