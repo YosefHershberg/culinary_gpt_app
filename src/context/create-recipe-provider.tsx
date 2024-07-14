@@ -11,7 +11,7 @@ type CreateRecipeState = {
     selectedTime: number,
     prompt: string,
     numOfPeople: number,
-    createdRecipe: Recipe,
+    createdRecipe: Recipe | null,
     handleMealSelected: (value: Meals) => void,
     handleTimeChange: (value: number[]) => void,
     handlePromptChange: (value: string) => void,
@@ -24,7 +24,7 @@ export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }) => {
-    const [createdRecipe, setCreatedRecipe] = useState<Recipe>({} as Recipe)
+    const [createdRecipe, setCreatedRecipe] = useState<Recipe | null>(null)
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
     const [numOfPeople, setNumOfPeople] = useState<number>(2)

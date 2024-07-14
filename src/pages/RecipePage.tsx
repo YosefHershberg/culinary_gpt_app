@@ -1,4 +1,8 @@
+import { Button } from '@/components/ui/button'
 import { Recipe } from '@/lib/types'
+import { Share2 } from 'lucide-react'
+import { useLayoutEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 interface RecipePageProps {
     createdRecipe: Recipe
@@ -6,6 +10,11 @@ interface RecipePageProps {
 }
 
 const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+    const navigate = useNavigate()
+
+    useLayoutEffect(() => {
+        if (!createdRecipe) navigate('/')
+    }, [createdRecipe])
 
     return (
         <main className=' flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
@@ -43,7 +52,24 @@ const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
             <h1 className='font-bold sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
                 Bon Apetite!
             </h1>
-            {buttonComponent}
+
+            {/* This is the buttons that appear in the created recipe view */}
+            {/* {buttonComponent} */}
+            <div className='absolute bottom-5 flex gap-5 w-full sm:justify-between justify-center px-5'>
+                <Button
+                    className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 flex items-center gap-2'
+                    variant='secondary'
+                >
+                    Share <Share2 className='size-4'/>
+                </Button>
+                <Button
+                    variant='secondary'
+                    // className='absolute bottom-5 sm:left-5 left-1/2 transform sm:-translate-x-0 -translate-x-1/2 min-w-[8rem] h-12 rounded-full px-5 hover:scale-105'
+                    className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105'
+                >
+                    Add to My Recipes
+                </Button>
+            </div>
         </main>
     )
 }
