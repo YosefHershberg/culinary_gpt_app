@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { useTheme } from '@/context/theme-provider'
 import { useUserData } from '@/context/user-data-provider'
@@ -13,6 +13,7 @@ import Logo from '@/components/Logo'
 
 import { UserButton } from '@clerk/clerk-react'
 import { LaptopMinimal, Moon, Sun } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 
 const Navbar = () => {
@@ -40,37 +41,40 @@ const Navbar = () => {
                 {isSignedIn &&
                     <ul className='md:flex hidden items-center gap-5 ml-7'>
                         <li>
-                            <Button
-                                onClick={() => navigate('/create-new-recipe')}
-                                variant='secondary'
-                                className='transition-all duration-200 hover:scale-105 h-8'
+                            <NavLink
+                                to='/create-new-recipe'
+                                className='bg-orange text-white h-8 px-4 text-sm rounded-lg inline-flex items-center justify-center z-10 transition-all duration-200 hover:scale-105'
                             >
                                 Create New Recipe
-                            </Button>
+                            </NavLink>
                         </li>
                         <li className='size-fit relative'>
-                            <Button
-                                onClick={() => navigate('/my-ingredients')}
-                                variant='unstyled'
-                                className={`z-10 font-bold text-primary/60 hover:text-primary transition-all duration-200 ${isAnimating ? 'text-primary/100 transition-colors duration-300 scale-105' : ''
-                                    } hover:scale-105`}
+                            <NavLink
+                                to='/my-ingredients'
+                                className={({ isActive }) =>
+                                    `${isAnimating ? 'text-primary/100 transition-colors duration-300 scale-105' : ""}
+                                    h-8 px-4 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/60 hover:text-primary transition-all duration-200 hover:scale-105 
+                                    ${isActive && "bg-zinc-200 dark:bg-zinc-700"}`
+                                }
                             >
                                 My Ingredients
-                            </Button>
+                            </NavLink>
                             {userIngredients.length > 0 &&
-                                <span className='absolute text-secondary p-1 min-w-5 h-5 rounded-full bg-red-400 flex justify-center items-center top-0 right-[-0.4rem] text-[0.7rem]'>
+                                <span className='absolute text-secondary p-1 min-w-5 h-5 rounded-full bg-red-400 flex justify-center items-center top-[-.5rem] right-[-0.5rem] text-[0.7rem]'>
                                     {userIngredients.length > 100 ? '99+' : userIngredients.length}
                                 </span>
                             }
                         </li>
                         <li>
-                            <Button
-                                onClick={() => navigate('/my-recipes')}
-                                variant='unstyled'
-                                className='font-bold text-primary/60 hover:text-primary transition-all duration-200 hover:scale-105'
+                            <NavLink
+                                to="/my-recipes"
+                                className={({ isActive }) =>
+                                    `h-8 px-4 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/60 hover:text-primary transition-all duration-200 hover:scale-105 
+                                    ${isActive && "bg-zinc-200 dark:bg-zinc-700"}`
+                                }
                             >
                                 My Recipes
-                            </Button>
+                            </NavLink>
                         </li>
                     </ul>
                 }
