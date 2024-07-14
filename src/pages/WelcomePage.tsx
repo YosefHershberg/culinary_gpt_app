@@ -1,10 +1,12 @@
-import kitchentools from '@/assets/kitchen-tools.png'
-import { Button } from '@/components/ui/button'
-import { ArrowRight } from 'lucide-react'
-import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
+import { Button } from '@/components/ui/button'
 import About from '@/components/About'
 import Footer from '@/components/Footer'
+
+import { ArrowRight } from 'lucide-react'
+import kitchentools from '@/assets/kitchen-tools.png'
 
 const WelcomePage = () => {
   const navigate = useNavigate()

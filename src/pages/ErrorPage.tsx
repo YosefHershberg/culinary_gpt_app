@@ -1,6 +1,7 @@
 import React from 'react';
-import errorPic from '@/assets/error-pic.png';
 import { FallbackProps } from 'react-error-boundary';
+
+import errorPic from '@/assets/error-pic.png';
 import { Button } from '@/components/ui/button';
 
 const ErrorPage = ({ resetErrorBoundary, resetFunction, status, message }: React.ComponentType<FallbackProps> | any) => {

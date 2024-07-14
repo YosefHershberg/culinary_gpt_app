@@ -1,21 +1,26 @@
-import { Button } from '@/components/ui/button'
-import { useTheme } from '@/context/theme-provider'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { LaptopMinimal, Moon, Sun } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
-import { UserButton } from '@clerk/clerk-react'
-import MobileNavMenu from './MobileNavMenu'
-import { useAuth } from '@/context/auth-provider'
-import LoadingSpinner from '@/components/ui/LaodingSpinner'
-import Logo from '@/components/Logo'
-import { useUserData } from '@/context/user-data-provider'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useTheme } from '@/context/theme-provider'
+import { useUserData } from '@/context/user-data-provider'
+import { useAuth } from '@/context/auth-provider'
+
+import { Button } from '@/components/ui/button'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import LoadingSpinner from '@/components/ui/LaodingSpinner'
+import MobileNavMenu from '@/components/nav/MobileNavMenu'
+import Logo from '@/components/Logo'
+
+import { UserButton } from '@clerk/clerk-react'
+import { LaptopMinimal, Moon, Sun } from 'lucide-react'
+
 
 const Navbar = () => {
-    const { theme, setTheme } = useTheme()
     const navigate = useNavigate()
+    const { theme, setTheme } = useTheme()
     const { isSignedIn, isLoaded } = useAuth()
     const { userIngredients } = useUserData()
+
     const [isAnimating, setIsAnimating] = useState(false);
 
     useEffect(() => {

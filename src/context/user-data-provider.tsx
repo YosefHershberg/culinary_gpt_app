@@ -27,6 +27,7 @@ export const UserDataContext = createContext<UserDataState>(undefined as any)
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn } = useAuth()
   const [cookies] = useCookies()
+  
   const addUserIngredientMutation = useOptAddUserIngredient()
   const deleteUserIngredientMutation = useOptDeleteUserIngredient()
   const addKitchenUtilMutation = useOptAddkitchenUtil()

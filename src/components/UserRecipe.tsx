@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
 import { useLocation, useParams } from "react-router-dom"
+import { useQuery } from "@tanstack/react-query"
+
 import { getUserRecipe } from "@/lib/api"
 import RecipePage from "@/pages/RecipePage"
 import SuspenseTrigger from "./SuspenseTrigger"

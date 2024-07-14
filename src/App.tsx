@@ -1,7 +1,10 @@
-import { Routes, Route, Outlet } from 'react-router-dom'
 import { lazy } from 'react'
+import { Routes, Route, Outlet } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
 import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
+
+import Navbar from '@/components/nav/Navbar'
+import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
 
 const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
 const Signup = lazy(() => import('@/pages/Signup'))
@@ -10,9 +13,6 @@ const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
 const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
 const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
 const UserRecipe = lazy(() => import('@/components/UserRecipe'))
-
-import Navbar from '@/components/nav/Navbar'
-import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
 
 const App = () => {
 

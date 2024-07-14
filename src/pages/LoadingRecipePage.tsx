@@ -1,6 +1,5 @@
-import bgimage from '@/assets/sign-up-background.jpg'
-
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import bgimage from '@/assets/sign-up-background.jpg'
 
 const loadingStates = [
   {
@@ -19,7 +18,7 @@ const loadingStates = [
     text: "Our AI artists are designing the recipe picture",
   },
   {
-    text: "Duble checking the recipe for you",
+    text: "Double checking the recipe for you",
   },
   {
     text: "Almost done...",

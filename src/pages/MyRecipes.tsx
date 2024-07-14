@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query"
-import useOptDeleteUserRecipe from "@/hooks/useOptDeleteUserRecipe";
-import { getUserRecipes } from "@/lib/api"
 
-import { Button } from "@/components/ui/button";
+import { getUserRecipes } from "@/lib/api"
 import { Recipe } from "@/lib/types";
+
+import useOptDeleteUserRecipe from "@/hooks/useOptDeleteUserRecipe";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const MyRecipes = () => {
