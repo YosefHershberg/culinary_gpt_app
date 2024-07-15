@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
-import { addUserKitchenUtil } from "@/lib/api"
+import { addUserKitchenUtil } from "@/services/kitchenUtils.service"
 
 import { toast } from "@/components/ui/use-toast"
 

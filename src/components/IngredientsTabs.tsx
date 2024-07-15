@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import LoadingSpinner from "@/components/ui/LaodingSpinner";
 import { OptionCheckbox } from "@/components/ui/OptionCheckbox";
 import { toast } from "@/components/ui/use-toast"
-import { getIngredientSuggestions } from '@/lib/api';
+import { getIngredientSuggestions } from '@/services/ingredientSuggestions.service';
 
 import { useUserData } from "@/context/user-data-provider";
 import { Ingredient } from "@/lib/types";

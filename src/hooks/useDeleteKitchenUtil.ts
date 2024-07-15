@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 
-import { deleteUserKitchenUtil } from "@/lib/api"
+import { deleteUserKitchenUtil } from "@/services/kitchenUtils.service"
 import { toast } from "@/components/ui/use-toast"
 
 const useOptDeleteKitchenUtil = () => {

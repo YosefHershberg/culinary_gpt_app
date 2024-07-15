@@ -10,7 +10,8 @@ import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
 import useOptDeleteKitchenUtil from '@/hooks/useDeleteKitchenUtil'
 
-import { getUserIngredients, getUserKitchenUtils } from '@/lib/api'
+import { getUserIngredients } from '@/services/userIngredient.service'
+import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 import { Ingredient } from '@/lib/types'
 
 type UserDataState = {
