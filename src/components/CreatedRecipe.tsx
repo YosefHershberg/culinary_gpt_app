@@ -8,6 +8,7 @@ import LoadingSpinner from '@/components/ui/LaodingSpinner';
 import { useCreateRecipe } from '@/context/create-recipe-provider';
 import useHttpClient from '@/hooks/useHttpClient';
 import RecipePage from '@/pages/RecipePage';
+import { Recipe } from '@/lib/types';
 
 const CreatedRecipe: React.FC = () => {
     const { createdRecipe } = useCreateRecipe()
@@ -38,9 +39,8 @@ const CreatedRecipe: React.FC = () => {
 
     return (
         <RecipePage
-            //@ts-ignore
-            createdRecipe={createdRecipe}
-            addToRecipesbuttonComponent={
+            createdRecipe={createdRecipe as Recipe}
+            buttonComponent={
                 <Button
                     onClick={handleAddToMyRecipes}
                     variant='secondary'

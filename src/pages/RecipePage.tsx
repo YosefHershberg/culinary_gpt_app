@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useLayoutEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
 import { Recipe } from '@/lib/types'
+
 import { Share2 } from 'lucide-react'
 
 interface RecipePageProps {
@@ -11,9 +13,15 @@ interface RecipePageProps {
 }
 
 const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+    const navigate = useNavigate()
+
     const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false)
 
-    return (
+    useLayoutEffect(() => {
+        if (!createdRecipe) navigate('/create-new-recipe')
+    }, []);
+
+    if (createdRecipe) return (
         <main className=' flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
             <div className='max-w-[50rem] flex flex-col items-center bg-orange/20 py-5 px-10 rounded-2xl m-5'>
 
