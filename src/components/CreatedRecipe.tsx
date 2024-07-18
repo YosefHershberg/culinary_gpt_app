@@ -40,7 +40,7 @@ const CreatedRecipe: React.FC = () => {
     return (
         <RecipePage
             createdRecipe={createdRecipe as Recipe}
-            buttonComponent={
+            addToRecipesBtn={
                 <Button
                     onClick={handleAddToMyRecipes}
                     variant='secondary'

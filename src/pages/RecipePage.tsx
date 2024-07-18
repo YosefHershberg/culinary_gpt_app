@@ -9,10 +9,10 @@ import { Share2 } from 'lucide-react'
 
 interface RecipePageProps {
     createdRecipe: Recipe
-    buttonComponent?: JSX.Element
+    addToRecipesBtn?: JSX.Element
 }
 
-const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
+const RecipePage = ({ createdRecipe, addToRecipesBtn }: RecipePageProps) => {
     const navigate = useNavigate()
 
     const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false)
@@ -58,14 +58,14 @@ const RecipePage = ({ createdRecipe, buttonComponent }: RecipePageProps) => {
                 Bon Apetite!
             </h1>
             <div className='absolute w-full px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
-                <Button
+                {!addToRecipesBtn && <Button
                     onClick={() => setIsShareModalOpen(true)}
                     variant='secondary'
                     className='min-w-[8rem] flex items-center gap-2 h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out'
                 >
                     Share <Share2 className='size-4' />
-                </Button>
-                {buttonComponent}
+                </Button>}
+                {addToRecipesBtn}
             </div>
             <ShareRecipeModal
                 url={window.location.href}
