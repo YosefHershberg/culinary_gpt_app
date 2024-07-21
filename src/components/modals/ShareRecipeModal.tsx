@@ -34,7 +34,7 @@ const ShareRecipeModal = ({ url, isOpen, close }: ShareRecipeModalProps) => {
         <Dialog open={isOpen}>
             {/* NOTE: Need this to prevent warning */}
             <DialogTrigger></DialogTrigger>
-
+            
             <DialogContent>
                 <DialogTitle>How Would you like to share your recipe?</DialogTitle>
 
