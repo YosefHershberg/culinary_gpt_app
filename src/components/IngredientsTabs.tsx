@@ -27,7 +27,6 @@ const IngredientsTabs = () => {
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
     const handleClicked = (ingredient: Ingredient) => {
-        console.log(userIngredients?.some(item => item.id === ingredient.id))
         if (userIngredients?.some(item => item.id === ingredient.id)) {
             deleteUserIngredient(ingredient)
         } else {
