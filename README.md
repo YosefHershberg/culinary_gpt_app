@@ -1,30 +1,21 @@
-# React + TypeScript + Vite
+# CulinaryGPT Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CulinaryGPT is a recipe generation application that leverages modern web technologies to provide an intuitive and seamless user experience. This frontend is built using Vite, React, and several other powerful libraries and tools.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication with Clerk
+- Recipe generation and display
+- Optimistic updates with React Query caching
+- Styling & Responsive design with Tailwind CSS
+- Component library with Shadcn-UI
+- Clean layered architecture for maintainability
 
-## Expanding the ESLint configuration
+## Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **React**: A JavaScript library for building user interfaces.
+- **React Query**: For data fetching and state management.
+- **Clerk**: Authentication and user management.
+- **Tailwind CSS**: Utility-first CSS framework.
+- **Shadcn-UI**: Component library for consistent UI.
+- **TypeScript**: Static type checking for JavaScript.

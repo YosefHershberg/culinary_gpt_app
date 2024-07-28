@@ -46,7 +46,6 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
             setSelectedTime(50)
             setMealSelected('lunch')
             setCreatedRecipe(response)
-            console.log('createdRecipe', response);
             navigate('/recipe')
         }
     }, [responseStatus]);

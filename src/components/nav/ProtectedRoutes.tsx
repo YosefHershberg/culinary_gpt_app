@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
-import SuspenseTrigger from '../SuspenseTrigger'
+import LoadingPage from '@/pages/LoadingPage'
 
 const ProtectedRoutes = () => {
     const { isLoaded, isSignedIn } = useUser()
@@ -12,7 +12,7 @@ const ProtectedRoutes = () => {
             return <Navigate to='signup' />
         }
     } else {
-        return <SuspenseTrigger />
+        return <LoadingPage />
     }
 }
 

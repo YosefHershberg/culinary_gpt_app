@@ -19,7 +19,7 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
       <Checkbox
         onCheckedChange={() => handleClicked(ingredient)}
         id={ingredient.name.toLowerCase().replace(/\s/g, '_')}
-        checked={!!userIngredients?.find(item => item.name === ingredient.name)}
+        checked={userIngredients?.some(item => item.id === ingredient.id)}
       />
       <label
         htmlFor={ingredient.name.toLowerCase().replace(/\s/g, '_')}
