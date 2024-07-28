@@ -32,29 +32,29 @@ const queryClient = new QueryClient({
 const Providers = ({ children }: { children: React.ReactNode }) => {
 
   return (
-    <ErrorBoundary fallback={<ErrorPage />}>
-      <QueryClientProvider client={queryClient}>
-        <Router>
+    <Router>
+      <ErrorBoundary FallbackComponent={ErrorPage}>
+        <QueryClientProvider client={queryClient}>
           <CookiesProvider>
             <ThemeProvider>
               <ClerkProvider>
                 <AuthProvider>
-                  <UserDataProvider>
-                    <CreateRecipeProvider>
-                      <Suspense fallback={<LoadingPage />}>
+                  <Suspense fallback={<LoadingPage />}>
+                    <UserDataProvider>
+                      <CreateRecipeProvider>
                         {children}
                         <Toaster />
                         <ReactQueryDevtools initialIsOpen={false} />
-                      </Suspense>
-                    </CreateRecipeProvider>
-                  </UserDataProvider>
+                      </CreateRecipeProvider>
+                    </UserDataProvider>
+                  </Suspense>
                 </AuthProvider>
               </ClerkProvider>
             </ThemeProvider>
           </CookiesProvider>
-        </Router>
-      </QueryClientProvider>
-    </ErrorBoundary>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </Router>
   )
 }
 

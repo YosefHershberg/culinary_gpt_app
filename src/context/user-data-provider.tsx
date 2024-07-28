@@ -26,7 +26,7 @@ type UserDataState = {
 export const UserDataContext = createContext<UserDataState>(undefined as any)
 
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isSignedIn } = useAuth()
+  const { isSignedIn, isLoaded } = useAuth()
   const [cookies] = useCookies()
 
   const addUserIngredientMutation = useOptAddUserIngredient()
@@ -37,13 +37,15 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
   const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
     queryKey: ['userIngredients'],
     queryFn: () => getUserIngredients(cookies.__session),
-    enabled: !!isSignedIn
+    enabled: !!isSignedIn,
+    throwOnError: true
   })
 
   const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
     queryKey: ['userKitchenUtils'],
     queryFn: () => getUserKitchenUtils(cookies.__session),
-    enabled: !!isSignedIn
+    enabled: !!isSignedIn,
+    throwOnError: true
   })
 
   const addUserIngredient = (ingredient: Ingredient) => {
@@ -74,6 +76,10 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
     }
   }
 
+  if (isLoadingUserIngrdts || isLoadingUserUtils || !isLoaded) {
+    return <LoadingPage />
+  }
+
   return (
     <UserDataContext.Provider value={{
       userIngredients: userIngredients || [],
@@ -83,7 +89,7 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
       addKithcenUtil,
       removeKithcenUtil,
     }}>
-      {(isLoadingUserUtils || isLoadingUserIngrdts) ? <LoadingPage /> : children}
+      {children}
     </UserDataContext.Provider>
   )
 }

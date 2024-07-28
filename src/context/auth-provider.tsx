@@ -3,6 +3,7 @@ import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { UserResource } from '@clerk/types';
 
 import axiosClient from '@/lib/axiosClient';
+import LoadingPage from '@/pages/LoadingPage';
 
 type AuthProviderState = {
     user: UserResource | null | undefined | any, //NOTO: properly type this

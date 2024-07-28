@@ -5,10 +5,13 @@ import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
 
 import Navbar from '@/components/nav/Navbar'
 import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
+import WelcomePage from './pages/WelcomePage'
 
-const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
-const Signup = lazy(() => import('@/pages/Signup'))
-const Signin = lazy(() => import('@/pages/Signin'))
+// const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
+// const Signup = lazy(() => import('@/pages/Signup'))
+// const Signin = lazy(() => import('@/pages/Signin'))
 const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
 const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
 const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
