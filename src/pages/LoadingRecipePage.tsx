@@ -1,6 +1,6 @@
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import bgimage from '@/assets/sign-up-background.jpg'
-import { useTheme } from "@emotion/react";
+import { useTheme } from "@/context/theme-provider";
 
 const loadingStates = [
   {
@@ -33,12 +33,12 @@ const loadingStates = [
 ];
 
 const LoadingRecipePage = () => {
-  const theme = useTheme();
+  const { theme } = useTheme();
 
   return (
     <section
       className="bg-cover bg-center h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5"
-      style={theme === 'light' ? {backgroundImage: `url(${bgimage})`} : {}}
+      style={theme === 'light' ? { backgroundImage: `url(${bgimage})` } : {}}
     >
       <Loader loadingStates={loadingStates} loading={true} duration={4000} />
     </section>

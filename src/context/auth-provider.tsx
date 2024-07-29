@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         interceptorRequests = axiosClient.interceptors.request.use(
             async (req) => {
+                // TODO: check if this is the correct way to handle this without await getToken()
                 req.headers.Authorization = `Bearer ${await getToken()}`;
                 return req;
             },
