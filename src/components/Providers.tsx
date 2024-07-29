@@ -1,7 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { CookiesProvider } from 'react-cookie'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
@@ -35,7 +34,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <Router>
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <QueryClientProvider client={queryClient}>
-          <CookiesProvider>
             <ThemeProvider>
               <ClerkProvider>
                 <AuthProvider>
@@ -51,7 +49,6 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                 </AuthProvider>
               </ClerkProvider>
             </ThemeProvider>
-          </CookiesProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     </Router>

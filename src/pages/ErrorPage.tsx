@@ -5,7 +5,7 @@ import errorPic from '@/assets/error-pic.png';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
-const ErrorPage = ({ resetErrorBoundary, error ,status, message }: React.ComponentType<FallbackProps> | any) => {
+const ErrorPage = ({ resetErrorBoundary, error, status, message }: React.ComponentType<FallbackProps> | any) => {
     const navigate = useNavigate();
 
     return (
@@ -15,13 +15,13 @@ const ErrorPage = ({ resetErrorBoundary, error ,status, message }: React.Compone
                 <h1 className='absolute top-[6rem] right-1/4 text-3xl text-red-600'>{status || 'Oops!'}</h1>
                 <img className='h-full object-contain' src={errorPic} alt="Error" />
             </div>
-            <h2 className='text-red-600 text-lg'>{error.response?.data?.message}</h2>
-                <Button
-                    className='mt-4 font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
-                    onClick={resetErrorBoundary || (() => navigate('/'))}
-                >
-                    Try again
-                </Button>
+            <h2 className='text-red-600 text-lg'>{error?.response?.data?.message}</h2>
+            <Button
+                className='mt-4 font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
+                onClick={resetErrorBoundary || (() => navigate('/'))}
+            >
+                Try again
+            </Button>
         </div>
     );
 };

@@ -3,6 +3,7 @@ import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { UserResource } from '@clerk/types';
 
 import axiosClient from '@/lib/axiosClient';
+import { toast } from '@/components/ui/use-toast';
 
 type AuthProviderState = {
     user: UserResource | null | undefined | any, //NOTO: properly type this
@@ -18,21 +19,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     useLayoutEffect(() => {
         let interceptorRequests: number;
+        let interceptorResponses: number;
 
-        const addInterceptors = async () => {
-            interceptorRequests = axiosClient.interceptors.request.use(
-                async (req) => {
-                    req.headers.Authorization = `Bearer ${await getToken()}`;
-                    return req;
-                },
-                (error: Error) => error,
-            );
-        }
+        interceptorRequests = axiosClient.interceptors.request.use(
+            async (req) => {
+                req.headers.Authorization = `Bearer ${await getToken()}`;
+                return req;
+            },
+            (error: Error) => error,
+        );
+
+        interceptorResponses = axiosClient.interceptors.response.use(
+            (res) => res,
+            (error: any) => {
+                if (error.response?.status === 429) {
+                    toast({
+                        variant: 'destructive',
+                        title: "Too many requests",
+                        description: "Please try again later.",
+                    })
+                    throw new Error("Too many requests. Please try again later.");
+                }
+                return Promise.reject(error);
+            },
+        );
         
-        isSignedIn && addInterceptors();
-
         return () => {
             axiosClient.interceptors.request.eject(interceptorRequests);
+            axiosClient.interceptors.response.eject(interceptorResponses);
         }
     }, [isSignedIn]);
 

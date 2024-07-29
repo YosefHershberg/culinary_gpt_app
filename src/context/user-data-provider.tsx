@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
-import { useCookies } from 'react-cookie'
 
 import { useAuth } from '@/context/auth-provider'
 import LoadingPage from '@/pages/LoadingPage'
@@ -27,7 +26,6 @@ export const UserDataContext = createContext<UserDataState>(undefined as any)
 
 export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
   const { isSignedIn, isLoaded } = useAuth()
-  const [cookies] = useCookies()
 
   const addUserIngredientMutation = useOptAddUserIngredient()
   const deleteUserIngredientMutation = useOptDeleteUserIngredient()
@@ -36,14 +34,14 @@ export const UserDataProvider = ({ children }: { children: React.ReactNode }) =>
 
   const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
     queryKey: ['userIngredients'],
-    queryFn: () => getUserIngredients(cookies.__session),
+    queryFn: () => getUserIngredients(),
     enabled: !!isSignedIn,
     throwOnError: true
   })
 
   const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
     queryKey: ['userKitchenUtils'],
-    queryFn: () => getUserKitchenUtils(cookies.__session),
+    queryFn: () => getUserKitchenUtils(),
     enabled: !!isSignedIn,
     throwOnError: true
   })

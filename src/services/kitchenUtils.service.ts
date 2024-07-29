@@ -1,11 +1,7 @@
 import axiosClient from "@/lib/axiosClient"
 
-export const getUserKitchenUtils = async (token: string) => {
-    const { data } = await axiosClient.get('/user/kitchen-utils', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+export const getUserKitchenUtils = async () => {
+    const { data } = await axiosClient.get('/user/kitchen-utils')
     return data
 }
 

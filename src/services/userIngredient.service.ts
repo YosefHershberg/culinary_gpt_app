@@ -1,12 +1,8 @@
 import axiosClient from "@/lib/axiosClient"
 import { Ingredient } from "@/lib/types"
 
-export const getUserIngredients = async (token: string) => {
-    const { data } = await axiosClient.get('/user/ingredients', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+export const getUserIngredients = async () => {
+    const { data } = await axiosClient.get('/user/ingredients')
     return data
 }
 
