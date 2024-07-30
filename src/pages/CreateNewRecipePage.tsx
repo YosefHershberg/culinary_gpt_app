@@ -14,7 +14,7 @@ const steps = [
   { label: 'Final step', icon: Soup },
 ]
 
-const CreateNewRecipePage = () => {
+const CreateNewRecipePage: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (

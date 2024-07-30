@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import { AxiosError, AxiosResponse } from "axios";
 
-import axiosClient from '@/lib/axiosClient';
+import axiosClient from '@/config/axiosClient';
 
 interface UseHttpClientProps {
     endpoint: string,

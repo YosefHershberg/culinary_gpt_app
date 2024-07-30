@@ -19,7 +19,7 @@ interface ShareRecipeModalProps {
     close: () => void
 }
 
-const ShareRecipeModal = ({ url, isOpen, close }: ShareRecipeModalProps) => {
+const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close }) => {
 
     const handleCopyToClipboard = async () => {
         await navigator.clipboard.writeText(url)

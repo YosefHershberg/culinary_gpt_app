@@ -1,4 +1,4 @@
-import axiosClient from "@/lib/axiosClient"
+import axiosClient from "@/config/axiosClient"
 import { Ingredient } from "@/lib/types"
 
 export const getUserIngredients = async () => {

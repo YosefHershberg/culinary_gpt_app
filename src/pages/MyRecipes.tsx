@@ -8,7 +8,7 @@ import useOptDeleteUserRecipe from "@/hooks/useOptDeleteUserRecipe";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
-const MyRecipes = () => {
+const MyRecipes: React.FC = () => {
   const deleteUserRecipeMutation = useOptDeleteUserRecipe()
   const navigate = useNavigate()
 

@@ -2,7 +2,7 @@ import { createContext, useContext, useLayoutEffect } from 'react'
 import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { UserResource } from '@clerk/types';
 
-import axiosClient from '@/lib/axiosClient';
+import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 
 type AuthProviderState = {
@@ -13,7 +13,7 @@ type AuthProviderState = {
 
 const AuthContext = createContext<AuthProviderState>(undefined as any);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, isSignedIn, isLoaded } = useUser();
     const { getToken } = useClerkAuth();
 

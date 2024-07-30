@@ -10,7 +10,7 @@ import { getIngredientSuggestions } from '@/services/ingredientSuggestions.servi
 import { useUserData } from "@/context/user-data-provider";
 import { Ingredient } from "@/lib/types";
 
-export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>(undefined as any)
+export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void } | null>(null)
 
 enum ActiveTab {
     Common = 'common',
@@ -21,9 +21,9 @@ enum ActiveTab {
     Meat = 'meat',
 }
 
-const IngredientsTabs = () => {
+const IngredientsTabs: React.FC = () => {
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
-    
+
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
     const handleClicked = (ingredient: Ingredient) => {

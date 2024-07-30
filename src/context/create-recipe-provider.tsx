@@ -23,7 +23,7 @@ export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as
 
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
-export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }) => {
+export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [createdRecipe, setCreatedRecipe] = useState<Recipe | null>(null) // TODO: Can this be a ref?
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
@@ -32,7 +32,7 @@ export const CreateRecipeProvider = ({ children }: { children: React.ReactNode }
 
     const navigate = useNavigate()
 
-    const { data: response, isLoading, error, responseStatus ,triggerHttpReq } = useHttpClient({
+    const { data: response, isLoading, error, responseStatus, triggerHttpReq } = useHttpClient({
         endpoint: '/user/recipes/create',
         method: 'POST',
         body: {

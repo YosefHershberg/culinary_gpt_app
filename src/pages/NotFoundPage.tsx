@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 import ErrorPage from '@/pages/ErrorPage'
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
     const navigate = useNavigate()
 
     return (
-        <ErrorPage 
+        <ErrorPage
             message='URL Path no found!'
             resetFunction={() => navigate('/')}
             status={404}

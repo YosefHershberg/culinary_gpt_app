@@ -1,4 +1,4 @@
-import axiosClient from "@/lib/axiosClient"
+import axiosClient from "@/config/axiosClient"
 
 export const getUserKitchenUtils = async () => {
     const { data } = await axiosClient.get('/user/kitchen-utils')

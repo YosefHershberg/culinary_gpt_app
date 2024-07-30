@@ -14,7 +14,7 @@ const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
 const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
 const UserRecipe = lazy(() => import('@/components/UserRecipe'))
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <Routes>
@@ -38,7 +38,7 @@ const App = () => {
 
 export default App
 
-const AppLayout = () => {
+const AppLayout: React.FC = () => {
 
   return (
     <main className='overflow-y-auto overflow-x-hidden h-screen w-screen flex flex-col'>

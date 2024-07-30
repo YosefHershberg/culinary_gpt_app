@@ -12,7 +12,7 @@ interface RecipePageProps {
     addToRecipesBtn?: JSX.Element
 }
 
-const RecipePage = ({ createdRecipe, addToRecipesBtn }: RecipePageProps) => {
+const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn }) => {
     const navigate = useNavigate()
 
     const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false)

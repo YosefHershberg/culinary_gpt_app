@@ -14,7 +14,7 @@ import Logo from '@/components/Logo'
 import { UserButton } from '@clerk/clerk-react'
 import { LaptopMinimal, Moon, Sun } from 'lucide-react'
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     const navigate = useNavigate()
     const { theme, setTheme } = useTheme()
     const { isSignedIn, isLoaded } = useAuth()

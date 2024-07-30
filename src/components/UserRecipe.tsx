@@ -5,7 +5,7 @@ import { getUserRecipe } from "@/services/userRecipe.service"
 import RecipePage from "@/pages/RecipePage"
 import SuspenseTrigger from "../lib/suspenseTrigger"
 
-const UserRecipe = () => {
+const UserRecipe: React.FC = () => {
     const { id } = useParams()
     const location = useLocation()
 

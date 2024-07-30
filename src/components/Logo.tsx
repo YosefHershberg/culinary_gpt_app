@@ -1,6 +1,6 @@
 import logo from '@/assets/logo.png'
 
-const Logo = () => {
+const Logo: React.FC = () => {
     return (
         <div className='flex items-center gap-2'>
             <img src={logo} className='size-10' alt="" />

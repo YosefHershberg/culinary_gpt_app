@@ -32,7 +32,7 @@ const loadingStates = [
   }
 ];
 
-const LoadingRecipePage = () => {
+const LoadingRecipePage: React.FC = () => {
   const { theme } = useTheme();
 
   return (

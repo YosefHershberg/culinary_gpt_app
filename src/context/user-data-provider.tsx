@@ -24,7 +24,7 @@ type UserDataState = {
 
 export const UserDataContext = createContext<UserDataState>(undefined as any)
 
-export const UserDataProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isSignedIn, isLoaded } = useAuth()
 
   const addUserIngredientMutation = useOptAddUserIngredient()

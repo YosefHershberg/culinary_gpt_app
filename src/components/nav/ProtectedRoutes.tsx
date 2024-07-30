@@ -2,7 +2,7 @@ import { Outlet, Navigate } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
 import LoadingPage from '@/pages/LoadingPage'
 
-const ProtectedRoutes = () => {
+const ProtectedRoutes: React.FC = () => {
     const { isLoaded, isSignedIn } = useUser()
 
     if (isLoaded) {

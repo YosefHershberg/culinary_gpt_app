@@ -1,7 +1,7 @@
 import { HoverEffect } from "./ui/card-hover-effect"
 
-const About = () => {
-    
+const About: React.FC = () => {
+
     return (
         <div id="about" className="p-10 bg-blue-100 dark:bg-zinc-700 flex justify-center">
             <div className="flex flex-col items-center">

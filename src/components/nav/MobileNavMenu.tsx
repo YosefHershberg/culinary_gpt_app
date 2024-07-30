@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal
 
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus } from 'lucide-react';
 
-const MobileNavMenu = () => {
+const MobileNavMenu: React.FC = () => {
     const { theme, setTheme } = useTheme()
     const navigate = useNavigate()
     const { isSignedIn, isLoaded } = useAuth()

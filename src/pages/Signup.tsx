@@ -1,7 +1,7 @@
 import { SignUp } from "@clerk/clerk-react";
 import bgimage from '@/assets/sign-up-background.jpg'
 
-const Signup = () => {
+const Signup: React.FC = () => {
     return (
         <section
             className='bg-cover bg-center flex h-screen w-screen justify-center items-center'

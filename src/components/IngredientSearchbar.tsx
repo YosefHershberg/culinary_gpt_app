@@ -18,7 +18,7 @@ const placeholders = [
 
 //NOTE: Should I devide the logic into hook?
 
-const IngredientSearchbar = () => {
+const IngredientSearchbar: React.FC = () => {
     const { addUserIngredient } = useUserData()
 
     const [searchValue, setSearchValue] = useState<string>('');

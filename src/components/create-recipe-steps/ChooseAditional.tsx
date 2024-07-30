@@ -11,7 +11,7 @@ import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
 
 
-const ChooseAditional = () => {
+const ChooseAditional: React.FC = () => {
     const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
     const { selectedTime,
         numOfPeople,

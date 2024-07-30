@@ -11,7 +11,7 @@ interface IconStepperProps {
     steps: { label: string; icon: React.ElementType }[];
 }
 
-const IconStepper = ({ setActiveStep, activeStep, steps }: IconStepperProps) => {
+const IconStepper: React.FC<IconStepperProps> = ({ setActiveStep, activeStep, steps }) => {
 
     return (
         <Stepper

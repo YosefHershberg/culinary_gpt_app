@@ -1,4 +1,4 @@
-import axiosClient from "@/lib/axiosClient"
+import axiosClient from "@/config/axiosClient"
 
 export const getUserRecipes = async () => {
     const { data } = await axiosClient.get('/user/recipes')
