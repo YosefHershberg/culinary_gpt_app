@@ -1,7 +1,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@/lib/types";
 import { useContext } from "react";
-import { HanldeIngredientClickContext } from "../IngredientsTabs";
+import { HandleIngredientClickContext } from "../IngredientsTabs";
 import { useUserData } from "@/context/user-data-provider";
 
 type OptionCheckboxProps = {
@@ -9,8 +9,8 @@ type OptionCheckboxProps = {
 }
 
 const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
-  const { handleClicked } = useContext(HanldeIngredientClickContext)
-  const { userIngredients } = useUserData() //NOTE: is creating this here the best practice?  
+  const { handleClicked } = useContext(HandleIngredientClickContext)
+  const { userIngredients } = useUserData()
 
   return (
     <div

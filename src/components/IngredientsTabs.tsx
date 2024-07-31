@@ -59,7 +59,7 @@ const TabsContentMap = {
     )
 }
 
-export const HanldeIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void } | null>(null)
+export const HandleIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>({ handleClicked: () => { } })
 
 const IngredientsTabs: React.FC = () => {
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
@@ -75,7 +75,7 @@ const IngredientsTabs: React.FC = () => {
     }
 
     return (
-        <HanldeIngredientClickContext.Provider value={{ handleClicked }}>
+        <HandleIngredientClickContext.Provider value={{ handleClicked }}>
             <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
                 <TabsList>
                     <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
@@ -126,7 +126,7 @@ const IngredientsTabs: React.FC = () => {
                 {TabsContentMap[activeTab]}
             </Tabs>
 
-        </HanldeIngredientClickContext.Provider>
+        </HandleIngredientClickContext.Provider>
     )
 }
 

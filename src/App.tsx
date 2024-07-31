@@ -1,7 +1,9 @@
 import { Outlet } from 'react-router-dom'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 import Navbar from './components/nav/Navbar'
-import Router from './routes'
 import { Toaster } from './components/ui/toaster'
+import Router from './routes'
 
 const App: React.FC = () => {
 
@@ -9,6 +11,7 @@ const App: React.FC = () => {
     <>
       <Router />
       <Toaster />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   )
 }

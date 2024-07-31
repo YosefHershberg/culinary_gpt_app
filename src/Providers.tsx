@@ -1,7 +1,6 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClientProvider } from "@tanstack/react-query"
 import queryClient from '@/config/queryClient';
 
@@ -32,7 +31,6 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <UserDataProvider>
                       <CreateRecipeProvider>
                         {children}
-                        <ReactQueryDevtools initialIsOpen={false} />
                       </CreateRecipeProvider>
                     </UserDataProvider>
                   </Suspense>
