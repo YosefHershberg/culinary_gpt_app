@@ -10,16 +10,10 @@ const useOptDeleteKitchenUtil = () => {
         mutationFn: (util: string) => deleteUserKitchenUtil(util),
 
         onMutate: async (util: string) => {
-            await queryClient.cancelQueries({ queryKey: ['userKitchenUtils']})
-            const previousCachedData = queryClient.getQueryData<{ [key: string]: boolean }>(['userKitchenUtils'])
-        
-            if (previousCachedData) {
-                queryClient.setQueryData(['userKitchenUtils'], {
-                    ...previousCachedData,
-                    [util]: false
-                })
-            }
-        
+            await queryClient.cancelQueries({ queryKey: ['userKitchenUtils'] })
+            const previousCachedData = queryClient.getQueryData<{ [key: string]: boolean }>(['userKitchenUtils']) as { [key: string]: boolean }
+
+            queryClient.setQueryData(['userKitchenUtils'], { ...previousCachedData, [util]: false })
             return { previousCachedData }
         },
 
@@ -34,7 +28,7 @@ const useOptDeleteKitchenUtil = () => {
             })
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils']})
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils'] })
     })
 
     return deletekitchenUtilMutation

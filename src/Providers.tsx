@@ -3,6 +3,7 @@ import { Suspense } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { QueryClientProvider } from "@tanstack/react-query"
+import queryClient from '@/config/queryClient';
 
 import { ThemeProvider } from "@/context/theme-provider"
 import { AuthProvider } from "@/context/auth-provider"
@@ -12,9 +13,6 @@ import ClerkProvider from "@/context/clerk-provider"
 
 import LoadingPage from "@/pages/LoadingPage"
 import ErrorPage from "@/pages/ErrorPage"
-
-import { Toaster } from "@/components/ui/toaster"
-import queryClient from '@/config/queryClient';
 
 // NOTE: the order of the wrappers are precise!
 // Router has to wrap ClerkProvider
@@ -34,7 +32,6 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <UserDataProvider>
                       <CreateRecipeProvider>
                         {children}
-                        <Toaster />
                         <ReactQueryDevtools initialIsOpen={false} />
                       </CreateRecipeProvider>
                     </UserDataProvider>

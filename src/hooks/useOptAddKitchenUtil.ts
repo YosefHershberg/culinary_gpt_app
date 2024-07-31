@@ -10,16 +10,11 @@ const useOptAddkitchenUtil = () => {
         mutationFn: (util: string) => addUserKitchenUtil(util),
 
         onMutate: async (util: string) => {
-            await queryClient.cancelQueries({ queryKey: ['userKitchenUtils']})
-            const previousCachedData = queryClient.getQueryData<{ [key: string]: boolean }>(['userKitchenUtils'])
-        
-            if (previousCachedData) {
-                queryClient.setQueryData(['userKitchenUtils'], {
-                    ...previousCachedData,
-                    [util]: true
-                })
-            }
-        
+            await queryClient.cancelQueries({ queryKey: ['userKitchenUtils'] })
+            const previousCachedData = queryClient.getQueryData<{ [key: string]: boolean }>(['userKitchenUtils']) as { [key: string]: boolean }
+
+            queryClient.setQueryData(['userKitchenUtils'], {...previousCachedData, [util]: true})
+
             return { previousCachedData }
         },
 
@@ -29,12 +24,12 @@ const useOptAddkitchenUtil = () => {
             toast({
                 variant: "destructive",
                 title: "Oops! Something went wrong!",
-                //@ts-expect-error
+                // @ts-expect-error
                 description: error.response?.data?.message || "An error occurred while adding ingredient.",
             })
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils']})
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils'] })
     })
 
     return addkitchenUtilMutation

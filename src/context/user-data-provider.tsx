@@ -7,7 +7,7 @@ import LoadingPage from '@/pages/LoadingPage'
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
-import useOptDeleteKitchenUtil from '@/hooks/useDeleteKitchenUtil'
+import useOptDeleteKitchenUtil from '@/hooks/useOptDeleteKitchenUtil'
 
 import { getUserIngredients } from '@/services/userIngredient.service'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
@@ -22,7 +22,7 @@ type UserDataState = {
   removeKithcenUtil: (util: string) => void
 }
 
-export const UserDataContext = createContext<UserDataState>(undefined as any)
+export const UserDataContext = createContext<UserDataState>(null as any)
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isSignedIn, isLoaded } = useAuth()

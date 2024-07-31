@@ -12,9 +12,8 @@ const useOptdeleteUserIngredient = () => {
 
         onMutate: async (ingredient: any) => {
             await queryClient.cancelQueries({ queryKey: ['userIngredients'] })
-            const previousIngredients = queryClient.getQueryData(['userIngredients'])
+            const previousIngredients = queryClient.getQueryData(['userIngredients']) as Ingredient[]
 
-            //@ts-expect-error
             queryClient.setQueryData(['userIngredients'], previousIngredients.filter((i: Ingredient) => i.name !== ingredient.name))
             return { previousIngredients }
         },
@@ -29,7 +28,7 @@ const useOptdeleteUserIngredient = () => {
                 description: error.response?.data?.message || "An error occurred while removing ingredient.",
             })
         },
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userIngredients']})
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userIngredients'] })
     })
 
     return deleteUserIngredientMutation

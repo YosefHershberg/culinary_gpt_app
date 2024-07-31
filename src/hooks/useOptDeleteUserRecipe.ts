@@ -11,13 +11,10 @@ const useOptDeleteUserRecipe = () => {
         mutationFn: (recipe: Recipe) => deleteUserRecipe(recipe?.id as string),
 
         onMutate: async (recipe: Recipe) => {
-            await queryClient.cancelQueries({ queryKey: ['userRecipes']})
-            const previousCachedData = queryClient.getQueryData<Recipe[]>(['userRecipes'])
-        
-            if (previousCachedData) {
-                queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: Recipe) => r.id !== recipe.id)])
-            }
-        
+            await queryClient.cancelQueries({ queryKey: ['userRecipes'] })
+            const previousCachedData = queryClient.getQueryData<Recipe[]>(['userRecipes']) as Recipe[]
+
+            queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: Recipe) => r.id !== recipe.id)])
             return { previousCachedData }
         },
 
@@ -40,7 +37,7 @@ const useOptDeleteUserRecipe = () => {
             })
         },
 
-        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userRecipes']})
+        onSettled: () => queryClient.invalidateQueries({ queryKey: ['userRecipes'] })
     })
 
     return deleteUserRecipeMutation

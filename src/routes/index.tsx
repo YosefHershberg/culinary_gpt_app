@@ -1,0 +1,38 @@
+import { lazy } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import NotFoundPage from '@/pages/NotFoundPage'
+import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
+
+import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
+import WelcomePage from '@/pages/WelcomePage'
+import { AppLayout } from '@/App'
+
+const Signup = lazy(() => import('@/pages/Signup'))
+const Signin = lazy(() => import('@/pages/Signin'))
+const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
+const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
+const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
+const UserRecipe = lazy(() => import('@/components/UserRecipe'))
+
+const Router = () => {
+  return (
+    <Routes>
+      <Route path='/' element={<AppLayout />}>
+        <Route index element={<WelcomePage />} />
+        <Route element={<ProtectedRoutes />}>
+          <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
+          <Route path='my-ingredients' element={<MyIngredients />} />
+          <Route path='my-recipes' element={<MyRecipes />} />
+          <Route path='recipe' element={<CreatedRecipe />} />
+          <Route path='user-recipe/:id' element={<UserRecipe />} />
+        </Route>
+      </Route>
+      <Route path='signup/*' element={<Signup />} />
+      <Route path='signin/*' element={<Signin />} />
+
+      <Route path="/*" element={<NotFoundPage />} />
+    </Routes>
+  )
+}
+
+export default Router

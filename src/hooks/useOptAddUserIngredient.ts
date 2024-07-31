@@ -12,9 +12,8 @@ const useOptAddUserIngredient = () => {
 
         onMutate: async (ingredient: Ingredient) => {
             await queryClient.cancelQueries({ queryKey: ['userIngredients']})
-            const previousIngredients = queryClient.getQueryData(['userIngredients'])
+            const previousIngredients = queryClient.getQueryData(['userIngredients']) as Ingredient[]
 
-            //@ts-expect-error
             queryClient.setQueryData(['userIngredients'], [...previousIngredients, ingredient])
             return { previousIngredients }
         },
