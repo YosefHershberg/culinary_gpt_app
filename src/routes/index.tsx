@@ -11,8 +11,8 @@ const Signup = lazy(() => import('@/pages/Signup'))
 const Signin = lazy(() => import('@/pages/Signin'))
 const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
 const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
-const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
 const UserRecipe = lazy(() => import('@/components/UserRecipe'))
+const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
 
 const Router = () => {
   return (
