@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { getIngredientSuggestions } from '@/services/ingredientSuggestions.service';
+import { getIngredientSuggestions } from '@/services/ingredient.service';
 
 import { useUserData } from "@/context/user-data-provider";
 import { Ingredient } from "@/lib/types";

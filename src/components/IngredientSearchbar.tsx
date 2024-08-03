@@ -18,12 +18,12 @@ const placeholders = [
 
 //NOTE: Should I devide the logic into hook?
 
-const IngredientSearchbar: React.FC = () => {
+const IngredientSearchBar: React.FC = () => {
     const { addUserIngredient } = useUserData()
 
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-    const dropdownRef = useRef<any>()
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/ingredients/search',
@@ -34,9 +34,7 @@ const IngredientSearchbar: React.FC = () => {
     });
 
     useEffect(() => {
-        if (results) {
-            setIsDropdownOpen(true);
-        }
+        if (results) setIsDropdownOpen(true)
     }, [results]);
 
     useEffect(() => {
@@ -53,7 +51,7 @@ const IngredientSearchbar: React.FC = () => {
 
     useLayoutEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsDropdownOpen(false);
             }
         };
@@ -117,4 +115,4 @@ const IngredientSearchbar: React.FC = () => {
     )
 }
 
-export default IngredientSearchbar
+export default IngredientSearchBar

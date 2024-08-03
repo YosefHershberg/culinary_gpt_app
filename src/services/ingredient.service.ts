@@ -15,3 +15,8 @@ export const deleteUserIngredient = async (ingredient: Ingredient) => {
     const { data } = await axiosClient.delete(`/user/ingredients/${ingredient.id}`)
     return data
 }
+
+export const getIngredientSuggestions = async (category: string) => {
+    const { data } = await axiosClient.get(`/ingredients/suggestions/${category}`)
+    return data
+}
