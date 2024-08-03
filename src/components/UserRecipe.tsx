@@ -1,7 +1,7 @@
 import { useLocation, useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 
-import { getUserRecipe } from "@/services/userRecipe.service"
+import { getUserRecipe } from "@/services/recipe.service"
 import RecipePage from "@/pages/RecipePage"
 import SuspenseTrigger from "../lib/suspenseTrigger"
 

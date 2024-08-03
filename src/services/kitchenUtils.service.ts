@@ -6,11 +6,11 @@ export const getUserKitchenUtils = async () => {
 }
 
 export const addUserKitchenUtil = async (util: string) => {
-    const { data } = await axiosClient.post('/user/kitchen-utils', { name: util, value: true })
+    const { data } = await axiosClient.patch('/user/kitchen-utils', { name: util, value: true })
     return data
 }
 
 export const deleteUserKitchenUtil = async (util: string) => {
-    const { data } = await axiosClient.post('/user/kitchen-utils', { name: util, value: false })
+    const { data } = await axiosClient.patch('/user/kitchen-utils', { name: util, value: false })
     return data
 }

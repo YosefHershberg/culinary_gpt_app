@@ -3,10 +3,10 @@ import { addUserKitchenUtil } from "@/services/kitchenUtils.service"
 
 import { toast } from "@/components/ui/use-toast"
 
-const useOptAddkitchenUtil = () => {
+const useOptAddKitchenUtil = () => {
     const queryClient = useQueryClient()
 
-    const addkitchenUtilMutation = useMutation({
+    const addKitchenUtilMutation = useMutation({
         mutationFn: (util: string) => addUserKitchenUtil(util),
 
         onMutate: async (util: string) => {
@@ -32,7 +32,7 @@ const useOptAddkitchenUtil = () => {
         onSettled: () => queryClient.invalidateQueries({ queryKey: ['userKitchenUtils'] })
     })
 
-    return addkitchenUtilMutation
+    return addKitchenUtilMutation
 }
 
-export default useOptAddkitchenUtil
+export default useOptAddKitchenUtil

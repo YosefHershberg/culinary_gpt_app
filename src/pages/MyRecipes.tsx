@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSuspenseQuery } from "@tanstack/react-query"
 
-import { getUserRecipes } from "@/services/userRecipe.service"
+import { getUserRecipes } from "@/services/recipe.service"
 import { Recipe } from "@/lib/types";
 
 import useOptDeleteUserRecipe from "@/hooks/useOptDeleteUserRecipe";

@@ -6,7 +6,7 @@ import LoadingPage from '@/pages/LoadingPage'
 
 import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
-import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
+import useOptAddKitchenUtil from '@/hooks/useOptAddKitchenUtil'
 import useOptDeleteKitchenUtil from '@/hooks/useOptDeleteKitchenUtil'
 
 import { getUserIngredients } from '@/services/ingredient.service'
@@ -29,7 +29,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const addUserIngredientMutation = useOptAddUserIngredient()
   const deleteUserIngredientMutation = useOptDeleteUserIngredient()
-  const addKitchenUtilMutation = useOptAddkitchenUtil()
+  const addKitchenUtilMutation = useOptAddKitchenUtil()
   const removeKitchenUtilMutation = useOptDeleteKitchenUtil()
 
   const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
