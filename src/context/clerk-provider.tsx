@@ -1,7 +1,7 @@
 import { ClerkProvider as CP } from '@clerk/clerk-react'
 import { dark } from '@clerk/themes';
-import { useTheme } from './theme-provider';
 import env from '@/lib/env';
+import { useTheme } from './theme-provider';
 
 const ClerkProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { theme } = useTheme()
