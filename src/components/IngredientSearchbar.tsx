@@ -26,7 +26,7 @@ const IngredientSearchbar: React.FC = () => {
     const dropdownRef = useRef<any>()
 
     const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
-        endpoint: '/search',
+        endpoint: '/ingredients/search',
         method: 'GET',
         params: {
             query: searchValue
