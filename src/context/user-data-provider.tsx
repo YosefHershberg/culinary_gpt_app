@@ -9,7 +9,7 @@ import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
 import useOptAddkitchenUtil from '@/hooks/useOptAddKitchenUtil'
 import useOptDeleteKitchenUtil from '@/hooks/useOptDeleteKitchenUtil'
 
-import { getUserIngredients } from '@/services/userIngredient.service'
+import { getUserIngredients } from '@/services/ingredient.service'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 import { Ingredient } from '@/lib/types'
 

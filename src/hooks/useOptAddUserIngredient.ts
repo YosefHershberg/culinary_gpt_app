@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { Ingredient } from "@/lib/types"
-import { addUserIngredient } from "@/services/userIngredient.service"
+import { addUserIngredient } from "@/services/ingredient.service"
 
 import { toast } from "@/components/ui/use-toast"
 
