@@ -3,7 +3,7 @@ import { useState } from 'react';
 import IconStepper from '@/components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
-import ChooseAditional from '@/components/create-recipe-steps/ChooseAditional';
+import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional';
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
@@ -34,7 +34,7 @@ const CreateNewRecipePage: React.FC = () => {
             <ChooseIngredients />
           }
           {activeStep === 1 &&
-            <ChooseAditional />
+            <ChooseAdditional />
           }
           {activeStep === 2 &&
             <FinalStep />
