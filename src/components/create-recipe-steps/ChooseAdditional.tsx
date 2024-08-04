@@ -11,7 +11,7 @@ import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
 
 
-const ChooseAditional: React.FC = () => {
+const ChooseAdditional: React.FC = () => {
     const { kithchenUtils, addKithcenUtil, removeKithcenUtil } = useUserData()
     const { selectedTime,
         numOfPeople,
@@ -105,6 +105,6 @@ const ChooseAditional: React.FC = () => {
     )
 }
 
-export default ChooseAditional
+export default ChooseAdditional
 
 const inputSchema = z.number().int().positive().min(1).max(99)
