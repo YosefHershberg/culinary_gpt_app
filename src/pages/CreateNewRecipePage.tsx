@@ -48,7 +48,7 @@ const CreateNewRecipePage: React.FC = () => {
             variant='secondary'
             className='h-12 w-42 rounded-full text-xl flex flex-row-reverse justify-center items-center gap-3'
           >
-            <span>Previus</span>
+            <span>Previous</span>
             <ArrowLeft />
           </Button>
           <Button

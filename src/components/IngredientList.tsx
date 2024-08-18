@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { toast } from "./ui/use-toast"
-import LoadingSpinner from "./ui/LaodingSpinner"
+import LoadingSpinner from "./ui/LoadingSpinner"
 import { Ingredient } from "@/lib/types"
 import { OptionCheckbox } from "./ui/OptionCheckbox"
 

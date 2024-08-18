@@ -14,7 +14,7 @@ const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
 const UserRecipe = lazy(() => import('@/components/UserRecipe'))
 const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
 
-const Router = () => {
+const Router: React.FC = () => {
   return (
     <Routes>
       <Route path='/' element={<AppLayout />}>

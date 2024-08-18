@@ -7,7 +7,7 @@ import { useAuth } from '@/context/auth-provider'
 
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import LoadingSpinner from '@/components/ui/LaodingSpinner'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import MobileNavMenu from '@/components/nav/MobileNavMenu'
 import Logo from '@/components/Logo'
 

@@ -66,7 +66,7 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
                         className="flex flex-col items-center gap-2"
                     >
                         <WhatsappIcon size={32} round />
-                        WhatApp
+                        WhatsApp
                     </WhatsappShareButton>
 
                     <Button

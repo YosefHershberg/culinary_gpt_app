@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTheme } from '@/context/theme-provider';
 import { useAuth } from '@/context/auth-provider';
 
-import LoadingSpinner from '@/components/ui/LaodingSpinner';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 import { UserButton } from '@clerk/clerk-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu';

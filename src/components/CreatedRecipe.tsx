@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
-import LoadingSpinner from '@/components/ui/LaodingSpinner';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import { useCreateRecipe } from '@/context/create-recipe-provider';
 import useHttpClient from '@/hooks/useHttpClient';
