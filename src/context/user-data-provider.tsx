@@ -15,11 +15,11 @@ import { Ingredient } from '@/lib/types'
 
 type UserDataState = {
   userIngredients: Ingredient[]
-  kithchenUtils: { [key: string]: boolean } | null
+  kitchenUtils: { [key: string]: boolean } | null
   addUserIngredient: (ingredient: Ingredient) => void
   deleteUserIngredient: (ingredient: Ingredient) => void
-  addKithcenUtil: (util: string) => void
-  removeKithcenUtil: (util: string) => void
+  addKitchenUtil: (util: string) => void
+  removeKitchenUtil: (util: string) => void
 }
 
 export const UserDataContext = createContext<UserDataState>(null as any)
@@ -60,14 +60,14 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }
 
-  const addKithcenUtil = (util: string) => {
+  const addKitchenUtil = (util: string) => {
     console.log('adding kitchen util', util);
     if (userKitchenUtils) {
       addKitchenUtilMutation.mutate(util)
     }
   }
 
-  const removeKithcenUtil = (util: string) => {
+  const removeKitchenUtil = (util: string) => {
     console.log('removing kitchen util', util);
     if (userKitchenUtils) {
       removeKitchenUtilMutation.mutate(util)
@@ -83,9 +83,9 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       userIngredients: userIngredients || [],
       addUserIngredient,
       deleteUserIngredient,
-      kithchenUtils: userKitchenUtils || emptykitchenUtils,
-      addKithcenUtil,
-      removeKithcenUtil,
+      kitchenUtils: userKitchenUtils || emptykitchenUtils,
+      addKitchenUtil: addKitchenUtil,
+      removeKitchenUtil,
     }}>
       {children}
     </UserDataContext.Provider>
