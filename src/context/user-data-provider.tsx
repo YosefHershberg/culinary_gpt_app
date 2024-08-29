@@ -1,17 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
 import React, { createContext, useContext } from 'react'
 
 import { useAuth } from '@/context/auth-provider'
 import LoadingPage from '@/pages/LoadingPage'
 
-import useOptAddUserIngredient from '@/hooks/useOptAddUserIngredient'
-import useOptDeleteUserIngredient from '@/hooks/useOptDeleteUserIngredient'
-import useOptAddKitchenUtil from '@/hooks/useOptAddKitchenUtil'
-import useOptDeleteKitchenUtil from '@/hooks/useOptDeleteKitchenUtil'
-
-import { getUserIngredients } from '@/services/ingredient.service'
-import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 import { Ingredient } from '@/lib/types'
+import useKitchenUtils from '@/hooks/useKitchenUtils'
+import useUserIngredients from '@/hooks/useUserIngredients'
 
 type UserDataState = {
   userIngredients: Ingredient[]
@@ -25,54 +19,10 @@ type UserDataState = {
 export const UserDataContext = createContext<UserDataState>(null as any)
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isSignedIn, isLoaded } = useAuth()
+  const { isLoaded } = useAuth()
 
-  const addUserIngredientMutation = useOptAddUserIngredient()
-  const deleteUserIngredientMutation = useOptDeleteUserIngredient()
-  const addKitchenUtilMutation = useOptAddKitchenUtil()
-  const removeKitchenUtilMutation = useOptDeleteKitchenUtil()
-
-  const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
-    queryKey: ['userIngredients'],
-    queryFn: () => getUserIngredients(),
-    enabled: !!isSignedIn,
-    throwOnError: true
-  })
-
-  const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
-    queryKey: ['userKitchenUtils'],
-    queryFn: () => getUserKitchenUtils(),
-    enabled: !!isSignedIn,
-    throwOnError: true
-  })
-
-  const addUserIngredient = (ingredient: Ingredient) => {
-    console.log('adding ingredient', ingredient);
-    if (userIngredients) {
-      addUserIngredientMutation.mutate(ingredient)
-    }
-  }
-
-  const deleteUserIngredient = (ingredient: Ingredient) => {
-    console.log('removing ingredient', ingredient);
-    if (userIngredients) {
-      deleteUserIngredientMutation.mutate(ingredient)
-    }
-  }
-
-  const addKitchenUtil = (util: string) => {
-    console.log('adding kitchen util', util);
-    if (userKitchenUtils) {
-      addKitchenUtilMutation.mutate(util)
-    }
-  }
-
-  const removeKitchenUtil = (util: string) => {
-    console.log('removing kitchen util', util);
-    if (userKitchenUtils) {
-      removeKitchenUtilMutation.mutate(util)
-    }
-  }
+  const { isLoadingUserUtils, userKitchenUtils, addKitchenUtil, removeKitchenUtil } = useKitchenUtils()
+  const { isLoadingUserIngrdts, userIngredients, addUserIngredient, deleteUserIngredient } = useUserIngredients()
 
   if (isLoadingUserIngrdts || isLoadingUserUtils || !isLoaded) {
     return <LoadingPage />

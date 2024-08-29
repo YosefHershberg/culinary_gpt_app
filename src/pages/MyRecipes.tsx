@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import { getUserRecipes } from "@/services/recipe.service"
 import { Recipe } from "@/lib/types";
 
-import useOptDeleteUserRecipe from "@/hooks/useOptDeleteUserRecipe";
+import useOptDeleteUserRecipe from "@/hooks/optimistic/useOptDeleteUserRecipe";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 

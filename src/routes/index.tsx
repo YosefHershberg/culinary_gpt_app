@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
 import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
 
-import ProtectedRoutes from '@/components/nav/ProtectedRoutes'
+import ProtectedRoutes from '@/routes/ProtectedRoutes'
 import WelcomePage from '@/pages/WelcomePage'
 import { AppLayout } from '@/App'
 
