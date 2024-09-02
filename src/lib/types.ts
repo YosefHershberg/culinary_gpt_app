@@ -21,3 +21,15 @@ export type Recipe = {
     image_url: string,
     id?: number | string,
 }
+
+export type KitchenUtils = {
+    "Stove Top": boolean,
+    "Oven": boolean,
+    "Microwave": boolean,
+    "Air Fryer": boolean,
+    "Blender": boolean,
+    "Food Processor": boolean,
+    "Slow Cooker": boolean,
+    "BBQ": boolean,
+    "Grill": boolean,
+}

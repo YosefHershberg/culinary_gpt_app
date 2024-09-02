@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { useTheme } from '@/context/theme-provider'
@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
 
     const [isAnimating, setIsAnimating] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (userIngredients.length > 0) {
             setIsAnimating(true);
             const timer = setTimeout(() => setIsAnimating(false), 200);
@@ -50,8 +50,8 @@ const Navbar: React.FC = () => {
                             <NavLink
                                 to='/my-ingredients'
                                 className={({ isActive }) =>
-                                    `${isAnimating ? 'text-primary/100 transition-colors duration-300 scale-105' : ""}
-                                    h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/60 hover:text-primary transition-all duration-200 hover:scale-105 whitespace-nowrap
+                                    `${isAnimating ? 'text-primary transition-colors duration-300 scale-105' : ""}
+                                    h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/90 hover:text-primary transition-all duration-200 hover:scale-105 whitespace-nowrap
                                     ${isActive && "bg-zinc-200 dark:bg-zinc-700"}`
                                 }
                             >
@@ -67,8 +67,8 @@ const Navbar: React.FC = () => {
                             <NavLink
                                 to="/my-recipes"
                                 className={({ isActive }) =>
-                                    `h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/60 hover:text-primary transition-all duration-200 hover:scale-105 whitespace-nowrap
-                                    ${isActive && "bg-zinc-200 dark:bg-zinc-700"}`
+                                    `h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/90 hover:text-primary transition-all duration-200 hover:scale-105 whitespace-nowrap
+                                    ${isActive && "bg-zinc-200 dark:bg-zinc-700 "}`
                                 }
                             >
                                 My Recipes

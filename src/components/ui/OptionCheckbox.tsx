@@ -18,11 +18,11 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
     >
       <Checkbox
         onCheckedChange={() => handleClicked(ingredient)}
-        id={ingredient.name.toLowerCase().replace(/\s/g, '_')}
+        id={ingredient.id as string}
         checked={userIngredients?.some(item => item.id === ingredient.id)}
       />
       <label
-        htmlFor={ingredient.name.toLowerCase().replace(/\s/g, '_')}
+        htmlFor={ingredient.id as string}
         className="cursor-pointer pl-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
       >
         {ingredient.name}

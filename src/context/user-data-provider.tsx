@@ -3,13 +3,13 @@ import React, { createContext, useContext } from 'react'
 import { useAuth } from '@/context/auth-provider'
 import LoadingPage from '@/pages/LoadingPage'
 
-import { Ingredient } from '@/lib/types'
+import { Ingredient, KitchenUtils } from '@/lib/types'
 import useKitchenUtils from '@/hooks/useKitchenUtils'
 import useUserIngredients from '@/hooks/useUserIngredients'
 
 type UserDataState = {
   userIngredients: Ingredient[]
-  kitchenUtils: { [key: string]: boolean } | null
+  kitchenUtils: KitchenUtils | null
   addUserIngredient: (ingredient: Ingredient) => void
   deleteUserIngredient: (ingredient: Ingredient) => void
   addKitchenUtil: (util: string) => void
@@ -33,7 +33,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       userIngredients: userIngredients || [],
       addUserIngredient,
       deleteUserIngredient,
-      kitchenUtils: userKitchenUtils || emptykitchenUtils,
+      kitchenUtils: userKitchenUtils || emptyKitchenUtils,
       addKitchenUtil: addKitchenUtil,
       removeKitchenUtil,
     }}>
@@ -52,7 +52,7 @@ export const useUserData = () => {
   return context
 }
 
-const emptykitchenUtils: { [key: string]: boolean } = {
+const emptyKitchenUtils: { [key: string]: boolean } = {
   "Stove Top": false,
   "Oven": false,
   "Microwave": false,

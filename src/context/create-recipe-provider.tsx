@@ -5,6 +5,7 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
 import { Recipe } from "@/lib/types";
+import { useUserData } from "./user-data-provider";
 
 type CreateRecipeState = {
     mealSelected: Meals,
@@ -24,6 +25,8 @@ export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { userIngredients } = useUserData()
+
     const [createdRecipe, setCreatedRecipe] = useState<Recipe | null>(null) // TODO: Can this be a ref?
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
@@ -78,7 +81,16 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     const handleSubmit = () => {
-        triggerHttpReq()
+        if (userIngredients.length < 3) {
+            toast({
+                variant: 'destructive',
+                title: 'Oops! You need more ingredients!',
+                description: 'You need at least 3 ingredients to create a recipe.'
+            })
+        } else {
+            triggerHttpReq()
+
+        }
     }
 
     if (isLoading) return <LoadingRecipePage />
@@ -100,6 +112,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         </CreateRecipeContext.Provider>
     )
 }
+
 
 export const useCreateRecipe = () => {
     const context = useContext(CreateRecipeContext)
