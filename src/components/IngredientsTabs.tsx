@@ -59,7 +59,12 @@ const TabsContentMap = {
     )
 }
 
-export const HandleIngredientClickContext = createContext<{ handleClicked: (ingredient: Ingredient) => void }>({ handleClicked: () => { } })
+type HandleIngredientClickContextType = {
+    handleClicked: (ingredient: Ingredient) => void,
+    userIngredientsSet: Set<string | number>
+}
+
+export const HandleIngredientClickContext = createContext<HandleIngredientClickContextType>(null as any)
 
 const IngredientsTabs: React.FC = () => {
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
@@ -75,7 +80,10 @@ const IngredientsTabs: React.FC = () => {
     }
 
     return (
-        <HandleIngredientClickContext.Provider value={{ handleClicked }}>
+        <HandleIngredientClickContext.Provider value={{
+            handleClicked,
+            userIngredientsSet: new Set(userIngredients.map(ingredient => ingredient.id))
+        }}>
             <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
                 <TabsList>
                     <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">

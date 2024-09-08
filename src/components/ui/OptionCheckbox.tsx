@@ -2,15 +2,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@/lib/types";
 import { useContext } from "react";
 import { HandleIngredientClickContext } from "../IngredientsTabs";
-import { useUserData } from "@/context/user-data-provider";
 
 type OptionCheckboxProps = {
   ingredient: Ingredient,
 }
 
 const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
-  const { handleClicked } = useContext(HandleIngredientClickContext)
-  const { userIngredients } = useUserData()
+  const { handleClicked, userIngredientsSet } = useContext(HandleIngredientClickContext)
 
   return (
     <div
@@ -19,7 +17,7 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
       <Checkbox
         onCheckedChange={() => handleClicked(ingredient)}
         id={ingredient.id as string}
-        checked={userIngredients?.some(item => item.id === ingredient.id)}
+        checked={userIngredientsSet.has(ingredient.id)}
       />
       <label
         htmlFor={ingredient.id as string}
