@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
-
+import { KitchenUtils } from "@/lib/types";
 
 const ChooseAdditional: React.FC = () => {
     const { kitchenUtils: kitchenUtils, addKitchenUtil: addKitchenUtil, removeKitchenUtil } = useUserData()
@@ -72,11 +72,11 @@ const ChooseAdditional: React.FC = () => {
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
                     <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
-                        {kitchenUtils && Object.keys(kitchenUtils).map(key => (
+                        {kitchenUtils && Object.keys(kitchenUtils).map((key) => (
                             <div key={key} className="flex items-center gap-3 start">
                                 <Switch
                                     id={key}
-                                    checked={kitchenUtils[key]}
+                                    checked={kitchenUtils[key as keyof KitchenUtils]} //TODO: Damn! ugly. but it works
                                     onCheckedChange={() => handleKitchenUtilsSelected(key)}
                                 />
                                 <Label htmlFor={key}>{key}</Label>
