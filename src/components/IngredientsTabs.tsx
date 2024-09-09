@@ -1,10 +1,8 @@
-import { createContext, useState } from "react";
+import { useState } from "react";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getIngredientSuggestions } from '@/services/ingredient.service';
 
-import { useUserData } from "@/context/user-data-provider";
-import { Ingredient } from "@/lib/types";
 import { ActiveTab } from "@/lib/enums";
 import IngredientsList from "./IngredientList";
 
@@ -59,82 +57,59 @@ const TabsContentMap = {
     )
 }
 
-type HandleIngredientClickContextType = {
-    handleClicked: (ingredient: Ingredient) => void,
-    userIngredientsSet: Set<string | number>
-}
-
-export const HandleIngredientClickContext = createContext<HandleIngredientClickContextType>(null as any)
-
 const IngredientsTabs: React.FC = () => {
-    const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
-
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
-    const handleClicked = (ingredient: Ingredient) => {
-        if (userIngredients?.some(item => item.id === ingredient.id)) {
-            deleteUserIngredient(ingredient)
-        } else {
-            addUserIngredient(ingredient)
-        }
-    }
-
     return (
-        <HandleIngredientClickContext.Provider value={{
-            handleClicked,
-            userIngredientsSet: new Set(userIngredients.map(ingredient => ingredient.id))
-        }}>
-            <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
-                <TabsList>
-                    <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Common)}
-                            className="flex-1"
-                            value={ActiveTab.Common}
-                        >
-                            The Usuals
-                        </TabsTrigger>
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Dairy)}
-                            className="flex-1"
-                            value={ActiveTab.Dairy}
-                        >
-                            Dairy
-                        </TabsTrigger>
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Vegetables)}
-                            className="flex-1"
-                            value={ActiveTab.Vegetables}
-                        >
-                            Vegetables & Greens
-                        </TabsTrigger>
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Spices)}
-                            className="flex-1"
-                            value={ActiveTab.Spices}
-                        >
-                            Spices
-                        </TabsTrigger>
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Carbs)}
-                            className="flex-1"
-                            value={ActiveTab.Carbs}
-                        >
-                            Carbs
-                        </TabsTrigger>
-                        <TabsTrigger
-                            onClick={() => setActiveTab(ActiveTab.Meat)}
-                            className="flex-1"
-                            value={ActiveTab.Meat}
-                        >
-                            Meat
-                        </TabsTrigger>
-                    </div>
-                </TabsList>
-                {TabsContentMap[activeTab]}
-            </Tabs>
-
-        </HandleIngredientClickContext.Provider>
+        <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
+            <TabsList>
+                <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Common)}
+                        className="flex-1"
+                        value={ActiveTab.Common}
+                    >
+                        The Usuals
+                    </TabsTrigger>
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Dairy)}
+                        className="flex-1"
+                        value={ActiveTab.Dairy}
+                    >
+                        Dairy
+                    </TabsTrigger>
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Vegetables)}
+                        className="flex-1"
+                        value={ActiveTab.Vegetables}
+                    >
+                        Vegetables & Greens
+                    </TabsTrigger>
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Spices)}
+                        className="flex-1"
+                        value={ActiveTab.Spices}
+                    >
+                        Spices
+                    </TabsTrigger>
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Carbs)}
+                        className="flex-1"
+                        value={ActiveTab.Carbs}
+                    >
+                        Carbs
+                    </TabsTrigger>
+                    <TabsTrigger
+                        onClick={() => setActiveTab(ActiveTab.Meat)}
+                        className="flex-1"
+                        value={ActiveTab.Meat}
+                    >
+                        Meat
+                    </TabsTrigger>
+                </div>
+            </TabsList>
+            {TabsContentMap[activeTab]}
+        </Tabs>
     )
 }
 

@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { useCreateRecipe } from "@/context/create-recipe-provider"
+import { useCreateRecipe } from "@/context/create-recipe-context"
 
 const FinalStep: React.FC = () => {
   const { prompt, handlePromptChange, handleSubmit } = useCreateRecipe()

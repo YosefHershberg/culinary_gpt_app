@@ -6,3 +6,9 @@ export enum ActiveTab {
     Carbs = 'carbs',
     Meat = 'meat',
 }
+
+export enum FilterOptions {
+    Popularity = 'popularity',
+    Alphabetical = 'alphabetical',
+    None = ''
+}

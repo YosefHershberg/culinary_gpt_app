@@ -6,6 +6,11 @@ export const getUserIngredients = async () => {
     return data
 }
 
+export const deleteAllUserIngredients = async () => {
+    const { data } = await axiosClient.delete('/user/ingredients/all')
+    return data
+}
+
 export const addUserIngredient = async (ingredient: Ingredient) => {
     const { data } = await axiosClient.post('/user/ingredients', ingredient)
     return data

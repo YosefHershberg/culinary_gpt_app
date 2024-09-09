@@ -1,6 +1,6 @@
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 import bgimage from '@/assets/sign-up-background.jpg'
-import { useTheme } from "@/context/theme-provider";
+import { useTheme } from "@/context/theme-context";
 
 const loadingStates = [
   {

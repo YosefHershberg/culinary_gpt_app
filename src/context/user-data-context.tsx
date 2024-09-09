@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react'
 
-import { useAuth } from '@/context/auth-provider'
+import { useAuth } from '@/context/auth-context'
 import LoadingPage from '@/pages/LoadingPage'
 
 import { Ingredient, KitchenUtils } from '@/lib/types'
@@ -12,6 +12,7 @@ type UserDataState = {
   kitchenUtils: KitchenUtils | null
   addUserIngredient: (ingredient: Ingredient) => void
   deleteUserIngredient: (ingredient: Ingredient) => void
+  deleteAllUserIngredients: () => void
   addKitchenUtil: (util: string) => void
   removeKitchenUtil: (util: string) => void
 }
@@ -22,7 +23,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const { isLoaded } = useAuth()
 
   const { isLoadingUserUtils, userKitchenUtils, addKitchenUtil, removeKitchenUtil } = useKitchenUtils()
-  const { isLoadingUserIngrdts, userIngredients, addUserIngredient, deleteUserIngredient } = useUserIngredients()
+  const { isLoadingUserIngrdts, userIngredients, addUserIngredient, deleteUserIngredient, deleteAllUserIngredients } = useUserIngredients()
 
   if (isLoadingUserIngrdts || isLoadingUserUtils || !isLoaded) {
     return <LoadingPage />
@@ -33,6 +34,7 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       userIngredients: userIngredients || [],
       addUserIngredient,
       deleteUserIngredient,
+      deleteAllUserIngredients,
       kitchenUtils: userKitchenUtils || emptyKitchenUtils,
       addKitchenUtil: addKitchenUtil,
       removeKitchenUtil,

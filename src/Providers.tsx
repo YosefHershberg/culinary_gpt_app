@@ -4,11 +4,11 @@ import { ErrorBoundary } from "react-error-boundary"
 import { QueryClientProvider } from "@tanstack/react-query"
 import queryClient from '@/config/queryClient';
 
-import { ThemeProvider } from "@/context/theme-provider"
-import { AuthProvider } from "@/context/auth-provider"
-import { CreateRecipeProvider } from "@/context/create-recipe-provider"
-import { UserDataProvider } from "@/context/user-data-provider"
-import ClerkProvider from "@/context/clerk-provider"
+import { ThemeProvider } from "@/context/theme-context"
+import { AuthProvider } from "@/context/auth-context"
+import { CreateRecipeProvider } from "@/context/create-recipe-context"
+import { UserDataProvider } from "@/context/user-data-context"
+import ClerkProvider from "@/context/clerk-context"
 
 import LoadingPage from "@/pages/LoadingPage"
 import ErrorPage from "@/pages/ErrorPage"

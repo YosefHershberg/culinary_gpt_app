@@ -5,7 +5,7 @@ import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
-import { useCreateRecipe } from '@/context/create-recipe-provider';
+import { useCreateRecipe } from '@/context/create-recipe-context';
 import useHttpClient from '@/hooks/useHttpClient';
 import RecipePage from '@/pages/RecipePage';
 import { Recipe } from '@/lib/types';

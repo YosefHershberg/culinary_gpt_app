@@ -1,14 +1,13 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Ingredient } from "@/lib/types";
-import { useContext } from "react";
-import { HandleIngredientClickContext } from "../IngredientsTabs";
+import { useIngredientList } from "@/context/ingredient-list-context";
 
 type OptionCheckboxProps = {
   ingredient: Ingredient,
 }
 
 const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
-  const { handleClicked, userIngredientsSet } = useContext(HandleIngredientClickContext)
+  const { handleClicked, userIngredientsSet } = useIngredientList()
 
   return (
     <div

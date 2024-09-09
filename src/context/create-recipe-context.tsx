@@ -5,7 +5,7 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
 import { Recipe } from "@/lib/types";
-import { useUserData } from "./user-data-provider";
+import { useUserData } from "./user-data-context";
 
 type CreateRecipeState = {
     mealSelected: Meals,

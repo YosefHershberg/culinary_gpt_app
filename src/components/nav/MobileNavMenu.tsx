@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useTheme } from '@/context/theme-provider';
-import { useAuth } from '@/context/auth-provider';
+import { useTheme } from '@/context/theme-context';
+import { useAuth } from '@/context/auth-context';
 
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Button } from '@/components/ui/button';

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { useUserData } from "@/context/user-data-provider";
-import { useCreateRecipe } from "@/context/create-recipe-provider";
+import { useUserData } from "@/context/user-data-context";
+import { useCreateRecipe } from "@/context/create-recipe-context";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';

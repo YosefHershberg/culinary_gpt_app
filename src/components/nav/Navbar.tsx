@@ -1,12 +1,12 @@
 import { useState, useLayoutEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { useTheme } from '@/context/theme-provider'
-import { useUserData } from '@/context/user-data-provider'
-import { useAuth } from '@/context/auth-provider'
+import { useTheme } from '@/context/theme-context'
+import { useUserData } from '@/context/user-data-context'
+import { useAuth } from '@/context/auth-context'
 
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import MobileNavMenu from '@/components/nav/MobileNavMenu'
 import Logo from '@/components/Logo'
@@ -88,6 +88,8 @@ const Navbar: React.FC = () => {
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className='dark:bg-zinc-700'>
+                        <DropdownMenuLabel className='flex justify-center'>Theme</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
                         <DropdownMenuItem className='flex gap-2' onClick={() => setTheme('light')}>
                             <Sun className='size-5' /> Light
                         </DropdownMenuItem>

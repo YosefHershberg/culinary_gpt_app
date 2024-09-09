@@ -1,15 +1,25 @@
-import { useAuth } from '@/context/auth-provider'
+import { useAuth } from '@/context/auth-context'
 import { getUserIngredients } from '@/services/ingredient.service'
 import { useQuery } from '@tanstack/react-query'
 import useOptAddUserIngredient from './optimistic/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from './optimistic/useOptDeleteUserIngredient'
 import { Ingredient } from '@/lib/types'
+import useOptDeleteAllUserIngredients from './optimistic/useOptDeleteAllUserIngredients'
 
-const useUserIngredients = () => {
+type UseUserIngredientsReturnType = {
+    userIngredients: Ingredient[] | undefined;
+    isLoadingUserIngrdts: boolean;
+    addUserIngredient: (ingredient: Ingredient) => void;
+    deleteUserIngredient: (ingredient: Ingredient) => void;
+    deleteAllUserIngredients: () => void;
+}
+
+const useUserIngredients = (): UseUserIngredientsReturnType => {
     const { isSignedIn } = useAuth()
 
     const addUserIngredientMutation = useOptAddUserIngredient()
     const deleteUserIngredientMutation = useOptDeleteUserIngredient()
+    const deleteAllUserIngredientsMutation = useOptDeleteAllUserIngredients()
 
     const { data: userIngredients, isLoading: isLoadingUserIngrdts } = useQuery({
         queryKey: ['userIngredients'],
@@ -20,23 +30,25 @@ const useUserIngredients = () => {
 
     const addUserIngredient = (ingredient: Ingredient) => {
         console.log('adding ingredient', ingredient);
-        if (userIngredients) {
-            addUserIngredientMutation.mutate(ingredient)
-        }
+        addUserIngredientMutation.mutate(ingredient)
     }
 
     const deleteUserIngredient = (ingredient: Ingredient) => {
         console.log('removing ingredient', ingredient);
-        if (userIngredients) {
-            deleteUserIngredientMutation.mutate(ingredient)
-        }
+        deleteUserIngredientMutation.mutate(ingredient)
+    }
+
+    const deleteAllUserIngredients = () => {
+        console.log('removing all ingredients');
+        deleteAllUserIngredientsMutation.mutate(null)
     }
 
     return {
         userIngredients,
         isLoadingUserIngrdts,
         addUserIngredient,
-        deleteUserIngredient
+        deleteUserIngredient,
+        deleteAllUserIngredients
     }
 }
 

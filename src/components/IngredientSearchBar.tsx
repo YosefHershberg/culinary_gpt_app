@@ -1,22 +1,23 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { useUserData } from '@/context/user-data-provider';
+import { useUserData } from '@/context/user-data-context';
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { toast } from '@/components/ui/use-toast';
 
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient } from '@/lib/types';
+import IngredientListMenuDropdown from './IngredientListMenuDropdown';
 
 const placeholders = [
-    "Whole Wheat Bread",
-    "Tomato",
+    "Cocoa Powder",
+    "Peanut Butter",
     "Canola oil",
-    "Salt",
+    "Barbecue Sauce",
     "White wine",
 ];
 
-//NOTE: Should I devide the logic into hook?
+//NOTE: Should I divide the logic into hook?
 
 const IngredientSearchBar: React.FC = () => {
     const { addUserIngredient } = useUserData()
@@ -75,13 +76,16 @@ const IngredientSearchBar: React.FC = () => {
 
     return (
         <div className='max-w-[35rem] w-full mb-4 flex flex-col'>
-            <PlaceholdersAndVanishInput
-                placeholders={placeholders}
-                onSubmit={onSubmit}
-                isLoading={isLoading}
-                value={searchValue}
-                setValue={setSearchValue}
-            />
+            <div className='flex items-center gap-3'>
+                <PlaceholdersAndVanishInput
+                    placeholders={placeholders}
+                    onSubmit={onSubmit}
+                    isLoading={isLoading}
+                    value={searchValue}
+                    setValue={setSearchValue}
+                />
+                <IngredientListMenuDropdown />
+            </div>
             <DropdownMenu open={isDropdownOpen}>
                 {/* <DropdownMenu open={true}> */}
                 <DropdownMenuTrigger></DropdownMenuTrigger>
