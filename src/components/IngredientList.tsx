@@ -3,6 +3,9 @@ import { toast } from "./ui/use-toast"
 import LoadingSpinner from "./ui/LoadingSpinner"
 import { Ingredient } from "@/lib/types"
 import { OptionCheckbox } from "./ui/OptionCheckbox"
+import { useIngredientList } from "@/context/ingredient-list-context"
+import { useEffect, useState } from "react"
+import { FilterOptions } from "@/lib/enums"
 
 type UsualIngredientsContent = {
     queryKey: string,
@@ -10,10 +13,30 @@ type UsualIngredientsContent = {
 }
 
 const IngredientsList = ({ queryKey, queryFn }: UsualIngredientsContent) => {
+    const { filterOptions } = useIngredientList()
+    const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>()
+    
     const { data: ingredients, isLoading, error } = useQuery({
         queryKey: [`${queryKey}`],
         queryFn: queryFn,
     })
+
+    useEffect(() => {
+        if (ingredients) {
+            let filteredIngredients = [...ingredients]
+            switch (filterOptions) {
+                case FilterOptions.Popularity:
+                    filteredIngredients = filteredIngredients.sort((a, b) => b.popularity - a.popularity)
+                    break
+                case FilterOptions.Alphabetical:
+                    filteredIngredients = filteredIngredients.sort((a, b) => a.name.localeCompare(b.name))
+                    break
+                case FilterOptions.None:
+                    break
+            }
+            setFilteredIngredients(filteredIngredients)
+        }
+    }, [filterOptions, ingredients]);
 
     if (error) {
         toast({
@@ -35,7 +58,7 @@ const IngredientsList = ({ queryKey, queryFn }: UsualIngredientsContent) => {
 
     return (
         <div className="flex-[1_1_0] flex gap-3 flex-wrap overflow-y-auto">
-            {ingredients?.map((ingredient: Ingredient) => (
+            {filteredIngredients?.map((ingredient: Ingredient) => (
                 <OptionCheckbox
                     key={ingredient.id}
                     ingredient={ingredient}

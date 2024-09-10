@@ -16,7 +16,7 @@ export const IngredientListContext = createContext<IngredientListContextType>(nu
 
 const IngredientListContextProvider = ({ children }: { children: React.ReactNode }) => {
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
-    const [filterOptions, setFilterOptions] = useState<FilterOptions>(FilterOptions.None)
+    const [filterOptions, setFilterOptions] = useState<FilterOptions>(FilterOptions.Popularity)
 
     const handleClicked = (ingredient: Ingredient) => {
         if (userIngredients?.some(item => item.id === ingredient.id)) {

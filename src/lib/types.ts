@@ -1,7 +1,8 @@
 export type Ingredient = {
-    id: number | string;
+    id: string;
     name: string;
-    category?: string;
+    category: string;
+    popularity: number;
 }
 
 export type Recipe = {

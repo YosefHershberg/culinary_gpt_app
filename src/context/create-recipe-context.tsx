@@ -25,6 +25,7 @@ export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
     const [createdRecipe, setCreatedRecipe] = useState<Recipe | null>(null) // TODO: Can this be a ref?
@@ -32,8 +33,6 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const [selectedTime, setSelectedTime] = useState<number>(50)
     const [numOfPeople, setNumOfPeople] = useState<number>(2)
     const [prompt, setPrompt] = useState<string>('')
-
-    const navigate = useNavigate()
 
     const { data: response, isLoading, error, responseStatus, triggerHttpReq } = useHttpClient({
         endpoint: '/user/recipes/create',
@@ -81,16 +80,23 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     const handleSubmit = () => {
-        if (userIngredients.length < 3) {
-            toast({
+        if (userIngredients.length < 4) {
+            return toast({
                 variant: 'destructive',
                 title: 'Oops! You need more ingredients!',
-                description: 'You need at least 3 ingredients to create a recipe.'
+                description: 'You need at least 4 ingredients to create a recipe.'
             })
-        } else {
-            triggerHttpReq()
-
         }
+
+        if (numOfPeople < 1) {
+            return toast({
+                variant: 'destructive',
+                title: 'Oops! You need more people!',
+                description: 'You need at least 1 person to create a recipe.'
+            })
+        }
+
+        triggerHttpReq()
     }
 
     if (isLoading) return <LoadingRecipePage />
