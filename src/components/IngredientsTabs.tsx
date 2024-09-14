@@ -60,10 +60,11 @@ const TabsContentMap = {
 const IngredientsTabs: React.FC = () => {
     const [activeTab, setActiveTab] = useState<ActiveTab>(ActiveTab.Common)
 
+
     return (
         <Tabs defaultValue={activeTab} className="rounded-xl max-w-[60rem] flex-1 flex flex-col">
             <TabsList>
-                <div className="w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
+                <div className="md:w-full w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden">
                     <TabsTrigger
                         onClick={() => setActiveTab(ActiveTab.Common)}
                         className="flex-1"

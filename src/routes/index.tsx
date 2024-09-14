@@ -21,7 +21,7 @@ const Router: React.FC = () => {
         <Route index element={<WelcomePage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
-          <Route path='my-ingredients' element={<MyIngredients />} />
+          <Route path='my-ingredients/*' element={<MyIngredients />} />
           <Route path='my-recipes' element={<MyRecipes />} />
           <Route path='recipe' element={<CreatedRecipe />} />
           <Route path='user-recipe/:id' element={<UserRecipe />} />
