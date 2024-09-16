@@ -6,20 +6,17 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { toast } from '@/components/ui/use-toast';
 
 import useHttpClient from '@/hooks/useHttpClient';
-import { Ingredient } from '@/lib/types';
+import { Ingredient, IngredientType } from '@/lib/types';
 import IngredientListMenuDropdown from './IngredientListMenuDropdown';
-
-const placeholders = [
-    "Cocoa Powder",
-    "Peanut Butter",
-    "Canola oil",
-    "Barbecue Sauce",
-    "White wine",
-];
 
 //NOTE: Should I divide the logic into hook?
 
-const IngredientSearchBar: React.FC = () => {
+interface IngredientSearchBarProps {
+    placeholders: string[];
+    type: IngredientType;
+}
+
+const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders, type }) => {
     const { addUserIngredient } = useUserData()
 
     const [searchValue, setSearchValue] = useState<string>('');
@@ -30,7 +27,7 @@ const IngredientSearchBar: React.FC = () => {
         endpoint: '/ingredients/search',
         method: 'GET',
         params: {
-            query: searchValue
+            query: searchValue, type
         }
     });
 
@@ -87,9 +84,10 @@ const IngredientSearchBar: React.FC = () => {
                 <IngredientListMenuDropdown />
             </div>
             <DropdownMenu open={isDropdownOpen}>
-                {/* <DropdownMenu open={true}> */}
+
                 <DropdownMenuTrigger></DropdownMenuTrigger>
                 {/* NOTE: NEED THIS ^^^ */}
+
                 <DropdownMenuContent
                     className='max-w-[30rem] w-[95vw] dark:bg-zinc-700 max-h-[25rem] overflow-y-auto'
                     ref={dropdownRef}
@@ -97,7 +95,7 @@ const IngredientSearchBar: React.FC = () => {
                     {results?.length === 0 && (
                         <div className='w-full flex flex-col gap-2 justify-center items-center h-20 text-primary'>
                             <p className='text-lg'>No results found :/</p>
-                            <p>Try searching for somehting else</p>
+                            <p>Try searching for something else</p>
                         </div>
                     )}
                     {results?.map((item: Ingredient) => (

@@ -12,7 +12,7 @@ type UsualIngredientsContent = {
     queryFn: () => Promise<any>
 }
 
-const IngredientsList = ({ queryKey, queryFn }: UsualIngredientsContent) => {
+const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn }) => {
     const { filterOptions } = useIngredientList()
     const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>()
     

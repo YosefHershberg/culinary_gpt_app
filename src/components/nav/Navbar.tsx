@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
                         </li>
                         <li className='size-fit relative'>
                             <NavLink
-                                to='/my-ingredients'
+                                to='/my-ingredients/food'
                                 className={({ isActive }) =>
                                     `${isAnimating ? 'text-primary transition-colors duration-300 scale-105' : ""}
                                     h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 font-bold text-primary/90 hover:text-primary transition-all duration-200 hover:scale-105 whitespace-nowrap

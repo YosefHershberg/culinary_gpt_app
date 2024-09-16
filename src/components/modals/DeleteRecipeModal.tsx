@@ -9,13 +9,13 @@ import {
 import { X } from "lucide-react"
 import { Button } from "../ui/button"
 
-interface ClearIngredientsModalProps {
+interface DeleteRecipeModalProps {
     isOpen: boolean,
     close: () => void,
     handleClick: () => void
 }
 
-const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, close, handleClick }) => {
+const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ isOpen, close, handleClick }) => {
 
     return (
         <Dialog open={isOpen}>
@@ -25,7 +25,7 @@ const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, c
 
             <DialogContent>
                 <DialogTitle className="text-center leading-snug">
-                    Are you sure you want to remove all you ingredients?
+                    Are you sure you want to delete this recipe?
                 </DialogTitle>
 
                 {/* NOTE: Need this to prevent clerk warning in console */}
@@ -33,7 +33,7 @@ const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, c
 
                 <div className="mt-5 flex justify-around">
                     <Button onClick={handleClick}>
-                        Yes, remove all
+                        Yes, delete it.
                     </Button>
                     <Button variant='destructive' onClick={close}>
                         Cancel
@@ -51,4 +51,4 @@ const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, c
     )
 }
 
-export default ClearIngredientsModal
+export default DeleteRecipeModal

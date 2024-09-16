@@ -11,10 +11,17 @@ import { FilterOptions } from '@/lib/enums'
 import { useIngredientList } from '@/context/ingredient-list-context'
 import { useState } from 'react'
 import ClearIngredientsModal from './modals/ClearIngredientsModal'
+import { useUserData } from '@/context/user-data-context'
 
-const IngredientListMenuDropdown = () => {
+const IngredientListMenuDropdown: React.FC = () => {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
     const { changeFilterOptions, filterOptions } = useIngredientList()
+    const { deleteAllUserIngredients } = useUserData()
+
+    const handleClick = () => {
+        deleteAllUserIngredients()
+        setIsOpenModal(false)
+    }
 
     return (
         <>
@@ -67,13 +74,11 @@ const IngredientListMenuDropdown = () => {
                     </DropdownMenuSub>
                 </DropdownMenuContent>
             </DropdownMenu>
-            {/* <Button onClick={() => setIsOpenModal(true)}>
-                <DiamondMinus className="mr-2 size-4" />
-                <span>Clear all ingredients</span>
-            </Button> */}
+
             {isOpenModal && <ClearIngredientsModal
                 isOpen={isOpenModal}
                 close={() => setIsOpenModal(false)}
+                handleClick={handleClick}
             />}
         </>
     )

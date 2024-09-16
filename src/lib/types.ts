@@ -34,3 +34,5 @@ export type KitchenUtils = {
     "BBQ": boolean,
     "Grill": boolean,
 }
+
+export type IngredientType = 'food' | 'drink';
