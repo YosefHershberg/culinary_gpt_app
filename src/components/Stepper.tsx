@@ -9,9 +9,13 @@ interface IconStepperProps {
     setActiveStep: (step: number) => void;
     activeStep: number;
     steps: { label: string; icon: React.ElementType }[];
+    strongColor?: string;
+    weakColor?: string;
 }
 
-const IconStepper: React.FC<IconStepperProps> = ({ setActiveStep, activeStep, steps }) => {
+const IconStepper: React.FC<IconStepperProps> = ({
+    setActiveStep, activeStep, steps, strongColor = '#ff8c00', weakColor = '#f5bc75'
+}) => {
 
     return (
         <Stepper
@@ -28,11 +32,11 @@ const IconStepper: React.FC<IconStepperProps> = ({ setActiveStep, activeStep, st
                 },
                 [`& .${stepClasses.completed}`]: {
                     [`& .${stepIndicatorClasses.root}`]: {
-                        borderColor: '#f5bc75',
-                        color: '#f5bc75',
+                        borderColor: weakColor,
+                        color: weakColor,
                     },
                     '&::after': {
-                        bgcolor: '#f5bc75',
+                        bgcolor: weakColor,
                     },
                 },
                 [`& .${stepClasses.active}`]: {
@@ -54,7 +58,7 @@ const IconStepper: React.FC<IconStepperProps> = ({ setActiveStep, activeStep, st
                     indicator={
                         <Button variant='unstyled' onClick={() => setActiveStep(index)}>
                             <StepIndicator variant="outlined" sx={
-                                { color: activeStep < index ? 'neutral.outlinedDisabledColor' : '#ff8c00', }
+                                { color: activeStep < index ? 'neutral.outlinedDisabledColor' : strongColor, }
                             }>
                                 <step.icon />
                             </StepIndicator>

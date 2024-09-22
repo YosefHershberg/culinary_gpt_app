@@ -1,9 +1,9 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { useCreateRecipe } from "@/context/create-recipe-context"
+import { useCreateCocktail } from "@/context/create-cocktail-context"
 
 const FinalStep: React.FC = () => {
-  const { prompt, handlePromptChange, handleSubmit } = useCreateRecipe()
+  const { prompt, handlePromptChange, handleSubmit } = useCreateCocktail()
 
   return (
     <div className='flex-1 flex flex-col items-center'>
@@ -27,7 +27,7 @@ const FinalStep: React.FC = () => {
           <Button
             onClick={handleSubmit}
             variant='secondary'
-            className="bg-amber-800 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-amber-100 hover:text-amber-900 hover:border-amber-800 hover:border hover:scale-105"
+            className="bg-violet-500 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-violet-100 hover:text-violet-900 hover:border-violet-800 hover:border hover:scale-105"
           >
             Create Recipe!
           </Button>

@@ -7,6 +7,7 @@ import queryClient from '@/config/queryClient';
 import { ThemeProvider } from "@/context/theme-context"
 import { AuthProvider } from "@/context/auth-context"
 import { CreateRecipeProvider } from "@/context/create-recipe-context"
+import { CreateCocktailProvider } from './context/create-cocktail-context';
 import { UserDataProvider } from "@/context/user-data-context"
 import ClerkProvider from "@/context/clerk-context"
 
@@ -24,19 +25,21 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <Router>
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-              <ClerkProvider>
-                <AuthProvider>
-                  <Suspense fallback={<LoadingPage />}>
-                    <UserDataProvider>
-                      <CreateRecipeProvider>
+          <ThemeProvider>
+            <ClerkProvider>
+              <AuthProvider>
+                <Suspense fallback={<LoadingPage />}>
+                  <UserDataProvider>
+                    <CreateRecipeProvider>
+                      <CreateCocktailProvider>
                         {children}
-                      </CreateRecipeProvider>
-                    </UserDataProvider>
-                  </Suspense>
-                </AuthProvider>
-              </ClerkProvider>
-            </ThemeProvider>
+                      </CreateCocktailProvider>
+                    </CreateRecipeProvider>
+                  </UserDataProvider>
+                </Suspense>
+              </AuthProvider>
+            </ClerkProvider>
+          </ThemeProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     </Router>

@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
-import { Recipe } from "@/lib/types";
 import { useUserData } from "./user-data-context";
 
 type CreateRecipeState = {
@@ -12,7 +11,6 @@ type CreateRecipeState = {
     selectedTime: number,
     prompt: string,
     numOfPeople: number,
-    createdRecipe: Recipe | null,
     handleMealSelected: (value: Meals) => void,
     handleTimeChange: (value: number[]) => void,
     handlePromptChange: (value: string) => void,
@@ -28,7 +26,6 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [createdRecipe, setCreatedRecipe] = useState<Recipe | null>(null) // TODO: Can this be a ref?
     const [mealSelected, setMealSelected] = useState<Meals>('lunch')
     const [selectedTime, setSelectedTime] = useState<number>(50)
     const [numOfPeople, setNumOfPeople] = useState<number>(2)
@@ -47,8 +44,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             setPrompt('')
             setSelectedTime(50)
             setMealSelected('lunch')
-            setCreatedRecipe(response)
-            navigate('/recipe')
+            navigate('/recipe', { state: response })    
         }
     }, [responseStatus]);
 
@@ -80,7 +76,8 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     const handleSubmit = () => {
-        if (userIngredients.length < 4) {
+        const foodIngredients = userIngredients.filter(ingredient => ingredient.type.includes('food'))
+        if (foodIngredients.length < 4) {
             return toast({
                 variant: 'destructive',
                 title: 'Oops! You need more ingredients!',
@@ -112,7 +109,6 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             handlePromptChange,
             handleSubmit,
             handleNumOfPeopleChange,
-            createdRecipe
         }}>
             {children}
         </CreateRecipeContext.Provider>

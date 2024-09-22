@@ -17,7 +17,7 @@ interface IngredientSearchBarProps {
 }
 
 const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders, type }) => {
-    const { addUserIngredient } = useUserData()
+    const { addUserIngredient, userIngredients } = useUserData()
 
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
@@ -67,6 +67,14 @@ const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders,
     };
 
     const handleSelected = (ingredient: Ingredient) => {
+        if (userIngredients.some((ing) => ing.id === ingredient.id)) {
+            toast({
+                title: 'Ingredient already added!',
+                description: 'You have already added this ingredient.'
+            })
+            setIsDropdownOpen(false);
+            return;
+        }
         addUserIngredient(ingredient)
         setIsDropdownOpen(false);
     }

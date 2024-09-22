@@ -1,23 +1,17 @@
 import { useState, useLayoutEffect } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-import { useTheme } from '@/context/theme-context'
 import { useUserData } from '@/context/user-data-context'
 import { useAuth } from '@/context/auth-context'
 
-import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import MobileNavMenu from '@/components/nav/MobileNavMenu'
 import Logo from '@/components/Logo'
 
-import { UserButton } from '@clerk/clerk-react'
-import { LaptopMinimal, Moon, Sun } from 'lucide-react'
+import ThemeButton from './ThemeButton'
+import AuthNavButtons from './AuthNavButtons'
 
 const Navbar: React.FC = () => {
-    const navigate = useNavigate()
-    const { theme, setTheme } = useTheme()
-    const { isSignedIn, isLoaded } = useAuth()
+    const { isSignedIn } = useAuth()
     const { userIngredients } = useUserData()
 
     const [isAnimating, setIsAnimating] = useState(false);
@@ -31,19 +25,27 @@ const Navbar: React.FC = () => {
     }, [userIngredients]);
 
     return (
-        <nav className=' nt flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>
+        <nav className='flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>
             <div className='flex items-center gap-4'>
                 <a href="/">
                     <Logo />
                 </a>
                 {isSignedIn &&
-                    <ul className='md:flex hidden items-center md:gap-5 gap-3 ml-7 mr-3'>
+                    <ul className='lg:flex hidden items-center md:gap-5 gap-3 ml-7 mr-3'>
                         <li>
                             <NavLink
                                 to='/create-new-recipe'
                                 className='bg-orange text-white h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 transition-all duration-200 hover:scale-105 whitespace-nowrap'
                             >
                                 Create New Recipe
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/create-new-cocktail'
+                                className='bg-emerald-400 text-white h-8 px-3 text-sm rounded-lg inline-flex items-center justify-center z-10 transition-all duration-200 hover:scale-105 whitespace-nowrap'
+                            >
+                                Create A Cocktail
                             </NavLink>
                         </li>
                         <li className='size-fit relative'>
@@ -77,66 +79,13 @@ const Navbar: React.FC = () => {
                     </ul>
                 }
             </div>
-            <div className='md:flex hidden gap-4 items-center'>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button size='icon' variant='outline' className='dark:border-zinc-400 rounded-full'>
-                            {theme !== 'light' ?
-                                <Moon className='size-5' /> :
-                                <Sun className='size-5' />
-                            }
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className='dark:bg-zinc-700'>
-                        <DropdownMenuLabel className='flex justify-center'>Theme</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem className='flex gap-2' onClick={() => setTheme('light')}>
-                            <Sun className='size-5' /> Light
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className='flex gap-2' onClick={() => setTheme('dark')}>
-                            <Moon className='size-5' /> Dark
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className='flex gap-2' onClick={() => setTheme('system')}>
-                            <LaptopMinimal className='size-5' /> System
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-                {!isLoaded ? <LoadingSpinner className='size-8' /> :
-                    isSignedIn ?
-                        <Button size='icon' variant='outline' className='p-0 rounded-full'>
-                            <UserButton
-                                afterSignOutUrl='/'
-                                appearance={{
-                                    elements: {
-                                        userButtonAvatarBox: {
-                                            height: '100%',
-                                            width: '100%',
-                                        },
-                                    },
-                                }} />
-                        </Button>
-                        :
-                        <>
-                            <Button
-                                className='hover:scale-105 rounded-full'
-                                variant='ghost'
-                                onClick={() => navigate('/signin')}
-                            >
-                                Sign in
-                            </Button>
-                            <Button
-                                className='hover:scale-105 rounded-full'
-                                variant='secondary'
-                                onClick={() => navigate('/signup')}
-                            >
-                                Sign up
-                            </Button>
-                        </>
-                }
+            <div className='lg:flex hidden gap-4 items-center'>
+                <ThemeButton />
+                <AuthNavButtons />
             </div>
 
             {/* mobile --------------- */}
-            <div className='md:hidden block'>
+            <div className='lg:hidden block'>
                 <MobileNavMenu />
             </div>
         </nav >

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { UserButton } from '@clerk/clerk-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
-import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus } from 'lucide-react';
+import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 'lucide-react';
 
 const MobileNavMenu: React.FC = () => {
     const { theme, setTheme } = useTheme()
@@ -52,6 +52,10 @@ const MobileNavMenu: React.FC = () => {
                             <DropdownMenuItem onClick={() => navigate('/create-new-recipe')}>
                                 <Plus className='mr-2 size-4' />
                                 Create New Recipe
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigate('/create-new-cocktail')}>
+                                <Martini className='mr-2 size-4' />
+                                Create New Cocktail
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => navigate('/my-recipes')}>
                                 <CookingPot className='mr-2 size-4' />

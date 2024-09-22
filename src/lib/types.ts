@@ -3,6 +3,7 @@ export type Ingredient = {
     name: string;
     category: string;
     popularity: number;
+    type: IngredientType[];
 }
 
 export type Recipe = {
@@ -16,7 +17,7 @@ export type Recipe = {
             step: string,
             time: string,
         }[],
-        time: string,
+        time?: string,
         level: string,
     },
     image_url: string,

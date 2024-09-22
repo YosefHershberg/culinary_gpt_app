@@ -1,24 +1,27 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { toast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
-import { useCreateRecipe } from '@/context/create-recipe-context';
 import useHttpClient from '@/hooks/useHttpClient';
 import RecipePage from '@/pages/RecipePage';
 import { Recipe } from '@/lib/types';
 
 const CreatedRecipe: React.FC = () => {
-    const { createdRecipe } = useCreateRecipe()
     const navigate = useNavigate()
+    const createdRecipe = useLocation().state as Recipe
 
     const { responseStatus, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/user/recipes',
         method: 'POST',
         body: createdRecipe
     })
+
+    useEffect(() => {
+        console.log(location)
+    }, [])
 
     useEffect(() => {
         if (responseStatus === 200) navigate('/my-recipes')

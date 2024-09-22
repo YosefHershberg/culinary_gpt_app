@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
-import CreateNewRecipePage from '@/pages/CreateNewRecipePage'
 
 import ProtectedRoutes from '@/routes/ProtectedRoutes'
 import WelcomePage from '@/pages/WelcomePage'
@@ -13,6 +12,8 @@ const MyIngredients = lazy(() => import('@/pages/MyIngredients'))
 const MyRecipes = lazy(() => import('@/pages/MyRecipes'))
 const UserRecipe = lazy(() => import('@/components/UserRecipe'))
 const CreatedRecipe = lazy(() => import('@/components/CreatedRecipe'))
+const CreateNewCocktailPage = lazy(() => import('@/pages/CreateNewCocktailPage'))
+const CreateNewRecipePage = lazy(() => import('@/pages/CreateNewRecipePage'))
 
 const Router: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const Router: React.FC = () => {
         <Route index element={<WelcomePage />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="create-new-recipe" element={<CreateNewRecipePage />} />
+          <Route path="create-new-cocktail" element={<CreateNewCocktailPage />} />
           <Route path='my-ingredients/*' element={<MyIngredients />} />
           <Route path='my-recipes' element={<MyRecipes />} />
           <Route path='recipe' element={<CreatedRecipe />} />
