@@ -15,7 +15,7 @@ const WelcomePage: React.FC = () => {
 
   return (
     <main>
-      <div className=" nt p-10 h-[calc(100vh-4rem)] w-full flex md:flex-row flex-col gap-5">
+      <div className="p-10 h-[calc(100vh-4rem)] w-full flex md:flex-row flex-col gap-5">
         <motion.div
           initial={{ x: '-100vw' }}
           animate={{ x: 0 }}

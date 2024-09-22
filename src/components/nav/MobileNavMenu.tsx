@@ -61,7 +61,7 @@ const MobileNavMenu: React.FC = () => {
                                 <CookingPot className='mr-2 size-4' />
                                 My Recipes
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => navigate('/my-ingredients')}>
+                            <DropdownMenuItem onClick={() => navigate('/my-ingredients/food')}>
                                 <Beef className='mr-2 size-4' />
                                 My Ingredients
                             </DropdownMenuItem>
