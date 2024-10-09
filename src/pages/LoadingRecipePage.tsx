@@ -40,7 +40,7 @@ const LoadingRecipePage: React.FC = () => {
       className="bg-cover bg-center h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5"
       style={theme === 'light' ? { backgroundImage: `url(${bgimage})` } : {}}
     >
-      <Loader loadingStates={loadingStates} loading={true} duration={2000} />
+      <Loader loadingStates={loadingStates} loading={true} duration={2200} />
     </section>
   )
 }

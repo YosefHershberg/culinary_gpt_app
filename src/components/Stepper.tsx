@@ -65,11 +65,9 @@ const IconStepper: React.FC<IconStepperProps> = ({
                         </Button>
                     }
                 >
-
                     <span className='dark:text-white font-century-gothic'>
                         {step.label}
                     </span>
-
                 </Step>
             ))}
         </Stepper>

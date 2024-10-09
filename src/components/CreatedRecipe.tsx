@@ -20,10 +20,6 @@ const CreatedRecipe: React.FC = () => {
     })
 
     useEffect(() => {
-        console.log(location)
-    }, [])
-
-    useEffect(() => {
         if (responseStatus === 200) navigate('/my-recipes')
 
         if (error) {

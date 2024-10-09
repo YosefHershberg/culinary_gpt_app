@@ -12,6 +12,8 @@ const UserRecipe: React.FC = () => {
     const { data: recipe, isLoading } = useQuery({
         queryKey: ['userRecipe'],
         queryFn: () => getUserRecipe(id as string),
+
+        // Disable the query when the recipe is already in the location state
         enabled: !location.state,
     })
 
