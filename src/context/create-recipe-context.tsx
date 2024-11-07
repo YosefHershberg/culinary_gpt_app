@@ -5,6 +5,7 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
+import useCreateRecipeStream from "@/hooks/useCreateRecipe";
 
 type CreateRecipeState = {
     mealSelected: Meals,
@@ -38,6 +39,8 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             mealSelected, selectedTime, prompt, numOfPeople
         }
     })
+
+    const { trigger } = useCreateRecipeStream({mealSelected, selectedTime, prompt, numOfPeople})
 
     useEffect(() => {
         if (responseStatus === 200 && response) {
@@ -92,7 +95,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
                 description: 'You need at least 1 person to create a recipe.'
             })
         }
-
+        trigger()
         triggerHttpReq()
     }
 

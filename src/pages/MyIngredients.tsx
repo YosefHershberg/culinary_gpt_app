@@ -55,7 +55,7 @@ const MobileNavIngredients: React.FC = () => {
           <Menu className="size-8" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="ml-2">
-          <Link to='/my-ingredients'>
+          <Link to='/my-ingredients/food'>
             <DropdownMenuItem className="font-semibold flex items-center gap-2">
               <Milk className="size-3" />
               Ingredients

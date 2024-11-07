@@ -23,6 +23,9 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.5
         version: 11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react@18.3.1)
+      '@microsoft/fetch-event-source':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@mui/joy':
         specifier: ^5.0.0-beta.36
         version: 5.0.0-beta.36(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react@18.3.1))(@types/react@18.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -599,6 +602,9 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
+
+  '@microsoft/fetch-event-source@2.0.1':
+    resolution: {integrity: sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==}
 
   '@mui/base@5.0.0-beta.42':
     resolution: {integrity: sha512-fWRiUJVCHCPF+mxd5drn08bY2qRw3jj5f1SSQdUXmaJ/yKpk23ys8MgLO2KGVTRtbks/+ctRfgffGPbXifj0Ug==}
@@ -3641,6 +3647,8 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  '@microsoft/fetch-event-source@2.0.1': {}
 
   '@mui/base@5.0.0-beta.42(@types/react@18.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
