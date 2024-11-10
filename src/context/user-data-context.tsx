@@ -1,11 +1,11 @@
 import React, { createContext, useContext } from 'react'
 
 import { useAuth } from '@/context/auth-context'
-import LoadingPage from '@/pages/LoadingPage'
-
-import { Ingredient, KitchenUtils } from '@/lib/types'
 import useKitchenUtils from '@/hooks/useKitchenUtils'
 import useUserIngredients from '@/hooks/useUserIngredients'
+
+import { Ingredient, KitchenUtils } from '@/lib/types'
+import LoadingPage from '@/pages/LoadingPage'
 
 type UserDataState = {
   userIngredients: Ingredient[]

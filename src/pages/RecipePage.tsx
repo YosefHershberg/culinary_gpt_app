@@ -1,14 +1,17 @@
 import { useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Lottie from 'lottie-react'
+
+import { RecipeState } from '@/hooks/useCreateRecipe'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
-import { Recipe } from '@/lib/types'
-
 import { Share2 } from 'lucide-react'
 
+import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
+
 interface RecipePageProps {
-    createdRecipe: Recipe
+    createdRecipe: RecipeState
     addToRecipesBtn?: JSX.Element
 }
 
@@ -35,12 +38,14 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                         <h2 className='text-2xl font-semibold text-center'>{createdRecipe.recipe.title}</h2>
                         <p className='text-lg text-center mt-4'>{createdRecipe.recipe.description}</p>
                     </div>
-                    <div className='flex flex-col items-center mt-8'>
-                        <img
+                    <div className='size-80 rounded-lg flex flex-col items-center mt-8 bg-transparent/10'>
+                        {createdRecipe.image_url ? <img
                             src={createdRecipe.image_url}
                             alt={createdRecipe.recipe.title}
-                            className='max-h-80 object-cover rounded-lg aspect-square'
-                        />
+                            className='size-full object-cover rounded-lg aspect-square'
+                        /> :
+                            <Lottie animationData={loadingRecipeAnimation} className='size-[20rem] p-5' />
+                        }
                     </div>
                     <div className='flex flex-col items-center mt-10'>
                         <h3 className='text-2xl font-semibold'>Ingredients</h3>

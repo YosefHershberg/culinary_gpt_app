@@ -10,37 +10,44 @@ type CreateRecipeState = {
     numOfPeople: number,
 }
 
-const useCreateRecipeStream = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeState) => {
-    const [recipe, setRecipe] = useState<Recipe | null>(null)
-    const [recipeImage, setRecipeImage] = useState<string | null>(null)
+export type RecipeState = {
+    recipe: Recipe,
+    image_url: string | null,
+    id?: number | string, 
+}
+
+const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeState) => {
+    const [recipe, setRecipe] = useState<RecipeState | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
-    const { stream, error, triggerStream } = useSSE('/stream', {
-        meal: mealSelected,
-        time: selectedTime,
+    const { stream, error, triggerStream, clearStream } = useSSE('/user/recipes/create', {
+        mealSelected,
+        selectedTime,
         prompt,
         numOfPeople
     })
 
     useEffect(() => {
-        if (stream.length > 0) console.log(stream)
         if (stream.length === 0) return
         if (stream[0]?.event === 'recipe') {
-            //@ts-ignore
-            setRecipe(stream[0].data as Recipe)
+            setRecipe({ recipe: stream[0].data as unknown as Recipe, image_url: null })
             setIsLoadingRecipe(false)
             setIsLoadingImage(true)
         }
         if (stream[1]?.event === 'image') {
-            setRecipeImage(stream[1].data as string)
+            setRecipe(prev => prev ? { ...prev, image_url: stream[1].data } : null)
             setIsLoadingImage(false)
+            clearStream()
         }
     }, [stream]);
 
     useEffect(() => {
-        console.log(isLoadingImage, isLoadingRecipe);
-    }, [isLoadingImage, isLoadingRecipe]);
+        if (error) {
+            setIsLoadingRecipe(false)
+            console.error(error)
+        }
+    }, [error]);
 
     const trigger = () => {
         triggerStream()
@@ -48,8 +55,8 @@ const useCreateRecipeStream = ({ mealSelected, selectedTime, prompt, numOfPeople
     }
 
     return {
-        error, trigger, recipe, isLoadingRecipe, recipeImage, isLoadingImage
+        error, trigger, recipe, isLoadingRecipe, isLoadingImage
     }
 }
 
-export default useCreateRecipeStream
+export default useCreateRecipe;

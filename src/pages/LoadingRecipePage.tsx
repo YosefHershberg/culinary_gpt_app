@@ -10,7 +10,7 @@ const loadingStates = [
     text: "Your request has been received by the AI chef",
   },
   {
-    text: "This process usually takes 15 seconds",
+    text: "This process usually takes 10 seconds",
   },
   {
     text: "The AI chef is creating the recipe",
@@ -32,7 +32,11 @@ const loadingStates = [
   }
 ];
 
-const LoadingRecipePage: React.FC = () => {
+interface LoadingRecipePageProps {
+  duration?: number;
+}
+
+const LoadingRecipePage: React.FC = ({ duration }: LoadingRecipePageProps) => {
   const { theme } = useTheme();
 
   return (
@@ -40,7 +44,7 @@ const LoadingRecipePage: React.FC = () => {
       className="bg-cover bg-center h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5"
       style={theme === 'light' ? { backgroundImage: `url(${bgimage})` } : {}}
     >
-      <Loader loadingStates={loadingStates} loading={true} duration={2200} />
+      <Loader loadingStates={loadingStates} loading={true} duration={duration || 2200} />
     </section>
   )
 }

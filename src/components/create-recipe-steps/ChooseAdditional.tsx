@@ -11,6 +11,8 @@ import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
 import { KitchenUtils } from "@/lib/types";
 
+const inputSchema = z.number().int().positive().min(1).max(99)
+
 const ChooseAdditional: React.FC = () => {
     const { kitchenUtils: kitchenUtils, addKitchenUtil: addKitchenUtil, removeKitchenUtil } = useUserData()
     const { selectedTime,
@@ -106,5 +108,3 @@ const ChooseAdditional: React.FC = () => {
 }
 
 export default ChooseAdditional
-
-const inputSchema = z.number().int().positive().min(1).max(99)

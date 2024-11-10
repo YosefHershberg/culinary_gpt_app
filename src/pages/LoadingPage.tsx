@@ -1,5 +1,5 @@
 import Lottie from 'lottie-react'
-import cookinganimation from '@/assets/animations/cooking-lottie1.json'
+import cookinganimation from '@/assets/animations/loading-page-animation.json'
 
 const LoadingPage: React.FC = () => {
 

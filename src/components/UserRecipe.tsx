@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { getUserRecipe } from "@/services/recipe.service"
 import RecipePage from "@/pages/RecipePage"
-import SuspenseTrigger from "../lib/suspenseTrigger"
+import SuspenseTrigger from "./SuspenseTrigger"
 
 const UserRecipe: React.FC = () => {
     const { id } = useParams()

@@ -1,6 +1,9 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useCreateRecipe } from "@/context/create-recipe-context"
+import { z } from "zod"
+
+const textareaSchema = z.string().max(99, { message: 'Max 99 characters' })
 
 const FinalStep: React.FC = () => {
   const { prompt, handlePromptChange, handleSubmit } = useCreateRecipe()
@@ -20,11 +23,19 @@ const FinalStep: React.FC = () => {
               id="message-2"
               onChange={(e) => handlePromptChange(e.target.value)}
             />
+
+            {!textareaSchema.safeParse(prompt).success && (
+              <span className="text-sm text-muted-foreground text-red-500">
+                {textareaSchema.safeParse(prompt).error?.errors[0].message}
+              </span>
+            )}
+
             <p className="text-sm text-muted-foreground mt-2">
               Your prompt will be added to the recipe generation.
             </p>
           </div>
           <Button
+
             onClick={handleSubmit}
             variant='secondary'
             className="bg-amber-800 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-amber-100 hover:text-amber-900 hover:border-amber-800 hover:border hover:scale-105"

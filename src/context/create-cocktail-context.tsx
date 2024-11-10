@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import useHttpClient from '@/hooks/useHttpClient';
 import { useUserData } from '@/context/user-data-context';
 import { toast } from '@/components/ui/use-toast';
-import { Recipe } from '@/lib/types';
+import { RecipeWithImage } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
 
 type CreateCocktailState = {
-    createdCocktail: Recipe | null,
+    createdCocktail: RecipeWithImage | null,
     handleSubmit: () => void,
     handlePromptChange: (value: string) => void,
     prompt: string
@@ -19,7 +19,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [createdCocktail, setCreatedCocktail] = useState<Recipe | null>(null)
+    const [createdCocktail, setCreatedCocktail] = useState<RecipeWithImage | null>(null)
     const [prompt, setPrompt] = useState<string>('')
 
     const { data: response, isLoading, error, responseStatus, triggerHttpReq } = useHttpClient({

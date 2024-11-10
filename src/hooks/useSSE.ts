@@ -12,6 +12,7 @@ interface UseSSEReturn {
     stream: EventSourceMessage[],
     error: Error | null,
     triggerStream: () => void,
+    clearStream: () => void
 }
 
 const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
@@ -25,19 +26,21 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
 
     const triggerStream = () => setTrigger(true)
 
+    const clearStream = () => setStream([])
+
     const streamFnc = async () => {
         const ctrl = new AbortController();
 
         activeHttpRequest.current.push(ctrl)
 
-        await fetchEventSource(`${env.VITE_API_URL}${endpoint}?${body && objectToQueryString(body)}`, {
-            method: 'GET',
+        await fetchEventSource(`${env.VITE_API_URL}${endpoint}`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${await getToken()}`
             },
-            // body: JSON.stringify({ foo: 'bar' }),
             signal: ctrl.signal,
+            body: JSON.stringify(body),
             onmessage(msg) {
                 if (msg.event === 'FatalError') {
                     throw new Error(msg.data);
@@ -47,8 +50,10 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 // TODO: Check if of type EventSourceMessage
                 setStream(prevData => [...prevData, parsedData])
             },
-            onerror() {
-                ctrl.abort()
+            onerror(error) {
+                setError(error)
+                setTrigger(false)
+                activeHttpRequest.current.forEach(ctrl => ctrl.abort())
             }
         });
     }
@@ -69,12 +74,14 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 } else {
                     setError(new Error('An error occurred while streaming data.'))
                 }
+            } finally {
+                setTrigger(false)
             }
         }
     }, [trigger]);
 
     return {
-        stream, error, triggerStream
+        stream, error, triggerStream, clearStream
     }
 }
 

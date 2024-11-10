@@ -4,11 +4,11 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 
 import useOptDeleteUserRecipe from './optimistic/useOptDeleteUserRecipe'
 import { getUserRecipes } from '@/services/recipe.service'
-import { Recipe } from '@/lib/types'
+import { RecipeWithImage } from '@/lib/types'
 
 const useMyRecipes = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const [recipeToDelete, setRecipeToDelete] = useState<Recipe | null>(null)
+    const [recipeToDelete, setRecipeToDelete] = useState<RecipeWithImage | null>(null)
 
     const deleteUserRecipeMutation = useOptDeleteUserRecipe()
     const navigate = useNavigate()
@@ -18,7 +18,7 @@ const useMyRecipes = () => {
         queryFn: getUserRecipes,
     })
 
-    const handleClick = (recipe: Recipe) => {
+    const handleClick = (recipe: RecipeWithImage) => {
         navigate(`/user-recipe/${recipe.id}`, { state: recipe })
     }
 
@@ -29,7 +29,7 @@ const useMyRecipes = () => {
         }
     }
 
-    const handleOpenModal = (recipe: Recipe) => {
+    const handleOpenModal = (recipe: RecipeWithImage) => {
         setIsOpen(true)
         setRecipeToDelete(recipe)
     }

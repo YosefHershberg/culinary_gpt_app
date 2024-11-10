@@ -1,19 +1,19 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query"
 import { deleteUserRecipe } from "@/services/recipe.service"
 import { toast } from "@/components/ui/use-toast"
-import { Recipe } from "@/lib/types"
+import { RecipeWithImage } from "@/lib/types"
 
 const useOptDeleteUserRecipe = () => {
     const queryClient = useQueryClient()
 
     const deleteUserRecipeMutation = useMutation({
-        mutationFn: (recipe: Recipe) => deleteUserRecipe(recipe?.id as string),
+        mutationFn: (recipe: RecipeWithImage) => deleteUserRecipe(recipe?.id as string),
 
-        onMutate: async (recipe: Recipe) => {
+        onMutate: async (recipe: RecipeWithImage) => {
             await queryClient.cancelQueries({ queryKey: ['userRecipes'] })
-            const previousCachedData = queryClient.getQueryData<Recipe[]>(['userRecipes']) as Recipe[]
+            const previousCachedData = queryClient.getQueryData<RecipeWithImage[]>(['userRecipes']) as RecipeWithImage[]
 
-            queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: Recipe) => r.id !== recipe.id)])
+            queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: RecipeWithImage) => r.id !== recipe.id)])
             return { previousCachedData }
         },
 
@@ -25,7 +25,7 @@ const useOptDeleteUserRecipe = () => {
 
         },
 
-        onError: (error: Error, _recipe: Recipe, context: any) => {
+        onError: (error: Error, _recipe: RecipeWithImage, context: any) => {
             queryClient.setQueryData(['userRecipes'], context?.previousCachedData)
             console.log(error);
             toast({

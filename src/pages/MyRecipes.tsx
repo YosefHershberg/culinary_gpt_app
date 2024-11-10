@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Recipe as RecipeType } from "@/lib/types";
+import { RecipeWithImage as RecipeType } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";

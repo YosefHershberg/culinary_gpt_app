@@ -6,22 +6,24 @@ export type Ingredient = {
     type: IngredientType[];
 }
 
-export type Recipe = {
-    recipe: {
-        title: string,
-        description: string,
-        ingredients: {
-            ingredient: string,
-        }[],
-        steps: {
-            step: string,
-            time: string,
-        }[],
-        time?: string,
-        level: string,
-    },
+export type RecipeWithImage = {
+    recipe: Recipe,
     image_url: string,
     id?: number | string,
+}
+
+export type Recipe = {
+    title: string,
+    description: string,
+    ingredients: {
+        ingredient: string,
+    }[],
+    steps: {
+        step: string,
+        time: string,
+    }[],
+    time?: string,
+    level: string,
 }
 
 export type KitchenUtils = {

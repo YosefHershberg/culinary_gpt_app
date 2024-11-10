@@ -2,10 +2,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
-import useHttpClient from "@/hooks/useHttpClient";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
-import useCreateRecipeStream from "@/hooks/useCreateRecipe";
+import useCreateRecipeStream, { RecipeState } from "@/hooks/useCreateRecipe";
+import { RecipeWithImage } from "@/lib/types";
 
 type CreateRecipeState = {
     mealSelected: Meals,
@@ -17,6 +17,7 @@ type CreateRecipeState = {
     handlePromptChange: (value: string) => void,
     handleSubmit: () => void,
     handleNumOfPeopleChange: (value: number) => void,
+    recipe: RecipeWithImage | RecipeState | null,
 }
 
 export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as any);
@@ -27,29 +28,34 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [mealSelected, setMealSelected] = useState<Meals>('lunch')
-    const [selectedTime, setSelectedTime] = useState<number>(50)
-    const [numOfPeople, setNumOfPeople] = useState<number>(2)
-    const [prompt, setPrompt] = useState<string>('')
-
-    const { data: response, isLoading, error, responseStatus, triggerHttpReq } = useHttpClient({
-        endpoint: '/user/recipes/create',
-        method: 'POST',
-        body: {
-            mealSelected, selectedTime, prompt, numOfPeople
-        }
+    const [newRecipe, setNewRecipe] = useState<{
+        mealSelected: Meals,
+        selectedTime: number,
+        prompt: string,
+        numOfPeople: number,
+    }>({
+        mealSelected: 'lunch',
+        selectedTime: 50,
+        prompt: '',
+        numOfPeople: 2
     })
 
-    const { trigger } = useCreateRecipeStream({mealSelected, selectedTime, prompt, numOfPeople})
+    const { trigger, recipe, isLoadingRecipe, error } = useCreateRecipeStream({
+        mealSelected: newRecipe.mealSelected,
+        selectedTime: newRecipe.selectedTime,
+        prompt: newRecipe.prompt,
+        numOfPeople: newRecipe.numOfPeople
+    })
 
     useEffect(() => {
-        if (responseStatus === 200 && response) {
-            setPrompt('')
-            setSelectedTime(50)
-            setMealSelected('lunch')
-            navigate('/recipe', { state: response })    
+        if (recipe) {
+            handleNumOfPeopleChange(2)
+            handleMealSelected('lunch')
+            handlePromptChange('')
+            handleTimeChange([50])
+            navigate('/recipe', { state: recipe })
         }
-    }, [responseStatus]);
+    }, [recipe]);
 
     useEffect(() => {
         if (error) {
@@ -63,19 +69,19 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }, [error]);
 
     const handleNumOfPeopleChange = (value: number) => {
-        setNumOfPeople(value)
+        setNewRecipe(prev => ({ ...prev, numOfPeople: value }))
     }
 
     const handleMealSelected = (value: Meals) => {
-        setMealSelected(value)
+        setNewRecipe(prev => ({ ...prev, mealSelected: value }))
     }
 
     const handleTimeChange = (value: number[]) => {
-        setSelectedTime(value[0] + 5)
+        setNewRecipe(prev => ({ ...prev, selectedTime: value[0] }))
     }
 
     const handlePromptChange = (value: string) => {
-        setPrompt(value)
+        setNewRecipe(prev => ({ ...prev, prompt: value }))
     }
 
     const handleSubmit = () => {
@@ -88,7 +94,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             })
         }
 
-        if (numOfPeople < 1) {
+        if (newRecipe.numOfPeople < 1) {
             return toast({
                 variant: 'destructive',
                 title: 'Oops! You need more people!',
@@ -96,17 +102,18 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             })
         }
         trigger()
-        triggerHttpReq()
     }
 
-    if (isLoading) return <LoadingRecipePage />
+    //@ts-expect-error
+    if (isLoadingRecipe) return <LoadingRecipePage duration={1500} />
 
     return (
         <CreateRecipeContext.Provider value={{
-            mealSelected,
-            selectedTime,
-            prompt,
-            numOfPeople,
+            mealSelected: newRecipe.mealSelected,
+            selectedTime: newRecipe.selectedTime,
+            prompt: newRecipe.prompt,
+            numOfPeople: newRecipe.numOfPeople,
+            recipe,
             handleMealSelected,
             handleTimeChange,
             handlePromptChange,
