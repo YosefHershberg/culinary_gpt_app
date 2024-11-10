@@ -85,10 +85,4 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
     }
 }
 
-export default useSSE
-
-const objectToQueryString = (obj: Record<string, any>): string => {
-    return Object.entries(obj)
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&');
-}
+export default useSSE;
