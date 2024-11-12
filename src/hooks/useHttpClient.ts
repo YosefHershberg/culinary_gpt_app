@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from "axios";
 
 import axiosClient from '@/config/axiosClient';
 
-interface UseHttpClientProps {
+type UseHttpClientProps = {
     endpoint: string,
     method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH',
     body?: any,
@@ -11,7 +11,7 @@ interface UseHttpClientProps {
     headers?: any
 }
 
-interface UseHttpClientResponseType {
+type UseHttpClientResponseType = {
     data: any,
     error: AxiosError | null,
     isLoading: boolean,

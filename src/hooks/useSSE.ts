@@ -3,12 +3,12 @@ import { useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
 import env from '@/config/env'
 
-interface EventSourceMessage {
+type EventSourceMessage = {
     event: string,
     data: string
 }
 
-interface UseSSEReturn {
+type UseSSEReturn = {
     stream: EventSourceMessage[],
     error: Error | null,
     triggerStream: () => void,

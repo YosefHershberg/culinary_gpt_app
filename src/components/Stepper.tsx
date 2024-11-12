@@ -5,7 +5,7 @@ import Step, { stepClasses } from '@mui/joy/Step';
 import StepIndicator, { stepIndicatorClasses } from '@mui/joy/StepIndicator';
 import { Button } from './ui/button';
 
-interface IconStepperProps {
+type IconStepperProps = {
     setActiveStep: (step: number) => void;
     activeStep: number;
     steps: { label: string; icon: React.ElementType }[];

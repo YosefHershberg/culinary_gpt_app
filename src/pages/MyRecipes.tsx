@@ -49,7 +49,7 @@ const MyRecipes: React.FC = () => {
 
 export default MyRecipes
 
-interface RecipeProps {
+type RecipeProps = {
   recipe: RecipeType
   handleClick: (recipe: RecipeType) => void,
   handleOpenModal: (recipe: RecipeType) => void

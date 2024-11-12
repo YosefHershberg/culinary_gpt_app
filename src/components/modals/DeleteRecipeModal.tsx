@@ -9,7 +9,7 @@ import {
 import { X } from "lucide-react"
 import { Button } from "../ui/button"
 
-interface DeleteRecipeModalProps {
+type DeleteRecipeModalProps = {
     isOpen: boolean,
     close: () => void,
     handleClick: () => void

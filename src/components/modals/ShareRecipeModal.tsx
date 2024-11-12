@@ -13,7 +13,7 @@ import { toast } from "../ui/use-toast"
 
 const title = 'Check out this recipe I created with CulinaryGPT'
 
-interface ShareRecipeModalProps {
+type ShareRecipeModalProps = {
     url: string,
     isOpen: boolean,
     close: () => void

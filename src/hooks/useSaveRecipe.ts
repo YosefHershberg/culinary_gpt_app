@@ -4,7 +4,7 @@ import useHttpClient from "./useHttpClient";
 import { RecipeWithImage } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 
-interface SaveRecipeResponse {
+type SaveRecipeResponse = {
     responseStatus: number | null,
     isLoading: boolean,
     error: any,

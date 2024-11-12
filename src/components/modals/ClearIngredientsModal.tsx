@@ -9,7 +9,7 @@ import {
 import { X } from "lucide-react"
 import { Button } from "../ui/button"
 
-interface ClearIngredientsModalProps {
+type ClearIngredientsModalProps = {
     isOpen: boolean,
     close: () => void,
     handleClick: () => void

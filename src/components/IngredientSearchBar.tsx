@@ -11,7 +11,7 @@ import IngredientListMenuDropdown from './IngredientListMenuDropdown';
 
 //NOTE: Should I divide the logic into hook?
 
-interface IngredientSearchBarProps {
+type IngredientSearchBarProps = {
     placeholders: string[];
     type: IngredientType;
 }

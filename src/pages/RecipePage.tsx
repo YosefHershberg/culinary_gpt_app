@@ -10,7 +10,7 @@ import { Share2 } from 'lucide-react'
 
 import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
 
-interface RecipePageProps {
+type RecipePageProps = {
     createdRecipe: RecipeState
     addToRecipesBtn?: JSX.Element
 }

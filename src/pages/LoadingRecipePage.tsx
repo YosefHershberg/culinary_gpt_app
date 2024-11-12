@@ -32,7 +32,7 @@ const loadingStates = [
   }
 ];
 
-interface LoadingRecipePageProps {
+type LoadingRecipePageProps = {
   duration?: number;
 }
 

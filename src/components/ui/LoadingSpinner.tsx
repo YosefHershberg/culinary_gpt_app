@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { forwardRef } from 'react';
 
-interface LoadingSpinnerProps {
+type LoadingSpinnerProps = {
     className?: string;
 }
 
