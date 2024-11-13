@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import RecipePage from '@/pages/RecipePage';
 import { useCreateRecipe } from '@/context/create-recipe-context';
-import { RecipeState } from '@/hooks/useCreateRecipe';
+import { RecipeState } from '@/lib/types';
 import useSaveRecipe from '@/hooks/useSaveRecipe';
 import { RecipeWithImage } from '@/lib/types';
+import { useLocation } from 'react-router-dom';
 
 const CreatedRecipe: React.FC = () => {
-    const { recipe } = useCreateRecipe()
+    const recipe = useLocation().state as RecipeState
     const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe as RecipeWithImage)
 
     return (

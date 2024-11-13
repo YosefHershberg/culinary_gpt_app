@@ -51,7 +51,11 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 setStream(prevData => [...prevData, parsedData])
             },
             onerror(error) {
-                setError(error)
+                if (error instanceof Error) {
+                    setError(error)
+                } else {
+                    setError(new Error('An error occurred while streaming data.'))
+                }
                 setTrigger(false)
                 activeHttpRequest.current.forEach(ctrl => ctrl.abort())
             }
@@ -68,12 +72,6 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
         if (trigger) {
             try {
                 streamFnc()
-            } catch (error) {
-                if (error instanceof Error) {
-                    setError(error)
-                } else {
-                    setError(new Error('An error occurred while streaming data.'))
-                }
             } finally {
                 setTrigger(false)
             }

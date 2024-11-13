@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
-import useCreateRecipeStream, { RecipeState } from "@/hooks/useCreateRecipe";
-import { RecipeWithImage } from "@/lib/types";
+import useCreateRecipeStream from "@/hooks/useCreateRecipe";
+import { Meals, RecipeState } from "@/lib/types";
 
 type CreateRecipeState = {
     mealSelected: Meals,
@@ -17,12 +17,10 @@ type CreateRecipeState = {
     handlePromptChange: (value: string) => void,
     handleSubmit: () => void,
     handleNumOfPeopleChange: (value: number) => void,
-    recipe: RecipeWithImage | RecipeState | null,
+    recipe: RecipeState | null,
 }
 
 export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as any);
-
-export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate()
@@ -40,7 +38,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         numOfPeople: 2
     })
 
-    const { trigger, recipe, isLoadingRecipe, error } = useCreateRecipeStream({
+    const { trigger, recipe, isLoadingRecipe } = useCreateRecipeStream({
         mealSelected: newRecipe.mealSelected,
         selectedTime: newRecipe.selectedTime,
         prompt: newRecipe.prompt,
@@ -56,17 +54,6 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             navigate('/recipe', { state: recipe })
         }
     }, [recipe]);
-
-    useEffect(() => {
-        if (error) {
-            toast({
-                variant: 'destructive',
-                title: 'Oops! Something went wrong!',
-                //@ts-ignore
-                description: error.response?.data?.message || 'An error occurred while creating your recipe.'
-            })
-        }
-    }, [error]);
 
     const handleNumOfPeopleChange = (value: number) => {
         setNewRecipe(prev => ({ ...prev, numOfPeople: value }))
@@ -104,7 +91,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         trigger()
     }
 
-    //@ts-expect-error
+    // @ts-expect-error
     if (isLoadingRecipe) return <LoadingRecipePage duration={1500} />
 
     return (

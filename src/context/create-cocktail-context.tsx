@@ -1,13 +1,13 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useHttpClient from '@/hooks/useHttpClient';
 import { useUserData } from '@/context/user-data-context';
+import useCreateCocktailStream from '@/hooks/useCreateCocktail';
 import { toast } from '@/components/ui/use-toast';
-import { RecipeWithImage } from '@/lib/types';
+import { RecipeState } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
 
 type CreateCocktailState = {
-    createdCocktail: RecipeWithImage | null,
+    createdCocktail: RecipeState | null,
     handleSubmit: () => void,
     handlePromptChange: (value: string) => void,
     prompt: string
@@ -19,34 +19,20 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [createdCocktail, setCreatedCocktail] = useState<RecipeWithImage | null>(null)
+    const [createdCocktail, setCreatedCocktail] = useState<RecipeState | null>(null)
     const [prompt, setPrompt] = useState<string>('')
 
-    const { data: response, isLoading, error, responseStatus, triggerHttpReq } = useHttpClient({
-        endpoint: '/user/recipes/create-cocktail',
-        method: 'POST',
-        body: { prompt }
+    const { trigger, recipe, isLoadingRecipe } = useCreateCocktailStream({
+        prompt
     })
 
     useEffect(() => {
-        if (responseStatus === 200 && response) {
-            console.log(response)
+        if (recipe) {
             setPrompt('')
-            setCreatedCocktail(response)
-            navigate('/recipe', { state: response })
+            setCreatedCocktail(recipe)
+            navigate('/recipe', { state: recipe })
         }
-    }, [responseStatus]);
-
-    useEffect(() => {
-        if (error) {
-            toast({
-                variant: 'destructive',
-                title: 'Oops! Something went wrong!',
-                //@ts-ignore
-                description: error.response?.data?.message || 'An error occurred while creating your recipe.'
-            })
-        }
-    }, [error]);
+    }, [recipe]);
 
     const handlePromptChange = (value: string) => {
         setPrompt(value)
@@ -62,10 +48,10 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
             })
         }
 
-        triggerHttpReq()
+        trigger()
     }
 
-    if (isLoading) return <LoadingRecipePage />
+    if (isLoadingRecipe) return <LoadingRecipePage />
 
     return (
         <CreateCocktailContext.Provider value={{

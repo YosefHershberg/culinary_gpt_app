@@ -1,25 +1,19 @@
 import useSSE from './useSSE'
 import { useEffect, useState } from 'react'
-import { Meals, Recipe, RecipeState } from '@/lib/types'
+import { Recipe, RecipeState } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
 
 type CreateRecipeState = {
-    mealSelected: Meals,
-    selectedTime: number,
     prompt: string,
-    numOfPeople: number,
 }
 
-const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeState) => {
+const useCreateCocktail = ({ prompt }: CreateRecipeState) => {
     const [recipe, setRecipe] = useState<RecipeState | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
-    const { stream, error, triggerStream, clearStream } = useSSE('/user/recipes/create', {
-        mealSelected,
-        selectedTime,
+    const { stream, error, triggerStream, clearStream } = useSSE('/user/recipes/create-cocktail', {
         prompt,
-        numOfPeople
     })
 
     useEffect(() => {
@@ -58,4 +52,4 @@ const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: Cr
     }
 }
 
-export default useCreateRecipe;
+export default useCreateCocktail;

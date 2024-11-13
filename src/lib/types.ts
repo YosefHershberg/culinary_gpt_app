@@ -26,6 +26,12 @@ export type Recipe = {
     level: string,
 }
 
+export type RecipeState = {
+    recipe: Recipe,
+    image_url: string | null,
+    id?: number | string, 
+}
+
 export type KitchenUtils = {
     "Stove Top": boolean,
     "Oven": boolean,
@@ -39,3 +45,5 @@ export type KitchenUtils = {
 }
 
 export type IngredientType = 'food' | 'drink';
+
+export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'

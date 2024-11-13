@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Lottie from 'lottie-react'
 
-import { RecipeState } from '@/hooks/useCreateRecipe'
+import { RecipeState } from '@/lib/types'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
@@ -47,6 +47,9 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                             <Lottie animationData={loadingRecipeAnimation} className='size-[20rem] p-5' />
                         }
                     </div>
+                    {!createdRecipe.image_url &&
+                        <p className='text-lg text-center mt-4'>Loading image. One moment please...</p>
+                    }
                     <div className='flex flex-col items-center mt-10'>
                         <h3 className='text-2xl font-semibold'>Ingredients</h3>
                         <ul className='list-disc mt-2 sm:grid grid-cols-2 gap-x-10'>
