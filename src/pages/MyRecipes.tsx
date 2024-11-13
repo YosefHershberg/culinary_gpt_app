@@ -2,18 +2,54 @@ import { useNavigate } from "react-router-dom";
 import { RecipeWithImage as RecipeType } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { Filter, X } from "lucide-react";
 import useMyRecipes from "@/hooks/useMyRecipes";
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useLayoutEffect, useState } from "react";
+import { set } from "zod";
 
 const MyRecipes: React.FC = () => {
   const navigate = useNavigate()
   const { recipes, handleDelete, handleClick, handleOpenModal, isOpen, handleCloseModal } = useMyRecipes()
 
+  const [sortedRecipes, setSortedRecipes] = useState<RecipeType[]>([])
+  const [currentFilter, setCurrentFilter] = useState<FilterOptions>('creation-date')
+
+  useLayoutEffect(() => {
+    switch (currentFilter) {
+      case 'creation-date':
+        setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
+          new Date(b.created_at as Date).getTime() - new Date(a.created_at as Date).getTime()))
+        break
+      case 'name':
+        setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) => a.recipe.title.localeCompare(b.recipe.title)))
+        break
+      case 'recipes':
+        setSortedRecipes([...recipes].filter((recipe: RecipeType) => recipe.recipe.type === 'recipe'))
+        break
+      case 'cocktails':
+        setSortedRecipes([...recipes].filter((recipe: RecipeType) => recipe.recipe.type === 'cocktail'))
+        break
+      default:
+        break
+    }
+  }, [currentFilter, recipes])
+
+  const handleFilterChange = (value: FilterOptions) => {
+    setCurrentFilter(value)
+  }
+
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
-      <div className="my-8 flex flex-col items-center w-full max-w-[40rem]">
-        <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+      <div className="my-6 flex flex-col items-center w-full max-w-[40rem]">
+        <div className="w-full relative h-10 flex items-center justify-center">
+          <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+          <FilterOptionsDropdown
+            handleFilterChange={handleFilterChange}
+            currentFilter={currentFilter}
+          />
+        </div>
         {recipes.length === 0 &&
           <div className="flex flex-col items-center">
             <p className="text-center text-xl mt-10">You have no recipes yet!</p>
@@ -27,7 +63,7 @@ const MyRecipes: React.FC = () => {
           </div>
         }
 
-        {recipes.map((recipe: RecipeType) => (
+        {sortedRecipes.map((recipe: RecipeType) => (
           <Recipe
             key={recipe.id}
             recipe={recipe}
@@ -56,7 +92,6 @@ type RecipeProps = {
 }
 
 const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal }) => {
-
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation()
     handleOpenModal(recipe)
@@ -96,5 +131,42 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
         <X className="size-5" />
       </Button>
     </div>
+  )
+}
+
+type FilterOptions = 'creation-date' | 'name' | 'recipes' | 'cocktails'
+
+type FilterOptionsDropdownProps = {
+  handleFilterChange: (value: FilterOptions) => void,
+  currentFilter: FilterOptions
+}
+
+const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFilterChange, currentFilter }) => {
+  const navigate = useNavigate()
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant='outline'
+          onClick={() => navigate('/create-new-recipe')}
+          className="absolute top-0 right-1 flex items-center gap-2"
+        >
+          <span className="text-md">Filter</span>
+          <Filter className="size-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>Filter by..</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuRadioGroup value={currentFilter} onValueChange={(val) => handleFilterChange(val as FilterOptions)}>
+          <DropdownMenuRadioItem value="creation-date">Creation Date</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="recipes">Recipes</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="cocktails">Cocktails</DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+
   )
 }

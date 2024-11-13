@@ -10,6 +10,7 @@ export type RecipeWithImage = {
     recipe: Recipe,
     image_url: string,
     id?: number | string,
+    created_at?: string | Date | number,
 }
 
 export type Recipe = {
@@ -24,6 +25,7 @@ export type Recipe = {
     }[],
     time?: string,
     level: string,
+    type: 'recipe' | 'cocktail'
 }
 
 export type RecipeState = {
