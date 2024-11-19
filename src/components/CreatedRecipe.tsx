@@ -5,7 +5,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import RecipePage from '@/pages/RecipePage';
 import { RecipeState } from '@/lib/types';
-import useSaveRecipe from '@/hooks/useSaveRecipe';
+import useSaveRecipe from '@/hooks/componentHooks/useSaveRecipe';
 import { RecipeWithImage } from '@/lib/types';
 import { useLocation } from 'react-router-dom';
 

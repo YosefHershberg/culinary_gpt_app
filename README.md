@@ -1,6 +1,6 @@
 # CulinaryGPT Frontend
 
-CulinaryGPT is a recipe generation application that allows the user to genarate recipes based on the user's ingredients and kithchen utensils. This application is builed with scalability, re-usabilty & maintainablty in mind by implementing a clean and layerd architecture.
+CulinaryGPT is a recipe generation application that allows the user to generate recipes based on the user's ingredients and kitchen utensils. This application is build with scalability, re-usability & maintainability in mind by implementing a clean and layard architecture.
 
 ## Features
 

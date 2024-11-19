@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 import ProtectedRoutes from '@/routes/ProtectedRoutes'
-import WelcomePage from '@/pages/WelcomePage'
 import { AppLayout } from '@/App'
 
+const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
 const Signup = lazy(() => import('@/pages/Signup'))
 const Signin = lazy(() => import('@/pages/Signin'))
 const MyIngredients = lazy(() => import('@/pages/MyIngredients'))

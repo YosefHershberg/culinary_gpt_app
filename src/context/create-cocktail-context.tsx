@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserData } from '@/context/user-data-context';
-import useCreateCocktailStream from '@/hooks/useCreateCocktail';
+import useCreateCocktailStream from '@/hooks/componentHooks/useCreateCocktail';
 import { toast } from '@/components/ui/use-toast';
 import { RecipeState } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';

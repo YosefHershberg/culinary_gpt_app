@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
-import useCreateRecipeStream from "@/hooks/useCreateRecipe";
+import useCreateRecipeStream from "@/hooks/componentHooks/useCreateRecipe";
 import { Meals, RecipeState } from "@/lib/types";
 
 type CreateRecipeState = {

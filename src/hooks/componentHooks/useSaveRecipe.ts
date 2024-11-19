@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useHttpClient from "./useHttpClient";
+import useHttpClient from "../useHttpClient";
 import { RecipeWithImage } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 

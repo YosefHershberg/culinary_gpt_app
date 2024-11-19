@@ -35,7 +35,6 @@ const FinalStep: React.FC = () => {
             </p>
           </div>
           <Button
-
             onClick={handleSubmit}
             variant='secondary'
             className="bg-amber-800 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-amber-100 hover:text-amber-900 hover:border-amber-800 hover:border hover:scale-105"

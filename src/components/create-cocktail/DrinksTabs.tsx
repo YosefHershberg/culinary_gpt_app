@@ -68,14 +68,15 @@ const TabsContentMap = {
 
 const IngredientsTabs: React.FC = () => {
     const [activeTab, setActiveTab] = useState<DrinksCategories>(DrinksCategories.Spirits)
-    const location = useLocation();
-    const pathname = location.pathname;
-    const isFullWidth = pathname.startsWith('/my-ingredients');
+    const { pathname } = useLocation();
 
     return (
-        <Tabs defaultValue={DrinksCategories.Spirits} className="rounded-xl max-w-[60rem] w-full flex-1 flex flex-col">
+        <Tabs
+            defaultValue={DrinksCategories.Spirits}
+            className="rounded-xl max-w-[60rem] w-full flex-1 flex flex-col"
+        >
             <TabsList>
-                <div className={`${isFullWidth && 'lg:w-[calc(100vw-310px)]'} w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden`}>
+                <div className={`${pathname.startsWith('/my-ingredients') && 'lg:w-[calc(100vw-310px)]'} w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden`}>
                     {/* NOTICE: ^^^^ Change When width/padding/margin blocks surrounding this element changes*/}
 
                     <TabsTrigger

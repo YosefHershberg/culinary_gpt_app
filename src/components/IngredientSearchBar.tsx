@@ -5,7 +5,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 import { Ingredient, IngredientType } from '@/lib/types';
 import IngredientListMenuDropdown from './IngredientListMenuDropdown';
-import { useIngredientSearch } from '@/hooks/useIngredientSearch';
+import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 
 //NOTE: Should I divide the logic into hook?
 

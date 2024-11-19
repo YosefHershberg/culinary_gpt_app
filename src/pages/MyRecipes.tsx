@@ -1,45 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { RecipeWithImage as RecipeType } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
-import { Filter, X } from "lucide-react";
-import useMyRecipes from "@/hooks/useMyRecipes";
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { useLayoutEffect, useState } from "react";
-import { set } from "zod";
+import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
+import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
+import useFilterRecipes, { FilterOptions } from "@/hooks/componentHooks/useFilterRecipes";
+
+import { RecipeWithImage as RecipeType } from "@/lib/types";
+import { Filter, X } from "lucide-react";
+import LazyImage from "@/components/ui/LazyImage";
 
 const MyRecipes: React.FC = () => {
   const navigate = useNavigate()
-  const { recipes, handleDelete, handleClick, handleOpenModal, isOpen, handleCloseModal } = useMyRecipes()
-
-  const [sortedRecipes, setSortedRecipes] = useState<RecipeType[]>([])
-  const [currentFilter, setCurrentFilter] = useState<FilterOptions>('creation-date')
-
-  useLayoutEffect(() => {
-    switch (currentFilter) {
-      case 'creation-date':
-        setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
-          new Date(b.created_at as Date).getTime() - new Date(a.created_at as Date).getTime()))
-        break
-      case 'name':
-        setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) => a.recipe.title.localeCompare(b.recipe.title)))
-        break
-      case 'recipes':
-        setSortedRecipes([...recipes].filter((recipe: RecipeType) => recipe.recipe.type === 'recipe'))
-        break
-      case 'cocktails':
-        setSortedRecipes([...recipes].filter((recipe: RecipeType) => recipe.recipe.type === 'cocktail'))
-        break
-      default:
-        break
-    }
-  }, [currentFilter, recipes])
-
-  const handleFilterChange = (value: FilterOptions) => {
-    setCurrentFilter(value)
-  }
-
+  const { recipes, handleClick } = useMyRecipes()
+  const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe()
+  const { sortedRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes)
+  
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
       <div className="my-6 flex flex-col items-center w-full max-w-[40rem]">
@@ -103,7 +80,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
       className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
       key={recipe.id}
     >
-      <img
+      <LazyImage
         src={recipe.image_url}
         alt={recipe.recipe.title}
         className="sm:w-[7rem] w-[15rem] aspect-square object-cover rounded-lg"
@@ -134,22 +111,18 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
   )
 }
 
-type FilterOptions = 'creation-date' | 'name' | 'recipes' | 'cocktails'
-
 type FilterOptionsDropdownProps = {
   handleFilterChange: (value: FilterOptions) => void,
   currentFilter: FilterOptions
 }
 
 const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFilterChange, currentFilter }) => {
-  const navigate = useNavigate()
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant='outline'
-          onClick={() => navigate('/create-new-recipe')}
           className="absolute top-0 right-1 flex items-center gap-2"
         >
           <span className="text-md">Filter</span>

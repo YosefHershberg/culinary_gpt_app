@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { AxiosError, AxiosResponse } from "axios";
 
 import axiosClient from '@/config/axiosClient';
@@ -27,9 +27,9 @@ const useHttpClient = ({ endpoint, method, body, params }: UseHttpClientProps): 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const responseStatus = useRef<number | null>(null)
 
-    const triggerHttpReq = useCallback(() => setTrigger(true), [])
+    const triggerHttpReq = () => setTrigger(true)
 
-    const fetcher = useCallback(async () => {
+    const fetcher = async () => {
         const httpAbortCtrl = new AbortController()
         activeHttpRequests.current.push(httpAbortCtrl)
 
@@ -59,8 +59,9 @@ const useHttpClient = ({ endpoint, method, body, params }: UseHttpClientProps): 
         }
 
         activeHttpRequests.current = activeHttpRequests.current.filter(reqCtrl => reqCtrl !== httpAbortCtrl)
+        
         return response
-    }, [endpoint, body, params])
+    }
 
     useEffect(() => {
         return () => {

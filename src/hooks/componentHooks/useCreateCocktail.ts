@@ -1,4 +1,4 @@
-import useSSE from './useSSE'
+import useSSE from '../useSSE'
 import { useEffect, useState } from 'react'
 import { Recipe, RecipeState } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
