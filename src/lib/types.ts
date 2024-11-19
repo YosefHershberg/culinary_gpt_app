@@ -10,7 +10,7 @@ export type RecipeWithImage = {
     recipe: Recipe,
     image_url: string,
     id?: number | string,
-    created_at?: string | Date | number,
+    createdAt?: string | Date | number,
 }
 
 export type Recipe = {

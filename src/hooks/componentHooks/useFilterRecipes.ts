@@ -18,7 +18,7 @@ const useFilterRecipes = (recipes: RecipeType[]): UseFilterRecipesResponse => {
         switch (currentFilter) {
             case 'all':
                 setFilteredRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
-                    new Date(b.created_at as Date).getTime() - new Date(a.created_at as Date).getTime()))
+                    new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime()))
                 break
             case 'recipes':
                 setFilteredRecipes([...recipes].filter((recipe: RecipeType) => recipe.recipe.type === 'recipe'))

@@ -14,15 +14,15 @@ const useSortRecipes = (recipes: RecipeType[]): UseSortRecipesResponse => {
     const [sortedRecipes, setSortedRecipes] = useState<RecipeType[]>([])
     const [currentSort, setCurrentSort] = useState<SortOptions>('oldest')
 
-    useLayoutEffect(() => {
+    useLayoutEffect(() => {                
         switch (currentSort) {
             case 'newest':
                 setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
-                    new Date(b.created_at as Date).getTime() - new Date(a.created_at as Date).getTime()))
+                    new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime()))
                 break
             case 'oldest':
                 setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
-                    new Date(a.created_at as Date).getTime() - new Date(b.created_at as Date).getTime()))
+                    new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime()))
                 break
             case 'a-z':
                 setSortedRecipes([...recipes].sort((a: RecipeType, b: RecipeType) =>
