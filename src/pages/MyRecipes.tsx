@@ -22,7 +22,7 @@ const MyRecipes: React.FC = () => {
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
       <div className="my-6 flex flex-col items-center w-full max-w-[40rem]">
-        <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+        <h1 className="text-2xl font-semibold text-center mb-4">My Recipes</h1>
         <div className="relative h-10 w-full flex gap-3">
           <FilterOptionsDropdown
             handleFilterChange={handleFilterChange}
