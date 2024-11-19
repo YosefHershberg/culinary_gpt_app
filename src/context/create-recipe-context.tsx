@@ -91,8 +91,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         trigger()
     }
 
-    // @ts-expect-error
-    if (isLoadingRecipe) return <LoadingRecipePage duration={1500} />
+    if (isLoadingRecipe) return <LoadingRecipePage duration={1200} />
 
     return (
         <CreateRecipeContext.Provider value={{

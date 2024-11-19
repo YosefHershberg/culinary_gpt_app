@@ -1,5 +1,5 @@
 import IngredientListContextProvider from "@/context/ingredient-list-context"
-import IngredientSearchBar from "../IngredientSearchBar"
+import IngredientSearchBar from "@/components/create-components/IngredientSearchBar"
 import DrinksTabs from "./DrinksTabs";
 
 const placeholders = [

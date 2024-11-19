@@ -1,4 +1,4 @@
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import { DiamondMinus, Menu, UserPlus } from 'lucide-react'
 import {
     Tooltip,
@@ -6,11 +6,11 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from './ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../ui/dropdown-menu'
 import { FilterOptions } from '@/lib/enums'
 import { useIngredientList } from '@/context/ingredient-list-context'
 import { useState } from 'react'
-import ClearIngredientsModal from './modals/ClearIngredientsModal'
+import ClearIngredientsModal from '../modals/ClearIngredientsModal'
 import { useUserData } from '@/context/user-data-context'
 
 const IngredientListMenuDropdown: React.FC = () => {

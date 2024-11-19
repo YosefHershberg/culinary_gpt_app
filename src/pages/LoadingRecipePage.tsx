@@ -36,7 +36,7 @@ type LoadingRecipePageProps = {
   duration?: number;
 }
 
-const LoadingRecipePage: React.FC = ({ duration }: LoadingRecipePageProps) => {
+const LoadingRecipePage: React.FC<LoadingRecipePageProps> = ({ duration }) => {
   const { theme } = useTheme();
 
   return (

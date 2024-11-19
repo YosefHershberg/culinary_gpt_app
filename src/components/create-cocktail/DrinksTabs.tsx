@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getIngredientSuggestions } from '@/services/ingredient.service';
 
 import { DrinksCategories } from "@/lib/enums";
-import IngredientsList from "../IngredientList";
+import IngredientsList from "../create-components/IngredientList"; // Ensure this path is correct or create the missing file
 import { useLocation } from "react-router-dom";
 
 const TabsContentMap = {

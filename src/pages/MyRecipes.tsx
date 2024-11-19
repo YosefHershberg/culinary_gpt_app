@@ -15,13 +15,14 @@ const MyRecipes: React.FC = () => {
   const navigate = useNavigate()
   const { recipes, handleClick } = useMyRecipes()
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe()
-  const { sortedRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes)
-  
+  const { filteredRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes)
+  // const { sortedRecipes, handleSortChange, currentSort } = useFilterRecipes(filteredRecipes)
+
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
       <div className="my-6 flex flex-col items-center w-full max-w-[40rem]">
-        <div className="w-full relative h-10 flex items-center justify-center">
-          <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+        <h1 className="text-2xl font-semibold text-center">My Recipes</h1>
+        <div className="relative h-10 w-full">
           <FilterOptionsDropdown
             handleFilterChange={handleFilterChange}
             currentFilter={currentFilter}
@@ -40,7 +41,7 @@ const MyRecipes: React.FC = () => {
           </div>
         }
 
-        {sortedRecipes.map((recipe: RecipeType) => (
+        {filteredRecipes.map((recipe: RecipeType) => (
           <Recipe
             key={recipe.id}
             recipe={recipe}
@@ -123,7 +124,7 @@ const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFil
       <DropdownMenuTrigger asChild>
         <Button
           variant='outline'
-          className="absolute top-0 right-1 flex items-center gap-2"
+          className="flex items-center gap-2"
         >
           <span className="text-md">Filter</span>
           <Filter className="size-4" />
@@ -133,8 +134,6 @@ const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFil
         <DropdownMenuLabel>Filter by..</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={currentFilter} onValueChange={(val) => handleFilterChange(val as FilterOptions)}>
-          <DropdownMenuRadioItem value="creation-date">Creation Date</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="recipes">Recipes</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="cocktails">Cocktails</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

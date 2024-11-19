@@ -1,5 +1,5 @@
 import IngredientsTabs from '@/components/create-recipe-steps/IngredientsTabs';
-import IngredientSearchBar from '@/components/IngredientSearchBar';
+import IngredientSearchBar from '@/components/create-components/IngredientSearchBar';
 import IngredientListContextProvider from '@/context/ingredient-list-context';
 
 const placeholders = [

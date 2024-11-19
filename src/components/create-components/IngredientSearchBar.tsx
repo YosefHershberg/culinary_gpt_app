@@ -4,7 +4,7 @@ import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-van
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 import { Ingredient, IngredientType } from '@/lib/types';
-import IngredientListMenuDropdown from './IngredientListMenuDropdown';
+import IngredientListMenuDropdown from '../create-components/IngredientListMenuDropdown';
 import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 
 //NOTE: Should I divide the logic into hook?

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import IconStepper from '@/components/Stepper';
+import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
 import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional';

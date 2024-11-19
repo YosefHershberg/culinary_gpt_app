@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { getIngredientSuggestions } from '@/services/ingredient.service';
 
 import { IngredientCategories } from "@/lib/enums";
-import IngredientsList from "../IngredientList";
+import IngredientsList from "../create-components/IngredientList";
 
 const TabsContentMap = {
     [IngredientCategories.Common]: (

@@ -60,7 +60,7 @@ const WelcomePage: React.FC = () => {
           <img
             className='object-contain max-w-[40rem] md:w-full w-2/3 min-w-[20rem]'
             src={kitchenToolsImage}
-            alt=""
+            alt="kitchen tools"
           />
         </motion.div>
       </div>
