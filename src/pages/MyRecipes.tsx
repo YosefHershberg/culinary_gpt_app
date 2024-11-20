@@ -6,13 +6,14 @@ import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
 import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
 import Recipe from "@/components/my-recipes/Recipe";
 import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
+
 import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
 import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
 import useFilterRecipes from "@/hooks/componentHooks/useFilterRecipes";
 import useSortRecipes from "@/hooks/componentHooks/useSortRecipes";
+import useSearchRecipes from "@/hooks/componentHooks/useSearchRecipes";
 
 import { RecipeWithImage as RecipeType } from "@/lib/types";
-import useSearchRecipes from "@/hooks/componentHooks/useSearchRecipes";
 
 const MyRecipes: React.FC = () => {
   const navigate = useNavigate()
@@ -20,7 +21,7 @@ const MyRecipes: React.FC = () => {
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe()
   const { filteredRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes)
   const { sortedRecipes, handleSortChange, currentSort } = useSortRecipes(filteredRecipes)
-  const { isSearchBarFocused, setIsSearchBarFocused, handleValueChange, searchValue, foundRecipes } = useSearchRecipes(recipes)
+  const { isSearchBarFocused, setIsSearchBarFocused, handleValueChange, searchValue, foundRecipes, isDebouncing } = useSearchRecipes(recipes)
 
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
@@ -38,6 +39,7 @@ const MyRecipes: React.FC = () => {
             />
           </>}
           <SearchRecipesBar
+            isDebouncing={isDebouncing}
             searchValue={searchValue}
             handleValueChange={handleValueChange}
             setIsSearchBarFocused={setIsSearchBarFocused}
@@ -56,7 +58,7 @@ const MyRecipes: React.FC = () => {
           </div>
         }
 
-        {foundRecipes.length === 0 && recipes.length > 0 &&
+        {foundRecipes.length === 0 && searchValue !== '' && !isDebouncing &&
           <div className="flex flex-col items-center">
             <p className="text-center text-xl mt-10">No recipes found!</p>
           </div>

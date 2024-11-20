@@ -1,13 +1,15 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { Input } from '../ui/input'
+import LoadingSpinner from '../ui/LoadingSpinner'
 
 type SearchRecipesBarProps = {
     setIsSearchBarFocused: (value: boolean) => void,
     handleValueChange: (value: string) => void,
-    searchValue: string
+    searchValue: string,
+    isDebouncing: boolean
 }
 
-const SearchRecipesBar: React.FC<SearchRecipesBarProps> = ({ setIsSearchBarFocused, handleValueChange, searchValue }) => {
+const SearchRecipesBar: React.FC<SearchRecipesBarProps> = ({ setIsSearchBarFocused, handleValueChange, searchValue, isDebouncing }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(false)
 
     useLayoutEffect(() => {
@@ -15,7 +17,7 @@ const SearchRecipesBar: React.FC<SearchRecipesBarProps> = ({ setIsSearchBarFocus
     }, []);
 
     return (
-        <>
+        <div className='flex-1 relative'>
             <Input
                 value={searchValue}
                 onChange={(e) => handleValueChange(e.target.value)}
@@ -23,9 +25,14 @@ const SearchRecipesBar: React.FC<SearchRecipesBarProps> = ({ setIsSearchBarFocus
                 onFocus={isSmallScreen ? () => setIsSearchBarFocused(true) : () => { }}
                 type="test"
                 placeholder="Search for a recipe"
-                className="flex-1"
+                className="w-full"
             />
-        </>
+            {isDebouncing && searchValue !== '' &&
+                <div className="absolute right-0 top-0 bottom-0 flex items-center pr-2">
+                    <LoadingSpinner className='size-5' />
+                </div>
+            }
+        </div>
 
     )
 }
