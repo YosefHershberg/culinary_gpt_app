@@ -2,15 +2,17 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
+import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
+import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
+import Recipe from "@/components/my-recipes/Recipe";
+import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
 import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
 import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
 import useFilterRecipes from "@/hooks/componentHooks/useFilterRecipes";
+import useSortRecipes from "@/hooks/componentHooks/useSortRecipes";
 
 import { RecipeWithImage as RecipeType } from "@/lib/types";
-import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
-import Recipe from "@/components/my-recipes/Recipe";
-import useSortRecipes from "@/hooks/componentHooks/useSortRecipes";
-import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
+import useSearchRecipes from "@/hooks/componentHooks/useSearchRecipes";
 
 const MyRecipes: React.FC = () => {
   const navigate = useNavigate()
@@ -18,17 +20,28 @@ const MyRecipes: React.FC = () => {
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe()
   const { filteredRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes)
   const { sortedRecipes, handleSortChange, currentSort } = useSortRecipes(filteredRecipes)
+  const { isSearchBarFocused, setIsSearchBarFocused, handleValueChange, searchValue, foundRecipes } = useSearchRecipes(recipes)
 
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
       <div className="my-6 flex flex-col items-center w-full max-w-[40rem]">
         <h1 className="text-2xl font-semibold text-center mb-4">My Recipes</h1>
         <div className="relative h-10 w-full flex gap-3">
-          <FilterOptionsDropdown
-            handleFilterChange={handleFilterChange}
-            currentFilter={currentFilter}
+          {!isSearchBarFocused && <>
+            <FilterOptionsDropdown
+              handleFilterChange={handleFilterChange}
+              currentFilter={currentFilter}
+            />
+            <SortOptionsDropdown
+              handleSortChange={handleSortChange}
+              currentSort={currentSort}
+            />
+          </>}
+          <SearchRecipesBar
+            searchValue={searchValue}
+            handleValueChange={handleValueChange}
+            setIsSearchBarFocused={setIsSearchBarFocused}
           />
-          <SortOptionsDropdown handleSortChange={handleSortChange} currentSort={currentSort} />
         </div>
         {recipes.length === 0 &&
           <div className="flex flex-col items-center">
@@ -43,14 +56,27 @@ const MyRecipes: React.FC = () => {
           </div>
         }
 
-        {sortedRecipes.map((recipe: RecipeType) => (
+        {foundRecipes.length === 0 && recipes.length > 0 &&
+          <div className="flex flex-col items-center">
+            <p className="text-center text-xl mt-10">No recipes found!</p>
+          </div>
+        }
+
+        {searchValue === '' ? sortedRecipes.map((recipe: RecipeType) => (
           <Recipe
             key={recipe.id}
             recipe={recipe}
             handleClick={handleClick}
             handleOpenModal={handleOpenModal}
           />
-        ))}
+        )): foundRecipes.map((recipe: RecipeType) => (
+          <Recipe
+            key={recipe.id}
+            recipe={recipe}
+            handleClick={handleClick}
+            handleOpenModal={handleOpenModal}
+          />))
+        }
       </div>
 
       <DeleteRecipeModal
