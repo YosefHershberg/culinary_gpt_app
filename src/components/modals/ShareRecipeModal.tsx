@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/dialog"
 import { Copy, X } from "lucide-react"
 import { Button } from "../ui/button"
-import { FacebookIcon, XIcon, FacebookShareButton, TwitterShareButton, WhatsappShareButton, WhatsappIcon } from 'react-share'
 import { toast } from "../ui/use-toast"
+
+import facebookLogo from '@/assets/logos/facebook-logo.png'
+import whatsappLogo from '@/assets/logos/whatsapp-logo.png'
+import xLogo from '@/assets/logos/x-logo.png'
 
 const title = 'Check out this recipe I created with CulinaryGPT'
 
@@ -52,7 +55,11 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
                             rel="noopener noreferrer"
                             className="flex flex-col items-center gap-2"
                         >
-                            <FacebookIcon size={32} round />
+                            <img
+                                className="size-10"
+                                src={facebookLogo}
+                                alt="facebook logo"
+                            />
                             <span>Facebook</span>
                         </a>
                     </Button>
@@ -67,7 +74,11 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
                             rel="noopener noreferrer"
                             className="flex flex-col items-center gap-2"
                         >
-                            <XIcon size={32} round />
+                            <img
+                                className="size-10"
+                                src={xLogo}
+                                alt="x logo"
+                            />
                             <span>X</span>
                         </a>
                     </Button>
@@ -82,7 +93,11 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
                             rel="noopener noreferrer"
                             className="flex flex-col items-center gap-2"
                         >
-                            <WhatsappIcon size={32} round />
+                            <img
+                                className="size-10"
+                                src={whatsappLogo}
+                                alt="whatsapp logo"
+                            />
                             <span>WhatsApp</span>
                         </a>
                     </Button>
@@ -92,12 +107,11 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
                         onClick={handleCopyToClipboard}
                         className="flex flex-col items-center gap-2 h-fit"
                     >
-                        <Copy size={32} />
+                        <Copy className="size-10" />
                         <span>Copy link</span>
                     </Button>
                 </div>
 
-                {/* </DialogDescription> */}
                 <DialogClose
                     onClick={close}
                     className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"

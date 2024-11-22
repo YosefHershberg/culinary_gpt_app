@@ -1,4 +1,4 @@
-import logo from '@/assets/logo.png'
+import logo from '@/assets/logos/logo.png'
 
 const Logo: React.FC = () => {
     return (

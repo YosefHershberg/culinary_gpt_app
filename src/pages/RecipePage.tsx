@@ -38,13 +38,13 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                         <h2 className='text-2xl font-semibold text-center'>{createdRecipe.recipe.title}</h2>
                         <p className='text-lg text-center mt-4'>{createdRecipe.recipe.description}</p>
                     </div>
-                    <div className='size-80 rounded-lg flex flex-col items-center mt-8 bg-transparent/10'>
+                    <div className='sm:size-[25rem] rounded-lg flex flex-col items-center mt-8 bg-transparent/10'>
                         {createdRecipe.image_url ? <img
                             src={createdRecipe.image_url}
                             alt={createdRecipe.recipe.title}
                             className='size-full object-cover rounded-lg aspect-square'
                         /> :
-                            <Lottie animationData={loadingRecipeAnimation} className='size-[20rem] p-5' />
+                            <Lottie animationData={loadingRecipeAnimation} className='size-full p-10' />
                         }
                     </div>
                     {!createdRecipe.image_url &&
