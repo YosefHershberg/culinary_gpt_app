@@ -34,51 +34,69 @@ const ShareRecipeModal: React.FC<ShareRecipeModalProps> = ({ url, isOpen, close 
         <Dialog open={isOpen}>
             {/* NOTE: Need this to prevent warning */}
             <DialogTrigger></DialogTrigger>
-            
+
             <DialogContent>
                 <DialogTitle>How Would you like to share your recipe?</DialogTitle>
 
                 {/* NOTE: Need this to prevent warning */}
                 <DialogDescription></DialogDescription>
 
-                <div className="mt-5 flex justify-around">
-                    <FacebookShareButton
-                        url={url}
-                        className="flex flex-col items-center gap-2"
+                <div className="flex justify-around">
+                    <Button
+                        variant='ghost'
+                        className="h-fit"
                     >
-                        <FacebookIcon size={32} round />
-                        Facebook
-                    </FacebookShareButton>
-
-                    <TwitterShareButton
-                        url={url}
-                        title={title}
-                        className="flex flex-col items-center gap-2"
-                    >
-                        <XIcon size={32} round />
-                        X
-                    </TwitterShareButton>
-
-                    <WhatsappShareButton
-                        url={url}
-                        title={title}
-                        separator=":: "
-                        className="flex flex-col items-center gap-2"
-                    >
-                        <WhatsappIcon size={32} round />
-                        WhatsApp
-                    </WhatsappShareButton>
+                        <a
+                            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex flex-col items-center gap-2"
+                        >
+                            <FacebookIcon size={32} round />
+                            <span>Facebook</span>
+                        </a>
+                    </Button>
 
                     <Button
-                        onClick={handleCopyToClipboard}
-                        variant='unstyled'
-                        size='icon'
-                        className="size-15 flex flex-col items-center gap-2"
+                        variant='ghost'
+                        className="h-fit"
                     >
-                        <Copy size='32' />
-                        Copy link
+                        <a
+                            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex flex-col items-center gap-2"
+                        >
+                            <XIcon size={32} round />
+                            <span>X</span>
+                        </a>
+                    </Button>
+
+                    <Button
+                        variant='ghost'
+                        className="h-fit"
+                    >
+                        <a
+                            href={`https://wa.me/?text=${encodeURIComponent(`${title} :: ${url}`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex flex-col items-center gap-2"
+                        >
+                            <WhatsappIcon size={32} round />
+                            <span>WhatsApp</span>
+                        </a>
+                    </Button>
+
+                    <Button
+                        variant='ghost'
+                        onClick={handleCopyToClipboard}
+                        className="flex flex-col items-center gap-2 h-fit"
+                    >
+                        <Copy size={32} />
+                        <span>Copy link</span>
                     </Button>
                 </div>
+
                 {/* </DialogDescription> */}
                 <DialogClose
                     onClick={close}
