@@ -49,3 +49,5 @@ export type KitchenUtils = {
 export type IngredientType = 'food' | 'drink';
 
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
+
+export type KitchenUtil = keyof KitchenUtils

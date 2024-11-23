@@ -14,6 +14,7 @@ const useOptDeleteUserRecipe = () => {
             const previousCachedData = queryClient.getQueryData<RecipeWithImage[]>(['userRecipes']) as RecipeWithImage[]
 
             queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: RecipeWithImage) => r.id !== recipe.id)])
+
             return { previousCachedData }
         },
 
@@ -27,7 +28,6 @@ const useOptDeleteUserRecipe = () => {
 
         onError: (error: Error, _recipe: RecipeWithImage, context: any) => {
             queryClient.setQueryData(['userRecipes'], context?.previousCachedData)
-            console.log(error);
             toast({
                 variant: "destructive",
                 title: "Oops! Something went wrong!",

@@ -3,21 +3,19 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/context/auth-context'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 
-import useOptAddKitchenUtil from './optimistic/useOptAddKitchenUtil'
-import useOptDeleteKitchenUtil from './optimistic/useOptDeleteKitchenUtil'
+import { KitchenUtil } from '@/lib/types'
+import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
 
 type UseKitchenUtilsReturnType = {
     userKitchenUtils: any;
     isLoadingUserUtils: boolean;
-    addKitchenUtil: (util: string) => void;
-    removeKitchenUtil: (util: string) => void;
+    toggleKitchenUtil: (util: KitchenUtil) => void;
 }
 
 const useKitchenUtils = (): UseKitchenUtilsReturnType => {
     const { isSignedIn } = useAuth()
 
-    const addKitchenUtilMutation = useOptAddKitchenUtil()
-    const removeKitchenUtilMutation = useOptDeleteKitchenUtil()
+    const addKitchenUtilMutation = useOptToggleKitchenUtil()
 
     const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
         queryKey: ['userKitchenUtils'],
@@ -26,25 +24,14 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
         throwOnError: true
     })
 
-    const addKitchenUtil = (util: string) => {
-        console.log('adding kitchen util', util);
-        if (userKitchenUtils) {
-            addKitchenUtilMutation.mutate(util)
-        }
-    }
-
-    const removeKitchenUtil = (util: string) => {
-        console.log('removing kitchen util', util);
-        if (userKitchenUtils) {
-            removeKitchenUtilMutation.mutate(util)
-        }
+    const toggleKitchenUtil = async (util: KitchenUtil) => {
+        addKitchenUtilMutation.mutate(util)
     }
 
     return {
         userKitchenUtils,
         isLoadingUserUtils,
-        addKitchenUtil,
-        removeKitchenUtil
+        toggleKitchenUtil,
     }
 }
 

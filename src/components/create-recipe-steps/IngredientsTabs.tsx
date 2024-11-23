@@ -5,6 +5,7 @@ import { getIngredientSuggestions } from '@/services/ingredient.service';
 
 import { IngredientCategories } from "@/lib/enums";
 import IngredientsList from "../create-components/IngredientList";
+import { Beef, Carrot, Croissant, EggFried, LeafyGreen, Milk } from "lucide-react";
 
 const TabsContentMap = {
     [IngredientCategories.Common]: (
@@ -69,42 +70,54 @@ const IngredientsTabs: React.FC = () => {
                         className="flex-1"
                         value={IngredientCategories.Common}
                     >
-                        The Usuals
+                        <span className="flex items-center gap-2">
+                            The Usuals <EggFried className="size-4" />
+                        </span>
                     </TabsTrigger>
                     <TabsTrigger
                         onClick={() => setActiveTab(IngredientCategories.Dairy)}
                         className="flex-1"
                         value={IngredientCategories.Dairy}
                     >
-                        Dairy
+                        <span className="flex items-center gap-2">
+                            Dairy <Milk className="size-4" />
+                        </span>
                     </TabsTrigger>
                     <TabsTrigger
                         onClick={() => setActiveTab(IngredientCategories.Vegetables)}
                         className="flex-1"
                         value={IngredientCategories.Vegetables}
                     >
-                        Vegetables & Greens
+                        <span className="flex items-center gap-2">
+                            Vegetables & Greens <Carrot className="size-4" />
+                        </span>
                     </TabsTrigger>
                     <TabsTrigger
                         onClick={() => setActiveTab(IngredientCategories.Spices)}
                         className="flex-1"
                         value={IngredientCategories.Spices}
                     >
-                        Spices
+                        <span className="flex items-center gap-2">
+                            Spices <LeafyGreen className="size-4" />
+                        </span>
                     </TabsTrigger>
                     <TabsTrigger
                         onClick={() => setActiveTab(IngredientCategories.Carbs)}
                         className="flex-1"
                         value={IngredientCategories.Carbs}
                     >
-                        Carbs
+                        <span className="flex items-center gap-2">
+                            Carbs <Croissant className="size-4" />
+                        </span>
                     </TabsTrigger>
                     <TabsTrigger
                         onClick={() => setActiveTab(IngredientCategories.Meat)}
                         className="flex-1"
                         value={IngredientCategories.Meat}
                     >
-                        Meat
+                        <span className="flex items-center gap-2">
+                            Meat <Beef className="size-4" />
+                        </span>
                     </TabsTrigger>
                 </div>
             </TabsList>

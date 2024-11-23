@@ -5,12 +5,7 @@ export const getUserKitchenUtils = async () => {
     return data
 }
 
-export const addUserKitchenUtil = async (util: string) => {
+export const toggleUserKitchenUtil = async (util: string) => {
     const { data } = await axiosClient.patch('/user/kitchen-utils', { name: util, value: true })
-    return data
-}
-
-export const deleteUserKitchenUtil = async (util: string) => {
-    const { data } = await axiosClient.patch('/user/kitchen-utils', { name: util, value: false })
     return data
 }

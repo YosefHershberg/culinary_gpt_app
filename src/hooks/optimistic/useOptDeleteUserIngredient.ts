@@ -20,7 +20,6 @@ const useOptdeleteUserIngredient = () => {
 
         onError: (error: Error, _ingredient: Ingredient, context: any) => {
             queryClient.setQueryData(['userIngredients'], context?.previousIngredients)
-            console.log(error);
             toast({
                 variant: "destructive",
                 title: "Oops! Something went wrong!",

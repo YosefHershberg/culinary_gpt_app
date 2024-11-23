@@ -9,27 +9,18 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
-import { KitchenUtils } from "@/lib/types";
+import { KitchenUtil, KitchenUtils } from "@/lib/types";
 
 const inputSchema = z.number().int().positive().min(1).max(99)
 
 const ChooseAdditional: React.FC = () => {
-    const { kitchenUtils: kitchenUtils, addKitchenUtil: addKitchenUtil, removeKitchenUtil } = useUserData()
+    const { kitchenUtils: kitchenUtils, toggleKitchenUtil } = useUserData()
     const { selectedTime,
         numOfPeople,
         handleTimeChange,
         handleMealSelected,
         handleNumOfPeopleChange,
     } = useCreateRecipe()
-
-    const handleKitchenUtilsSelected = (key: string) => {
-        //@ts-ignore
-        if (kitchenUtils[key] === false) {
-            return addKitchenUtil(key)
-        } else {
-            return removeKitchenUtil(key)
-        }
-    }
 
     return (
         <div className='flex-1 flex flex-col items-center'>
@@ -79,7 +70,7 @@ const ChooseAdditional: React.FC = () => {
                                 <Switch
                                     id={key}
                                     checked={kitchenUtils[key as keyof KitchenUtils]} //TODO: Damn! ugly. but it works
-                                    onCheckedChange={() => handleKitchenUtilsSelected(key)}
+                                    onCheckedChange={() => toggleKitchenUtil(key as KitchenUtil)}
                                 />
                                 <Label htmlFor={key}>{key}</Label>
                             </div>
