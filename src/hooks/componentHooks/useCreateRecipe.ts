@@ -1,5 +1,6 @@
-import useSSE from '../useSSE'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import useSSE from '../useSSE'
 import { Meals, Recipe, RecipeState } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
 
@@ -11,11 +12,13 @@ type CreateRecipeState = {
 }
 
 const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeState) => {
+    const navigate = useNavigate()
+
     const [recipe, setRecipe] = useState<RecipeState | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
-    const { stream, error, triggerStream, clearStream } = useSSE('/user/recipes/create', {
+    const { stream, error, triggerStream, clearStreamAndError } = useSSE('/user/recipes/create', {
         mealSelected,
         selectedTime,
         prompt,
@@ -32,7 +35,7 @@ const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: Cr
         if (stream[1]?.event === 'image') {
             setRecipe(prev => prev ? { ...prev, image_url: stream[1].data } : null)
             setIsLoadingImage(false)
-            clearStream()
+            clearStreamAndError()
         }
     }, [stream]);
 
@@ -45,6 +48,8 @@ const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: Cr
                 //@ts-ignore
                 description: error.response?.data?.message || 'An error occurred while creating your recipe.'
             })
+            clearStreamAndError()
+            navigate('/create-new-recipe')
         }
     }, [error]);
 

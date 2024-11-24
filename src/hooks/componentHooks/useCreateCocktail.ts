@@ -12,7 +12,7 @@ const useCreateCocktail = ({ prompt }: CreateRecipeState) => {
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 
-    const { stream, error, triggerStream, clearStream } = useSSE('/user/recipes/create-cocktail', {
+    const { stream, error, triggerStream, clearStreamAndError } = useSSE('/user/recipes/create-cocktail', {
         prompt,
     })
 
@@ -26,7 +26,7 @@ const useCreateCocktail = ({ prompt }: CreateRecipeState) => {
         if (stream[1]?.event === 'image') {
             setRecipe(prev => prev ? { ...prev, image_url: stream[1].data } : null)
             setIsLoadingImage(false)
-            clearStream()
+            clearStreamAndError()
         }
     }, [stream]);
 
@@ -39,6 +39,7 @@ const useCreateCocktail = ({ prompt }: CreateRecipeState) => {
                 //@ts-ignore
                 description: error.response?.data?.message || 'An error occurred while creating your recipe.'
             })
+            clearStreamAndError()
         }
     }, [error]);
 

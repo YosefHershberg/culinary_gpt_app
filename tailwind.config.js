@@ -23,6 +23,9 @@ module.exports = {
       },
     },
     extend: {
+      height: {
+        'screen': '100dvh',
+      },
       colors: {
         orange: 'hsl(33, 100%, 50%)',
         border: "hsl(var(--border))",

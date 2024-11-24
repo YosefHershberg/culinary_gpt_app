@@ -12,7 +12,7 @@ type UseSSEReturn = {
     stream: EventSourceMessage[],
     error: Error | null,
     triggerStream: () => void,
-    clearStream: () => void
+    clearStreamAndError: () => void,
 }
 
 const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
@@ -24,48 +24,8 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
     const [stream, setStream] = useState<EventSourceMessage[]>([])
     const [error, setError] = useState<Error | null>(null)
 
-    const triggerStream = () => setTrigger(true)
-
-    const clearStream = () => setStream([])
-
-    const streamFnc = async () => {
-        const ctrl = new AbortController();
-
-        activeHttpRequest.current.push(ctrl)
-
-        await fetchEventSource(`${env.VITE_API_URL}${endpoint}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${await getToken()}`
-            },
-            signal: ctrl.signal,
-            body: JSON.stringify(body),
-            onmessage(msg) {
-                if (msg.event === 'FatalError') {
-                    throw new Error(msg.data);
-                }
-                const parsedData = JSON.parse(msg.data)
-
-                // TODO: Check if of type EventSourceMessage
-                setStream(prevData => [...prevData, parsedData])
-            },
-            onerror(error) {
-                if (error instanceof Error) {
-                    setError(error)
-                } else {
-                    setError(new Error('An error occurred while streaming data.'))
-                }
-                setTrigger(false)
-                activeHttpRequest.current.forEach(ctrl => ctrl.abort())
-            }
-        });
-    }
-
     useEffect(() => {
-        return () => {
-            activeHttpRequest.current.forEach(ctrl => ctrl.abort())
-        }
+        return () => terminateStream()
     }, []);
 
     useEffect(() => {
@@ -78,8 +38,52 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
         }
     }, [trigger]);
 
+    const triggerStream = () => setTrigger(true)
+
+    const clearStreamAndError = () => {
+        setStream([])
+        setError(null)
+    }
+
+    const terminateStream = (error?: Error) => {
+        activeHttpRequest.current.forEach(ctrl => ctrl.abort())
+        setStream([])
+        setTrigger(false)
+        error && setError(error)
+    }
+
+    const streamFnc = async () => {
+        const ctrl = new AbortController();
+
+        activeHttpRequest.current.push(ctrl)
+
+        await fetchEventSource(`${env.VITE_API_URL}${endpoint}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${await getToken()}`
+            },
+            openWhenHidden: true,
+            signal: ctrl.signal,
+            body: JSON.stringify(body),
+            onmessage(msg) {
+                const parsedData = JSON.parse(msg.data)
+
+                if (parsedData.event === 'error') {
+                    return terminateStream(error instanceof Error ? error 
+                        : new Error(parsedData.data))
+                }
+
+                setStream(prevData => [...prevData, parsedData])
+            },
+            onerror(error) {
+                terminateStream(error instanceof Error ? error : new Error('An error occurred while streaming data'))
+            }
+        });
+    }
+
     return {
-        stream, error, triggerStream, clearStream
+        stream, error, triggerStream, clearStreamAndError
     }
 }
 
