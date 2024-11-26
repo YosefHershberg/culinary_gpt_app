@@ -91,7 +91,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         trigger()
     }
 
-    if (isLoadingRecipe) return <LoadingRecipePage duration={1200} />
+    if (isLoadingRecipe) return <LoadingRecipePage duration={1000} />
 
     return (
         <CreateRecipeContext.Provider value={{

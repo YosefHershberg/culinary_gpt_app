@@ -51,7 +51,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
         trigger()
     }
 
-    if (isLoadingRecipe) return <LoadingRecipePage duration={1200} />
+    if (isLoadingRecipe) return <LoadingRecipePage duration={600} />
 
     return (
         <CreateCocktailContext.Provider value={{

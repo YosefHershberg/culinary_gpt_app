@@ -10,22 +10,16 @@ const loadingStates = [
     text: "Your request has been received by the AI chef",
   },
   {
-    text: "This process usually takes 10 seconds",
+    text: "This process usually takes 5 seconds",
   },
   {
     text: "The AI chef is creating the recipe",
-  },
-  {
-    text: "Our AI artists are designing the recipe picture",
   },
   {
     text: "Double checking the recipe for you",
   },
   {
     text: "Almost done...",
-  },
-  {
-    text: "Your recipe is ready",
   },
   {
     text: "Sending your recipe to you",
