@@ -40,7 +40,7 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                     Share this recipe with friends on social platforms
                 </DialogDescription>
 
-                <div className="flex justify-around">
+                <div className="flex justify-around flex-wrap">
                     <DialogClose asChild>
                         <Button
                             variant='ghost'
