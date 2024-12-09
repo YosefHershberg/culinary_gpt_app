@@ -16,6 +16,11 @@ export const addUserIngredient = async (ingredient: Ingredient) => {
     return data
 }
 
+export const addMultipleIngredients = async (ingredients: Ingredient[]) => {
+    const { data } = await axiosClient.post('/user/ingredients/multiple', ingredients)
+    return data
+}
+
 export const deleteUserIngredient = async (ingredient: Ingredient) => {
     const { data } = await axiosClient.delete(`/user/ingredients/${ingredient.id}`)
     return data

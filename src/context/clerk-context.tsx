@@ -6,26 +6,19 @@ import { useTheme } from './theme-context';
 const ClerkProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { theme } = useTheme()
 
-    if (theme === 'light') {
-        return (
-            <CP
-                publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
-            >
-                {children}
-            </CP>
-        )
-    } else {
-        return (
-            <CP
-                publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
-                appearance={{
-                    baseTheme: dark
-                }}
-            >
-                {children}
-            </CP>
-        )
-    }
+    return (
+        <CP
+            afterSignOutUrl={'/'}
+            signInFallbackRedirectUrl={'/create-new-recipe'}
+            signUpFallbackRedirectUrl={'/create-new-recipe'}
+            publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
+            appearance={theme === 'dark' ? {
+                baseTheme: dark
+            } : undefined}
+        >
+            {children}
+        </CP>
+    )
 }
 
 export default ClerkProvider

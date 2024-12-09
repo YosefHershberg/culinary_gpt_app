@@ -85,12 +85,13 @@ const ChooseAdditional: React.FC = () => {
                     <div className="w-[25rem] max-w-[80vw] flex flex-col items-center">
                         <Slider
                             className="h-7"
-                            defaultValue={[selectedTime - 5]}
+                            defaultValue={[selectedTime]}
+                            min={10}
                             max={120}
                             step={10}
                             onValueChange={handleTimeChange}
                         />
-                        <p>{selectedTime > 120 ? '120+' : selectedTime} {' minutes'}</p>
+                        <p>{selectedTime === 120 ? '120+' : selectedTime} {' minutes'}</p>
                     </div>
                 </div>
             </div>

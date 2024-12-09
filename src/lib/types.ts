@@ -1,7 +1,9 @@
+import { IngredientCategories } from "./enums";
+
 export type Ingredient = {
     id: string;
     name: string;
-    category: string;
+    category: (typeof IngredientCategories)[keyof typeof IngredientCategories];
     popularity: number;
     type: IngredientType[];
 }

@@ -32,8 +32,8 @@ const IngredientListContextProvider = ({ children }: { children: React.ReactNode
 
     return (
         <IngredientListContext.Provider value={{
-            handleClicked,
             userIngredientsSet: new Set(userIngredients.map(ingredient => ingredient.id)),
+            handleClicked,
             changeFilterOptions,
             filterOptions
         }}>

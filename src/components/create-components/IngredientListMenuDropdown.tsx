@@ -16,9 +16,9 @@ import { useUserData } from '@/context/user-data-context'
 const IngredientListMenuDropdown: React.FC = () => {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
     const { changeFilterOptions, filterOptions } = useIngredientList()
-    const { deleteAllUserIngredients } = useUserData()
+    const { deleteAllUserIngredients, addCommonIngredients } = useUserData()
 
-    const handleClick = () => {
+    const handleClickClearIngredients = () => {
         deleteAllUserIngredients()
         setIsOpenModal(false)
     }
@@ -43,7 +43,7 @@ const IngredientListMenuDropdown: React.FC = () => {
                     </div>
 
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
+                <DropdownMenuContent className="w-64">
                     <DropdownMenuLabel className='flex justify-center'>Options</DropdownMenuLabel>
                     <DropdownMenuSeparator />
 
@@ -56,6 +56,11 @@ const IngredientListMenuDropdown: React.FC = () => {
                             <span>Clear all ingredients</span>
                         </DropdownMenuItem>
                     </div>
+
+                    <DropdownMenuItem onClick={addCommonIngredients}>
+                        <DiamondMinus className="mr-2 size-4" />
+                        <span>Add all common ingredients</span>
+                    </DropdownMenuItem>
 
                     <DropdownMenuSub>
                         <DropdownMenuSubTrigger>
@@ -78,7 +83,7 @@ const IngredientListMenuDropdown: React.FC = () => {
             {isOpenModal && <ClearIngredientsModal
                 isOpen={isOpenModal}
                 close={() => setIsOpenModal(false)}
-                handleClick={handleClick}
+                handleClick={handleClickClearIngredients}
             />}
         </>
     )
