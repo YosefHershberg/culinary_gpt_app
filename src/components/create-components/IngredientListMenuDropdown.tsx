@@ -27,11 +27,11 @@ const IngredientListMenuDropdown: React.FC = () => {
         <>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <div>
+                    <div> {/* NOTE: This div is here to prevent some error in the console */}
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <Button variant='outline' size='icon'>
+                                    <Button variant='outline' size='icon' className='aspect-square'>
                                         <Menu />
                                     </Button>
                                 </TooltipTrigger>

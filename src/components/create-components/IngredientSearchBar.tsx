@@ -6,6 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Ingredient, IngredientType } from '@/lib/types';
 import IngredientListMenuDropdown from '../create-components/IngredientListMenuDropdown';
 import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
+import ImageDetectorModal from './ImageDetectorModal';
 
 //NOTE: Should I divide the logic into hook?
 
@@ -37,6 +38,7 @@ const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders,
                     setValue={setSearchValue}
                 />
                 <IngredientListMenuDropdown />
+                <ImageDetectorModal />
             </div>
             <DropdownMenu open={isDropdownOpen}>
                 <DropdownMenuTrigger></DropdownMenuTrigger>
