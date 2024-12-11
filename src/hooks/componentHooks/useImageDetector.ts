@@ -8,7 +8,7 @@ type UseImageDetectorResponse = {
     base64Image: string;
     setBase64Image: Dispatch<React.SetStateAction<string>>;
     handleTriggerImageDetect: () => void;
-    ingredientResults: any;
+    ingredientResults: Ingredient[] | undefined;
     isLoading: boolean;
     handleAddIngredientsFromImage: () => void;
     clearImageDetector: () => void;
@@ -33,7 +33,7 @@ const useImageDetector = (): UseImageDetectorResponse => {
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
                 //@ts-expect-error
-                description: error.response?.data?.message || 'An error occurred while processing your image.'
+                description: imageDetect.error.response?.data?.message || 'An error occurred while processing your image.'
             });
         }
     }, [imageDetect.error]);

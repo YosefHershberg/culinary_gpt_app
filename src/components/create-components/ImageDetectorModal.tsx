@@ -1,6 +1,6 @@
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import useImageDetector from "@/hooks/componentHooks/useImageDetecor"
+import useImageDetector from "@/hooks/componentHooks/useImageDetector"
 
 import { Camera } from "lucide-react"
 import ImageUploader from "../ui/ImageUploader"
@@ -28,7 +28,7 @@ const ImageDetectorModal = () => {
         </Tooltip>
       </TooltipProvider>
       <DialogContent className="sm:max-w-[30rem] min-h-[300px]">
-        {ingredientResults?.length > 0 ?
+        {ingredientResults && ingredientResults.length > 0 ?
           <div className="flex flex-col items-center">
             <DialogTitle className="text-center">Ingredients detected</DialogTitle>
             <DialogDescription className="text-center mt-3">
@@ -36,7 +36,7 @@ const ImageDetectorModal = () => {
             </DialogDescription>
             <div className="w-full flex flex-col items-center h-full">
               <ul className="mt-3">
-                {ingredientResults.map((ingredient: Ingredient, index: number) => (
+                {ingredientResults?.map((ingredient: Ingredient, index: number) => (
                   <li key={index} className="text-center">{ingredient.name}</li>
                 ))}
               </ul>
