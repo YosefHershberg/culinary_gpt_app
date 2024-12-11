@@ -1,54 +1,18 @@
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import useImageDetector from "@/hooks/componentHooks/useImageDetecor"
+
 import { Camera } from "lucide-react"
 import ImageUploader from "../ui/ImageUploader"
-import { useEffect, useState } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
-import useHttpClient from "@/hooks/useHttpClient"
 import LoadingSpinner from "../ui/LoadingSpinner"
-import { toast } from "../ui/use-toast"
+import { Ingredient } from "@/lib/types"
 
 const ImageDetectorModal = () => {
-  const [base64Image, setBase64Image] = useState<string>('')
-
-  const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
-    endpoint: '/ingredients/image-detect',
-    method: 'POST',
-    body: { imageUrl: base64Image }
-  });
-
-  useEffect(() => {
-      error && console.log('error')
-      // toast({
-      //   variant: 'destructive',
-      //   title: 'Oops! Something went wrong!',
-      //   //@ts-expect-error
-      //   description: error.response?.data?.message || 'An error occurred while processing your image.'
-      // });
-  }, [error]);
-
-  useEffect(() => {
-    if (results) {
-      console.log(results)
-      setBase64Image('');
-    }
-  }, [results])
-
-  const handleClick = async () => {
-    triggerHttpReq();
-  }
-
+  const { isLoading, base64Image, setBase64Image, ingredientResults, handleTriggerImageDetect, handleAddIngredientsFromImage, clearImageDetector } = useImageDetector()
 
   return (
-    <Dialog onOpenChange={(e) => !e && setBase64Image('')}>
+    <Dialog onOpenChange={(e) => !e && clearImageDetector}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -63,35 +27,65 @@ const ImageDetectorModal = () => {
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <DialogContent className="sm:max-w-[425px]">
-        {isLoading ?
-          <div>
-            <LoadingSpinner />
-          </div> :
-          <>
-
-            <DialogHeader>
-              <DialogTitle className="text-center">Detect Ingredients in image</DialogTitle>
-              <DialogDescription>
-                Upload an image to add ingredients that are detected in the image.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="w-full flex justify-center">
-              <ImageUploader
-                base64Image={base64Image}
-                setBase64Image={setBase64Image}
-              />
+      <DialogContent className="sm:max-w-[30rem] min-h-[300px]">
+        {ingredientResults?.length > 0 ?
+          <div className="flex flex-col items-center">
+            <DialogTitle className="text-center">Ingredients detected</DialogTitle>
+            <DialogDescription className="text-center mt-3">
+              The following ingredients were detected in the image.
+            </DialogDescription>
+            <div className="w-full flex flex-col items-center h-full">
+              <ul className="mt-3">
+                {ingredientResults.map((ingredient: Ingredient, index: number) => (
+                  <li key={index} className="text-center">{ingredient.name}</li>
+                ))}
+              </ul>
             </div>
             <DialogFooter>
-              <Button
-                onClick={handleClick}
-                disabled={base64Image === ''}
-                type="submit"
-              >
-                Check for ingredients
-              </Button>
+              <DialogClose asChild>
+                <Button onClick={() => {
+                  handleAddIngredientsFromImage()
+                  clearImageDetector()
+                }}>Add Ingredients</Button>
+              </DialogClose>
             </DialogFooter>
-          </>
+          </div> :
+          isLoading ?
+            <div className="h-full w-full flex flex-col">
+              <DialogTitle className="text-center">Checking the image for ingredients...</DialogTitle>
+              <DialogDescription className="text-center mt-3">
+                Please wait while we process the image.
+              </DialogDescription>
+              <div className="flex-1 flex items-center justify-center">
+                <LoadingSpinner className="size-20" />
+              </div>
+            </div> :
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-center">Detect Ingredients in image</DialogTitle>
+                <DialogDescription className="text-center text-balance mt-3">
+                  Upload an image to add ingredients that are detected in the image.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="w-full flex flex-col items-center">
+                <ImageUploader
+                  base64Image={base64Image}
+                  setBase64Image={setBase64Image}
+                />
+                {ingredientResults?.length === 0 && base64Image === '' &&
+                  <span className="text-red-500">No ingredients found :/</span>
+                }
+              </div>
+              <DialogFooter>
+                <Button
+                  onClick={handleTriggerImageDetect}
+                  disabled={base64Image === ''}
+                  type="submit"
+                >
+                  Check for ingredients
+                </Button>
+              </DialogFooter>
+            </>
         }
 
       </DialogContent>

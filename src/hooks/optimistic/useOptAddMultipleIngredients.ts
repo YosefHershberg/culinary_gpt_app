@@ -30,7 +30,7 @@ const useOptAddMultipleIngredients = () => {
         onSuccess: () => {
             toast({
                 variant: "default",
-                title: "All common ingredients added successfully",
+                title: "Your ingredients added successfully",
             });
         },
 

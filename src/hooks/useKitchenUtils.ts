@@ -6,9 +6,9 @@ import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 import { KitchenUtil } from '@/lib/types'
 import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
 
-type UseKitchenUtilsReturnType = {
-    userKitchenUtils: any;
-    isLoadingUserUtils: boolean;
+export type UseKitchenUtilsReturnType = {
+    kitchenUtils: { [key: string]: boolean };
+    isLoading: boolean;
     toggleKitchenUtil: (util: KitchenUtil) => void;
 }
 
@@ -17,7 +17,7 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
 
     const addKitchenUtilMutation = useOptToggleKitchenUtil()
 
-    const { data: userKitchenUtils, isLoading: isLoadingUserUtils } = useQuery({
+    const { data: kitchenUtils, isLoading } = useQuery({
         queryKey: ['userKitchenUtils'],
         queryFn: () => getUserKitchenUtils(),
         enabled: !!isSignedIn,
@@ -29,10 +29,22 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
     }
 
     return {
-        userKitchenUtils,
-        isLoadingUserUtils,
+        kitchenUtils: kitchenUtils || initKitchenUtils,
+        isLoading,
         toggleKitchenUtil,
     }
 }
 
 export default useKitchenUtils
+
+const initKitchenUtils: { [key: string]: boolean } = {
+    "Stove Top": false,
+    "Oven": false,
+    "Microwave": false,
+    "Air Fryer": false,
+    "Blender": false,
+    "Food Processor": false,
+    "Slow Cooker": false,
+    "BBQ": false,
+    "Grill": false
+}
