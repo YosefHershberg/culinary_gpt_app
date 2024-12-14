@@ -7,6 +7,7 @@ import ImageUploader from "../ui/ImageUploader"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import LoadingSpinner from "../ui/LoadingSpinner"
 import { Ingredient } from "@/lib/types"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const ImageDetectorModal = () => {
   const { isLoading, base64Image, setBase64Image, ingredientResults, handleTriggerImageDetect, handleAddIngredientsFromImage, clearImageDetector } = useImageDetector()
@@ -37,7 +38,17 @@ const ImageDetectorModal = () => {
             <div className="w-full flex flex-col items-center h-full">
               <ul className="mt-3">
                 {ingredientResults?.map((ingredient: Ingredient, index: number) => (
-                  <li key={index} className="text-center">{ingredient.name}</li>
+                  <li key={index} className="flex items-center space-x-2">
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center h-10 px-3 gap-2"
+                    >
+                      <Checkbox id="terms" />
+                      <span>
+                        {ingredient.name}
+                      </span>
+                    </label>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -50,6 +61,7 @@ const ImageDetectorModal = () => {
               </DialogClose>
             </DialogFooter>
           </div> :
+
           isLoading ?
             <div className="h-full w-full flex flex-col">
               <DialogTitle className="text-center">Checking the image for ingredients...</DialogTitle>
@@ -60,6 +72,7 @@ const ImageDetectorModal = () => {
                 <LoadingSpinner className="size-20" />
               </div>
             </div> :
+
             <>
               <DialogHeader>
                 <DialogTitle className="text-center">Detect Ingredients in image</DialogTitle>
@@ -87,7 +100,6 @@ const ImageDetectorModal = () => {
               </DialogFooter>
             </>
         }
-
       </DialogContent>
     </Dialog>
   )

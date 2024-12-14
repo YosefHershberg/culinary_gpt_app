@@ -5,7 +5,7 @@ import { Ingredient } from "@/lib/types"
 import { OptionCheckbox } from "../ui/OptionCheckbox"
 import { useIngredientList } from "@/context/ingredient-list-context"
 import { useEffect, useState } from "react"
-import { FilterOptions } from "@/lib/enums"
+import { SortOptions } from "@/lib/enums"
 
 type UsualIngredientsContent = {
     queryKey: string,
@@ -13,7 +13,7 @@ type UsualIngredientsContent = {
 }
 
 const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn }) => {
-    const { filterOptions } = useIngredientList()
+    const { sortOption } = useIngredientList()
     const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>()
     
     const { data: ingredients, isLoading, error } = useQuery({
@@ -24,19 +24,19 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
     useEffect(() => {
         if (ingredients) {
             let filteredIngredients = [...ingredients]
-            switch (filterOptions) {
-                case FilterOptions.Popularity:
+            switch (sortOption) {
+                case SortOptions.Popularity:
                     filteredIngredients = filteredIngredients.sort((a, b) => b.popularity - a.popularity)
                     break
-                case FilterOptions.Alphabetical:
+                case SortOptions.Alphabetical:
                     filteredIngredients = filteredIngredients.sort((a, b) => a.name.localeCompare(b.name))
                     break
-                case FilterOptions.None:
+                case SortOptions.None:
                     break
             }
             setFilteredIngredients(filteredIngredients)
         }
-    }, [filterOptions, ingredients]);
+    }, [sortOption, ingredients]);
 
     if (error) {
         toast({

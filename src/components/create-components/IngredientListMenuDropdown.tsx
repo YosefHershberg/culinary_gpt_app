@@ -1,5 +1,5 @@
 import { Button } from '../ui/button'
-import { DiamondMinus, Menu, UserPlus } from 'lucide-react'
+import { ArrowDownWideNarrow, DiamondMinus, Menu, Plus } from 'lucide-react'
 import {
     Tooltip,
     TooltipContent,
@@ -7,7 +7,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../ui/dropdown-menu'
-import { FilterOptions } from '@/lib/enums'
+import { SortOptions } from '@/lib/enums'
 import { useIngredientList } from '@/context/ingredient-list-context'
 import { useState } from 'react'
 import ClearIngredientsModal from '../modals/ClearIngredientsModal'
@@ -15,7 +15,7 @@ import { useUserData } from '@/context/user-data-context'
 
 const IngredientListMenuDropdown: React.FC = () => {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-    const { changeFilterOptions, filterOptions } = useIngredientList()
+    const { changeSortOption, sortOption } = useIngredientList()
     const { deleteAllUserIngredients, addCommonIngredients } = useUserData()
 
     const handleClickClearIngredients = () => {
@@ -58,21 +58,21 @@ const IngredientListMenuDropdown: React.FC = () => {
                     </div>
 
                     <DropdownMenuItem onClick={addCommonIngredients}>
-                        <DiamondMinus className="mr-2 size-4" />
+                        <Plus className="mr-2 size-4" />
                         <span>Add all common ingredients</span>
                     </DropdownMenuItem>
 
                     <DropdownMenuSub>
                         <DropdownMenuSubTrigger>
-                            <UserPlus className="mr-2 size-4" />
-                            <span>Filter by..</span>
+                            <ArrowDownWideNarrow className="mr-2 size-4" />
+                            <span>Sort by..</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
-                                <DropdownMenuRadioGroup value={filterOptions} onValueChange={changeFilterOptions}>
-                                    <DropdownMenuRadioItem value={FilterOptions.Alphabetical}>Name</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value={FilterOptions.Popularity}>Popularity</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value={FilterOptions.None}>None</DropdownMenuRadioItem>
+                                <DropdownMenuRadioGroup value={sortOption} onValueChange={changeSortOption}>
+                                    <DropdownMenuRadioItem value={SortOptions.Alphabetical}>Name</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value={SortOptions.Popularity}>Popularity</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value={SortOptions.None}>None</DropdownMenuRadioItem>
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
