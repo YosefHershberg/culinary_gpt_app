@@ -1,19 +1,27 @@
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
+import { Camera } from "lucide-react"
+
+import useAddImageIngredients, { ingredientResultsState } from "@/hooks/componentHooks/useAddImageIngredients"
 import useImageDetector from "@/hooks/componentHooks/useImageDetector"
 
-import { Camera } from "lucide-react"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
+
 import ImageUploader from "../ui/ImageUploader"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 import LoadingSpinner from "../ui/LoadingSpinner"
-import { Ingredient } from "@/lib/types"
-import { Checkbox } from "@/components/ui/checkbox"
 
 const ImageDetectorModal = () => {
-  const { isLoading, base64Image, setBase64Image, ingredientResults, handleTriggerImageDetect, handleAddIngredientsFromImage, clearImageDetector } = useImageDetector()
+  const { isLoading, base64Image, setBase64Image, handleTriggerImageDetect, ingredientResults: data } = useImageDetector()
+  const { ingredientResults, handleAddIngredientsFromImage, handleChangeChecked, handleCheckAllIngredients, handleRemoveAllIngredients, clearIngredientsResults } = useAddImageIngredients(data)
+
+  const clearImageDetector = () => {
+    setBase64Image('')
+    clearIngredientsResults()
+  }
 
   return (
-    <Dialog onOpenChange={(e) => !e && clearImageDetector}>
+    <Dialog onOpenChange={(e) => !e && clearImageDetector()}>
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -29,23 +37,36 @@ const ImageDetectorModal = () => {
         </Tooltip>
       </TooltipProvider>
       <DialogContent className="sm:max-w-[30rem] min-h-[300px]">
-        {ingredientResults && ingredientResults.length > 0 ?
-          <div className="flex flex-col items-center">
+        {ingredientResults && ingredientResults?.length > 0 ?
+          <div className="flex flex-col items-center mx-3">
             <DialogTitle className="text-center">Ingredients detected</DialogTitle>
             <DialogDescription className="text-center mt-3">
               The following ingredients were detected in the image.
             </DialogDescription>
+            <div className="flex items-start w-full my-3 ml-5">
+              <label htmlFor="all" className="flex items-center gap-3">
+                <Checkbox
+                  id="all"
+                  onCheckedChange={(e) => e ? handleCheckAllIngredients() : handleRemoveAllIngredients()}
+                  checked={ingredientResults.every((ingredient: ingredientResultsState) => ingredient.checked)}
+                />
+                <h1 className="font-bold">Select all</h1>
+              </label>
+            </div>
             <div className="w-full flex flex-col items-center h-full">
-              <ul className="mt-3">
-                {ingredientResults?.map((ingredient: Ingredient, index: number) => (
+              <ul className="mt-3 max-h-56 overflow-auto mb-3 w-full">
+                {ingredientResults?.map((ingredient: ingredientResultsState, index: number) => (
                   <li key={index} className="flex items-center space-x-2">
                     <label
                       htmlFor="terms"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 flex items-center h-10 px-3 gap-2"
                     >
-                      <Checkbox id="terms" />
+                      <Checkbox
+                        onCheckedChange={() => handleChangeChecked(index)}
+                        checked={ingredientResults[index].checked}
+                        id="terms" />
                       <span>
-                        {ingredient.name}
+                        {ingredient.ingredient.name}
                       </span>
                     </label>
                   </li>
@@ -54,10 +75,14 @@ const ImageDetectorModal = () => {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button onClick={() => {
-                  handleAddIngredientsFromImage()
-                  clearImageDetector()
-                }}>Add Ingredients</Button>
+                <Button
+                  disabled={ingredientResults.every((ingredient: ingredientResultsState) => !ingredient.checked)}
+                  onClick={() => {
+                    handleAddIngredientsFromImage()
+                    clearImageDetector()
+                  }}>
+                  Add Ingredients
+                </Button>
               </DialogClose>
             </DialogFooter>
           </div> :

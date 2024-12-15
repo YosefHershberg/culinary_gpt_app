@@ -7,6 +7,7 @@ import useOptAddUserIngredient from './optimistic/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from './optimistic/useOptDeleteUserIngredient'
 import useOptDeleteAllUserIngredients from './optimistic/useOptDeleteAllUserIngredients'
 import useOptAddMultipleIngredients from './optimistic/useOptAddMultipleIngredients'
+import { toast } from '@/components/ui/use-toast'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];
@@ -41,8 +42,14 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
     const addMultipleIngredients = (ingredients: Ingredient[]) => {
         const missingIngredients = filterExistingIngredients(ingredients)
-        if (missingIngredients.length === 0) return
-        addMultipleIngredientsMutation.mutate(ingredients)
+
+        if (missingIngredients.length === 0) {
+            return toast({
+                variant: 'default',
+                title: 'No new ingredients to add!'
+            })
+        }
+        addMultipleIngredientsMutation.mutate(missingIngredients)
     }
 
     const addCommonIngredients = () => {
@@ -50,10 +57,8 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
         //Getting the common ingredients from the cache
         const commonIngredients = queryClient.getQueryData(['common-ingredient-suggestions']) as Ingredient[]
-
-        const missingIngredients = filterExistingIngredients(commonIngredients)
         
-        addMultipleIngredients(missingIngredients)
+        addMultipleIngredients(commonIngredients)
     }
     
     const filterExistingIngredients = (ingredients: Ingredient[]) => {

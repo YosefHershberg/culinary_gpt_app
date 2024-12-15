@@ -27,10 +27,10 @@ const useOptAddMultipleIngredients = () => {
             return { previousCachedData };
         },
 
-        onSuccess: () => {
+        onSuccess: (ingredients: Ingredient[]) => {
             toast({
                 variant: "default",
-                title: "Your ingredients added successfully",
+                title: `Added ${ingredients.length} ingredients!`,
             });
         },
 
