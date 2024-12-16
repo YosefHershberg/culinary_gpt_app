@@ -64,20 +64,25 @@ const MyRecipes: React.FC = () => {
           </div>
         }
 
-        {searchValue === '' ? sortedRecipes.map((recipe: RecipeType) => (
-          <Recipe
-            key={recipe.id}
-            recipe={recipe}
-            handleClick={handleClick}
-            handleOpenModal={handleOpenModal}
-          />
-        )): foundRecipes.map((recipe: RecipeType) => (
-          <Recipe
-            key={recipe.id}
-            recipe={recipe}
-            handleClick={handleClick}
-            handleOpenModal={handleOpenModal}
-          />))
+        {searchValue === '' ?
+          sortedRecipes.length == 0 ?
+            <div className="flex flex-col items-center">
+              <p className="text-center text-xl mt-10">No recipes found!</p>
+            </div> :
+            sortedRecipes.map((recipe: RecipeType) => (
+              <Recipe
+                key={recipe.id}
+                recipe={recipe}
+                handleClick={handleClick}
+                handleOpenModal={handleOpenModal}
+              />
+            )) : foundRecipes.map((recipe: RecipeType) => (
+              <Recipe
+                key={recipe.id}
+                recipe={recipe}
+                handleClick={handleClick}
+                handleOpenModal={handleOpenModal}
+              />))
         }
       </div>
 
