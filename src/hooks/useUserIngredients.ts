@@ -31,7 +31,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     const { data: userIngredients, isLoading } = useQuery({
         queryKey: ['userIngredients'],
         queryFn: () => getUserIngredients(),
-        enabled: isSignedIn,
+        enabled: !!isSignedIn,
         throwOnError: true
     })
 
