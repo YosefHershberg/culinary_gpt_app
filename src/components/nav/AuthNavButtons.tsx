@@ -2,10 +2,8 @@ import { Button } from '@/components/ui/button'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/auth-context'
 import { UserButton } from '@clerk/clerk-react'
-import { useNavigate } from 'react-router-dom'
 
 const AuthNavButtons = () => {
-    const navigate = useNavigate();
     const { isSignedIn, isLoaded } = useAuth();
 
     if (!isLoaded) {
@@ -15,7 +13,6 @@ const AuthNavButtons = () => {
     return isSignedIn ? (
         <Button size="icon" variant="outline" className="p-0 rounded-full">
             <UserButton
-                afterSignOutUrl="/"
                 appearance={{
                     elements: {
                         userButtonAvatarBox: {
@@ -31,16 +28,16 @@ const AuthNavButtons = () => {
             <Button
                 className="hover:scale-105 rounded-full"
                 variant="ghost"
-                onClick={() => navigate('/signin')}
+                asChild
             >
-                Sign in
+                <a href='/signin'>Sign in</a>
             </Button>
             <Button
                 className="hover:scale-105 rounded-full"
                 variant="secondary"
-                onClick={() => navigate('/signup')}
+                asChild
             >
-                Sign up
+                <a href='/signup'>Sign up</a>
             </Button>
         </>
     );

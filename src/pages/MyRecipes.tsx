@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router-dom";
-
 import { Button } from "@/components/ui/button";
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
 import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
@@ -16,7 +14,6 @@ import useSearchRecipes from "@/hooks/componentHooks/useSearchRecipes";
 import { RecipeWithImage as RecipeType } from "@/lib/types";
 
 const MyRecipes: React.FC = () => {
-  const navigate = useNavigate();
   const { recipes, handleClick } = useMyRecipes();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
   const { filteredRecipes, handleFilterChange, currentFilter } = useFilterRecipes(recipes);
@@ -59,10 +56,12 @@ const MyRecipes: React.FC = () => {
             <p className="text-center text-xl mt-10">You have no recipes yet!</p>
             <Button
               variant="secondary"
-              onClick={() => navigate('/create-new-recipe')}
               className="mt-6 w-fit"
+              asChild
             >
-              Create a new recipe
+              <a href="/create-new-recipe">
+                Create a new recipe
+              </a>
             </Button>
           </div>
         )}

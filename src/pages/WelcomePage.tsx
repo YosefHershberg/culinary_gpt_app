@@ -1,6 +1,4 @@
-import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { useUser } from '@clerk/clerk-react'
 
 import { Button } from '@/components/ui/button'
 import About from '@/components/About'
@@ -11,8 +9,6 @@ import kitchenToolsImage from '@/assets/kitchen-tools.png'
 import { ArrowRight } from 'lucide-react'
 
 const WelcomePage: React.FC = () => {
-  const navigate = useNavigate()
-  const { isSignedIn } = useUser()
 
   return (
     <main>
@@ -32,12 +28,16 @@ const WelcomePage: React.FC = () => {
               Say goodbye to boring meals, with AI-powered recipe recommendations, meal plans creation and more... 100,000+ dinners saved so far.
             </p>
             <Button
-              onClick={() => navigate(isSignedIn ? '/create-new-recipe' : '/signup')}
               variant='secondary'
               className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
+              asChild
             >
-              Get Started
-              <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
+              <div>
+                <a href={'/create-new-recipe'}>
+                  Get Started
+                </a>
+                <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
+              </div>
             </Button>
 
             <MoreInfoModal>

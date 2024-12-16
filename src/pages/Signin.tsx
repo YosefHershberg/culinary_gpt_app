@@ -25,6 +25,7 @@ const Signin: React.FC = () => {
             </div>
             <div className='lg:flex hidden h-full max-w-[40rem] flex-1 flex-col justify-center items-center bg-amber-200 dark:bg-zinc-800'>
                 <LargeLogo />
+                <p className='mt-5 text-lg'>We'll find you perfect dish to prepare!</p>
                 <Lottie animationData={signUpPageAnimation} className='size-[30rem]' />
             </div>
         </section>

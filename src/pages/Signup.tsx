@@ -18,6 +18,7 @@ const Signup: React.FC = () => {
         >
             <div className='lg:flex hidden h-full max-w-[40rem] flex-1 flex-col justify-center items-center bg-amber-200 dark:bg-zinc-800'>
                 <LargeLogo />
+                <p className='mt-5 text-lg'>We'll find you perfect dish to prepare!</p>
                 <Lottie animationData={signUpPageAnimation} className='size-[30rem]' />
             </div>
             <div className='h-full flex-1 flex justify-center items-center'>

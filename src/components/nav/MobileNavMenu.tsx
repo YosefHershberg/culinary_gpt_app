@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import { useTheme } from '@/context/theme-context';
 import { useAuth } from '@/context/auth-context';
 
@@ -12,7 +10,6 @@ import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 
 
 const MobileNavMenu: React.FC = () => {
     const { theme, setTheme } = useTheme()
-    const navigate = useNavigate()
     const { isSignedIn, isLoaded } = useAuth()
 
     return (
@@ -39,31 +36,43 @@ const MobileNavMenu: React.FC = () => {
                 <DropdownMenuContent className="w-[15rem] mx-2">
                     {!isSignedIn &&
                         <>
-                            <DropdownMenuItem onClick={() => navigate('/signup')}>
-                                Sign in
+                            <DropdownMenuItem asChild>
+                                <a href='/signup'>
+                                    Sign up
+                                </a>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => navigate('/signin')}>
-                                Log in
+                            <DropdownMenuItem asChild>
+                                <a href='/signin'>
+                                    Log in
+                                </a>
                             </DropdownMenuItem>
                         </>
                     }
                     {isSignedIn &&
                         <>
-                            <DropdownMenuItem onClick={() => navigate('/create-new-recipe')}>
-                                <Plus className='mr-2 size-4' />
-                                Create New Recipe
+                            <DropdownMenuItem asChild>
+                                <a href='/create-new-recipe'>
+                                    <Plus className='mr-2 size-4' />
+                                    Create New Recipe
+                                </a>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => navigate('/create-new-cocktail')}>
-                                <Martini className='mr-2 size-4' />
-                                Create New Cocktail
+                            <DropdownMenuItem asChild>
+                                <a href='/create-new-cocktail'>
+                                    <Martini className='mr-2 size-4' />
+                                    Create New Cocktail
+                                </a>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => navigate('/my-recipes')}>
-                                <CookingPot className='mr-2 size-4' />
-                                My Recipes
+                            <DropdownMenuItem asChild>
+                                <a href='/my-recipes'>
+                                    <CookingPot className='mr-2 size-4' />
+                                    My Recipes
+                                </a>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => navigate('/my-ingredients/food')}>
-                                <Beef className='mr-2 size-4' />
-                                My Ingredients
+                            <DropdownMenuItem asChild>
+                                <a href='/my-ingredients'>
+                                    <Beef className='mr-2 size-4' />
+                                    My Ingredients
+                                </a>
                             </DropdownMenuItem>
                         </>
                     }

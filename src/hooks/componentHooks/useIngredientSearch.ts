@@ -57,6 +57,10 @@ export const useIngredientSearch = (type: IngredientType) => {
             return;
         }
         addUserIngredient(ingredient);
+        toast({
+            title: 'Ingredient added!',
+            description: 'The ingredient has been added to your list.'
+        });
         setIsDropdownOpen(false);
     };
 

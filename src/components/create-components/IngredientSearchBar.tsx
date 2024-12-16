@@ -8,8 +8,6 @@ import IngredientListMenuDropdown from '../create-components/IngredientListMenuD
 import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 import ImageDetectorModal from './ImageDetectorModal';
 
-//NOTE: Should I divide the logic into hook?
-
 type IngredientSearchBarProps = {
     placeholders: string[];
     type: IngredientType;
