@@ -44,7 +44,7 @@ const ChooseAdditional: React.FC = () => {
                 <Separator className='my-6' />
 
                 <div className='flex md:flex-row flex-col justify-between items-center'>
-                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0 text-center'>How many people are you cooking for?</p>
+                    <p className='font-bold text-lg md:text-none mb-6 md:mb-0 text-center text-balance'>How many people are you cooking for?</p>
                     <div className="relative flex flex-col md:items-end w-full items-center">
                         <Input
                             className="max-w-[20rem]"
@@ -63,7 +63,7 @@ const ChooseAdditional: React.FC = () => {
                 <Separator className='my-6' />
 
                 <div className='flex md:flex-row flex-col justify-between md:items-start items-center'>
-                    <p className='font-bold text-lg md:text-none text-center mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
+                    <p className='font-bold text-lg md:text-none text-center text-balance mb-6 md:mb-0'>Select the kitchen utensils you have.</p>
                     <div className="grid grid-cols-2 gap-3 sm:gap-x-10">
                         {kitchenUtils && Object.keys(kitchenUtils).map((key) => (
                             <div key={key} className="flex items-center gap-3 start">
