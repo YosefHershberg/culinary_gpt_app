@@ -13,8 +13,8 @@ const FinalStep: React.FC = () => {
       <div className='max-w-[50rem] w-full flex-[1_1_0] overflow-y-auto sm:pt-5 pt-2'>
         <h1 className="text-3xl mb-8">Almost done..</h1>
         <div className="flex flex-col w-full items-center">
-          <p className="text-2xl font-bold">Anything else to add?</p>
-          <p className="mt-7 text-center">Write a message about anything else you would like th AI to know about!</p>
+          <p className="text-2xl font-bold">Message to the chef?</p>
+          <p className="mt-7 text-center">Such as dietary restriction, allergies, etc.</p>
           <div className="mt-7">
             <Textarea
               className="dark:bg-zinc-600 bg-zinc-100"

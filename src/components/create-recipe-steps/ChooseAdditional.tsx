@@ -25,6 +25,9 @@ const ChooseAdditional: React.FC = () => {
     return (
         <div className='flex-1 flex flex-col items-center'>
             <div className='max-w-[50rem] w-full flex-[1_1_0] overflow-y-auto sm:p-5 p-2'>
+
+                <h1 className='sm:text-3xl text-2xl font-bold mb-5 text-balance text-center'>What else?</h1>
+
                 <div className='flex md:flex-row flex-col justify-between items-center'>
                     <p className='font-bold text-lg md:text-none mb-6 md:mb-0'>What meal you want to cook?</p>
                     <Select onValueChange={handleMealSelected}>
