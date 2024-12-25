@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useUserData } from '@/context/user-data-context';
 import useCreateCocktailStream from '@/hooks/componentHooks/useCreateCocktail';
 import { toast } from '@/components/ui/use-toast';
-import { RecipeState } from '@/lib/types';
+import { RecipeWithImage } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
 
 type CreateCocktailState = {
-    createdCocktail: RecipeState | null,
+    createdCocktail: RecipeWithImage | null,
     handleSubmit: () => void,
     handlePromptChange: (value: string) => void,
     prompt: string
@@ -19,7 +19,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [createdCocktail, setCreatedCocktail] = useState<RecipeState | null>(null)
+    const [createdCocktail, setCreatedCocktail] = useState<RecipeWithImage | null>(null)
     const [prompt, setPrompt] = useState<string>('')
 
     const { trigger, recipe, isLoadingRecipe } = useCreateCocktailStream({
@@ -39,7 +39,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     }
 
     const handleSubmit = () => {
-        const foodIngredients = userIngredients.filter(ingredient => ingredient.type.includes('drink'))
+        const foodIngredients = userIngredients.filter(ingredient => ingredient.type?.includes('drink'))
         if (foodIngredients.length < 4) {
             return toast({
                 variant: 'destructive',

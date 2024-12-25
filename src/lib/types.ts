@@ -3,16 +3,17 @@ import { IngredientCategories } from "./enums";
 export type Ingredient = {
     id: string;
     name: string;
-    category: (typeof IngredientCategories)[keyof typeof IngredientCategories];
-    popularity: number;
-    type: IngredientType[];
+    category?: (typeof IngredientCategories)[keyof typeof IngredientCategories];
+    popularity?: number;
+    type?: IngredientType[];
 }
 
 export type RecipeWithImage = {
     recipe: Recipe,
-    image_url: string,
+    image_url: string | null,
     id?: number | string,
     createdAt?: string | Date | number,
+    userId?: string,
 }
 
 export type Recipe = {
@@ -28,12 +29,6 @@ export type Recipe = {
     time?: string,
     level: string,
     type: 'recipe' | 'cocktail'
-}
-
-export type RecipeState = {
-    recipe: Recipe,
-    image_url: string | null,
-    id?: number | string, 
 }
 
 export type KitchenUtils = {
@@ -53,3 +48,5 @@ export type IngredientType = 'food' | 'drink';
 export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 
 export type KitchenUtil = keyof KitchenUtils
+
+export type MessageResponse = { message: string }

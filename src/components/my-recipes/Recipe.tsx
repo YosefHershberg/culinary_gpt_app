@@ -22,7 +22,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
             key={recipe.id}
         >
             <LazyImage
-                src={recipe.image_url}
+                src={recipe.image_url as string}
                 alt={recipe.recipe.title}
                 className="sm:w-[7rem] w-[15rem] aspect-square object-cover rounded-lg"
             />

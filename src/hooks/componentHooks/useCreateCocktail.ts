@@ -1,14 +1,14 @@
 import useSSE from '../useSSE'
 import { useEffect, useState } from 'react'
-import { Recipe, RecipeState } from '@/lib/types'
+import { Recipe, RecipeWithImage } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
 
-type CreateRecipeState = {
+type CreateRecipeWithImage = {
     prompt: string,
 }
 
-const useCreateCocktail = ({ prompt }: CreateRecipeState) => {
-    const [recipe, setRecipe] = useState<RecipeState | null>(null)
+const useCreateCocktail = ({ prompt }: CreateRecipeWithImage) => {
+    const [recipe, setRecipe] = useState<RecipeWithImage | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 

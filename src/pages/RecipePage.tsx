@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Lottie from 'lottie-react'
 
-import { RecipeState } from '@/lib/types'
+import { RecipeWithImage } from '@/lib/types'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,7 @@ import { Share2 } from 'lucide-react'
 import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
 
 type RecipePageProps = {
-    createdRecipe: RecipeState
+    createdRecipe: RecipeWithImage
     addToRecipesBtn?: JSX.Element
 }
 

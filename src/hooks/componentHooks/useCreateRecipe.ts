@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSSE from '../useSSE'
-import { Meals, Recipe, RecipeState } from '@/lib/types'
+import { Meals, Recipe, RecipeWithImage } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
 
-type CreateRecipeState = {
+type CreateRecipeWithImage = {
     mealSelected: Meals,
     selectedTime: number,
     prompt: string,
     numOfPeople: number,
 }
 
-const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeState) => {
+const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeWithImage) => {
     const navigate = useNavigate()
 
-    const [recipe, setRecipe] = useState<RecipeState | null>(null)
+    const [recipe, setRecipe] = useState<RecipeWithImage | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
 

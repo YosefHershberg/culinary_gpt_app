@@ -5,9 +5,9 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateRecipe";
-import { Meals, RecipeState } from "@/lib/types";
+import { Meals, RecipeWithImage } from "@/lib/types";
 
-type CreateRecipeState = {
+type CreateRecipeWithImage = {
     mealSelected: Meals,
     selectedTime: number,
     prompt: string,
@@ -17,10 +17,10 @@ type CreateRecipeState = {
     handlePromptChange: (value: string) => void,
     handleSubmit: () => void,
     handleNumOfPeopleChange: (value: number) => void,
-    recipe: RecipeState | null,
+    recipe: RecipeWithImage | null,
 }
 
-export const CreateRecipeContext = createContext<CreateRecipeState>(undefined as any);
+export const CreateRecipeContext = createContext<CreateRecipeWithImage>(undefined as any);
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate()
@@ -72,7 +72,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
 
     const handleSubmit = () => {
-        const foodIngredients = userIngredients.filter(ingredient => ingredient.type.includes('food'))
+        const foodIngredients = userIngredients.filter(ingredient => ingredient.type?.includes('food'))
         if (foodIngredients.length < 4) {
             return toast({
                 variant: 'destructive',
