@@ -17,7 +17,7 @@ const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFil
                     variant='outline'
                     className="flex items-center gap-2"
                 >
-                    {currentFilter.charAt(0).toUpperCase() + currentFilter.slice(1)}
+                    Filter
                     <Filter className="size-4" />
                 </Button>
             </DropdownMenuTrigger>

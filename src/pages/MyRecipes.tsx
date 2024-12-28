@@ -10,14 +10,15 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
+import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
 
 const MyRecipes: React.FC = () => {
-  const { searchData, filterData, sentinelRef, ...myRecipesData } = useMyRecipes();
+  const { searchData, filterData, sortData, sentinelRef, query } = useMyRecipes();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
 
-  const noRecipes = myRecipesData.recipes.length === 0 && !myRecipesData.isLoading && searchData.debouncedValue === '';
-  const noSearchResults = searchData.searchValue !== '' && !searchData.isDebouncing && myRecipesData.recipes.length === 0 && !myRecipesData.isLoading;
-  const recipesToDisplay = myRecipesData.recipes;
+  const noRecipes = query.recipes.length === 0 && !query.isLoading && searchData.debouncedValue === '';
+  const noSearchResults = searchData.searchValue !== '' && !searchData.isDebouncing && query.recipes.length === 0 && !query.isLoading;
+  const recipesToDisplay = query.recipes;
 
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
@@ -29,19 +30,19 @@ const MyRecipes: React.FC = () => {
             searchValue={searchData.searchValue}
             handleValueChange={searchData.handleValueChange}
             setIsSearchBarFocused={searchData.setIsSearchBarFocused}
-            />
-            {!searchData.isSearchBarFocused && (
-              <>
-                <FilterOptionsDropdown
-                  handleFilterChange={filterData.handleFilterChange}
-                  currentFilter={filterData.currentFilter}
-                />
-                {/* <SortOptionsDropdown
-                  handleSortChange={() => { }}
-                  currentSort={() => { }}
-                /> */}
-              </>
-            )}
+          />
+          {!searchData.isSearchBarFocused && (
+            <>
+              <FilterOptionsDropdown
+                handleFilterChange={filterData.handleFilterChange}
+                currentFilter={filterData.currentFilter}
+              />
+              <SortOptionsDropdown
+                handleSortChange={sortData.handleSortChange}
+                currentSort={sortData.currentSort}
+              />
+            </>
+          )}
         </div>
 
         <div className="w-full max-w-[40rem]">
@@ -49,12 +50,17 @@ const MyRecipes: React.FC = () => {
             <Recipe
               key={recipe.id}
               recipe={recipe}
-              handleClick={myRecipesData.handleClick}
               handleOpenModal={handleOpenModal}
             />
           ))}
 
-          {myRecipesData.isFetchingNextPage && (
+          {query.isLoading && (
+            <div className="flex justify-center items-center w-full h-[10rem]">
+              <LoadingSpinner />
+            </div>
+          )}
+
+          {query.isFetchingNextPage && (
             <div className="flex justify-center items-center w-full h-[10rem]">
               <LoadingSpinner />
             </div>

@@ -3,14 +3,16 @@ import LazyImage from "../ui/LazyImage";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
+import { useNavigate } from "react-router-dom";
 
 type RecipeProps = {
     recipe: RecipeType
-    handleClick: (recipe: RecipeType) => void,
     handleOpenModal: (recipe: RecipeType) => void
 }
 
-const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal }) => {
+const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
+    const navigate = useNavigate()
+
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation()
         handleOpenModal(recipe)
@@ -18,7 +20,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
 
     return (
         <div
-            onClick={() => handleClick(recipe)}
+            onClick={() => navigate(`/user-recipe/${recipe.id}`, { state: recipe })}
             className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
             key={recipe.id}
         >

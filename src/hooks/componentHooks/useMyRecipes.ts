@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getUserRecipes } from '@/services/recipe.service';
 import { RecipeWithImage } from '@/lib/types';
@@ -6,25 +5,27 @@ import useSearchRecipes, { UseSearchRecipesResponse } from './useSearchRecipes';
 import { useEffect } from 'react';
 import useInfiniteScroll from './useInfiniteScroll';
 import useFilterRecipes, { UseFilterRecipesResponse } from './useFilterRecipes';
+import useSortRecipes, { UseSortRecipesResponse } from './useSortRecipes';
 
 export const LIMIT = 4;
 
 type UseMyRecipesResponse = {
-    recipes: RecipeWithImage[];
-    handleClick: (recipe: RecipeWithImage) => void;
-    isLoading: boolean;
-    isError: boolean;
-    nextPage: () => void;
-    isFetchingNextPage: boolean;
-    hasNextPage: boolean;
-    hasData: boolean;
+    query: {
+        recipes: RecipeWithImage[];
+        isLoading: boolean;
+        isError: boolean;
+        nextPage: () => void;
+        isFetchingNextPage: boolean;
+        hasNextPage: boolean;
+        hasData: boolean;
+    },
     sentinelRef: React.MutableRefObject<HTMLDivElement | null>
     searchData: UseSearchRecipesResponse,
     filterData: UseFilterRecipesResponse,
+    sortData: UseSortRecipesResponse
 };
 
 const useMyRecipes = (): UseMyRecipesResponse => {
-    const navigate = useNavigate();
     const searchData = useSearchRecipes();
     const filterData = useFilterRecipes()
 
@@ -44,15 +45,13 @@ const useMyRecipes = (): UseMyRecipesResponse => {
         throwOnError: true,
     });
 
+    const sortData = useSortRecipes(data?.pages.flatMap(page => page) || []);
+
     useEffect(() => {
         if (searchData.debouncedValue || searchData.debouncedValue === '') {
             refetch();
         }
     }, [searchData.debouncedValue, filterData.currentFilter]);
-
-    const handleClick = (recipe: RecipeWithImage) => {
-        navigate(`/user-recipe/${recipe.id}`, { state: recipe });
-    };
 
     const nextPage = () => {
         if (hasNextPage) {
@@ -63,17 +62,19 @@ const useMyRecipes = (): UseMyRecipesResponse => {
     const sentinelRef = useInfiniteScroll({ isLoading, nextPage });
 
     return {
-        recipes: data?.pages.flatMap(page => page) || [],
-        handleClick,
-        isLoading,
-        isError,
-        nextPage,
-        isFetchingNextPage,
-        hasNextPage,
-        hasData: (data?.pages?.flatMap(page => page).length ?? 0) > 0,
+        query: {
+            recipes: sortData.sortedRecipes,
+            isLoading,
+            isError,
+            nextPage,
+            isFetchingNextPage,
+            hasNextPage,
+            hasData: (data?.pages?.flatMap(page => page).length ?? 0) > 0
+        },
         sentinelRef,
         searchData,
-        filterData
+        filterData,
+        sortData
     };
 };
 
