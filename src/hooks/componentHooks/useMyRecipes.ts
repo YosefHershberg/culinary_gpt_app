@@ -5,6 +5,7 @@ import { RecipeWithImage } from '@/lib/types';
 import useSearchRecipes, { UseSearchRecipesResponse } from './useSearchRecipes';
 import { useEffect } from 'react';
 import useInfiniteScroll from './useInfiniteScroll';
+import useFilterRecipes, { UseFilterRecipesResponse } from './useFilterRecipes';
 
 export const LIMIT = 4;
 
@@ -18,19 +19,22 @@ type UseMyRecipesResponse = {
     hasNextPage: boolean;
     hasData: boolean;
     sentinelRef: React.MutableRefObject<HTMLDivElement | null>
-    search: UseSearchRecipesResponse
+    searchData: UseSearchRecipesResponse,
+    filterData: UseFilterRecipesResponse,
 };
 
 const useMyRecipes = (): UseMyRecipesResponse => {
     const navigate = useNavigate();
-    const search = useSearchRecipes();
+    const searchData = useSearchRecipes();
+    const filterData = useFilterRecipes()
 
     const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
         queryKey: ['userRecipes'],
         queryFn: ({ pageParam = 1 }) => getUserRecipes({
             page: pageParam,
             limit: LIMIT,
-            query: search.debouncedValue
+            query: searchData.debouncedValue,
+            filter: filterData.currentFilter
         }),
         getNextPageParam: (lastPage, allPages) => {
             const nextPage = allPages.length + 1;
@@ -41,10 +45,10 @@ const useMyRecipes = (): UseMyRecipesResponse => {
     });
 
     useEffect(() => {
-        if (search.debouncedValue || search.debouncedValue === '') {
+        if (searchData.debouncedValue || searchData.debouncedValue === '') {
             refetch();
         }
-    }, [search.debouncedValue]);
+    }, [searchData.debouncedValue, filterData.currentFilter]);
 
     const handleClick = (recipe: RecipeWithImage) => {
         navigate(`/user-recipe/${recipe.id}`, { state: recipe });
@@ -68,7 +72,8 @@ const useMyRecipes = (): UseMyRecipesResponse => {
         hasNextPage,
         hasData: (data?.pages?.flatMap(page => page).length ?? 0) > 0,
         sentinelRef,
-        search
+        searchData,
+        filterData
     };
 };
 

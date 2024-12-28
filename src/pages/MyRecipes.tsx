@@ -9,13 +9,14 @@ import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
 
 const MyRecipes: React.FC = () => {
-  const { search, sentinelRef, ...myRecipesData } = useMyRecipes();
+  const { searchData, filterData, sentinelRef, ...myRecipesData } = useMyRecipes();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
-  
-  const noRecipes = myRecipesData.recipes.length === 0 && !myRecipesData.isLoading && search.debouncedValue === '';
-  const noSearchResults = search.searchValue !== '' && !search.isDebouncing && myRecipesData.recipes.length === 0 && !myRecipesData.isLoading;
+
+  const noRecipes = myRecipesData.recipes.length === 0 && !myRecipesData.isLoading && searchData.debouncedValue === '';
+  const noSearchResults = searchData.searchValue !== '' && !searchData.isDebouncing && myRecipesData.recipes.length === 0 && !myRecipesData.isLoading;
   const recipesToDisplay = myRecipesData.recipes;
 
   return (
@@ -24,11 +25,23 @@ const MyRecipes: React.FC = () => {
         <h1 className="text-2xl font-semibold text-center mb-4">My Recipes</h1>
         <div className="relative h-10 w-full flex gap-3">
           <SearchRecipesBar
-            isDebouncing={search.isDebouncing}
-            searchValue={search.searchValue}
-            handleValueChange={search.handleValueChange}
-            setIsSearchBarFocused={search.setIsSearchBarFocused}
-          />
+            isDebouncing={searchData.isDebouncing}
+            searchValue={searchData.searchValue}
+            handleValueChange={searchData.handleValueChange}
+            setIsSearchBarFocused={searchData.setIsSearchBarFocused}
+            />
+            {!searchData.isSearchBarFocused && (
+              <>
+                <FilterOptionsDropdown
+                  handleFilterChange={filterData.handleFilterChange}
+                  currentFilter={filterData.currentFilter}
+                />
+                {/* <SortOptionsDropdown
+                  handleSortChange={() => { }}
+                  currentSort={() => { }}
+                /> */}
+              </>
+            )}
         </div>
 
         <div className="w-full max-w-[40rem]">
@@ -52,6 +65,7 @@ const MyRecipes: React.FC = () => {
               <p className="text-lg text-center">You haven't added any recipes yet.</p>
               <Button
                 variant="secondary"
+                asChild
               >
                 <Link to="/create-new-recipe">Add a Recipe</Link>
               </Button>
