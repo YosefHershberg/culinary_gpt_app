@@ -28,18 +28,16 @@ const WelcomePage: React.FC = () => {
             <p className='text-xl md:text-start text-center'>
               Say goodbye to boring meals, with AI-powered recipe recommendations, meal plans creation and more... 100,000+ dinners saved so far.
             </p>
-            <Button
-              variant='secondary'
-              className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
-              asChild
-            >
-              <div>
-                <Link to={'/create-new-recipe'}>
+            
+            <Link to={'/create-new-recipe'}>
+              <Button
+                variant='secondary'
+                className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
+              >
                   Get Started
-                </Link>
-                <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
-              </div>
-            </Button>
+                  <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
+              </Button>
+            </Link>
 
             <MoreInfoModal>
               <Button

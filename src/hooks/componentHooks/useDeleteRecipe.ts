@@ -15,7 +15,7 @@ const useDeleteRecipe = (): UseDeleteRecipeResponse => {
 
     const deleteUserRecipeMutation = useOptDeleteUserRecipe()
 
-    const handleDelete = () => {
+    const handleDelete = () => {                
         setIsOpen(false)
         if (recipeToDelete) {
             deleteUserRecipeMutation.mutate(recipeToDelete)

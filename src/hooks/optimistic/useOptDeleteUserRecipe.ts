@@ -10,11 +10,22 @@ const useOptDeleteUserRecipe = () => {
         mutationFn: (recipe: RecipeWithImage) => deleteUserRecipe(recipe?.id as string),
 
         onMutate: async (recipe: RecipeWithImage) => {
+            console.log('1');
+
             await queryClient.cancelQueries({ queryKey: ['userRecipes'] })
             const previousCachedData = queryClient.getQueryData<RecipeWithImage[]>(['userRecipes']) as RecipeWithImage[]
 
-            queryClient.setQueryData(['userRecipes'], [...previousCachedData.filter((r: RecipeWithImage) => r.id !== recipe.id)])
+            console.log('2', previousCachedData);
+            try {
 
+                queryClient.setQueryData(['userRecipes'], (oldData: RecipeWithImage[] | undefined) => 
+                    oldData ? oldData.filter((r: RecipeWithImage) => r.id !== recipe.id) : [])
+            } catch (error) {
+                console.log('error', error);
+
+            }
+
+            console.log('3');
             return { previousCachedData }
         },
 
@@ -32,7 +43,7 @@ const useOptDeleteUserRecipe = () => {
                 variant: "destructive",
                 title: "Oops! Something went wrong!",
                 //@ts-expect-error
-                description: error.response?.data?.message || "An error occurred while adding ingredient.",
+                description: error.response?.data?.message || "An error occurred while deleting recipe.",
             })
         },
 
