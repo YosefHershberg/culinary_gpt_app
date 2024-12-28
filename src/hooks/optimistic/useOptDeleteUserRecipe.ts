@@ -1,4 +1,4 @@
-import { useQueryClient, useMutation } from "@tanstack/react-query"
+import { useQueryClient, useMutation, InfiniteData } from "@tanstack/react-query"
 import { deleteUserRecipe } from "@/services/recipe.service"
 import { toast } from "@/components/ui/use-toast"
 import { RecipeWithImage } from "@/lib/types"
@@ -13,9 +13,29 @@ const useOptDeleteUserRecipe = () => {
 
             await queryClient.cancelQueries({ queryKey: ['userRecipes'] })
             const previousCachedData = queryClient.getQueryData<RecipeWithImage[]>(['userRecipes']) as RecipeWithImage[]
-            
-            queryClient.setQueryData(['userRecipes'], (oldData: RecipeWithImage[] | undefined) =>
-                oldData ? oldData.filter((r: RecipeWithImage) => r.id !== recipe.id) : [])
+
+            try {
+                queryClient.setQueryData(['userRecipes'], (oldData: InfiniteData<RecipeWithImage[]> | undefined) => {
+                    if (oldData && Array.isArray(oldData.pages)) {
+                        // Filter out the recipe with the given id from each page
+                        const updatedPages = oldData.pages.map(page =>
+                            page.filter(r => r.id !== recipe.id)
+                        );
+
+                        // Return the updated structure
+                        return {
+                            pages: updatedPages,
+                            pageParams: oldData.pageParams
+                        };
+                    } else {
+                        // If oldData is not an array or doesn't have pages, log an error and return the original data
+                        console.error('oldData is not structured as expected:', oldData);
+                        return oldData;
+                    }
+                });
+            } catch (error) {
+                console.error('Error updating query data:', error);
+            }
 
             return { previousCachedData }
         },
