@@ -7,6 +7,7 @@ import MoreInfoModal from '@/components/modals/MoreInfoModal'
 
 import kitchenToolsImage from '@/assets/kitchen-tools.png'
 import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const WelcomePage: React.FC = () => {
 
@@ -33,9 +34,9 @@ const WelcomePage: React.FC = () => {
               asChild
             >
               <div>
-                <a href={'/create-new-recipe'}>
+                <Link to={'/create-new-recipe'}>
                   Get Started
-                </a>
+                </Link>
                 <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
               </div>
             </Button>

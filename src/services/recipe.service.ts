@@ -1,8 +1,23 @@
 import axiosClient from "@/config/axiosClient"
 import { MessageResponse, RecipeWithImage } from "@/lib/types"
 
-export const getUserRecipes = async (): Promise<RecipeWithImage[]> => {
-    const { data } = await axiosClient.get('/user/recipes')
+type GetUserRecipesProps = {
+    page: number,
+    limit: number,
+    query?: string
+}
+
+export const getUserRecipes = async ({ page, limit, query }: GetUserRecipesProps): Promise<RecipeWithImage[]> => {
+    const url = new URL('api/user/recipes', axiosClient.defaults.baseURL)
+    url.searchParams.append('page', page.toString())
+    url.searchParams.append('limit', limit.toString())
+    
+    if (query) {
+        url.searchParams.append('query', query)
+    }
+
+    const { data } = await axiosClient.get(url.toString())
+
     return data
 }
 

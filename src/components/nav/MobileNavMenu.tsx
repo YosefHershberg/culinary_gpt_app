@@ -7,6 +7,7 @@ import { UserButton } from '@clerk/clerk-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const MobileNavMenu: React.FC = () => {
     const { theme, setTheme } = useTheme()
@@ -37,42 +38,42 @@ const MobileNavMenu: React.FC = () => {
                     {!isSignedIn &&
                         <>
                             <DropdownMenuItem asChild>
-                                <a href='/signup'>
+                                <Link to='/signup'>
                                     Sign up
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <a href='/signin'>
+                                <Link to='/signin'>
                                     Log in
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                         </>
                     }
                     {isSignedIn &&
                         <>
                             <DropdownMenuItem asChild>
-                                <a href='/create-new-recipe'>
+                                <Link to='/create-new-recipe'>
                                     <Plus className='mr-2 size-4' />
                                     Create New Recipe
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <a href='/create-new-cocktail'>
+                                <Link to='/create-new-cocktail'>
                                     <Martini className='mr-2 size-4' />
                                     Create New Cocktail
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <a href='/my-recipes'>
+                                <Link to='/my-recipes'>
                                     <CookingPot className='mr-2 size-4' />
                                     My Recipes
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <a href='/my-ingredients'>
+                                <Link to='/my-ingredients'>
                                     <Beef className='mr-2 size-4' />
                                     My Ingredients
-                                </a>
+                                </Link>
                             </DropdownMenuItem>
                         </>
                     }

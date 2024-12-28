@@ -2,6 +2,7 @@ import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LazyImage from "../ui/LazyImage";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
+import { Skeleton } from "../ui/skeleton";
 
 type RecipeProps = {
     recipe: RecipeType
@@ -53,3 +54,15 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleClick, handleOpenModal })
 }
 
 export default Recipe
+
+export const RecipeSkeleton = () => (
+    <div className="mt-6 p-5 w-full flex flex-col sm:flex-row items-center rounded-xl shadow-md">
+        <Skeleton className="sm:size-[7rem] size-[15rem] rounded-lg" />
+        <div className="sm:mt-0 mt-4 ml-4 flex flex-col sm:justify-around sm:items-start items-center sm:h-full gap-2">
+            <Skeleton className="w-40 h-7" />
+
+            <Skeleton className="w-64 h-7" />
+
+        </div>
+    </div>
+)

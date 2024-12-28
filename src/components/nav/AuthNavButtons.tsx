@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/auth-context'
 import { UserButton } from '@clerk/clerk-react'
+import { Link } from 'react-router-dom';
 
 const AuthNavButtons = () => {
     const { isSignedIn, isLoaded } = useAuth();
@@ -30,14 +31,14 @@ const AuthNavButtons = () => {
                 variant="ghost"
                 asChild
             >
-                <a href='/signin'>Sign in</a>
+                <Link to='/signin'>Sign in</Link>
             </Button>
             <Button
                 className="hover:scale-105 rounded-full"
                 variant="secondary"
                 asChild
             >
-                <a href='/signup'>Sign up</a>
+                <Link to='/signup'>Sign up</Link>
             </Button>
         </>
     );

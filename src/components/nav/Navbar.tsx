@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 import { useUserData } from '@/context/user-data-context'
 import { useAuth } from '@/context/auth-context'
@@ -27,9 +27,9 @@ const Navbar: React.FC = () => {
     return (
         <nav className='flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>
             <div className='flex items-center gap-4'>
-                <a href="/">
+                <Link to="/">
                     <Logo />
-                </a>
+                </Link>
                 {isSignedIn &&
                     <ul className='lg:flex hidden items-center md:gap-5 gap-3 ml-7 mr-3'>
                         <li>
