@@ -24,9 +24,7 @@ export const getUserRecipes = async ({ page, limit, query, filter }: GetUserReci
     return data
 }
 
-export const deleteUserRecipe = async (id: string): Promise<MessageResponse> => {    
-    console.log('deleteUserRecipe', id);
-    
+export const deleteUserRecipe = async (id: string): Promise<MessageResponse> => {        
     const { data } = await axiosClient.delete(`/user/recipes/${id}`)
     return data
 }

@@ -10,22 +10,13 @@ const useOptDeleteUserRecipe = () => {
         mutationFn: (recipe: RecipeWithImage) => deleteUserRecipe(recipe?.id as string),
 
         onMutate: async (recipe: RecipeWithImage) => {
-            console.log('1');
 
             await queryClient.cancelQueries({ queryKey: ['userRecipes'] })
             const previousCachedData = queryClient.getQueryData<RecipeWithImage[]>(['userRecipes']) as RecipeWithImage[]
+            
+            queryClient.setQueryData(['userRecipes'], (oldData: RecipeWithImage[] | undefined) =>
+                oldData ? oldData.filter((r: RecipeWithImage) => r.id !== recipe.id) : [])
 
-            console.log('2', previousCachedData);
-            try {
-
-                queryClient.setQueryData(['userRecipes'], (oldData: RecipeWithImage[] | undefined) => 
-                    oldData ? oldData.filter((r: RecipeWithImage) => r.id !== recipe.id) : [])
-            } catch (error) {
-                console.log('error', error);
-
-            }
-
-            console.log('3');
             return { previousCachedData }
         },
 
