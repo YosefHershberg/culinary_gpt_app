@@ -33,7 +33,7 @@ const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, c
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [isOpen, close]);
-
+    
     return (
         <Dialog open={isOpen}>
 

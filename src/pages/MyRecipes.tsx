@@ -54,17 +54,11 @@ const MyRecipes: React.FC = () => {
             />
           ))}
 
-          {query.isLoading && (
+            {(query.isLoading || query.isFetchingNextPage) && (
             <div className="flex justify-center items-center w-full h-[10rem]">
               <LoadingSpinner />
             </div>
-          )}
-
-          {query.isFetchingNextPage && (
-            <div className="flex justify-center items-center w-full h-[10rem]">
-              <LoadingSpinner />
-            </div>
-          )}
+            )}
 
           {noRecipes && (
             <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
@@ -73,7 +67,7 @@ const MyRecipes: React.FC = () => {
                 variant="secondary"
                 asChild
               >
-                <Link to="/create-new-recipe">Add a Recipe</Link>
+                <Link to="/create-new-recipe">Create a new recipe</Link>
               </Button>
             </div>
           )}

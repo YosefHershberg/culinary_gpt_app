@@ -28,7 +28,8 @@ export type Recipe = {
     }[],
     time?: string,
     level: string,
-    type: 'recipe' | 'cocktail'
+    type: 'recipe' | 'cocktail',
+    id: string
 }
 
 export type KitchenUtils = {
