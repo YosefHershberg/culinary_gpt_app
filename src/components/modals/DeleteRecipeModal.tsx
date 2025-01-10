@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import {
     Dialog,
     DialogClose,
@@ -16,6 +17,23 @@ type DeleteRecipeModalProps = {
 }
 
 const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ isOpen, close, handleClick }) => {
+
+    useEffect(() => {
+        const handleOutsideClick = (event: MouseEvent) => {
+            if ((event.target as HTMLElement).closest(".dialog-content") === null) {
+                close();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener("mousedown", handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, [isOpen, close]);
+
 
     return (
         <Dialog open={isOpen}>

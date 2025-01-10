@@ -70,7 +70,7 @@ const MobileNavMenu: React.FC = () => {
                                 </Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link to='/my-ingredients'>
+                                <Link to='/my-ingredients/food'>
                                     <Beef className='mr-2 size-4' />
                                     My Ingredients
                                 </Link>
