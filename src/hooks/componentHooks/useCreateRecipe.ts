@@ -27,13 +27,16 @@ const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: Cr
 
     useEffect(() => {
         if (stream.length === 0) return
+
+        console.log(stream);
+
         if (stream[0]?.event === 'recipe') {
-            setRecipe({ recipe: stream[0].data as unknown as Recipe, image_url: null })
+            setRecipe({ recipe: stream[0].payload as unknown as Recipe, image_url: null })
             setIsLoadingRecipe(false)
             setIsLoadingImage(true)
         }
         if (stream[1]?.event === 'image') {
-            setRecipe(prev => prev ? { ...prev, image_url: stream[1].data } : null)
+            setRecipe(prev => prev ? { ...prev, image_url: stream[1].payload } : null)
             setIsLoadingImage(false)
             clearStreamAndError()
         }
