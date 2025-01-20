@@ -16,12 +16,19 @@ const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetEr
                 <img className='h-full object-contain' src={errorPic} alt="Error" />
             </div>
             <h2 className='text-red-600 text-lg'>{error?.response?.data?.message}</h2>
-            <Button
-                className='mt-4 font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
-                onClick={resetErrorBoundary || (() => navigate('/'))}
-            >
-                Try again
-            </Button>
+            <div className='flex items-center gap-4'>
+                <Button
+                    className='font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
+                    onClick={() => navigate('/')}>
+                    Go home
+                </Button>
+                <Button
+                    className='font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
+                    onClick={resetErrorBoundary || (() => navigate('/'))}
+                >
+                    Try again
+                </Button>
+            </div>
         </div>
     );
 };
