@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Share2 } from 'lucide-react'
 
 import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
+import DownloadRecipePdfButton from '@/components/DownloadRecipePdfButton'
 
 type RecipePageProps = {
     createdRecipe: RecipeWithImage
@@ -62,9 +63,9 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
 
             </div>
             <h1 className='font-bold sm:mb-0 mb-[4rem] sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
-                Bon Apetite!
+                Bon Appetite!
             </h1>
-            <div className='fixed w-full px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
+            <div className='fixed w-full max-w-[80rem] px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
                 {!addToRecipesBtn &&
                     <ShareRecipeModal>
                         <Button
@@ -76,10 +77,10 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                     </ShareRecipeModal>
                 }
                 {addToRecipesBtn}
+                {createdRecipe.image_url && <DownloadRecipePdfButton createdRecipe={createdRecipe} />}
             </div>
         </main>
-
     )
 }
 
-export default RecipePage
+export default RecipePage;

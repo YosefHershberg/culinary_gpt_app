@@ -47,7 +47,11 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ base64Image, setBase64Ima
         const compressedBase64 = await compressImage(image, 800, 800, 0.7);
         setBase64Image(compressedBase64);
       } catch (error) {
-        alert('Image compression failed: ' + error);
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'Failed to compress the image.',
+        });
       } finally {
         setLoading(false);
       }

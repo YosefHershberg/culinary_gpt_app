@@ -5,7 +5,7 @@ import env from '@/config/env'
 
 type EventSourceMessage = {
     event: string,
-    data: string
+    payload: string
 }
 
 type UseSSEReturn = {
@@ -70,9 +70,14 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 const parsedData = JSON.parse(msg.data)
 
                 if (parsedData.event === 'error') {
-                    return terminateStream(error instanceof Error ? error 
-                        : new Error(parsedData.data))
+                    return terminateStream(new Error(parsedData.payload));
                 }
+                
+                if (typeof parsedData !== 'object' || !parsedData.event || !parsedData.payload) {
+                    return terminateStream(new Error('Invalid message format'));
+                }
+
+                console.log(parsedData);
 
                 setStream(prevData => [...prevData, parsedData])
             },
