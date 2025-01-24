@@ -15,7 +15,7 @@ const DownloadRecipePdfButton = ({ createdRecipe }: { createdRecipe: RecipeWithI
                 Download PDF
             </Button>
             <div className='hidden'>
-                <main ref={contentRef} className='max-h-[70rem] flex flex-col items-center bg-amber-100 dark:bg-zinc-700'>
+                <main ref={contentRef} className='flex flex-col items-center bg-amber-100 dark:bg-zinc-700'>
                     <div className='flex items-center h-10 gap-2'>
                         <Logo />
                     </div>
