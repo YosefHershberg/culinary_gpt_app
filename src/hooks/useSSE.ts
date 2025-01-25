@@ -77,8 +77,6 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                     return terminateStream(new Error('Invalid message format'));
                 }
 
-                console.log(parsedData);
-
                 setStream(prevData => [...prevData, parsedData])
             },
             onerror(error) {
