@@ -4,7 +4,7 @@ import { Ingredient } from "@/lib/types"
 
 import { toast } from "@/components/ui/use-toast"
 
-const useOptdeleteUserIngredient = () => {
+const useOptDeleteUserIngredient = () => {
     const queryClient = useQueryClient()
 
     const deleteUserIngredientMutation = useMutation({
@@ -33,4 +33,4 @@ const useOptdeleteUserIngredient = () => {
     return deleteUserIngredientMutation
 }
 
-export default useOptdeleteUserIngredient
+export default useOptDeleteUserIngredient
