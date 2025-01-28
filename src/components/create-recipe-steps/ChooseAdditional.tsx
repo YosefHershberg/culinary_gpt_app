@@ -20,7 +20,7 @@ const ChooseAdditional: React.FC = () => {
         handleTimeChange,
         handleMealSelected,
         handleNumOfPeopleChange,
-    } = useCreateRecipe()
+    } = useCreateRecipe();
 
     return (
         <div className='flex-1 flex flex-col items-center'>

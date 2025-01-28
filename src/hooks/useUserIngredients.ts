@@ -61,7 +61,12 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         addMultipleIngredients(commonIngredients)
     }
     
-    const filterExistingIngredients = (ingredients: Ingredient[]) => {
+    /**
+     * @description Filters out ingredients that are already in the user's ingredients
+     * @param ingredients 
+     * @returns 
+     */
+    const filterExistingIngredients = (ingredients: Ingredient[]): Ingredient[] => {
         //using a set for faster lookup. O(n) instead of O(n^2)
         const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
         return ingredients.filter((ingredient: Ingredient) => !userIngredientIds.has(ingredient.id));

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import {
     Dialog,
     DialogClose,
@@ -17,22 +17,20 @@ type DeleteRecipeModalProps = {
 }
 
 const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ isOpen, close, handleClick }) => {
+    const contentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        const handleOutsideClick = (event: MouseEvent) => {
-            if ((event.target as HTMLElement).closest(".dialog-content") === null) {
-                close();
+        const handleClickOutside = (event: MouseEvent) => {
+            if (contentRef.current && !contentRef.current.contains(event.target as Node)) {
+                close()
             }
-        };
-
-        if (isOpen) {
-            document.addEventListener("mousedown", handleOutsideClick);
         }
 
+        document.addEventListener("mousedown", handleClickOutside)
         return () => {
-            document.removeEventListener("mousedown", handleOutsideClick);
-        };
-    }, [isOpen, close]);
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [close])
 
 
     return (
@@ -41,7 +39,7 @@ const DeleteRecipeModal: React.FC<DeleteRecipeModalProps> = ({ isOpen, close, ha
             {/* NOTE: Need this to prevent clerk warning in console */}
             <DialogTrigger></DialogTrigger>
 
-            <DialogContent>
+            <DialogContent ref={contentRef}>
                 <DialogTitle className="text-center leading-snug">
                     Are you sure you want to delete this recipe?
                 </DialogTitle>
