@@ -9,7 +9,7 @@ import useSortRecipes, { UseSortRecipesResponse } from './useSortRecipes';
 
 export const LIMIT = 4;
 
-type UseMyRecipesResponse = {
+type UseMyRecipesReturnType = {
     query: {
         recipes: RecipeWithImage[];
         isLoading: boolean;
@@ -25,7 +25,7 @@ type UseMyRecipesResponse = {
     sortData: UseSortRecipesResponse
 };
 
-const useMyRecipes = (): UseMyRecipesResponse => {
+const useMyRecipes = (): UseMyRecipesReturnType => {
     const searchData = useSearchRecipes();
     const filterData = useFilterRecipes()
 

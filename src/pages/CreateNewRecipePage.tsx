@@ -16,11 +16,11 @@ const steps = [
 
 const CreateNewRecipePage: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
-
+  
   return (
     <div className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
       <div className='w-dvw flex flex-col items-center'>
-        <div className='sm:px-10 sm:block hidden w-full '>
+        <div className='sm:px-10 sm:block hidden w-full'>
           <IconStepper
             setActiveStep={setActiveStep}
             activeStep={activeStep}
