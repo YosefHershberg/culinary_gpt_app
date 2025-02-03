@@ -7,12 +7,10 @@ import { Martini, Menu, Milk } from "lucide-react"
 
 const MyIngredients: React.FC = () => {
 
-// md:w-[calc(100vw-310px)]
-
   return (
     <main className="flex-1 flex flex-col w-screen p-5">
       <div className="h-full flex">
-        
+
         <aside className="min-w-60 lg:block hidden ">
           <NavLink to='/my-ingredients/food' className={({ isActive }) =>
             `px-2 py-3 flex items-center gap-2 border-b-[1px] font-bold border-gray-300 hover:bg-zinc-200 dark:hover:bg-zinc-700

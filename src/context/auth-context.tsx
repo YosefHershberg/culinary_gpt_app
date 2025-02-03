@@ -6,7 +6,7 @@ import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 
 type AuthProviderState = {
-    user: UserResource | null | undefined | any, //NOTO: properly type this
+    user: UserResource | null | undefined | any, //TODO: properly type this
     isSignedIn: boolean | undefined,
     isLoaded: boolean
 }
