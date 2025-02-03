@@ -16,7 +16,7 @@ const CreateNewRecipePage: React.FC = () => {
     const [activeStep, setActiveStep] = useState(0);
 
     return (
-        <div className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
+        <main className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
             <div className='w-dvw flex flex-col items-center'>
                 <div className='sm:px-10 sm:block hidden w-full'>
                     <IconStepper
@@ -28,7 +28,7 @@ const CreateNewRecipePage: React.FC = () => {
                     />
                 </div>
 
-                <div className='relative flex-1 max-w-[80rem] w-full p-3 flex'>
+                <section className='relative flex-1 max-w-[80rem] w-full p-3 flex'>
                     <div className='absolute left-3 top-3 size-24 rounded-full bg-emerald-400/20 lg:flex hidden items-center justify-center text-white text-5xl'>{activeStep + 1}</div>
                     {activeStep === 0 &&
                         <ChooseDrinks />
@@ -36,7 +36,7 @@ const CreateNewRecipePage: React.FC = () => {
                     {activeStep === 1 &&
                         <FinalStepCocktail />
                     }
-                </div>
+                </section>
 
                 <div className='flex w-full justify-around'>
                     <Button
@@ -57,7 +57,7 @@ const CreateNewRecipePage: React.FC = () => {
                     </Button>
                 </div>
             </div>
-        </div>
+        </main>
     )
 }
 

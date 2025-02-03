@@ -12,23 +12,23 @@ const Signup: React.FC = () => {
     const { theme } = useTheme()
 
     return (
-        <section
+        <main
             className='bg-cover bg-center flex h-screen w-screen'
             style={{ backgroundImage: `url(${theme === 'light' ? bgimage : bgimageDark})` }}
         >
-            <div className='lg:flex hidden h-full max-w-[40rem] flex-1 flex-col justify-center items-center bg-amber-200 dark:bg-zinc-800'>
+            <section className='lg:flex hidden h-full max-w-[40rem] flex-1 flex-col justify-center items-center bg-amber-200 dark:bg-zinc-800'>
                 <LargeLogo />
                 <p className='mt-5 text-lg'>We'll find you perfect dish to prepare!</p>
                 <Lottie animationData={signUpPageAnimation} className='size-[30rem]' />
-            </div>
-            <div className='h-full flex-1 flex justify-center items-center'>
+            </section>
+            <section className='h-full flex-1 flex justify-center items-center'>
                 <SignUp
                     fallbackRedirectUrl={state?.from ?? '/create-new-recipe'}
                     path="/signup"
                     signInUrl='signin'
                 />
-            </div>
-        </section>
+            </section>
+        </main>
 
     )
 }
