@@ -1,5 +1,6 @@
 import { Outlet, Navigate, useLocation } from 'react-router-dom'
 import { useUser } from '@clerk/clerk-react'
+import { FeaturesProviders } from '@/Providers';
 
 /**
  * @description A component that checks if the user is signed in. If the user is not signed in, the user is redirected to the sign in page.
@@ -19,7 +20,11 @@ const ProtectedRoutes: React.FC = () => {
         )
     }
 
-    return <Outlet />
+    return (
+        <FeaturesProviders>
+            <Outlet />
+        </FeaturesProviders>
+    )
 }
 
 export default ProtectedRoutes

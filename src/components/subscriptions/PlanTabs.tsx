@@ -22,7 +22,7 @@ const PlanTabs: React.FC<PlanTabsProps> = ({ onSelectPlan }) => {
                 <PlanDetails plan={activePlan} onSelectPlan={onSelectPlan} />
             </TabsContent>
         );
-    }, [activeTab, onSelectPlan]); // Add dependencies to useCallback
+    }, [activeTab, onSelectPlan]);
 
     return (
         <Tabs defaultValue={plans[0].id} className="max-w-[400px] w-full flex-1 flex flex-col">

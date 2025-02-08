@@ -12,7 +12,6 @@ export type Plan = {
     features: string[];
 }
 
-
 export const plans: Plan[] = [
     {
         id: "monthly",
