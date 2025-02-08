@@ -29,9 +29,9 @@ const Router: React.FC = () => {
           <Route path='recipe' element={<CreatedRecipe />} />
           <Route path='user-recipe/:id' element={<UserRecipe />} />
           <Route path='subscribe' element={<SubscribePage />} />
-          <Route element={<SubscriptionRoutes />}>
+          {/* <Route element={<SubscriptionRoutes />}> */}
             <Route path="create-new-cocktail" element={<CreateNewCocktailPage />} />
-          </Route>
+          {/* </Route> */}
         </Route>
       </Route>
       <Route path='signup/*' element={<Signup />} />
