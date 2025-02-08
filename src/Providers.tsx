@@ -19,7 +19,7 @@ import ErrorPage from "@/pages/ErrorPage"
 // AuthProvider has to wrap any Component that trigger a fetch req that requires authentication (axoisCLient)
 // Theme provider & AuthProvider has to wrap Suspense
 
-const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   return (
     <Router>
@@ -30,11 +30,7 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <AuthProvider>
                 <Suspense fallback={<LoadingPage />}>
                   <UserDataProvider>
-                    <CreateRecipeProvider>
-                      <CreateCocktailProvider>
-                        {children}
-                      </CreateCocktailProvider>
-                    </CreateRecipeProvider>
+                    {children}
                   </UserDataProvider>
                 </Suspense>
               </AuthProvider>
@@ -46,4 +42,10 @@ const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   )
 }
 
-export default Providers
+export const FeaturesProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <CreateRecipeProvider>
+    <CreateCocktailProvider>
+      {children}
+    </CreateCocktailProvider>
+  </CreateRecipeProvider>
+)

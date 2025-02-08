@@ -14,6 +14,6 @@ if (!parsedResults.success) {
     throw new Error('Environment variables are not correctly set')
 }
 
-const env = parsedResults.data
+const env = { NODE_ENV: envData.MODE, ...parsedResults.data }
 
 export default env;

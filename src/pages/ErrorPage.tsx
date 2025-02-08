@@ -9,7 +9,7 @@ const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetEr
     const navigate = useNavigate();
 
     return (
-        <div className="h-screen w-screen flex flex-col justify-center items-center gap-7 p-4">
+        <main className="h-screen w-screen flex flex-col justify-center items-center gap-7 p-4">
             <h1 className='text-red-600 text-3xl text-center font-bold px-1'>{message ? message : 'Something went terribly wrong!'}</h1>
             <div className="relative h-80 m-2">
                 <h1 className='absolute top-[6rem] right-1/4 text-3xl text-red-600'>{status || 'Oops!'}</h1>
@@ -29,7 +29,7 @@ const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetEr
                     Try again
                 </Button>
             </div>
-        </div>
+        </main>
     );
 };
 

@@ -34,12 +34,12 @@ const LoadingRecipePage: React.FC<LoadingRecipePageProps> = ({ duration }) => {
   const { theme } = useTheme();
 
   return (
-    <section
+    <main
       className="bg-cover bg-center h-screen w-screen absolute z-100 flex justify-center items-center flex-col p-5"
       style={theme === 'light' ? { backgroundImage: `url(${bgimage})` } : {}}
     >
       <Loader loadingStates={loadingStates} loading={true} duration={duration || 2200} />
-    </section>
+    </main>
   )
 }
 
