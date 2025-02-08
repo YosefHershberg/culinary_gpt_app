@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 import ProtectedRoutes from '@/routes/ProtectedRoutes'
-import SubscriptionRoutes from '@/routes/SubscriptionRoutes'
+// import SubscriptionRoutes from '@/routes/SubscriptionRoutes'
 import { AppLayout } from '@/App'
 
 const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
