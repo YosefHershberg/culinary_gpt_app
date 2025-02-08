@@ -1,6 +1,7 @@
 import PlanTabs from "@/components/subscriptions/PlanTabs";
 import env from "@/config/env";
 import { useAuth } from "@/context/auth-context";
+import { useEffect } from "react";
 import { useState } from "react";
 
 export type Plan = {
@@ -45,6 +46,10 @@ export const plans: Plan[] = [
 const SubscribePage = () => {
     const { user } = useAuth();
     const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[0]);
+
+    useEffect(() => {
+        if (false) console.log(user, selectedPlan);
+    }, []);
 
     return (
         <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 sm:py-2">
