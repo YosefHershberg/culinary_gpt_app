@@ -3,7 +3,7 @@ import { HoverEffect } from "./card-hover-effect"
 const About: React.FC = () => {
 
     return (
-        <div id="about" className="p-10 bg-teal-100 dark:bg-zinc-700 flex justify-center">
+        <section id="about" className="p-10 bg-teal-100 dark:bg-zinc-700 flex justify-center">
             <div className="flex flex-col items-center">
                 <p className="text-orange text-xl">FEATURES</p>
                 <h1 className="text-4xl text-center font-bold mt-10">Discover the Features</h1>
@@ -11,7 +11,7 @@ const About: React.FC = () => {
 
                 <HoverEffect items={cardDetails} />
             </div>
-        </div>
+        </section>
     )
 }
 

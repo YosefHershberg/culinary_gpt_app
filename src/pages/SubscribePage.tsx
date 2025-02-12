@@ -1,8 +1,5 @@
 import PlanTabs from "@/components/subscriptions/PlanTabs";
-import env from "@/config/env";
-import { useAuth } from "@/context/auth-context";
-import { useEffect } from "react";
-import { useState } from "react";
+import env from "@/utils/env";
 
 export type Plan = {
     id: string;
@@ -40,16 +37,24 @@ export const plans: Plan[] = [
             '1 year of updates',
             '24/7 support'
         ]
-    }
+    },
+    // {
+    //     id: "test",
+    //     link: env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_aEUaGJgkV6em6kg8wz' : '',
+    //     priceId: env.NODE_ENV === 'development' ? 'price_1Qr2og2ZAvKPWO0JZzcy356C' : '',
+    //     price: 0.51,
+    //     duration: '/month',
+    //     features: [
+    //         'Testly payments',
+    //         'Save 20% on yearly payments',
+    //         'Limitless cocktail creation',
+    //         '1 year of updates',
+    //         '24/7 support'
+    //     ]
+    // }
 ];
 
 const SubscribePage = () => {
-    const { user } = useAuth();
-    const [selectedPlan, setSelectedPlan] = useState<Plan>(plans[0]);
-
-    useEffect(() => {
-        if (false) console.log(user, selectedPlan);
-    }, []);
 
     return (
         <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 sm:py-2">
@@ -59,9 +64,7 @@ const SubscribePage = () => {
                     <h1 className="text-2xl font-bold text-center">Choose a subscription plan</h1>
                 </div>
                 <section className="flex flex-col items-center gap-4 mt-10 flex-1">
-                    <PlanTabs
-                        onSelectPlan={setSelectedPlan}
-                    />
+                    <PlanTabs />
                 </section>
             </section>
         </main>

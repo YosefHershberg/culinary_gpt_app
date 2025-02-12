@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/auth-context'
-import { UserButton } from '@clerk/clerk-react'
 import { Link } from 'react-router-dom';
+import UserButton from './UserButton';
 
 const AuthNavButtons = () => {
     const { isSignedIn, isLoaded } = useAuth();
@@ -12,17 +12,13 @@ const AuthNavButtons = () => {
     }
 
     return isSignedIn ? (
-        <Button size="icon" variant="outline" className="p-0 rounded-full">
-            <UserButton
-                appearance={{
-                    elements: {
-                        userButtonAvatarBox: {
-                            height: "100%",
-                            width: "100%",
-                        },
-                    },
-                }}
-            />
+        <Button
+            size="icon"
+            variant="outline"
+            className="p-0 rounded-full"
+            asChild
+        >
+            <UserButton />
         </Button>
     ) : (
         <>

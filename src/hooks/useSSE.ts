@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
-import env from '@/config/env'
+import env from '@/utils/env'
 
 type EventSourceMessage = {
     event: string,

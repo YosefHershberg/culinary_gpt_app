@@ -2,7 +2,7 @@ import Logo from "./Logo"
 
 const Footer: React.FC = () => {
     return (
-        <div className="h-52 lg:px-20 px-10 p-6 flex justify-between">
+        <footer className="h-52 lg:px-20 px-10 p-6 flex justify-between">
             <div className="flex flex-col justify-between">
                 <div>
                     <Logo />
@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
                 </div>
                 <div>© 2023 CulinaryGPT, All Rights Reserved</div>
             </div>
-        </div>
+        </footer>
     )
 }
 

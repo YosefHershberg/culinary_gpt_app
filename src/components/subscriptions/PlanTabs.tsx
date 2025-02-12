@@ -3,11 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import PlanDetails from "./PlanDetails";
 import { Plan, plans } from "@/pages/SubscribePage";
 
-type PlanTabsProps = {
-    onSelectPlan: (plan: Plan) => void;
-}
-
-const PlanTabs: React.FC<PlanTabsProps> = ({ onSelectPlan }) => {
+const PlanTabs: React.FC = () => {
     const [activeTab, setActiveTab] = useState<string>(plans[0].id);
     
     const renderTabContent = useCallback(() => {
@@ -19,10 +15,10 @@ const PlanTabs: React.FC<PlanTabsProps> = ({ onSelectPlan }) => {
                 value={activePlan.id}
                 className="flex-1 flex flex-col items-center justify-between pb-4"
             >
-                <PlanDetails plan={activePlan} onSelectPlan={onSelectPlan} />
+                <PlanDetails plan={activePlan} />
             </TabsContent>
         );
-    }, [activeTab, onSelectPlan]);
+    }, [activeTab]);
 
     return (
         <Tabs defaultValue={plans[0].id} className="max-w-[400px] w-full flex-1 flex flex-col">

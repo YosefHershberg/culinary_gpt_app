@@ -25,3 +25,15 @@ export const LargeLogo: React.FC = () => {
         </div>
     )
 }
+
+export const SmallLogo: React.FC = () => {
+    return (
+        <div className='flex items-center gap-2'>
+            <img src={logo} className='size-8' alt="" />
+            <h1 className='text-xl font-black tracking-tighter'>
+                Culinary
+                <span className='text-orange -tracking-[0.1rem]'>GPT</span>
+            </h1>
+        </div>
+    )
+}

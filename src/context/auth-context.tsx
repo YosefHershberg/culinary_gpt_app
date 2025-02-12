@@ -1,21 +1,22 @@
 import { createContext, useContext, useLayoutEffect } from 'react'
 import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
-import { UserResource } from '@clerk/types';
+import { SignOut, UserResource } from '@clerk/types';
 
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 
 type AuthProviderState = {
-    user: UserResource | null | undefined | any, //TODO: properly type this
+    user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version
     isSignedIn: boolean | undefined,
-    isLoaded: boolean
+    isLoaded: boolean, 
+    signOut: SignOut
 }
 
 const AuthContext = createContext<AuthProviderState>(undefined as any);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, isSignedIn, isLoaded } = useUser();
-    const { getToken } = useClerkAuth();
+    const { getToken, signOut } = useClerkAuth();
 
     useLayoutEffect(() => {
         let interceptorRequests: number;
@@ -52,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [isSignedIn]);
 
     return (
-        <AuthContext.Provider value={{ user, isSignedIn, isLoaded }}>
+        <AuthContext.Provider value={{ user, isSignedIn, isLoaded, signOut }}>
             {children}
         </AuthContext.Provider>
     )
