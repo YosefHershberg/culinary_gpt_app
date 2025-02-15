@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { Camera } from "lucide-react";
 import useAddImageIngredients, { IngredientResultsState } from "@/hooks/componentHooks/useAddImageIngredients";
 import useImageDetector from "@/hooks/componentHooks/useImageDetector";
@@ -9,7 +9,7 @@ import { LoadingState } from "./image-detection/LoadingState";
 import { UploadState } from "./image-detection/UploadState";
 import { DetectedIngredientsList } from "./image-detection/DetectedIngredientsList";
 
-export const ImageDetectorModal: React.FC = () => {
+const ImageDetectorModal: React.FC = () => {  
   const {
     isLoading,
     base64Image,
@@ -27,10 +27,10 @@ export const ImageDetectorModal: React.FC = () => {
     clearIngredientsResults,
   } = useAddImageIngredients(data);
 
-  const clearImageDetector = useCallback(() => {
+  const clearImageDetector = () => {
     setBase64Image("");
     clearIngredientsResults();
-  }, [setBase64Image, clearIngredientsResults]);
+  };
 
   const renderContent = useMemo(() => {
     if (ingredientResults && ingredientResults.length > 0) {
@@ -89,3 +89,5 @@ export const ImageDetectorModal: React.FC = () => {
     </Dialog>
   );
 };
+
+export default memo(ImageDetectorModal)

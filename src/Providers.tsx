@@ -16,7 +16,7 @@ import ErrorPage from "@/pages/ErrorPage"
 
 // NOTE: the order of the wrappers are precise!
 // Router has to wrap ClerkProvider
-// AuthProvider has to wrap any Component that trigger a fetch req that requires authentication (axoisCLient)
+// AuthProvider has to wrap any Component that trigger a fetch req that requires authentication (axiosClient)
 // Theme provider & AuthProvider has to wrap Suspense
 
 export const Providers: React.FC<{ children: React.ReactNode }> = ({ children }) => {

@@ -9,9 +9,11 @@ import {
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../ui/dropdown-menu'
 import { SortOptions } from '@/lib/enums'
 import { useIngredientList } from '@/context/ingredient-list-context'
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import ClearIngredientsModal from '../modals/ClearIngredientsModal'
 import { useUserData } from '@/context/user-data-context'
+
+// NOTE: This comp is memoized (in export) because its parent re-renders in searchbar key type.
 
 const IngredientListMenuDropdown: React.FC = () => {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -89,4 +91,4 @@ const IngredientListMenuDropdown: React.FC = () => {
     )
 }
 
-export default IngredientListMenuDropdown
+export default memo(IngredientListMenuDropdown)

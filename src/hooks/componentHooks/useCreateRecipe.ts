@@ -4,14 +4,14 @@ import useSSE from '../useSSE'
 import { Meals, Recipe, RecipeWithImage } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
 
-type CreateRecipeWithImage = {
+type CreateRecipeWithImageProps = {
     mealSelected: Meals,
     selectedTime: number,
     prompt: string,
     numOfPeople: number,
 }
 
-const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeWithImage) => {
+const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeWithImageProps) => {
     const navigate = useNavigate()
 
     const [recipe, setRecipe] = useState<RecipeWithImage | null>(null)

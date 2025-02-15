@@ -5,7 +5,7 @@ import { Navigate, Outlet } from 'react-router-dom'
  * @returns Outlet. The children of the SubscriptionRoutes component Route. See routes/index.tsx
  */
 const SubscriptionRoutes = () => {
-    const isSubscribed = false
+    const isSubscribed = true
 
     if (!isSubscribed) {
         return (

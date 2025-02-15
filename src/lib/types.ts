@@ -51,3 +51,10 @@ export type Meals = 'breakfast' | 'lunch' | 'dinner' | 'snack' | 'dessert'
 export type KitchenUtil = keyof KitchenUtils
 
 export type MessageResponse = { message: string }
+
+export type RecipeState = {
+    mealSelected: Meals,
+    selectedTime: number,
+    prompt: string,
+    numOfPeople: number,
+}

@@ -5,7 +5,7 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateRecipe";
-import { Meals, RecipeWithImage } from "@/lib/types";
+import { Meals, RecipeState, RecipeWithImage } from "@/lib/types";
 
 type CreateRecipeWithImage = {
     mealSelected: Meals,
@@ -20,23 +20,20 @@ type CreateRecipeWithImage = {
     recipe: RecipeWithImage | null,
 }
 
+const initialRecipeState: RecipeState = {
+    mealSelected: 'lunch',
+    selectedTime: 50,
+    prompt: '',
+    numOfPeople: 2
+}
+
 export const CreateRecipeContext = createContext<CreateRecipeWithImage>(undefined as any);
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [newRecipe, setNewRecipe] = useState<{
-        mealSelected: Meals,
-        selectedTime: number,
-        prompt: string,
-        numOfPeople: number,
-    }>({
-        mealSelected: 'lunch',
-        selectedTime: 50,
-        prompt: '',
-        numOfPeople: 2
-    })
+    const [newRecipe, setNewRecipe] = useState<RecipeState>(initialRecipeState)
 
     const { trigger, recipe, isLoadingRecipe } = useCreateRecipeStream({
         mealSelected: newRecipe.mealSelected,
@@ -47,12 +44,10 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     useEffect(() => {
         if (recipe) {
-            handleNumOfPeopleChange(2)
-            handleMealSelected('lunch')
-            handlePromptChange('')
-            handleTimeChange([50])
-            navigate('/recipe', { state: recipe })
+            setNewRecipe(initialRecipeState);
+            navigate('/recipe', { state: recipe });
         }
+        // NOTE: Don't put navigate fnc in deps arr. It creates bugs in nav from save recipe to my recipes
     }, [recipe]);
 
     const handleNumOfPeopleChange = (value: number) => {

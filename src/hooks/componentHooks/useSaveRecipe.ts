@@ -21,7 +21,9 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
     })
 
     useEffect(() => {
-        if (responseStatus === 200) navigate('/my-recipes')
+        if (responseStatus === 200) {
+            navigate('/my-recipes')
+        }
 
         if (error) {
             toast({
