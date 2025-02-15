@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 import { useUserData } from '@/context/user-data-context'
@@ -13,16 +13,17 @@ import AuthNavButtons from './AuthNavButtons'
 const Navbar: React.FC = () => {
     const { isSignedIn } = useAuth()
     const { userIngredients } = useUserData()
+    const [isAnimating, setIsAnimating] = useState(false)
 
-    const [isAnimating, setIsAnimating] = useState(false);
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (userIngredients.length > 0) {
             setIsAnimating(true);
             const timer = setTimeout(() => setIsAnimating(false), 200);
             return () => clearTimeout(timer);
         }
-    }, [userIngredients]);
+
+        //we r watching the length because the reference to userIngredients is created twice. once on cache change (optimistically) and once again when on refetch (on invalidate query)
+    }, [userIngredients.length]);
 
     return (
         <nav className='flex min-h-16 w-full sm:px-8 px-4 items-center justify-between'>

@@ -4,7 +4,7 @@ import { LaptopMinimal, Moon, Sun } from 'lucide-react'
 import { Button } from '../ui/button'
 
 
-const ThemeButton = () => {
+const ThemeButton: React.FC = () => {
   const { theme, setTheme } = useTheme()
 
   return (

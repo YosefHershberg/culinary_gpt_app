@@ -4,7 +4,7 @@ import { useAuth } from '@/context/auth-context'
 import { Link } from 'react-router-dom';
 import UserButton from './UserButton';
 
-const AuthNavButtons = () => {
+const AuthNavButtons: React.FC = () => {
     const { isSignedIn, isLoaded } = useAuth();
 
     if (!isLoaded) {

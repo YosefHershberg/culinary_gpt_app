@@ -6,7 +6,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Ingredient, IngredientType } from '@/lib/types';
 import IngredientListMenuDropdown from '../create-components/IngredientListMenuDropdown';
 import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
-import ImageDetectorModal from './ImageDetectorModal';
+import { ImageDetectorModal } from './ImageDetectorModal';
 
 type IngredientSearchBarProps = {
     placeholders: string[];

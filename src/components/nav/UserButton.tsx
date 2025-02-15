@@ -2,7 +2,7 @@ import { useAuth } from "@/context/auth-context"
 import { Button } from "../ui/button";
 import UserDropdown from "./UserDropdown";
 
-const UserButton = () => {
+const UserButton: React.FC = () => {
     const { user } = useAuth()
 
     return (

@@ -3,7 +3,7 @@ import { useUserData } from '@/context/user-data-context';
 import { Ingredient } from '@/lib/types'
 
 type UseAddImageIngredientsResponse = {
-    ingredientResults: ingredientResultsState[] | null;
+    ingredientResults: IngredientResultsState[] | null;
     handleAddIngredientsFromImage: () => void;
     handleChangeChecked: (index: number) => void;
     handleCheckAllIngredients: () => void;
@@ -11,13 +11,13 @@ type UseAddImageIngredientsResponse = {
     clearIngredientsResults: () => void;
 }
 
-export type ingredientResultsState = {
+export type IngredientResultsState = {
     ingredient: Ingredient;
     checked: boolean;
 }
 
 const useAddImageIngredients = (ingredients: Ingredient[] | null): UseAddImageIngredientsResponse => {
-    const [ingredientResults, setIngredientResults] = useState<ingredientResultsState[] | null>(null);
+    const [ingredientResults, setIngredientResults] = useState<IngredientResultsState[] | null>(null);
     const { addMultipleIngredients } = useUserData();
 
     useEffect(() => {
