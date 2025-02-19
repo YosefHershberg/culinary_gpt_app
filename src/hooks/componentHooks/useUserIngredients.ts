@@ -3,10 +3,10 @@ import { getUserIngredients } from '@/services/ingredient.service'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Ingredient } from '@/lib/types'
 
-import useOptAddUserIngredient from './optimistic/useOptAddUserIngredient'
-import useOptDeleteUserIngredient from './optimistic/useOptDeleteUserIngredient'
-import useOptDeleteAllUserIngredients from './optimistic/useOptDeleteAllUserIngredients'
-import useOptAddMultipleIngredients from './optimistic/useOptAddMultipleIngredients'
+import useOptAddUserIngredient from '../optimistic/useOptAddUserIngredient'
+import useOptDeleteUserIngredient from '../optimistic/useOptDeleteUserIngredient'
+import useOptDeleteAllUserIngredients from '../optimistic/useOptDeleteAllUserIngredients'
+import useOptAddMultipleIngredients from '../optimistic/useOptAddMultipleIngredients'
 import { toast } from '@/components/ui/use-toast'
 
 export type UseUserIngredientsReturnType = {

@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/auth-context'
 import { Navigate, Outlet } from 'react-router-dom'
 
 /**
@@ -5,9 +6,9 @@ import { Navigate, Outlet } from 'react-router-dom'
  * @returns Outlet. The children of the SubscriptionRoutes component Route. See routes/index.tsx
  */
 const SubscriptionRoutes = () => {
-    const isSubscribed = true
+    const { user } = useAuth()
 
-    if (!isSubscribed) {
+    if (!user.isSubscribed) {
         return (
             <Navigate 
                 to="/subscribe"

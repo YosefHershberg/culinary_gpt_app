@@ -4,11 +4,12 @@ import { SignOut, UserResource } from '@clerk/types';
 
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
+import useIsSubscribed from '@/hooks/useIsSubscribed';
 
 type AuthProviderState = {
     user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version
     isSignedIn: boolean | undefined,
-    isLoaded: boolean, 
+    isLoaded: boolean,
     signOut: SignOut
 }
 
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthProviderState>(undefined as any);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, isSignedIn, isLoaded } = useUser();
     const { getToken, signOut } = useClerkAuth();
+    const { isLoading: isSubscribedLoading, isSubscribed } = useIsSubscribed();
 
     useLayoutEffect(() => {
         let interceptorRequests: number;
@@ -45,7 +47,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 return Promise.reject(error);
             },
         );
-        
+
         return () => {
             axiosClient.interceptors.request.eject(interceptorRequests);
             axiosClient.interceptors.response.eject(interceptorResponses);
@@ -53,7 +55,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, [isSignedIn]);
 
     return (
-        <AuthContext.Provider value={{ user, isSignedIn, isLoaded, signOut }}>
+        <AuthContext.Provider value={{
+            user: { ...user, isSubscribed },
+            isSignedIn,
+            isLoaded: isLoaded && !isSubscribedLoading,
+            signOut
+        }}>
             {children}
         </AuthContext.Provider>
     )
