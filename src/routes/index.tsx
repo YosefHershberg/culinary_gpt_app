@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 import NotFoundPage from '@/pages/NotFoundPage'
 
 import ProtectedRoutes from '@/routes/ProtectedRoutes'
-import SubscriptionRoutes from '@/routes/SubscriptionRoutes'
 import { AppLayout } from '@/App'
 
 const WelcomePage = lazy(() => import('@/pages/WelcomePage'))
@@ -29,9 +28,7 @@ const Router: React.FC = () => {
           <Route path='recipe' element={<CreatedRecipe />} />
           <Route path='user-recipe/:id' element={<UserRecipe />} />
           <Route path='subscribe' element={<SubscribePage />} />
-          <Route element={<SubscriptionRoutes />}>
-            <Route path="create-new-cocktail" element={<CreateNewCocktailPage />} />
-          </Route>
+          <Route path="create-new-cocktail" element={<CreateNewCocktailPage />} />
         </Route>
       </Route>
       <Route path='signup/*' element={<Signup />} />

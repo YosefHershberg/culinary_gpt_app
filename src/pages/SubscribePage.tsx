@@ -41,20 +41,6 @@ export const plans: Plan[] = [
             '24/7 support'
         ]
     },
-    {
-        id: "test",
-        link: env.NODE_ENV === 'development' ? 'https://buy.stripe.com/test_aEUaGJgkV6em6kg8wz' : '',
-        priceId: env.NODE_ENV === 'development' ? 'price_1Qr2og2ZAvKPWO0JZzcy356C' : '',
-        price: 0.51,
-        duration: '/month',
-        features: [
-            'Testly payments',
-            'Save 20% on yearly payments',
-            'Limitless cocktail creation',
-            '1 year of updates',
-            '24/7 support'
-        ]
-    }
 ];
 
 const SubscribePage: React.FC = () => {
