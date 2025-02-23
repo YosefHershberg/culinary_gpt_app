@@ -8,10 +8,10 @@ import {
 import { useState } from "react"
 import UserProfileModal from "../modals/UserProfileModal"
 import { useAuth } from "@/context/auth-context"
-import { LogOut, Settings, WalletCards } from "lucide-react"
+import { LogOut, Settings } from "lucide-react"
 import { SmallLogo } from "../Logo"
 
-const costumerPortalLink = 'https://billing.stripe.com/p/login/test_28o9DOfMm7NK9vWfYY'
+// const costumerPortalLink = 'https://billing.stripe.com/p/login/test_28o9DOfMm7NK9vWfYY'
 
 const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -51,7 +51,7 @@ const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                         <LogOut className='size-5' />
                         Sign out
                     </DropdownMenuItem>
-                    <a
+                    {/* <a
                         href={
                             costumerPortalLink + '?prefilled_email=' + user.emailAddresses[0].emailAddress
                         }
@@ -64,7 +64,7 @@ const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                             <WalletCards className='size-5' />
                             Subscriptions
                         </DropdownMenuItem>
-                    </a>
+                    </a> */}
                     <DropdownMenuSeparator />
                     <footer className="flex justify-center gap-4 cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                         <SmallLogo />
