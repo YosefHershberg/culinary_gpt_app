@@ -5,25 +5,20 @@ import Navbar from './components/nav/Navbar'
 import { Toaster } from './components/ui/toaster'
 import Router from './routes'
 
-const App: React.FC = () => {
+const App: React.FC = () => (
+  <>
+    <Router />
+    <Toaster />
+    <ReactQueryDevtools initialIsOpen={false} />
+  </>
+)
 
-  return (
-    <>
-      <Router />
-      <Toaster />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </>
-  )
-}
 
 export default App
 
-export const AppLayout: React.FC = () => {
-
-  return (
-    <main className='overflow-y-auto overflow-x-hidden h-screen w-screen flex flex-col'>
-      <Navbar />
-      <Outlet />
-    </main>
-  )
-}
+export const AppLayout: React.FC = () => (
+  <main className='overflow-y-auto overflow-x-hidden h-screen w-screen flex flex-col'>
+    <Navbar />
+    <Outlet />
+  </main>
+)

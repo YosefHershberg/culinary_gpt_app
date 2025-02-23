@@ -1,10 +1,9 @@
+import React, { useMemo } from "react";
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
 import Recipe from "@/components/my-recipes/Recipe";
 import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
-
 import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
 import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
-
 import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { Link } from "react-router-dom";
@@ -16,9 +15,15 @@ const MyRecipes: React.FC = () => {
   const { searchData, filterData, sortData, sentinelRef, query } = useMyRecipes();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
 
-  const noRecipes = query.recipes.length === 0 && !query.isLoading && searchData.debouncedValue === '';
-  const noSearchResults = searchData.searchValue !== '' && !searchData.isDebouncing && query.recipes.length === 0 && !query.isLoading;
-  const recipesToDisplay = query.recipes;
+  const noRecipes = useMemo(() => {
+    return query.recipes.length === 0 && !query.isLoading && searchData.debouncedValue === '';
+  }, [query.recipes, query.isLoading, searchData.debouncedValue]);
+
+  const noSearchResults = useMemo(() => {
+    return searchData.searchValue !== '' && !searchData.isDebouncing && query.recipes.length === 0 && !query.isLoading;
+  }, [searchData.searchValue, searchData.isDebouncing, query.recipes, query.isLoading]);
+
+  const recipesToDisplay = useMemo(() => query.recipes, [query.recipes]);
 
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
@@ -54,33 +59,17 @@ const MyRecipes: React.FC = () => {
             />
           ))}
 
-            {(query.isLoading || query.isFetchingNextPage) && (
-            <div className="flex justify-center items-center w-full h-[10rem]">
+          {(query.isLoading || query.isFetchingNextPage) && (
+            <div className="flex justify-center items-center w-full h-[10rem]" aria-live="polite">
               <LoadingSpinner />
             </div>
-            )}
-
-          {noRecipes && (
-            <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
-              <p className="text-lg text-center">You haven't added any recipes yet.</p>
-              <Button
-                variant="secondary"
-                asChild
-              >
-                <Link to="/create-new-recipe">Create a new recipe</Link>
-              </Button>
-            </div>
           )}
 
-          {noSearchResults && (
-            <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
-              <p className="text-lg text-center">No recipes found.</p>
-            </div>
-          )}
+          {noRecipes && <NoRecipesMessage />}
+          {noSearchResults && <NoSearchResultsMessage />}
 
           <div ref={sentinelRef} />
         </div>
-
       </div>
 
       <DeleteRecipeModal
@@ -92,4 +81,19 @@ const MyRecipes: React.FC = () => {
   );
 };
 
-export default MyRecipes
+const NoRecipesMessage: React.FC = () => (
+  <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
+    <p className="text-lg text-center">You haven't added any recipes yet.</p>
+    <Button variant="secondary" asChild>
+      <Link to="/create-new-recipe">Create a new recipe</Link>
+    </Button>
+  </div>
+);
+
+const NoSearchResultsMessage: React.FC = () => (
+  <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
+    <p className="text-lg text-center">No recipes found.</p>
+  </div>
+);
+
+export default MyRecipes;

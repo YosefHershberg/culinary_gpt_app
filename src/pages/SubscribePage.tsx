@@ -1,5 +1,8 @@
 import PlanTabs from "@/components/subscriptions/PlanTabs";
+import { useAuth } from "@/context/auth-context";
 import env from "@/utils/env";
+import { useLayoutEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type Plan = {
     id: string;
@@ -54,7 +57,15 @@ export const plans: Plan[] = [
     }
 ];
 
-const SubscribePage = () => {
+const SubscribePage: React.FC = () => {
+    const { user } = useAuth()
+    const navigate = useNavigate()
+
+    useLayoutEffect(() => {
+        if (user.isSubscribed) {
+            navigate('/create-new-cocktail')
+        }
+    }, [user])
 
     return (
         <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 sm:py-2">
