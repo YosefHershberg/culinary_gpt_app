@@ -1,28 +1,27 @@
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { useAuth } from '@/context/auth-context'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 
 import { KitchenUtil } from '@/lib/types'
 import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
+import { useEffect } from 'react'
 
 export type UseKitchenUtilsReturnType = {
     kitchenUtils: { [key: string]: boolean };
-    isLoading: boolean;
     toggleKitchenUtil: (util: KitchenUtil) => void;
 }
 
 const useKitchenUtils = (): UseKitchenUtilsReturnType => {
-    const { isSignedIn } = useAuth()
-
     const addKitchenUtilMutation = useOptToggleKitchenUtil()
 
-    const { data: kitchenUtils, isLoading } = useQuery({
+    const { data: kitchenUtils, error } = useSuspenseQuery({
         queryKey: ['userKitchenUtils'],
         queryFn: () => getUserKitchenUtils(),
-        enabled: !!isSignedIn,
-        throwOnError: true
     })
+
+    useEffect(() => {
+        if (error) throw error
+    }, [error]);
 
     const toggleKitchenUtil = async (util: KitchenUtil) => {
         addKitchenUtilMutation.mutate(util)
@@ -30,7 +29,6 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
 
     return {
         kitchenUtils: kitchenUtils || initKitchenUtils,
-        isLoading,
         toggleKitchenUtil,
     }
 }

@@ -10,9 +10,9 @@ import { Copy, X } from "lucide-react"
 import { Button } from "../ui/button"
 import { toast } from "../ui/use-toast"
 
-import facebookLogo from '@/assets/logos/facebook-logo.png'
-import whatsappLogo from '@/assets/logos/whatsapp-logo.png'
-import xLogo from '@/assets/logos/x-logo.png'
+import facebookLogo from '@/assets/logos/facebook-logo.webp'
+import whatsappLogo from '@/assets/logos/whatsapp-logo.webp'
+import xLogo from '@/assets/logos/x-logo.webp'
 import { Link } from "react-router-dom"
 
 const title = 'Check out this recipe I created with CulinaryGPT'

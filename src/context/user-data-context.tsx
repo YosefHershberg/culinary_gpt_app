@@ -4,21 +4,19 @@ import { useAuth } from '@/context/auth-context'
 import useKitchenUtils, { UseKitchenUtilsReturnType } from '@/hooks/useKitchenUtils'
 import useUserIngredients, { UseUserIngredientsReturnType } from '@/hooks/componentHooks/useUserIngredients'
 
-import LoadingPage from '@/pages/LoadingPage'
-
 type UserDataState = UseKitchenUtilsReturnType & UseUserIngredientsReturnType
 
 export const UserDataContext = createContext<UserDataState>(null as any)
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isLoaded } = useAuth()
+  const { isSignedIn } = useAuth()
+
+  if (!isSignedIn) {
+    return <>{children}</>
+  }
 
   const userIngredientsServices = useUserIngredients()
   const userKitchenUtilsServices = useKitchenUtils()
-
-  if (userIngredientsServices.isLoading || userKitchenUtilsServices.isLoading || !isLoaded) {
-    return <LoadingPage />
-  }
 
   return (
     <UserDataContext.Provider value={{

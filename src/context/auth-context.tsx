@@ -4,7 +4,8 @@ import { SignOut, UserResource } from '@clerk/types';
 
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
-import useIsSubscribed from '@/hooks/useIsSubscribed';
+import LoadingPage from '@/pages/LoadingPage';
+// import useIsSubscribed from '@/hooks/useIsSubscribed';
 
 type AuthProviderState = {
     user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version
@@ -18,7 +19,7 @@ const AuthContext = createContext<AuthProviderState>(undefined as any);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, isSignedIn, isLoaded } = useUser();
     const { getToken, signOut } = useClerkAuth();
-    const { isLoading: isSubscribedLoading, isSubscribed } = useIsSubscribed();
+    // const { isLoading: isSubscribedLoading, isSubscribed } = useIsSubscribed();
 
     useLayoutEffect(() => {
         let interceptorRequests: number;
@@ -54,11 +55,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, [isSignedIn]);
 
+    if (!isLoaded) {
+        return <LoadingPage />
+    }
+
     return (
         <AuthContext.Provider value={{
-            user: { ...user, isSubscribed },
+            // user: { ...user, isSubscribed },
+            user,
             isSignedIn,
-            isLoaded: isLoaded && !isSubscribedLoading,
+            isLoaded,
             signOut
         }}>
             {children}

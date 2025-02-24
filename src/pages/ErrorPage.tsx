@@ -1,7 +1,7 @@
 import React from 'react';
 import { FallbackProps } from 'react-error-boundary';
 
-import errorPic from '@/assets/error-pic.png';
+import errorPic from '@/assets/error-pic.webp';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 

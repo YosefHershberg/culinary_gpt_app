@@ -1,6 +1,5 @@
-import { useAuth } from '@/context/auth-context'
 import { getUserIngredients } from '@/services/ingredient.service'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { Ingredient } from '@/lib/types'
 
 import useOptAddUserIngredient from '../optimistic/useOptAddUserIngredient'
@@ -8,10 +7,10 @@ import useOptDeleteUserIngredient from '../optimistic/useOptDeleteUserIngredient
 import useOptDeleteAllUserIngredients from '../optimistic/useOptDeleteAllUserIngredients'
 import useOptAddMultipleIngredients from '../optimistic/useOptAddMultipleIngredients'
 import { toast } from '@/components/ui/use-toast'
+import { useEffect } from 'react'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];
-    isLoading: boolean;
     addUserIngredient: (ingredient: Ingredient) => void;
     addCommonIngredients: () => void;
     addMultipleIngredients: (ingredients: Ingredient[]) => void;
@@ -20,7 +19,6 @@ export type UseUserIngredientsReturnType = {
 }
 
 const useUserIngredients = (): UseUserIngredientsReturnType => {
-    const { isSignedIn } = useAuth()
     const queryClient = useQueryClient()
 
     const addUserIngredientMutation = useOptAddUserIngredient()
@@ -28,12 +26,14 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     const deleteAllUserIngredientsMutation = useOptDeleteAllUserIngredients()
     const addMultipleIngredientsMutation = useOptAddMultipleIngredients()
 
-    const { data: userIngredients, isLoading } = useQuery({
+    const { data: userIngredients, error } = useSuspenseQuery({
         queryKey: ['userIngredients'],
         queryFn: () => getUserIngredients(),
-        enabled: !!isSignedIn,
-        throwOnError: true
     })
+
+    useEffect(() => {
+        if (error) throw error
+    }, [error]);
 
     const addUserIngredient = (ingredient: Ingredient) => {
         console.log('adding ingredient', ingredient);
@@ -57,10 +57,10 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
         //Getting the common ingredients from the cache
         const commonIngredients = queryClient.getQueryData(['common-ingredient-suggestions']) as Ingredient[]
-        
+
         addMultipleIngredients(commonIngredients)
     }
-    
+
     /**
      * @description Filters out ingredients that are already in the user's ingredients
      * @param ingredients 
@@ -84,7 +84,6 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
     return {
         userIngredients: userIngredients || [],
-        isLoading,
         addUserIngredient,
         addCommonIngredients,
         addMultipleIngredients,
