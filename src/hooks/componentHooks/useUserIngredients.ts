@@ -1,6 +1,5 @@
-import { useAuth } from '@/context/auth-context'
 import { getUserIngredients } from '@/services/ingredient.service'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { Ingredient } from '@/lib/types'
 
 import useOptAddUserIngredient from '../optimistic/useOptAddUserIngredient'
@@ -11,7 +10,6 @@ import { toast } from '@/components/ui/use-toast'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];
-    isLoading: boolean;
     addUserIngredient: (ingredient: Ingredient) => void;
     addCommonIngredients: () => void;
     addMultipleIngredients: (ingredients: Ingredient[]) => void;
@@ -20,7 +18,6 @@ export type UseUserIngredientsReturnType = {
 }
 
 const useUserIngredients = (): UseUserIngredientsReturnType => {
-    const { isSignedIn } = useAuth()
     const queryClient = useQueryClient()
 
     const addUserIngredientMutation = useOptAddUserIngredient()
@@ -28,12 +25,12 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     const deleteAllUserIngredientsMutation = useOptDeleteAllUserIngredients()
     const addMultipleIngredientsMutation = useOptAddMultipleIngredients()
 
-    const { data: userIngredients, isLoading } = useQuery({
+    const { data: userIngredients } = useSuspenseQuery({
         queryKey: ['userIngredients'],
         queryFn: () => getUserIngredients(),
-        enabled: !!isSignedIn,
-        throwOnError: true
-    })
+        // enabled: !!isSignedIn,
+        // throwOnError: true
+    })    
 
     const addUserIngredient = (ingredient: Ingredient) => {
         console.log('adding ingredient', ingredient);
@@ -84,7 +81,6 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
     return {
         userIngredients: userIngredients || [],
-        isLoading,
         addUserIngredient,
         addCommonIngredients,
         addMultipleIngredients,
