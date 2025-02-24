@@ -4,7 +4,10 @@ import { SignOut, UserResource } from '@clerk/types';
 
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
+<<<<<<< HEAD
 import LoadingPage from '@/pages/LoadingPage';
+=======
+>>>>>>> 986492f (removed subs from user data context)
 // import useIsSubscribed from '@/hooks/useIsSubscribed';
 
 type AuthProviderState = {
@@ -61,7 +64,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return (
         <AuthContext.Provider value={{
+<<<<<<< HEAD
             // user: { ...user, isSubscribed },
+=======
+>>>>>>> 986492f (removed subs from user data context)
             user,
             isSignedIn,
             isLoaded,

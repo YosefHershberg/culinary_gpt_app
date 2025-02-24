@@ -17,7 +17,6 @@ import { Link } from "react-router-dom"
 
 const title = 'Check out this recipe I created with CulinaryGPT'
 
-
 const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const handleCopyToClipboard = async () => {
