@@ -4,6 +4,7 @@ import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 
 import { KitchenUtil } from '@/lib/types'
 import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
+import { useEffect } from 'react'
 
 export type UseKitchenUtilsReturnType = {
     kitchenUtils: { [key: string]: boolean };
@@ -13,12 +14,14 @@ export type UseKitchenUtilsReturnType = {
 const useKitchenUtils = (): UseKitchenUtilsReturnType => {
     const addKitchenUtilMutation = useOptToggleKitchenUtil()
 
-    const { data: kitchenUtils } = useSuspenseQuery({
+    const { data: kitchenUtils, error } = useSuspenseQuery({
         queryKey: ['userKitchenUtils'],
         queryFn: () => getUserKitchenUtils(),
-        // enabled: !!isSignedIn,
-        // throwOnError: true
     })
+
+    useEffect(() => {
+        if (error) throw error
+    }, [error]);
 
     const toggleKitchenUtil = async (util: KitchenUtil) => {
         addKitchenUtilMutation.mutate(util)

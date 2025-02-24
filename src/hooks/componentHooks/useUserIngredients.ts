@@ -7,6 +7,7 @@ import useOptDeleteUserIngredient from '../optimistic/useOptDeleteUserIngredient
 import useOptDeleteAllUserIngredients from '../optimistic/useOptDeleteAllUserIngredients'
 import useOptAddMultipleIngredients from '../optimistic/useOptAddMultipleIngredients'
 import { toast } from '@/components/ui/use-toast'
+import { useEffect } from 'react'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];
@@ -25,12 +26,14 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     const deleteAllUserIngredientsMutation = useOptDeleteAllUserIngredients()
     const addMultipleIngredientsMutation = useOptAddMultipleIngredients()
 
-    const { data: userIngredients } = useSuspenseQuery({
+    const { data: userIngredients, error } = useSuspenseQuery({
         queryKey: ['userIngredients'],
         queryFn: () => getUserIngredients(),
-        // enabled: !!isSignedIn,
-        // throwOnError: true
-    })    
+    })
+
+    useEffect(() => {
+        if (error) throw error
+    }, [error]);
 
     const addUserIngredient = (ingredient: Ingredient) => {
         console.log('adding ingredient', ingredient);
@@ -54,10 +57,10 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
         //Getting the common ingredients from the cache
         const commonIngredients = queryClient.getQueryData(['common-ingredient-suggestions']) as Ingredient[]
-        
+
         addMultipleIngredients(commonIngredients)
     }
-    
+
     /**
      * @description Filters out ingredients that are already in the user's ingredients
      * @param ingredients 
