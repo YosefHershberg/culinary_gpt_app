@@ -5,7 +5,7 @@ import About from '@/components/About'
 import Footer from '@/components/Footer'
 import MoreInfoModal from '@/components/modals/MoreInfoModal'
 
-import kitchenToolsImage from '@/assets/kitchen-tools.png'
+import kitchenToolsImage from '@/assets/kitchen-tools.webp'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
