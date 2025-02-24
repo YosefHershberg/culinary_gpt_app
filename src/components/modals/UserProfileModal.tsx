@@ -30,9 +30,11 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, close }) =>
             <DialogTrigger></DialogTrigger>
             {/* NOTE: This is needed to prevent warning ^^^ */}
 
-            <DialogContent className="size-fit" ref={contentRef}>
+            <DialogContent
+                ref={contentRef}
+            >
                 <DialogTitle></DialogTitle>
-                <div className="size-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 my-3 overflow-auto">
+                <div className="size-fit rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-auto max-h-[90vh]">
                     <UserProfile />
                     <Button
                         size='icon'
