@@ -1,6 +1,5 @@
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { useAuth } from '@/context/auth-context'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 
 import { KitchenUtil } from '@/lib/types'
