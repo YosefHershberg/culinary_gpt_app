@@ -1,101 +1,138 @@
-import { useRef, useEffect, useState } from 'react';
-import { AxiosError, AxiosResponse } from "axios";
-
+import { useRef, useEffect, useState, useCallback } from 'react';
+import { AxiosError, AxiosResponse } from 'axios';
 import axiosClient from '@/config/axiosClient';
 
-type UseHttpClientProps = {
-    endpoint: string,
-    method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH',
-    body?: any,
-    params?: any,
-    headers?: any
-}
+type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
-type UseHttpClientResponseType = {
-    data: any,
-    error: AxiosError | null,
-    isLoading: boolean,
-    triggerHttpReq: () => void,
-    responseStatus: number | null
-}
+type BaseUseHttpClientProps = {
+    endpoint: string;
+    method: HttpMethod;
+    params?: any;
+    headers?: any;
+    onSuccess?: (data: any) => void;
+    onError?: (error: AxiosError) => void;
+};
 
-const useHttpClient = ({ endpoint, method, body, params }: UseHttpClientProps): UseHttpClientResponseType => {
-    const activeHttpRequests = useRef<AbortController[]>([])
-    const [trigger, setTrigger] = useState<boolean>(false)
-    const [data, setData] = useState<any>()
-    const [error, setError] = useState<AxiosError | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const responseStatus = useRef<number | null>(null)
+type UseHttpClientProps =
+    | (BaseUseHttpClientProps & { method: 'GET' | 'DELETE'; body?: never })
+    | (BaseUseHttpClientProps & { method: 'POST' | 'PUT' | 'PATCH'; body: Record<string, any> });
 
-    const triggerHttpReq = () => setTrigger(true)
+type UseHttpClientResponseType<TResponse> = {
+    data: TResponse | null;
+    error: AxiosError | null;
+    isLoading: boolean;
+    triggerHttpReq: () => void;
+    responseStatus: number | null;
+};
 
-    const fetcher = async () => {
-        const httpAbortCtrl = new AbortController()
-        activeHttpRequests.current.push(httpAbortCtrl)
+const useHttpClient = <TResponse = any>({
+    endpoint,
+    method,
+    body,
+    params,
+    headers,
+    onSuccess,
+    onError,
+}: UseHttpClientProps): UseHttpClientResponseType<TResponse> => {
+    const activeHttpRequests = useRef<AbortController[]>([]);
+    const [trigger, setTrigger] = useState<boolean>(false);
+
+    const [state, setState] = useState<{
+        data: TResponse | null;
+        error: AxiosError | null;
+        isLoading: boolean;
+        responseStatus: number | null;
+    }>({
+        data: null,
+        error: null,
+        isLoading: false,
+        responseStatus: null,
+    });
+
+    const triggerHttpReq = () => setTrigger(true);
+
+    const fetcher = useCallback(async () => {
+        const httpAbortCtrl = new AbortController();
+        activeHttpRequests.current.push(httpAbortCtrl);
 
         const options = {
             signal: httpAbortCtrl.signal,
+            headers,
         };
 
-        let response: AxiosResponse;
-        switch (method) {
-            case 'GET':
-                response = await axiosClient.get(endpoint, { params, ...options });
-                break;
-            case 'POST':
-                response = await axiosClient.post(endpoint, body, options);
-                break;
-            case 'DELETE':
-                response = await axiosClient.delete(endpoint, options);
-                break;
-            case 'PUT':
-                response = await axiosClient.put(endpoint, body, options);
-                break;
-            case 'PATCH':
-                response = await axiosClient.patch(endpoint, body, options);
-                break;
-            default:
-                throw new Error(`Unsupported HTTP method: ${method}`);
-        }
+        let response: AxiosResponse<TResponse>;
+        try {
+            switch (method) {
+                case 'GET':
+                    response = await axiosClient.get(endpoint, { params, ...options });
+                    break;
+                case 'POST':
+                    response = await axiosClient.post(endpoint, body, options);
+                    break;
+                case 'DELETE':
+                    response = await axiosClient.delete(endpoint, options);
+                    break;
+                case 'PUT':
+                    response = await axiosClient.put(endpoint, body, options);
+                    break;
+                case 'PATCH':
+                    response = await axiosClient.patch(endpoint, body, options);
+                    break;
+                default:
+                    throw new Error(`Unsupported HTTP method: ${method}`);
+            }
 
-        activeHttpRequests.current = activeHttpRequests.current.filter(reqCtrl => reqCtrl !== httpAbortCtrl)
-        
-        return response
-    }
-
-    useEffect(() => {
-        return () => {
-            activeHttpRequests.current.forEach(abortCtrl => abortCtrl.abort())
+            return response;
+        } finally {
+            activeHttpRequests.current = activeHttpRequests.current.filter(
+                (reqCtrl) => reqCtrl !== httpAbortCtrl,
+            );
         }
-    }, []);
+    }, [endpoint, method, body, params, headers]);
 
     useEffect(() => {
         const innerFetcher = async () => {
             try {
-                setIsLoading(true)
-                responseStatus.current = null
-                const res = await fetcher()
+                setState((prev) => ({ ...prev, isLoading: true, error: null }));
+
+                const res = await fetcher();
                 if (res) {
-                    setData(res.data)
-                    responseStatus.current = res.status
+                    setState((prev) => ({
+                        ...prev,
+                        data: res.data,
+                        responseStatus: res.status,
+                    }));
                 }
-            } catch (error: any) {
-                setError(error)
+                onSuccess && onSuccess(res.data);
+            } catch (error: AxiosError | any) { //TODO: fix this any
+                console.error(error);
+                setState((prev) => ({ ...prev, error }));
+                onError && onError(error);
             } finally {
-                setIsLoading(false)
-                setTrigger(false)
+                setState((prev) => ({ ...prev, isLoading: false }));
+                setTrigger(false);
             }
+        };
+
+        if (trigger) {
+            innerFetcher();
         }
-        trigger && innerFetcher()
     }, [trigger]);
 
     useEffect(() => {
-        error && console.log(error)
-    }, [error]);
+        return () => {
+            activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
+            activeHttpRequests.current = [];
+        };
+    }, []);
 
     return {
-        data, error, isLoading, triggerHttpReq, responseStatus: responseStatus.current
-    }
-}
+        data: state.data,
+        error: state.error,
+        isLoading: state.isLoading,
+        triggerHttpReq,
+        responseStatus: state.responseStatus,
+    };
+};
 
 export default useHttpClient;

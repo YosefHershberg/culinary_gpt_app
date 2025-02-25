@@ -1,9 +1,8 @@
+import { Link } from "react-router-dom";
+import { X } from "lucide-react";
 import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LazyImage from "../ui/LazyImage";
 import { Button } from "../ui/button";
-import { X } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
-import { useNavigate } from "react-router-dom";
 
 type RecipeProps = {
     recipe: RecipeType
@@ -11,7 +10,6 @@ type RecipeProps = {
 }
 
 const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
-    const navigate = useNavigate()
 
     const handleDelete = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.stopPropagation()
@@ -19,8 +17,9 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
     }
 
     return (
-        <div
-            onClick={() => navigate(`/user-recipe/${recipe.id}`, { state: recipe })}
+        <Link
+            to={`/user-recipe/${recipe.id}`}
+            state={recipe}
             className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
             key={recipe.id}
         >
@@ -51,20 +50,8 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
             >
                 <X className="size-5" />
             </Button>
-        </div>
+        </Link>
     )
 }
 
 export default Recipe
-
-export const RecipeSkeleton = () => (
-    <div className="mt-6 p-5 w-full flex flex-col sm:flex-row items-center rounded-xl shadow-md">
-        <Skeleton className="sm:size-[7rem] size-[15rem] rounded-lg" />
-        <div className="sm:mt-0 mt-4 ml-4 flex flex-col sm:justify-around sm:items-start items-center sm:h-full gap-2">
-            <Skeleton className="w-40 h-7" />
-
-            <Skeleton className="w-64 h-7" />
-
-        </div>
-    </div>
-)

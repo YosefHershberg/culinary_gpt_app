@@ -1,27 +1,32 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient, IngredientType } from '@/lib/types';
 import { useUserData } from '@/context/user-data-context';
 
-export const useIngredientSearch = (type: IngredientType) => {
+type UseIngredientSearchResponseType = {
+    searchValue: string;
+    setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+    isDropdownOpen: boolean;
+    setIsDropdownOpen: (value: boolean) => void;
+    dropdownRef: React.RefObject<HTMLDivElement>;
+    results: Ingredient[] | null;
+    isLoading: boolean;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    handleSelectIngredient: (ingredient: Ingredient) => void;
+};
+
+export const useIngredientSearch = (type: IngredientType): UseIngredientSearchResponseType => {
     const { addUserIngredient, userIngredients } = useUserData();
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const { data: results, isLoading, error, triggerHttpReq } = useHttpClient({
+    const { data: results, isLoading, triggerHttpReq } = useHttpClient<Ingredient[]>({
         endpoint: '/ingredients/search',
         method: 'GET',
-        params: { query: searchValue, type }
-    });
-
-    useEffect(() => {
-        if (results) setIsDropdownOpen(true);
-    }, [results]);
-
-    useEffect(() => {
-        if (error) {
+        params: { query: searchValue, type },
+        onError: (error) => {
             setIsDropdownOpen(false);
             toast({
                 variant: 'destructive',
@@ -29,8 +34,9 @@ export const useIngredientSearch = (type: IngredientType) => {
                 //@ts-expect-error
                 description: error.response?.data?.message || 'An error occurred while searching for ingredients.'
             });
-        }
-    }, [error]);
+        },
+        onSuccess: () => setIsDropdownOpen(true)
+    });
 
     useLayoutEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {

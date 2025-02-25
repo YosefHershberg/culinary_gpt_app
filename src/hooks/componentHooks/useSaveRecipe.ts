@@ -17,15 +17,15 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
     const { responseStatus, isLoading, error, triggerHttpReq } = useHttpClient({
         endpoint: '/user/recipes',
         method: 'POST',
-        body: recipe
-    })
-
-    useEffect(() => {
-        if (responseStatus === 200) {
+        body: recipe,
+        onSuccess: () => {
+            toast({
+                title: 'Recipe added!',
+                description: 'Your recipe has been successfully added to My Recipes.'
+            })
             navigate('/my-recipes')
-        }
-
-        if (error) {
+        },
+        onError: (error) => {
             toast({
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
@@ -33,18 +33,29 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
                 description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
             })
         }
-    }, [responseStatus, error])
 
-    const handleSaveRecipe = () => {
-        triggerHttpReq()
-    }
+    })
 
+    // useEffect(() => {
+    //     if (responseStatus === 200) {
+    //         navigate('/my-recipes')
+    //     }
+
+    //     if (error) {
+    //         toast({
+    //             variant: 'destructive',
+    //             title: 'Oops! Something went wrong!',
+    //             //@ts-ignore
+    //             description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
+    //         })
+    //     }
+    // }, [responseStatus, error])
 
     return {
         responseStatus,
         isLoading,
         error,
-        handleSaveRecipe
+        handleSaveRecipe: () => triggerHttpReq()
     }
 }
 

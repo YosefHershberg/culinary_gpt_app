@@ -1,20 +1,20 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import RecipePage from '@/pages/RecipePage';
-import { RecipeWithImage } from '@/lib/types';
 import useSaveRecipe from '@/hooks/componentHooks/useSaveRecipe';
-import { useLocation } from 'react-router-dom';
+import { RecipeWithImage } from '@/lib/types';
 
 const CreatedRecipe: React.FC = () => {
     const recipe = useLocation().state as RecipeWithImage
-    const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe as RecipeWithImage)
+    const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe)
 
     return (
         <RecipePage
-            createdRecipe={recipe as RecipeWithImage}
+            createdRecipe={recipe}
             addToRecipesBtn={
                 <Button
                     disabled={!recipe?.image_url}

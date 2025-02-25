@@ -77,7 +77,11 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                     </ShareRecipeModal>
                 }
                 {addToRecipesBtn}
-                {createdRecipe.image_url && <DownloadRecipePdfButton createdRecipe={createdRecipe} />}
+                {createdRecipe.image_url &&
+                    <DownloadRecipePdfButton
+                        createdRecipe={createdRecipe}
+                    />
+                }
             </div>
         </main>
     )
