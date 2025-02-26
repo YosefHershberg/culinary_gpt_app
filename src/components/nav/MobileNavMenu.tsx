@@ -3,11 +3,11 @@ import { useAuth } from '@/context/auth-context';
 
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Button } from '@/components/ui/button';
-import { UserButton } from '@clerk/clerk-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import UserButton from './UserButton';
 
 const MobileNavMenu: React.FC = () => {
     const { theme, setTheme } = useTheme()
@@ -17,16 +17,7 @@ const MobileNavMenu: React.FC = () => {
         <div className='flex items-center gap-4'>
             {!isLoaded ? <LoadingSpinner /> :
                 isSignedIn &&
-                <Button size='icon' variant='outline' className='p-0 rounded-full'>
-                    <UserButton appearance={{
-                        elements: {
-                            userButtonAvatarBox: {
-                                height: '100%',
-                                width: '100%',
-                            },
-                        },
-                    }} />
-                </Button>
+                <UserButton />
             }
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
