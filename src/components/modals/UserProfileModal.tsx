@@ -34,7 +34,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, close }) =>
                 ref={contentRef}
             >
                 <DialogTitle></DialogTitle>
-                <div className="size-fit rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-auto max-h-[90vh]">
+                <div className="size-fit rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-auto max-h-[90dvh]">
                     <UserProfile />
                     <Button
                         size='icon'
