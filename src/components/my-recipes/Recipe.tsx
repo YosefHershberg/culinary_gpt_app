@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LazyImage from "../ui/LazyImage";
