@@ -10,6 +10,7 @@ import { Share2 } from 'lucide-react'
 
 import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
 import DownloadRecipePdfButton from '@/components/DownloadRecipePdfButton'
+import RecipeImageModal from '@/components/modals/RecipeImageModal'
 
 type RecipePageProps = {
     createdRecipe: RecipeWithImage
@@ -33,11 +34,14 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                 </div>
                 <div className='sm:size-[25rem] rounded-lg flex flex-col items-center mt-8 bg-transparent/10'>
                     {createdRecipe.image_url ?
-                        <img
-                            src={createdRecipe.image_url}
-                            alt={createdRecipe.recipe.title}
-                            className='size-full object-cover rounded-lg aspect-square'
-                        /> :
+                        <RecipeImageModal>
+                            <img
+                                src={createdRecipe.image_url}
+                                alt={createdRecipe.recipe.title}
+                                className='size-full object-cover rounded-lg aspect-square'
+                            />
+                        </RecipeImageModal>
+                        :
                         <Lottie animationData={loadingRecipeAnimation} className='size-full p-10' />
                     }
                 </div>
