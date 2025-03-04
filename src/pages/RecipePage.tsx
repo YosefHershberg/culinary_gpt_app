@@ -67,7 +67,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
 
             </div>
             <h1 className='font-bold sm:mb-0 mb-[4rem] sm:text-6xl text-5xl italic text-amber-800 dark:text-amber-600'>
-                Bon Appetite!
+                Bon Appetit!
             </h1>
             <div className='fixed w-full max-w-[80rem] px-5 bottom-5 flex sm:justify-between justify-center gap-5'>
                 {!addToRecipesBtn &&

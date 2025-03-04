@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
-import { RecipeWithImage as RecipeType } from "@/lib/types";
+import { RecipeWithImage } from "@/lib/types";
 import LazyImage from "../ui/LazyImage";
 import { Button } from "../ui/button";
 
 type RecipeProps = {
-    recipe: RecipeType
-    handleOpenModal: (recipe: RecipeType) => void
+    recipe: RecipeWithImage
+    handleOpenModal: (recipe: RecipeWithImage) => void
 }
 
 const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
@@ -19,6 +19,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
 
     return (
         <div
+            // Note: this isn't a Link because on the delete btn click it navigates although the stopPropagation
             onClick={() => navigate(`/user-recipe/${recipe.id}`, { state: recipe })}
             className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
             key={recipe.id}
