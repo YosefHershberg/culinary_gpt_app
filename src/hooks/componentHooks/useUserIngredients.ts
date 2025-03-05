@@ -1,13 +1,14 @@
-import { getUserIngredients } from '@/services/ingredient.service'
+import { useEffect } from 'react'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
-import { Ingredient } from '@/lib/types'
 
 import useOptAddUserIngredient from '../optimistic/useOptAddUserIngredient'
 import useOptDeleteUserIngredient from '../optimistic/useOptDeleteUserIngredient'
 import useOptDeleteAllUserIngredients from '../optimistic/useOptDeleteAllUserIngredients'
 import useOptAddMultipleIngredients from '../optimistic/useOptAddMultipleIngredients'
+
+import { getUserIngredients } from '@/services/ingredient.service'
+import { Ingredient } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
-import { useEffect } from 'react'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];

@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateRecipe";
 import { Meals, RecipeState, RecipeWithImage } from "@/lib/types";
+import { useNavigate } from "@tanstack/react-router";
 
 type CreateRecipeWithImage = {
     mealSelected: Meals,
@@ -45,7 +45,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     useEffect(() => {
         if (recipe) {
             setNewRecipe(initialRecipeState);
-            navigate('/recipe', { state: recipe });
+            navigate({ to: '/recipe', state: recipe as any });
         }
         // NOTE: Don't put navigate fnc in deps arr. It creates bugs in nav from save recipe to my recipes
     }, [recipe]);

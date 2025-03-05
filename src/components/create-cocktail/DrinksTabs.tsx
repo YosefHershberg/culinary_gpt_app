@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { useLocation } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import IngredientsList from "@/components/create-components/IngredientList";
 import { getIngredientSuggestions } from '@/services/ingredient.service';
 
 import { DrinksCategories } from "@/lib/enums";
-import IngredientsList from "../create-components/IngredientList"; // Ensure this path is correct or create the missing file
-import { useLocation } from "react-router-dom";
 
 const TabsContentMap = {
     [DrinksCategories.Spirits]: (

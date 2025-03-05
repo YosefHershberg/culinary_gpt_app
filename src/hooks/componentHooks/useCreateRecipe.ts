@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import useSSE from '../useSSE'
 import { Meals, Recipe, RecipeWithImage } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
+import { redirect } from '@tanstack/react-router'
 
 type CreateRecipeWithImageProps = {
     mealSelected: Meals,
@@ -12,8 +12,6 @@ type CreateRecipeWithImageProps = {
 }
 
 const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: CreateRecipeWithImageProps) => {
-    const navigate = useNavigate()
-
     const [recipe, setRecipe] = useState<RecipeWithImage | null>(null)
     const [isLoadingRecipe, setIsLoadingRecipe] = useState<boolean>(false)
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
@@ -49,7 +47,7 @@ const useCreateRecipe = ({ mealSelected, selectedTime, prompt, numOfPeople }: Cr
                 description: error.response?.data?.message || 'An error occurred while creating your recipe.'
             })
             clearStreamAndError()
-            navigate('/create-new-recipe')
+            redirect({ to: '/create-recipe' })
         }
     }, [error]);
 

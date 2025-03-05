@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useUserData } from '@/context/user-data-context';
 import useCreateCocktailStream from '@/hooks/componentHooks/useCreateCocktail';
 import { toast } from '@/components/ui/use-toast';
 import { RecipeWithImage } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
+import { useNavigate } from '@tanstack/react-router';
 
 type CreateCocktailState = {
     createdCocktail: RecipeWithImage | null,
@@ -30,7 +30,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
         if (recipe) {
             setPrompt('')
             setCreatedCocktail(recipe)
-            navigate('/recipe', { state: recipe })
+            navigate({ to: '/recipe', state: recipe as any });
         }
     }, [recipe]);
 

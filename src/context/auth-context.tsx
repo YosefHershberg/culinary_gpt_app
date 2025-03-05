@@ -6,7 +6,7 @@ import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 import LoadingPage from '@/pages/LoadingPage';
 
-type AuthProviderState = {
+export type AuthProviderState = {
     user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version
     isSignedIn: boolean | undefined,
     isLoaded: boolean,

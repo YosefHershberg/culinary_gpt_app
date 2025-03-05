@@ -40,7 +40,7 @@ const tabConfig = [
 
 const IngredientsTabs: React.FC = () => {
     const [activeTab, setActiveTab] = useState<IngredientCategories>(IngredientCategories.Common);
-
+    
     const renderTabsContent = useCallback((category: IngredientCategories) => (
         <TabsContent value={category} className="flex-1 flex flex-col">
             <IngredientsList

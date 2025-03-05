@@ -1,15 +1,16 @@
-import React from 'react';
-
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
-
-import RecipePage from '@/pages/RecipePage';
 import useSaveRecipe from '@/hooks/componentHooks/useSaveRecipe';
 import { RecipeWithImage } from '@/lib/types';
-import { useLocation } from '@tanstack/react-router';
+import RecipePage from '@/pages/RecipePage';
+import { createLazyFileRoute, useLocation } from '@tanstack/react-router'
 
-const CreatedRecipe: React.FC = () => {
-    const recipe = useLocation().state as unknown as RecipeWithImage
+export const Route = createLazyFileRoute('/_auth/recipe')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
+  const recipe = useLocation().state as unknown as RecipeWithImage
     const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe)
 
     return (
@@ -30,6 +31,4 @@ const CreatedRecipe: React.FC = () => {
             }
         />
     );
-};
-
-export default CreatedRecipe;
+}

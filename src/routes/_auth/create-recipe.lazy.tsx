@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createLazyFileRoute } from '@tanstack/react-router'
 
 import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
@@ -8,13 +9,17 @@ import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
 
+export const Route = createLazyFileRoute('/_auth/create-recipe')({
+  component: RouteComponent,
+})
+
 const steps = [
   { label: 'Ingredients', icon: Milk },
   { label: 'Your kitchen', icon: CookingPot },
   { label: 'Final step', icon: Soup },
 ]
 
-const CreateNewRecipePage: React.FC = () => {
+function RouteComponent() {
   const [activeStep, setActiveStep] = useState(0);
   
   return (
@@ -65,5 +70,3 @@ const CreateNewRecipePage: React.FC = () => {
     </main>
   )
 }
-
-export default CreateNewRecipePage

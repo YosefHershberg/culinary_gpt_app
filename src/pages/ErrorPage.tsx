@@ -3,7 +3,8 @@ import { FallbackProps } from 'react-error-boundary';
 
 import errorPic from '@/assets/error-pic.webp';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
+
 
 const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetErrorBoundary, error, status, message }) => {
     const navigate = useNavigate();
@@ -19,12 +20,12 @@ const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetEr
             <div className='flex items-center gap-4'>
                 <Button
                     className='font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
-                    onClick={() => navigate('/')}>
+                    onClick={() => navigate({ to: '/' })}>
                     Go home
                 </Button>
                 <Button
                     className='font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'
-                    onClick={resetErrorBoundary || (() => navigate('/'))}
+                    onClick={resetErrorBoundary || (() => navigate({ to: '/' }))}
                 >
                     Try again
                 </Button>

@@ -1,10 +1,10 @@
+import { useEffect } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
+import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
 import { getUserKitchenUtils } from '@/services/kitchenUtils.service'
 
 import { KitchenUtil } from '@/lib/types'
-import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
-import { useEffect } from 'react'
 
 export type UseKitchenUtilsReturnType = {
     kitchenUtils: { [key: string]: boolean };
