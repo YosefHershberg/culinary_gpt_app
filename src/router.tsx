@@ -1,12 +1,14 @@
-import { createRouter, ErrorComponent } from '@tanstack/react-router'
+import { createRouter } from '@tanstack/react-router'
 import LoadingPage from './pages/LoadingPage'
 import { routeTree } from './routeTree.gen'
 import queryClient from './config/queryClient'
+import ErrorPage from './pages/ErrorPage'
 
 export const router = createRouter({
     routeTree,
     defaultPendingComponent: LoadingPage,
-    defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+    defaultErrorComponent: ({ error }) => <ErrorPage error={error} />,
+    defaultNotFoundComponent: () => <ErrorPage status={404} message='Page not found' />,
     context: {
       auth: undefined!, // We'll inject this when we render
       queryClient,

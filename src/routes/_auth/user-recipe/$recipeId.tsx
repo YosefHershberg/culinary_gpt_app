@@ -1,5 +1,4 @@
 import SuspenseTrigger from '@/components/SuspenseTrigger'
-import { RecipeWithImage } from '@/lib/types'
 import RecipePage from '@/pages/RecipePage'
 import { getUserRecipe } from '@/services/recipe.service'
 import { useQuery } from '@tanstack/react-query'
@@ -27,6 +26,7 @@ function RouteComponent() {
         // Disable the query when the recipe is already in the location state
         //@ts-expect-error
         enabled: !location.state.recipe,
+        throwOnError: true,
     })
 
     //@ts-expect-error

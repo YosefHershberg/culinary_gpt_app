@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { createLazyFileRoute, Link, Outlet } from '@tanstack/react-router'
 import { Martini, Menu, Milk } from 'lucide-react';
 
-export const Route = createLazyFileRoute('/my-ingredients')({
+export const Route = createLazyFileRoute('/_auth/my-ingredients')({
   component: RouteComponent,
 })
 
