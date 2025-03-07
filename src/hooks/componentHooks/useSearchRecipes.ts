@@ -10,9 +10,9 @@ export type UseSearchRecipesResponse = {
     isDebouncing: boolean
 }
 
-const useSearchRecipes = (): UseSearchRecipesResponse => {
+const useSearchRecipes = (initQuery = ''): UseSearchRecipesResponse => {
+    const [searchValue, setSearchValue] = useState<string>(initQuery)
     const [isSearchBarFocused, setIsSearchBarFocused] = useState<boolean>(false)
-    const [searchValue, setSearchValue] = useState<string>('')
     const { debouncedValue, isDebouncing } = useDebounce(searchValue, 500)
 
     const handleValueChange = (value: string) => {

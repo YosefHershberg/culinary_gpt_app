@@ -1,13 +1,17 @@
+import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getUserRecipes } from '@/services/recipe.service';
 import { RecipeWithImage } from '@/lib/types';
-import useSearchRecipes, { UseSearchRecipesResponse } from './useSearchRecipes';
-import { useEffect } from 'react';
 import useInfiniteScroll from './useInfiniteScroll';
-import useFilterRecipes, { UseFilterRecipesResponse } from './useFilterRecipes';
-import useSortRecipes, { UseSortRecipesResponse } from './useSortRecipes';
+import { FilterOptions, SortOptions } from '@/routes/_auth/my-recipes/route';
 
 export const LIMIT = 4;
+
+type UseMyRecipesProps = {
+    searchQuery: string;
+    currentFilter: FilterOptions;
+    currentSort: SortOptions;
+}
 
 type UseMyRecipesReturnType = {
     query: {
@@ -20,22 +24,20 @@ type UseMyRecipesReturnType = {
         hasData: boolean;
     },
     sentinelRef: React.MutableRefObject<HTMLDivElement | null>
-    searchData: UseSearchRecipesResponse,
-    filterData: UseFilterRecipesResponse,
-    sortData: UseSortRecipesResponse
 };
 
-const useMyRecipes = (): UseMyRecipesReturnType => {
-    const searchData = useSearchRecipes();
-    const filterData = useFilterRecipes()
+const useMyRecipes = ({
+    searchQuery, currentFilter, currentSort
+}: UseMyRecipesProps): UseMyRecipesReturnType => {
 
     const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
         queryKey: ['userRecipes'],
         queryFn: ({ pageParam = 1 }) => getUserRecipes({
             page: pageParam,
             limit: LIMIT,
-            query: searchData.debouncedValue,
-            filter: filterData.currentFilter
+            query: searchQuery,
+            filter: currentFilter,
+            sort: currentSort
         }),
         getNextPageParam: (lastPage, allPages) => {
             const nextPage = allPages.length + 1;
@@ -45,13 +47,11 @@ const useMyRecipes = (): UseMyRecipesReturnType => {
         throwOnError: true,
     });
 
-    const sortData = useSortRecipes(data?.pages.flatMap(page => page) || []);
-
     useEffect(() => {
-        if (searchData.debouncedValue || searchData.debouncedValue === '') {
+        if (searchQuery || searchQuery === '') {
             refetch();
         }
-    }, [searchData.debouncedValue, filterData.currentFilter]);
+    }, [searchQuery, currentFilter, currentSort]);
 
     const nextPage = () => {
         if (hasNextPage) {
@@ -63,7 +63,7 @@ const useMyRecipes = (): UseMyRecipesReturnType => {
 
     return {
         query: {
-            recipes: sortData.sortedRecipes,
+            recipes: data?.pages.flatMap(page => page) || [],
             isLoading,
             isError,
             nextPage,
@@ -72,9 +72,6 @@ const useMyRecipes = (): UseMyRecipesReturnType => {
             hasData: (data?.pages?.flatMap(page => page).length ?? 0) > 0
         },
         sentinelRef,
-        searchData,
-        filterData,
-        sortData
     };
 };
 

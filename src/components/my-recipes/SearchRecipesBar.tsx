@@ -6,7 +6,7 @@ type SearchRecipesBarProps = {
     setIsSearchBarFocused: (value: boolean) => void,
     handleValueChange: (value: string) => void,
     searchValue: string,
-    isDebouncing: boolean
+    isDebouncing: boolean,
 }
 
 const SearchRecipesBar: React.FC<SearchRecipesBarProps> = ({ setIsSearchBarFocused, handleValueChange, searchValue, isDebouncing }) => {

@@ -18,13 +18,14 @@ import { Route as SigninImport } from './routes/signin'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as AuthRecipeImport } from './routes/_auth/recipe'
+import { Route as AuthMyRecipesRouteImport } from './routes/_auth/my-recipes/route'
+import { Route as AuthMyRecipesIndexImport } from './routes/_auth/my-recipes/index'
 import { Route as AuthUserRecipeRecipeIdImport } from './routes/_auth/user-recipe/$recipeId'
 import { Route as AuthMyIngredientsFoodImport } from './routes/_auth/my-ingredients/food'
 import { Route as AuthMyIngredientsDrinksImport } from './routes/_auth/my-ingredients/drinks'
 
 // Create Virtual Routes
 
-const AuthMyRecipesLazyImport = createFileRoute('/_auth/my-recipes')()
 const AuthCreateRecipeLazyImport = createFileRoute('/_auth/create-recipe')()
 const AuthCreateCocktailLazyImport = createFileRoute('/_auth/create-cocktail')()
 const AuthMyIngredientsRouteLazyImport = createFileRoute(
@@ -56,14 +57,6 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthMyRecipesLazyRoute = AuthMyRecipesLazyImport.update({
-  id: '/my-recipes',
-  path: '/my-recipes',
-  getParentRoute: () => AuthRouteRoute,
-} as any).lazy(() =>
-  import('./routes/_auth/my-recipes.lazy').then((d) => d.Route),
-)
-
 const AuthCreateRecipeLazyRoute = AuthCreateRecipeLazyImport.update({
   id: '/create-recipe',
   path: '/create-recipe',
@@ -94,6 +87,18 @@ const AuthRecipeRoute = AuthRecipeImport.update({
   id: '/recipe',
   path: '/recipe',
   getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthMyRecipesRouteRoute = AuthMyRecipesRouteImport.update({
+  id: '/my-recipes',
+  path: '/my-recipes',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthMyRecipesIndexRoute = AuthMyRecipesIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthMyRecipesRouteRoute,
 } as any)
 
 const AuthUserRecipeRecipeIdRoute = AuthUserRecipeRecipeIdImport.update({
@@ -146,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/my-recipes': {
+      id: '/_auth/my-recipes'
+      path: '/my-recipes'
+      fullPath: '/my-recipes'
+      preLoaderRoute: typeof AuthMyRecipesRouteImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/recipe': {
       id: '/_auth/recipe'
       path: '/recipe'
@@ -174,13 +186,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthCreateRecipeLazyImport
       parentRoute: typeof AuthRouteImport
     }
-    '/_auth/my-recipes': {
-      id: '/_auth/my-recipes'
-      path: '/my-recipes'
-      fullPath: '/my-recipes'
-      preLoaderRoute: typeof AuthMyRecipesLazyImport
-      parentRoute: typeof AuthRouteImport
-    }
     '/_auth/my-ingredients/drinks': {
       id: '/_auth/my-ingredients/drinks'
       path: '/drinks'
@@ -202,10 +207,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthUserRecipeRecipeIdImport
       parentRoute: typeof AuthRouteImport
     }
+    '/_auth/my-recipes/': {
+      id: '/_auth/my-recipes/'
+      path: '/'
+      fullPath: '/my-recipes/'
+      preLoaderRoute: typeof AuthMyRecipesIndexImport
+      parentRoute: typeof AuthMyRecipesRouteImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface AuthMyRecipesRouteRouteChildren {
+  AuthMyRecipesIndexRoute: typeof AuthMyRecipesIndexRoute
+}
+
+const AuthMyRecipesRouteRouteChildren: AuthMyRecipesRouteRouteChildren = {
+  AuthMyRecipesIndexRoute: AuthMyRecipesIndexRoute,
+}
+
+const AuthMyRecipesRouteRouteWithChildren =
+  AuthMyRecipesRouteRoute._addFileChildren(AuthMyRecipesRouteRouteChildren)
 
 interface AuthMyIngredientsRouteLazyRouteChildren {
   AuthMyIngredientsDrinksRoute: typeof AuthMyIngredientsDrinksRoute
@@ -224,20 +247,20 @@ const AuthMyIngredientsRouteLazyRouteWithChildren =
   )
 
 interface AuthRouteRouteChildren {
+  AuthMyRecipesRouteRoute: typeof AuthMyRecipesRouteRouteWithChildren
   AuthRecipeRoute: typeof AuthRecipeRoute
   AuthMyIngredientsRouteLazyRoute: typeof AuthMyIngredientsRouteLazyRouteWithChildren
   AuthCreateCocktailLazyRoute: typeof AuthCreateCocktailLazyRoute
   AuthCreateRecipeLazyRoute: typeof AuthCreateRecipeLazyRoute
-  AuthMyRecipesLazyRoute: typeof AuthMyRecipesLazyRoute
   AuthUserRecipeRecipeIdRoute: typeof AuthUserRecipeRecipeIdRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthMyRecipesRouteRoute: AuthMyRecipesRouteRouteWithChildren,
   AuthRecipeRoute: AuthRecipeRoute,
   AuthMyIngredientsRouteLazyRoute: AuthMyIngredientsRouteLazyRouteWithChildren,
   AuthCreateCocktailLazyRoute: AuthCreateCocktailLazyRoute,
   AuthCreateRecipeLazyRoute: AuthCreateRecipeLazyRoute,
-  AuthMyRecipesLazyRoute: AuthMyRecipesLazyRoute,
   AuthUserRecipeRecipeIdRoute: AuthUserRecipeRecipeIdRoute,
 }
 
@@ -250,14 +273,15 @@ export interface FileRoutesByFullPath {
   '': typeof AuthRouteRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/recipe': typeof AuthRecipeRoute
   '/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/create-recipe': typeof AuthCreateRecipeLazyRoute
-  '/my-recipes': typeof AuthMyRecipesLazyRoute
   '/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
+  '/my-recipes/': typeof AuthMyRecipesIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -269,10 +293,10 @@ export interface FileRoutesByTo {
   '/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/create-recipe': typeof AuthCreateRecipeLazyRoute
-  '/my-recipes': typeof AuthMyRecipesLazyRoute
   '/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
+  '/my-recipes': typeof AuthMyRecipesIndexRoute
 }
 
 export interface FileRoutesById {
@@ -281,14 +305,15 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteRouteWithChildren
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/_auth/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/_auth/recipe': typeof AuthRecipeRoute
   '/_auth/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/_auth/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/_auth/create-recipe': typeof AuthCreateRecipeLazyRoute
-  '/_auth/my-recipes': typeof AuthMyRecipesLazyRoute
   '/_auth/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/_auth/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/_auth/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
+  '/_auth/my-recipes/': typeof AuthMyRecipesIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -298,14 +323,15 @@ export interface FileRouteTypes {
     | ''
     | '/signin'
     | '/signup'
+    | '/my-recipes'
     | '/recipe'
     | '/my-ingredients'
     | '/create-cocktail'
     | '/create-recipe'
-    | '/my-recipes'
     | '/my-ingredients/drinks'
     | '/my-ingredients/food'
     | '/user-recipe/$recipeId'
+    | '/my-recipes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -316,24 +342,25 @@ export interface FileRouteTypes {
     | '/my-ingredients'
     | '/create-cocktail'
     | '/create-recipe'
-    | '/my-recipes'
     | '/my-ingredients/drinks'
     | '/my-ingredients/food'
     | '/user-recipe/$recipeId'
+    | '/my-recipes'
   id:
     | '__root__'
     | '/'
     | '/_auth'
     | '/signin'
     | '/signup'
+    | '/_auth/my-recipes'
     | '/_auth/recipe'
     | '/_auth/my-ingredients'
     | '/_auth/create-cocktail'
     | '/_auth/create-recipe'
-    | '/_auth/my-recipes'
     | '/_auth/my-ingredients/drinks'
     | '/_auth/my-ingredients/food'
     | '/_auth/user-recipe/$recipeId'
+    | '/_auth/my-recipes/'
   fileRoutesById: FileRoutesById
 }
 
@@ -373,11 +400,11 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth/route.tsx",
       "children": [
+        "/_auth/my-recipes",
         "/_auth/recipe",
         "/_auth/my-ingredients",
         "/_auth/create-cocktail",
         "/_auth/create-recipe",
-        "/_auth/my-recipes",
         "/_auth/user-recipe/$recipeId"
       ]
     },
@@ -386,6 +413,13 @@ export const routeTree = rootRoute
     },
     "/signup": {
       "filePath": "signup.tsx"
+    },
+    "/_auth/my-recipes": {
+      "filePath": "_auth/my-recipes/route.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/my-recipes/"
+      ]
     },
     "/_auth/recipe": {
       "filePath": "_auth/recipe.tsx",
@@ -407,10 +441,6 @@ export const routeTree = rootRoute
       "filePath": "_auth/create-recipe.lazy.tsx",
       "parent": "/_auth"
     },
-    "/_auth/my-recipes": {
-      "filePath": "_auth/my-recipes.lazy.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/my-ingredients/drinks": {
       "filePath": "_auth/my-ingredients/drinks.tsx",
       "parent": "/_auth/my-ingredients"
@@ -422,6 +452,10 @@ export const routeTree = rootRoute
     "/_auth/user-recipe/$recipeId": {
       "filePath": "_auth/user-recipe/$recipeId.tsx",
       "parent": "/_auth"
+    },
+    "/_auth/my-recipes/": {
+      "filePath": "_auth/my-recipes/index.tsx",
+      "parent": "/_auth/my-recipes"
     }
   }
 }

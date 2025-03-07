@@ -4,18 +4,18 @@ import axiosClient from '@/config/axiosClient';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
 
-type BaseUseHttpClientProps = {
+type BaseUseHttpClientProps<TResponse> = {
     endpoint: string;
     method: HttpMethod;
-    params?: any;
-    headers?: any;
-    onSuccess?: (data: any) => void;
+    params?: Record<string, any>;
+    headers?: Record<string, any>;
+    onSuccess?: (data: TResponse) => void;
     onError?: (error: AxiosError) => void;
 };
 
-type UseHttpClientProps =
-    | (BaseUseHttpClientProps & { method: 'GET' | 'DELETE'; body?: never })
-    | (BaseUseHttpClientProps & { method: 'POST' | 'PUT' | 'PATCH'; body: Record<string, any> });
+type UseHttpClientProps<TResponse> =
+    | (BaseUseHttpClientProps<TResponse> & { method: 'GET' | 'DELETE'; body?: never })
+    | (BaseUseHttpClientProps<TResponse> & { method: 'POST' | 'PUT' | 'PATCH'; body: Record<string, any> });
 
 type UseHttpClientResponseType<TResponse> = {
     data: TResponse | null;
@@ -25,7 +25,7 @@ type UseHttpClientResponseType<TResponse> = {
     responseStatus: number | null;
 };
 
-const useHttpClient = <TResponse = any>({
+const useHttpClient = <TResponse extends Record<string, any>>({
     endpoint,
     method,
     body,
@@ -33,7 +33,7 @@ const useHttpClient = <TResponse = any>({
     headers,
     onSuccess,
     onError,
-}: UseHttpClientProps): UseHttpClientResponseType<TResponse> => {
+}: UseHttpClientProps<TResponse>): UseHttpClientResponseType<TResponse> => {
     const activeHttpRequests = useRef<AbortController[]>([]);
     const [trigger, setTrigger] = useState<boolean>(false);
 

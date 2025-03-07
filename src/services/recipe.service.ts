@@ -1,19 +1,21 @@
 import axiosClient from "@/config/axiosClient"
-import { FilterOptions } from "@/hooks/componentHooks/useFilterRecipes"
 import { MessageResponse, RecipeWithImage } from "@/lib/types"
+import { SortOptions, FilterOptions } from "@/routes/_auth/my-recipes/route"
 
 type GetUserRecipesProps = {
     page: number,
     limit: number,
     query?: string,
+    sort: SortOptions,
     filter: FilterOptions
 }
 
-export const getUserRecipes = async ({ page, limit, query, filter }: GetUserRecipesProps): Promise<RecipeWithImage[]> => {
+export const getUserRecipes = async ({ page, limit, query, filter, sort }: GetUserRecipesProps): Promise<RecipeWithImage[]> => {
     const url = new URL('api/user/recipes', axiosClient.defaults.baseURL)
     url.searchParams.append('page', page.toString())
     url.searchParams.append('limit', limit.toString())
     url.searchParams.append('filter', filter.toString())
+    url.searchParams.append('sort', sort.toString())
     
     if (query) {
         url.searchParams.append('query', query)

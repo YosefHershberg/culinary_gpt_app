@@ -32,7 +32,7 @@ function RouteComponent() {
               Say goodbye to boring meals, with AI-powered recipe recommendations, meal plans creation and more... 100,000+ dinners saved so far.
             </p>
             
-            <Link to={'/create-recipe'}>
+            <Link to='/create-recipe'>
               <Button
                 variant='secondary'
                 className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
