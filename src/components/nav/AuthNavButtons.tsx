@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
 import { useAuth } from '@/context/auth-context'
-import { Link } from 'react-router-dom';
 import UserButton from './UserButton';
+import { Link } from '@tanstack/react-router';
 
 const AuthNavButtons: React.FC = () => {
     const { isSignedIn, isLoaded } = useAuth();

@@ -1,13 +1,12 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createContext, useContext, useState } from 'react';
 import { useUserData } from '@/context/user-data-context';
-import useCreateCocktailStream from '@/hooks/componentHooks/useCreateCocktail';
 import { toast } from '@/components/ui/use-toast';
-import { RecipeWithImage } from '@/lib/types';
+// import { RecipeWithImage } from '@/lib/types';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
+import { useNavigate } from '@tanstack/react-router';
+import useCreateItemStream from '@/hooks/componentHooks/useCreateItemStream';
 
 type CreateCocktailState = {
-    createdCocktail: RecipeWithImage | null,
     handleSubmit: () => void,
     handlePromptChange: (value: string) => void,
     prompt: string
@@ -16,23 +15,27 @@ type CreateCocktailState = {
 export const CreateCocktailContext = createContext<CreateCocktailState>(undefined as any);
 
 export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const navigate = useNavigate()
     const { userIngredients } = useUserData()
-
-    const [createdCocktail, setCreatedCocktail] = useState<RecipeWithImage | null>(null)
     const [prompt, setPrompt] = useState<string>('')
+    const navigate = useNavigate()
 
-    const { trigger, recipe, isLoadingRecipe } = useCreateCocktailStream({
-        prompt
-    })
-
-    useEffect(() => {
-        if (recipe) {
+    const { trigger, isLoadingItem } = useCreateItemStream<{
+        prompt: string
+    }>({
+        type: 'cocktail',
+        endpoint: '/user/recipes/create-cocktail',
+        params: {
+            prompt
+        },
+        onSuccess: (newCocktail) => {
             setPrompt('')
-            setCreatedCocktail(recipe)
-            navigate('/recipe', { state: recipe })
+            navigate({
+                to: '/recipe',
+                state: newCocktail as any,
+                replace: true
+            });
         }
-    }, [recipe]);
+    })
 
     const handlePromptChange = (value: string) => {
         setPrompt(value)
@@ -51,11 +54,10 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
         trigger()
     }
 
-    if (isLoadingRecipe) return <LoadingRecipePage duration={600} />
+    if (isLoadingItem) return <LoadingRecipePage duration={600} />
 
     return (
         <CreateCocktailContext.Provider value={{
-            createdCocktail,
             handleSubmit,
             handlePromptChange,
             prompt

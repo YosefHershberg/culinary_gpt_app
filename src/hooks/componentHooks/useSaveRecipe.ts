@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import useHttpClient from "../useHttpClient";
 import { RecipeWithImage } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
+import { useNavigate } from "@tanstack/react-router";
 
 type SaveRecipeResponse = {
     responseStatus: number | null,
@@ -22,7 +22,7 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
                 title: 'Recipe added!',
                 description: 'Your recipe has been successfully added to My Recipes.'
             })
-            navigate('/my-recipes')
+            navigate({ to: '/my-recipes' })
         },
         onError: (error) => {
             toast({
@@ -34,21 +34,6 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
         }
 
     })
-
-    // useEffect(() => {
-    //     if (responseStatus === 200) {
-    //         navigate('/my-recipes')
-    //     }
-
-    //     if (error) {
-    //         toast({
-    //             variant: 'destructive',
-    //             title: 'Oops! Something went wrong!',
-    //             //@ts-ignore
-    //             description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
-    //         })
-    //     }
-    // }, [responseStatus, error])
 
     return {
         responseStatus,

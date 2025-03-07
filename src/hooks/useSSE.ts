@@ -72,7 +72,7 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 if (parsedData.event === 'error') {
                     return terminateStream(new Error(parsedData.payload));
                 }
-                
+
                 if (typeof parsedData !== 'object' || !parsedData.event || !parsedData.payload) {
                     return terminateStream(new Error('Invalid message format'));
                 }
@@ -80,7 +80,9 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 setStream(prevData => [...prevData, parsedData])
             },
             onerror(error) {
-                terminateStream(error instanceof Error ? error : new Error('An error occurred while streaming data'))
+                terminateStream(error instanceof Error ?
+                    error : new Error('An error occurred while streaming data')
+                )
             }
         });
     }

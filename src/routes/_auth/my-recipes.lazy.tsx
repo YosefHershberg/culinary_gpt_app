@@ -1,17 +1,24 @@
 import React, { useMemo } from "react";
+import { createLazyFileRoute, Link } from '@tanstack/react-router'
+
 import DeleteRecipeModal from "@/components/modals/DeleteRecipeModal";
 import Recipe from "@/components/my-recipes/Recipe";
 import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
-import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
-import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
-import { RecipeWithImage as RecipeType } from "@/lib/types";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import FilterOptionsDropdown from "@/components/my-recipes/FilterOptionsDropdown";
 import SortOptionsDropdown from "@/components/my-recipes/SortOptionsDropdown";
 
-const MyRecipes: React.FC = () => {
+import useMyRecipes from "@/hooks/componentHooks/useMyRecipes";
+import useDeleteRecipe from "@/hooks/componentHooks/useDeleteRecipe";
+
+import { RecipeWithImage as RecipeType } from "@/lib/types";
+
+export const Route = createLazyFileRoute('/_auth/my-recipes')({
+  component: RouteComponent,
+})
+
+function RouteComponent() {
   const { searchData, filterData, sortData, sentinelRef, query } = useMyRecipes();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
 
@@ -85,7 +92,7 @@ const NoRecipesMessage: React.FC = () => (
   <div className="flex flex-col gap-4 items-center justify-center w-full h-[10rem]">
     <p className="text-lg text-center">You haven't added any recipes yet.</p>
     <Button variant="secondary" asChild>
-      <Link to="/create-new-recipe">Create a new recipe</Link>
+      <Link to="/create-recipe">Create a new recipe</Link>
     </Button>
   </div>
 );
@@ -96,4 +103,3 @@ const NoSearchResultsMessage: React.FC = () => (
   </div>
 );
 
-export default MyRecipes;

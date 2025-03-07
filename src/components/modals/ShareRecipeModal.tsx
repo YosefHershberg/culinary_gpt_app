@@ -13,7 +13,6 @@ import { toast } from "../ui/use-toast"
 import facebookLogo from '@/assets/logos/facebook-logo.webp'
 import whatsappLogo from '@/assets/logos/whatsapp-logo.webp'
 import xLogo from '@/assets/logos/x-logo.webp'
-import { Link } from "react-router-dom"
 
 const title = 'Check out this recipe I created with CulinaryGPT'
 
@@ -46,8 +45,8 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                             variant='ghost'
                             className="h-fit"
                         >
-                            <Link
-                                to={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+                            <a
+                                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex flex-col items-center gap-2"
@@ -58,7 +57,7 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                                     alt="facebook logo"
                                 />
                                 <span>Facebook</span>
-                            </Link>
+                            </a>
                         </Button>
                     </DialogClose>
 
@@ -67,8 +66,8 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                             variant='ghost'
                             className="h-fit"
                         >
-                            <Link
-                                to={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(window.location.href)}`}
+                            <a
+                                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(window.location.href)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex flex-col items-center gap-2"
@@ -79,7 +78,7 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                                     alt="x logo"
                                 />
                                 <span>X</span>
-                            </Link>
+                            </a>
                         </Button>
                     </DialogClose>
 
@@ -88,8 +87,8 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                             variant='ghost'
                             className="h-fit"
                         >
-                            <Link
-                                to={`https://wa.me/?text=${encodeURIComponent(`${title} :: ${window.location.href}`)}`}
+                            <a
+                                href={`https://wa.me/?text=${encodeURIComponent(`${title} :: ${window.location.href}`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex flex-col items-center gap-2"
@@ -100,7 +99,7 @@ const ShareRecipeModal: React.FC<{ children: React.ReactNode }> = ({ children })
                                     alt="whatsapp logo"
                                 />
                                 <span>WhatsApp</span>
-                            </Link>
+                            </a>
                         </Button>
                     </DialogClose>
 

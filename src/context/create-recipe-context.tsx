@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useContext, useState } from "react";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
-import useCreateRecipeStream from "@/hooks/componentHooks/useCreateRecipe";
+import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
 import { Meals, RecipeState, RecipeWithImage } from "@/lib/types";
+import { useNavigate } from "@tanstack/react-router";
 
 type CreateRecipeWithImage = {
     mealSelected: Meals,
@@ -33,37 +33,38 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const navigate = useNavigate()
     const { userIngredients } = useUserData()
 
-    const [newRecipe, setNewRecipe] = useState<RecipeState>(initialRecipeState)
+    const [recipeState, setRecipeState] = useState<RecipeState>(initialRecipeState)
 
-    const { trigger, recipe, isLoadingRecipe } = useCreateRecipeStream({
-        mealSelected: newRecipe.mealSelected,
-        selectedTime: newRecipe.selectedTime,
-        prompt: newRecipe.prompt,
-        numOfPeople: newRecipe.numOfPeople
+    const { trigger, item: newRecipe, isLoadingItem } = useCreateRecipeStream<
+        RecipeState
+    >({
+        type: 'recipe',
+        endpoint: '/user/recipes/create',
+        params: recipeState,
+        onSuccess: (newRecipe) => {
+            setRecipeState(initialRecipeState);
+            navigate({
+                to: '/recipe',
+                state: newRecipe as any,
+                replace: true
+            });
+        }
     })
 
-    useEffect(() => {
-        if (recipe) {
-            setNewRecipe(initialRecipeState);
-            navigate('/recipe', { state: recipe });
-        }
-        // NOTE: Don't put navigate fnc in deps arr. It creates bugs in nav from save recipe to my recipes
-    }, [recipe]);
-
     const handleNumOfPeopleChange = (value: number) => {
-        setNewRecipe(prev => ({ ...prev, numOfPeople: value }))
+        setRecipeState(prev => ({ ...prev, numOfPeople: value }))
     }
 
     const handleMealSelected = (value: Meals) => {
-        setNewRecipe(prev => ({ ...prev, mealSelected: value }))
+        setRecipeState(prev => ({ ...prev, mealSelected: value }))
     }
 
     const handleTimeChange = (value: number[]) => {
-        setNewRecipe(prev => ({ ...prev, selectedTime: value[0] }))
+        setRecipeState(prev => ({ ...prev, selectedTime: value[0] }))
     }
 
     const handlePromptChange = (value: string) => {
-        setNewRecipe(prev => ({ ...prev, prompt: value }))
+        setRecipeState(prev => ({ ...prev, prompt: value }))
     }
 
     const handleSubmit = () => {
@@ -76,7 +77,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             })
         }
 
-        if (newRecipe.numOfPeople < 1) {
+        if (recipeState.numOfPeople < 1) {
             return toast({
                 variant: 'destructive',
                 title: 'Oops! You need more people!',
@@ -86,15 +87,15 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         trigger()
     }
 
-    if (isLoadingRecipe) return <LoadingRecipePage duration={1000} />
+    if (isLoadingItem) return <LoadingRecipePage duration={1000} />
 
     return (
         <CreateRecipeContext.Provider value={{
-            mealSelected: newRecipe.mealSelected,
-            selectedTime: newRecipe.selectedTime,
-            prompt: newRecipe.prompt,
-            numOfPeople: newRecipe.numOfPeople,
-            recipe,
+            mealSelected: recipeState.mealSelected,
+            selectedTime: recipeState.selectedTime,
+            prompt: recipeState.prompt,
+            numOfPeople: recipeState.numOfPeople,
+            recipe: newRecipe,
             handleMealSelected,
             handleTimeChange,
             handlePromptChange,

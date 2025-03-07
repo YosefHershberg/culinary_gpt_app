@@ -15,7 +15,7 @@ const ChooseDrinks: React.FC = () => {
   return (
     <IngredientListContextProvider>
       <div className='flex-1 flex flex-col items-center'>
-        <h1 className='sm:text-3xl text-xl mb-5 text-center'>What cocktail ingredients do you have?</h1>
+        <h1 className='sm:text-3xl text-2xl font-bold mb-5 text-balance text-center'>What cocktail ingredients do you have?</h1>
         <IngredientSearchBar
           placeholders={placeholders}
           type='drink'

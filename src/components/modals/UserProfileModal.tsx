@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { UserProfile } from '@clerk/clerk-react'
-import { X } from 'lucide-react'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Button } from '../ui/button'
+import { X } from 'lucide-react'
 
 type UserProfileModalProps = {
     isOpen: boolean;
@@ -32,6 +32,7 @@ const UserProfileModal: React.FC<UserProfileModalProps> = ({ isOpen, close }) =>
 
             <DialogContent
                 ref={contentRef}
+                className='w-fit'
             >
                 <DialogTitle></DialogTitle>
                 <div className="size-fit rounded-xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-auto max-h-[90dvh]">

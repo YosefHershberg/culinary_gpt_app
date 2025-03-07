@@ -15,8 +15,8 @@ import {
 } from '../ui/dropdown-menu';
 
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import UserButton from './UserButton';
+import { Link } from '@tanstack/react-router';
 
 const MobileNavMenu: React.FC = () => {
   const { isSignedIn, isLoaded } = useAuth();
@@ -86,13 +86,13 @@ const ThemeOptions = () => {
   const SignedInMenuItems = () => (
     <>
       <DropdownMenuItem asChild>
-        <Link to="/create-new-recipe">
+        <Link to="/create-recipe">
           <Plus className="mr-2 size-4" />
           Create New Recipe
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
-        <Link to="/create-new-cocktail">
+        <Link to="/create-cocktail">
           <Martini className="mr-2 size-4" />
           Create New Cocktail
         </Link>

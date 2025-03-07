@@ -1,8 +1,8 @@
 import PlanTabs from "@/components/subscriptions/PlanTabs";
 import { useAuth } from "@/context/auth-context";
 import env from "@/utils/env";
+import { useNavigate } from "@tanstack/react-router";
 import { useLayoutEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export type Plan = {
     id: string;
@@ -49,7 +49,7 @@ const SubscribePage: React.FC = () => {
 
     useLayoutEffect(() => {
         if (user.isSubscribed) {
-            navigate('/create-new-cocktail')
+            navigate({ to: '/create-recipe' })
         }
     }, [user])
 

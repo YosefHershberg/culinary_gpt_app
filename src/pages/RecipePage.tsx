@@ -1,16 +1,15 @@
 import { useLayoutEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Lottie from 'lottie-react'
-
-import { RecipeWithImage } from '@/lib/types'
+import { useNavigate } from '@tanstack/react-router'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
 import { Button } from '@/components/ui/button'
-import { Share2 } from 'lucide-react'
-
-import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
 import DownloadRecipePdfButton from '@/components/DownloadRecipePdfButton'
 import RecipeImageModal from '@/components/modals/RecipeImageModal'
+
+import Lottie from 'lottie-react'
+import { Share2 } from 'lucide-react'
+import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
+import { RecipeWithImage } from '@/lib/types'
 
 type RecipePageProps = {
     createdRecipe: RecipeWithImage
@@ -21,10 +20,10 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
     const navigate = useNavigate()
 
     useLayoutEffect(() => {
-        if (!createdRecipe) navigate('/create-new-recipe')
+        if (!createdRecipe) navigate({ to: '/create-recipe' })
     }, []);
 
-    if (createdRecipe) return (
+    if (createdRecipe.recipe) return (
         <main className='flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
             <div className='max-w-[50rem] flex flex-col items-center bg-orange/20 py-5 px-10 rounded-2xl m-5'>
 
