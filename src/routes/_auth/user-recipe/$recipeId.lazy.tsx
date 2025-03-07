@@ -2,10 +2,10 @@ import SuspenseTrigger from '@/components/SuspenseTrigger'
 import RecipePage from '@/pages/RecipePage'
 import { getUserRecipe } from '@/services/recipe.service'
 import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, useLocation } from '@tanstack/react-router'
+import { createLazyFileRoute, useLocation } from '@tanstack/react-router'
 import { z } from 'zod'
 
-export const Route = createFileRoute('/_auth/user-recipe/$recipeId')({
+export const Route = createLazyFileRoute('/_auth/user-recipe/$recipeId')({
   params: {
     parse: (params) => ({
       recipeId: z.string().parse(String(params.recipeId)),

@@ -6,11 +6,11 @@ import RecipePage from '@/pages/RecipePage';
 import { createFileRoute, useLocation } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/recipe')({
-  component: RouteComponent,
+    component: RouteComponent,
 })
 
 function RouteComponent() {
-  const recipe = useLocation().state as unknown as RecipeWithImage
+    const recipe = useLocation().state as unknown as RecipeWithImage
     const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe)
 
     return (

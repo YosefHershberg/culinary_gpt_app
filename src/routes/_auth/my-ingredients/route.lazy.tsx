@@ -1,6 +1,8 @@
+import { useLayoutEffect } from 'react';
+import { createLazyFileRoute, Link, Outlet, useNavigate } from '@tanstack/react-router'
+
 import Divider from '@/components/ui/Divider';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { createLazyFileRoute, Link, Outlet } from '@tanstack/react-router'
 import { Martini, Menu, Milk } from 'lucide-react';
 
 export const Route = createLazyFileRoute('/_auth/my-ingredients')({
@@ -8,6 +10,14 @@ export const Route = createLazyFileRoute('/_auth/my-ingredients')({
 })
 
 function RouteComponent() {
+  const navigate = useNavigate()
+
+  useLayoutEffect(() => {
+    if (window.location.pathname === '/my-ingredients') {
+      navigate({ to: '/my-ingredients/food' });
+    }
+  }, [])
+
   return (
     <main className="flex-1 flex flex-col w-screen p-5">
       <div className="h-full flex flex-1">
