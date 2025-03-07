@@ -3,9 +3,9 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import useSaveRecipe from '@/hooks/componentHooks/useSaveRecipe';
 import { RecipeWithImage } from '@/lib/types';
 import RecipePage from '@/pages/RecipePage';
-import { createLazyFileRoute, useLocation } from '@tanstack/react-router'
+import { createFileRoute, useLocation } from '@tanstack/react-router'
 
-export const Route = createLazyFileRoute('/_auth/recipe')({
+export const Route = createFileRoute('/_auth/recipe')({
   component: RouteComponent,
 })
 

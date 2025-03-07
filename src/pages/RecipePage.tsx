@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import { useNavigate } from '@tanstack/react-router'
 
 import ShareRecipeModal from '@/components/modals/ShareRecipeModal'
@@ -23,11 +23,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
         if (!createdRecipe) navigate({ to: '/create-recipe' })
     }, []);
 
-    useEffect(() => {
-        console.log(createdRecipe);
-    }, [createdRecipe]);
-
-    if (createdRecipe) return (
+    if (createdRecipe.recipe) return (
         <main className='flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>
             <div className='max-w-[50rem] flex flex-col items-center bg-orange/20 py-5 px-10 rounded-2xl m-5'>
 

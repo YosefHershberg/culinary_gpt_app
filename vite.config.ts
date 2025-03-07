@@ -5,7 +5,10 @@ import { defineConfig } from "vite"
 
 export default defineConfig({
   plugins: [
-    TanStackRouterVite({ target: 'react', autoCodeSplitting: true }),
+    TanStackRouterVite({
+      target: 'react',
+      // autoCodeSplitting: true
+    }),
     react(),
   ],
   resolve: {
@@ -13,5 +16,5 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  
+
 })
