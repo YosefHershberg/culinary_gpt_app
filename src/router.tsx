@@ -1,8 +1,8 @@
 import { createRouter } from '@tanstack/react-router'
-import LoadingPage from './pages/LoadingPage'
-import { routeTree } from './routeTree.gen'
-import queryClient from './config/queryClient'
-import ErrorPage from './pages/ErrorPage'
+import LoadingPage from '@/pages/LoadingPage'
+import { routeTree } from '@/routeTree.gen'
+import queryClient from '@/config/queryClient'
+import ErrorPage from '@/pages/ErrorPage'
 
 export const router = createRouter({
     routeTree,

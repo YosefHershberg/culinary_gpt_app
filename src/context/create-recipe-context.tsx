@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useLayoutEffect, useState } from "react";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
@@ -42,7 +42,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         numOfPeople: newRecipe.numOfPeople
     })
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (recipe) {
             setNewRecipe(initialRecipeState);
             navigate({ to: '/recipe', state: recipe as any });

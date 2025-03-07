@@ -17,11 +17,11 @@ function RootComponent() {
 
   if (!isSignedIn) {
     return (
-    <main className='flex flex-col min-h-[100dvh]'>
-      <Navbar />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </main>
+      <main className='flex flex-col min-h-[100dvh]'>
+        <Navbar />
+        <Outlet />
+        <TanStackRouterDevtools />
+      </main>
     )
   } else {
     return (
