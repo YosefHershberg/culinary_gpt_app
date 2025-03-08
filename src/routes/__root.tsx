@@ -4,7 +4,7 @@ import Navbar from '@/components/nav/Navbar'
 import type { QueryClient } from '@tanstack/react-query'
 import { AuthProviderState, useAuth } from '@/context/auth-context'
 import { FeaturesProviders } from '@/Providers'
-import { env } from 'process'
+import env from '@/utils/env'
 
 export const Route = createRootRouteWithContext<{
   auth: AuthProviderState
