@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import LoadingSpinner from './LoadingSpinner';
 import { compressImage } from '@/lib/utils';
 import { toast } from './use-toast';
@@ -40,11 +40,17 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ base64Image, setBase64Ima
     }
   };
 
-  const handleImageChange = async (image: File | undefined) => {
+  const handleImageChange = useCallback(async (image: File | undefined) => {
     if (image && image.type.includes('image')) {
       setLoading(true);
       try {
-        const compressedBase64 = await compressImage(image, 800, 800, 0.7);
+        const compressedBase64 = await compressImage({
+          file: image,
+          quality: 0.6,
+          maxWidth: 800,
+          maxHeight: 800,
+        });
+        console.log(compressedBase64);
         setBase64Image(compressedBase64);
       } catch (error) {
         toast({
@@ -64,7 +70,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ base64Image, setBase64Ima
       setState((prevState) => ({ ...prevState, selectedImage: null }));
       setLoading(false);
     }
-  };
+  }, [setBase64Image]);
 
   return (
     <div

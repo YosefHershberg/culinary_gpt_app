@@ -5,7 +5,14 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
 }
 
-export const compressImage = (image: File, maxWidth: number, maxHeight: number, quality: number): Promise<string> => {
+type CompressImageProps = {
+  file: File;
+  maxWidth: number;
+  maxHeight: number;
+  quality: number;
+}
+
+export const compressImage = ({file, maxWidth, maxHeight, quality}: CompressImageProps): Promise<string> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const reader = new FileReader();
@@ -16,7 +23,7 @@ export const compressImage = (image: File, maxWidth: number, maxHeight: number, 
       }
     };
 
-    reader.readAsDataURL(image);
+    reader.readAsDataURL(file);
 
     img.onload = () => {
       // Create a canvas to draw the image on
@@ -39,9 +46,32 @@ export const compressImage = (image: File, maxWidth: number, maxHeight: number, 
       // Draw the image on the canvas
       ctx.drawImage(img, 0, 0, width, height);
 
-      // Convert canvas to Base64 with the desired quality (jpeg format)
-      const compressedBase64 = canvas.toDataURL('image/jpeg', quality); // Compress to JPEG format with quality
-      resolve(compressedBase64);
+      // Function to compress the image and check its size
+      const compressAndCheckSize = (quality: number): Promise<string> => {
+        return new Promise((resolve, reject) => {
+          // Convert canvas to Base64 with the desired quality (jpeg format)
+          const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+
+          // Calculate the size of the Base64 string in bytes
+          const sizeInBytes = (compressedBase64.length * 3) / 4 - (compressedBase64.endsWith('==') ? 2 : compressedBase64.endsWith('=') ? 1 : 0);
+
+          // Check if the size is within the limit
+          if (sizeInBytes <= 50000) {
+            resolve(compressedBase64);
+          } else {
+            // Reduce quality and try again
+            const newQuality = quality * 0.9; // Reduce quality by 10%
+            if (newQuality < 0.1) {
+              reject('Unable to compress image below 50,000 bytes');
+            } else {
+              compressAndCheckSize(newQuality).then(resolve).catch(reject);
+            }
+          }
+        });
+      };
+
+      // Start the compression process with the initial quality
+      compressAndCheckSize(quality).then(resolve).catch(reject);
     };
 
     img.onerror = (err) => {
