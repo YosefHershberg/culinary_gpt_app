@@ -7,9 +7,13 @@ import { router } from './router'
 import queryClient from './config/queryClient'
 import { Providers } from './Providers'
 import env from './utils/env'
+import { useEffect } from 'react'
 
 function InnerApp() {
   const auth = useAuth()
+  useEffect(() => {
+    console.log(env.NODE_ENV === 'development');
+  }, []);
   return <RouterProvider router={router} context={{ auth, queryClient }} />
 }
 
