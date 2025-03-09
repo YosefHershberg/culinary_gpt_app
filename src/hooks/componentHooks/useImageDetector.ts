@@ -20,7 +20,6 @@ const useImageDetector = (): UseImageDetectorResponse => {
         method: 'POST',
         body: { imageUrl: base64Image },
         onError: (error: AxiosError) => {
-            console.log('wrrr');
             setBase64Image('');
             toast({
                 variant: 'destructive',

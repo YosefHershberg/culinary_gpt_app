@@ -21,7 +21,6 @@ const useAddImageIngredients = (ingredients: Ingredient[] | null): UseAddImageIn
     const { addMultipleIngredients } = useUserData();
 
     useEffect(() => {
-        console.log(ingredients);
         if (ingredients) {
             setIngredientResults(ingredients?.map(ingredient => ({ checked: true, ingredient })));
         }

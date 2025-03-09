@@ -50,7 +50,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ base64Image, setBase64Ima
           maxWidth: 800,
           maxHeight: 800,
         });
-        console.log(compressedBase64);
         setBase64Image(compressedBase64);
       } catch (error) {
         toast({
