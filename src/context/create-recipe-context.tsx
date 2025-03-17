@@ -38,15 +38,22 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const { trigger, item: newRecipe, isLoadingItem } = useCreateRecipeStream<
         RecipeState
     >({
-        type: 'recipe',
         endpoint: '/user/recipes/create',
         params: recipeState,
         onSuccess: (newRecipe) => {
             setRecipeState(initialRecipeState);
             navigate({
-                to: '/recipe',
+                to: '/user-recipe/$' + newRecipe.id || '',
                 state: newRecipe as any,
                 replace: true
+            });
+        },
+        onError: (error) => {
+            toast({
+                variant: 'destructive',
+                title: 'Oops! Something went wrong!',
+                //@ts-expect-error
+                description: error?.response?.data?.message || `Failed to create recipe.`,
             });
         }
     })

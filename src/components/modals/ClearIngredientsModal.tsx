@@ -20,16 +20,16 @@ const ClearIngredientsModal: React.FC<ClearIngredientsModalProps> = ({ isOpen, c
     const contentRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+        const controller = new AbortController()
+
         const handleClickOutside = (event: MouseEvent) => {
             if (contentRef.current && !contentRef.current.contains(event.target as Node)) {
                 close()
             }
         }
 
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside)
-        }
+        document.addEventListener("mousedown", handleClickOutside, { signal: controller.signal })
+        return () => controller.abort()
     }, [close])
 
     return (

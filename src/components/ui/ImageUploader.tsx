@@ -69,7 +69,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ base64Image, setBase64Ima
       setState((prevState) => ({ ...prevState, selectedImage: null }));
       setLoading(false);
     }
-  }, [setBase64Image]);
+  }, []);
 
   return (
     <div

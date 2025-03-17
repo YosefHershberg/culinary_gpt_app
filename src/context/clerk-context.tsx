@@ -9,8 +9,8 @@ const ClerkProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
     return (
         <CP
             afterSignOutUrl={'/'}
-            signInFallbackRedirectUrl={'/create-new-recipe'}
-            signUpFallbackRedirectUrl={'/create-new-recipe'}
+            // signInFallbackRedirectUrl={'/create-recipe'}
+            // signUpFallbackRedirectUrl={'/create-recipe'}
             publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
             appearance={theme === 'dark' ? {
                 baseTheme: dark

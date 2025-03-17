@@ -22,7 +22,6 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     const { trigger, isLoadingItem } = useCreateItemStream<{
         prompt: string
     }>({
-        type: 'cocktail',
         endpoint: '/user/recipes/create-cocktail',
         params: {
             prompt
@@ -34,7 +33,16 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
                 state: newCocktail as any,
                 replace: true
             });
+        },
+        onError: (error) => {
+            toast({
+                variant: 'destructive',
+                title: 'Oops! Something went wrong!',
+                //@ts-expect-error
+                description: error?.response?.data?.message || `Failed to create cocktail.`,
+            });
         }
+
     })
 
     const handlePromptChange = (value: string) => {

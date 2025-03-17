@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 import useSSE from '../useSSE';
 import { Recipe, RecipeWithImage } from '@/lib/types';
-import { toast } from '@/components/ui/use-toast';
 
 type UseCreateItemStreamProps<T extends Record<string, any>> = {
-    type: 'recipe' | 'cocktail';
     endpoint: string;
     params: T;
     onSuccess?: (item: RecipeWithImage) => void;
+    onError?: (error: Error) => void;
 };
 
 const useCreateItemStream = <T extends Record<string, any>>({
-    endpoint, params, onSuccess, type
+    endpoint, params, onSuccess, onError
 }: UseCreateItemStreamProps<T>) => {
     const [item, setItem] = useState<RecipeWithImage | null>(null);
     const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
@@ -41,12 +40,9 @@ const useCreateItemStream = <T extends Record<string, any>>({
 
     useEffect(() => {
         if (error) {
-            toast({
-                variant: 'destructive',
-                title: 'Oops! Something went wrong!',
-                //@ts-expect-error
-                description: error?.response?.data?.message || `Failed to create ${type}.`,
-            });
+            if (onError) {
+                onError(error);
+            }
             setIsLoadingImage(false);
             setIsLoadingItem(false);
         }

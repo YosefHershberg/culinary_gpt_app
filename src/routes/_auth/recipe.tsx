@@ -3,9 +3,17 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import useSaveRecipe from '@/hooks/componentHooks/useSaveRecipe';
 import { RecipeWithImage } from '@/lib/types';
 import RecipePage from '@/pages/RecipePage';
-import { createFileRoute, useLocation } from '@tanstack/react-router'
+import { createFileRoute, redirect, useLocation } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/recipe')({
+    beforeLoad: ({ location }) => {
+        const state = location.state as { recipe?: RecipeWithImage };
+        if (!state.recipe) {
+            throw redirect({ to: '/' });
+        } else {
+            console.log('Recipe found:', state.recipe);
+        }
+    },
     component: RouteComponent,
 })
 

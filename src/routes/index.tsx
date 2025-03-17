@@ -31,16 +31,17 @@ function RouteComponent() {
             <p className='text-xl md:text-start text-center'>
               Say goodbye to boring meals, with AI-powered recipe recommendations, meal plans creation and more... 100,000+ dinners saved so far.
             </p>
-            
-            <Link to='/create-recipe'>
-              <Button
-                variant='secondary'
-                className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
-              >
-                  Get Started
-                  <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
-              </Button>
-            </Link>
+
+            <Button
+              variant='secondary'
+              className='group md:ml-10 md:mt-8 flex items-center h-16 w-60 text-xl rounded-full gap-2 font-bold'
+              asChild
+            >
+              <Link to='/create-recipe'>
+                Get Started
+                <ArrowRight className='transition-transform transform translate-x-0 group-hover:translate-x-2' />
+              </Link>
+            </Button>
 
             <MoreInfoModal>
               <Button

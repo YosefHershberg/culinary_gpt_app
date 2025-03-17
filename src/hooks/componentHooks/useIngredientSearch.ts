@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import useHttpClient from '@/hooks/useHttpClient';
 import { Ingredient, IngredientType } from '@/lib/types';
@@ -38,14 +38,16 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
         onSuccess: () => setIsDropdownOpen(true)
     });
 
-    useLayoutEffect(() => {
+    useEffect(() => {
+        const controller = new AbortController();
+
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 setIsDropdownOpen(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        document.addEventListener("mousedown", handleClickOutside, { signal: controller.signal });
+        return () => controller.abort();
     }, []);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

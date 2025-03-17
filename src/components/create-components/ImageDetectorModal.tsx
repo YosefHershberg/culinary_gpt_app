@@ -1,10 +1,12 @@
 import React, { memo, useMemo } from "react";
 import { Camera } from "lucide-react";
+
 import useAddImageIngredients, { IngredientResultsState } from "@/hooks/componentHooks/useAddImageIngredients";
 import useImageDetector from "@/hooks/componentHooks/useImageDetector";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+
 import { LoadingState } from "./image-detection/LoadingState";
 import { UploadState } from "./image-detection/UploadState";
 import { DetectedIngredientsList } from "./image-detection/DetectedIngredientsList";
