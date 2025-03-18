@@ -27,14 +27,14 @@ const AuthNavButtons: React.FC = () => {
                 variant="ghost"
                 asChild
             >
-                <Link to='/signin'>Sign in</Link>
+                <Link to='/signin/$'>Sign in</Link>
             </Button>
             <Button
                 className="hover:scale-105 rounded-full"
                 variant="secondary"
                 asChild
             >
-                <Link to='/signup'>Sign up</Link>
+                <Link to='/signup/$'>Sign up</Link>
             </Button>
         </>
     );

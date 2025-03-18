@@ -26,6 +26,5 @@
       ]
     }
   },
-  "include": ["src", "src/routes/signin/$.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
