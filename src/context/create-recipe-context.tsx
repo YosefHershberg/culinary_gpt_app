@@ -43,7 +43,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
         onSuccess: (newRecipe) => {
             setRecipeState(initialRecipeState);
             navigate({
-                to: '/user-recipe/$' + newRecipe.id || '',
+                to: '/recipe',
                 state: newRecipe as any,
                 replace: true
             });
