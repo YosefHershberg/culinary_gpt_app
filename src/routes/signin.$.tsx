@@ -10,6 +10,7 @@ import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
 import { z } from 'zod'
 
+// NOTE: Need the $ at the end of the path to allow clerk redirect to work
 export const Route = createFileRoute('/signin/$')({
   validateSearch: z.object({
     redirect: z.string().optional(),

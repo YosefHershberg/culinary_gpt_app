@@ -9,6 +9,7 @@ import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
 import { SignUp } from '@clerk/clerk-react'
 
+// NOTE: Need the $ at the end of the path to allow clerk redirect to work
 export const Route = createFileRoute('/signup/$')({
   component: RouteComponent,
 })
