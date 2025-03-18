@@ -10,7 +10,7 @@ import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
 import { z } from 'zod'
 
-export const Route = createFileRoute('/signin')({
+export const Route = createFileRoute('/signin/$')({
   validateSearch: z.object({
     redirect: z.string().optional(),
   }),

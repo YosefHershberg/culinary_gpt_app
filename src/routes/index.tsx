@@ -14,6 +14,7 @@ export const Route = createFileRoute('/')({
 })
 
 function RouteComponent() {
+
   return (
     <main>
       <section className="p-10 h-[calc(100vh-4rem)] w-full flex md:flex-row flex-col gap-5">

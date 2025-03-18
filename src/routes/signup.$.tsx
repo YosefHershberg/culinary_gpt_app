@@ -9,7 +9,7 @@ import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
 import { SignUp } from '@clerk/clerk-react'
 
-export const Route = createFileRoute('/signup')({
+export const Route = createFileRoute('/signup/$')({
   component: RouteComponent,
 })
 

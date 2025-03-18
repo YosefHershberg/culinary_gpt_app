@@ -13,10 +13,10 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as SigninImport } from './routes/signin'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
+import { Route as SignupSplatImport } from './routes/signup.$'
+import { Route as SigninSplatImport } from './routes/signin.$'
 import { Route as AuthRecipeImport } from './routes/_auth/recipe'
 import { Route as AuthMyRecipesRouteImport } from './routes/_auth/my-recipes/route'
 import { Route as AuthMyRecipesIndexImport } from './routes/_auth/my-recipes/index'
@@ -33,18 +33,6 @@ const AuthMyIngredientsRouteLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
-
-const SignupRoute = SignupImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SigninRoute = SigninImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const AuthRouteRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -82,6 +70,18 @@ const AuthMyIngredientsRouteLazyRoute = AuthMyIngredientsRouteLazyImport.update(
 ).lazy(() =>
   import('./routes/_auth/my-ingredients/route.lazy').then((d) => d.Route),
 )
+
+const SignupSplatRoute = SignupSplatImport.update({
+  id: '/signup/$',
+  path: '/signup/$',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SigninSplatRoute = SigninSplatImport.update({
+  id: '/signin/$',
+  path: '/signin/$',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRecipeRoute = AuthRecipeImport.update({
   id: '/recipe',
@@ -137,20 +137,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
-    }
     '/_auth/my-recipes': {
       id: '/_auth/my-recipes'
       path: '/my-recipes'
@@ -164,6 +150,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/recipe'
       preLoaderRoute: typeof AuthRecipeImport
       parentRoute: typeof AuthRouteImport
+    }
+    '/signin/$': {
+      id: '/signin/$'
+      path: '/signin/$'
+      fullPath: '/signin/$'
+      preLoaderRoute: typeof SigninSplatImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup/$': {
+      id: '/signup/$'
+      path: '/signup/$'
+      fullPath: '/signup/$'
+      preLoaderRoute: typeof SignupSplatImport
+      parentRoute: typeof rootRoute
     }
     '/_auth/my-ingredients': {
       id: '/_auth/my-ingredients'
@@ -271,10 +271,10 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthRouteRouteWithChildren
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/recipe': typeof AuthRecipeRoute
+  '/signin/$': typeof SigninSplatRoute
+  '/signup/$': typeof SignupSplatRoute
   '/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/create-recipe': typeof AuthCreateRecipeLazyRoute
@@ -287,9 +287,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthRouteRouteWithChildren
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/recipe': typeof AuthRecipeRoute
+  '/signin/$': typeof SigninSplatRoute
+  '/signup/$': typeof SignupSplatRoute
   '/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/create-recipe': typeof AuthCreateRecipeLazyRoute
@@ -303,10 +303,10 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
   '/_auth/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/_auth/recipe': typeof AuthRecipeRoute
+  '/signin/$': typeof SigninSplatRoute
+  '/signup/$': typeof SignupSplatRoute
   '/_auth/my-ingredients': typeof AuthMyIngredientsRouteLazyRouteWithChildren
   '/_auth/create-cocktail': typeof AuthCreateCocktailLazyRoute
   '/_auth/create-recipe': typeof AuthCreateRecipeLazyRoute
@@ -321,10 +321,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
-    | '/signin'
-    | '/signup'
     | '/my-recipes'
     | '/recipe'
+    | '/signin/$'
+    | '/signup/$'
     | '/my-ingredients'
     | '/create-cocktail'
     | '/create-recipe'
@@ -336,9 +336,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
-    | '/signin'
-    | '/signup'
     | '/recipe'
+    | '/signin/$'
+    | '/signup/$'
     | '/my-ingredients'
     | '/create-cocktail'
     | '/create-recipe'
@@ -350,10 +350,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
-    | '/signin'
-    | '/signup'
     | '/_auth/my-recipes'
     | '/_auth/recipe'
+    | '/signin/$'
+    | '/signup/$'
     | '/_auth/my-ingredients'
     | '/_auth/create-cocktail'
     | '/_auth/create-recipe'
@@ -367,15 +367,15 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
+  SigninSplatRoute: typeof SigninSplatRoute
+  SignupSplatRoute: typeof SignupSplatRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
+  SigninSplatRoute: SigninSplatRoute,
+  SignupSplatRoute: SignupSplatRoute,
 }
 
 export const routeTree = rootRoute
@@ -390,8 +390,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
-        "/signin",
-        "/signup"
+        "/signin/$",
+        "/signup/$"
       ]
     },
     "/": {
@@ -408,12 +408,6 @@ export const routeTree = rootRoute
         "/_auth/user-recipe/$recipeId"
       ]
     },
-    "/signin": {
-      "filePath": "signin.tsx"
-    },
-    "/signup": {
-      "filePath": "signup.tsx"
-    },
     "/_auth/my-recipes": {
       "filePath": "_auth/my-recipes/route.tsx",
       "parent": "/_auth",
@@ -424,6 +418,12 @@ export const routeTree = rootRoute
     "/_auth/recipe": {
       "filePath": "_auth/recipe.tsx",
       "parent": "/_auth"
+    },
+    "/signin/$": {
+      "filePath": "signin.$.tsx"
+    },
+    "/signup/$": {
+      "filePath": "signup.$.tsx"
     },
     "/_auth/my-ingredients": {
       "filePath": "_auth/my-ingredients/route.lazy.tsx",
