@@ -30,7 +30,6 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
             navigate({
                 to: '/recipe',
                 state: newCocktail as any,
-                replace: true
             });
         },
         onError: (error) => {

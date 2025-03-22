@@ -3,7 +3,6 @@ import { ArrowDownWideNarrow, DiamondMinus, Menu, Plus } from 'lucide-react'
 import {
     Tooltip,
     TooltipContent,
-    TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../ui/dropdown-menu'
@@ -30,7 +29,6 @@ const IngredientListMenuDropdown: React.FC = () => {
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <div> {/* NOTE: This div is here to prevent some error in the console */}
-                        <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
                                     <Button variant='outline' size='icon' className='aspect-square'>
@@ -41,7 +39,6 @@ const IngredientListMenuDropdown: React.FC = () => {
                                     <p>Other Options</p>
                                 </TooltipContent>
                             </Tooltip>
-                        </TooltipProvider>
                     </div>
 
                 </DropdownMenuTrigger>

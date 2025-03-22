@@ -7,6 +7,7 @@ import { CreateRecipeProvider } from "@/context/create-recipe-context"
 import { CreateCocktailProvider } from '@/context/create-cocktail-context';
 import { UserDataProvider } from "@/context/user-data-context"
 import ClerkProvider from "@/context/clerk-context"
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 // NOTE: the order of the wrappers are precise!
 // Router has to wrap ClerkProvider
@@ -20,7 +21,9 @@ export const Providers: React.FC<{ children: React.ReactNode }> = ({ children })
       <ThemeProvider>
         <ClerkProvider>
           <AuthProvider>
-            {children}
+            <TooltipProvider>
+              {children}
+            </TooltipProvider>
           </AuthProvider>
         </ClerkProvider>
       </ThemeProvider>

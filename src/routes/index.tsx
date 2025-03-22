@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button'
 import About from '@/components/About'
 import Footer from '@/components/Footer'
 import MoreInfoModal from '@/components/modals/MoreInfoModal'
+import { ArrowRight } from 'lucide-react'
 
 import kitchenToolsImage from '@/assets/kitchen-tools.webp'
-import { ArrowRight } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,

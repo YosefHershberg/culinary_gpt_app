@@ -5,7 +5,7 @@ import useAddImageIngredients, { IngredientResultsState } from "@/hooks/componen
 import useImageDetector from "@/hooks/componentHooks/useImageDetector";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 import { LoadingState } from "./image-detection/LoadingState";
 import { UploadState } from "./image-detection/UploadState";
@@ -73,7 +73,6 @@ const ImageDetectorModal: React.FC = () => {
 
   return (
     <Dialog onOpenChange={(e) => !e && clearImageDetector()}>
-      <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
@@ -86,7 +85,6 @@ const ImageDetectorModal: React.FC = () => {
             <p>Upload image</p>
           </TooltipContent>
         </Tooltip>
-      </TooltipProvider>
       <DialogContent className="sm:max-w-[30rem] min-h-[300px]">{renderContent}</DialogContent>
     </Dialog>
   );

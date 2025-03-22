@@ -1,17 +1,22 @@
+import { z } from 'zod'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { useTheme } from '@/context/theme-context'
+
 import Lottie from 'lottie-react'
 import { SignIn } from '@clerk/clerk-react'
-import { createFileRoute } from '@tanstack/react-router'
-
-import { useTheme } from '@/context/theme-context'
 import { LargeLogo } from '@/components/Logo'
 
 import signUpPageAnimation from '@/assets/animations/signup-page-animation.json'
 import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
-import { z } from 'zod'
 
 // NOTE: Need the $ at the end of the path to allow clerk redirect to work
 export const Route = createFileRoute('/signin/$')({
+  beforeLoad: ({ context }) => {
+    if (context.auth.isSignedIn) {
+      throw redirect({ to: '/', replace: true })
+    }
+  },
   validateSearch: z.object({
     redirect: z.string().optional(),
   }),

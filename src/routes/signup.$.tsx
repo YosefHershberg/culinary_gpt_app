@@ -1,16 +1,21 @@
-import Lottie from 'lottie-react'
-import { createFileRoute, useLocation } from '@tanstack/react-router'
-
+import { createFileRoute, redirect, useLocation } from '@tanstack/react-router'
 import { useTheme } from '@/context/theme-context'
+
+import Lottie from 'lottie-react'
 import { LargeLogo } from '@/components/Logo'
+import { SignUp } from '@clerk/clerk-react'
 
 import signUpPageAnimation from '@/assets/animations/signup-page-animation.json'
 import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
-import { SignUp } from '@clerk/clerk-react'
 
 // NOTE: Need the $ at the end of the path to allow clerk redirect to work
 export const Route = createFileRoute('/signup/$')({
+  beforeLoad: ({ context }) => {
+    if (context.auth.isSignedIn) {
+      throw redirect({ to: '/', replace: true })
+    }
+  },
   component: RouteComponent,
 })
 

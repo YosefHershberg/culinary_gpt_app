@@ -45,7 +45,6 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
             navigate({
                 to: '/recipe',
                 state: newRecipe as any,
-                replace: true
             });
         },
         onError: (error) => {
