@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useLocation } from '@tanstack/react-router'
+import { createFileRoute, redirect, retainSearchParams, useLocation } from '@tanstack/react-router'
 import { useTheme } from '@/context/theme-context'
 
 import Lottie from 'lottie-react'
@@ -8,6 +8,7 @@ import { SignUp } from '@clerk/clerk-react'
 import signUpPageAnimation from '@/assets/animations/signup-page-animation.json'
 import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'
+import { z } from 'zod'
 
 // NOTE: Need the $ at the end of the path to allow clerk redirect to work
 export const Route = createFileRoute('/signup/$')({
@@ -15,6 +16,14 @@ export const Route = createFileRoute('/signup/$')({
     if (context.auth.isSignedIn) {
       throw redirect({ to: '/', replace: true })
     }
+  },
+  validateSearch: z.object({
+    redirect: z.string().optional(),
+  }),
+  search: {
+    // Retain the usersView search param while navigating
+    // within or to this route (or it's children!)
+    middlewares: [retainSearchParams(['redirect'])],
   },
   component: RouteComponent,
 })

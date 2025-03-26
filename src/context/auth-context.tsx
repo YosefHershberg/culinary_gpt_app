@@ -5,6 +5,7 @@ import { SignOut, UserResource } from '@clerk/types';
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 import LoadingPage from '@/pages/LoadingPage';
+import useHasAuthed from '@/hooks/useHasAuthed';
 
 export type AuthProviderState = {
     user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthProviderState>(undefined as any);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { user, isSignedIn, isLoaded } = useUser();
     const { getToken, signOut } = useClerkAuth();
+    useHasAuthed()
     // const { isLoading: isSubscribedLoading, isSubscribed } = useIsSubscribed();
 
     useLayoutEffect(() => {

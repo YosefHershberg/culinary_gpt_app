@@ -1,15 +1,23 @@
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
-import { Toaster } from './components/ui/toaster'
-import { useAuth } from './context/auth-context'
 import { RouterProvider } from '@tanstack/react-router'
-import { router } from './router'
-import queryClient from './config/queryClient'
-import { Providers } from './Providers'
 
-function InnerApp() {
+import { Toaster } from '@/components/ui/toaster'
+import { useAuth } from '@/context/auth-context'
+import { router } from '@/router'
+import queryClient from '@/config/queryClient'
+import { Providers } from '@/Providers'
+
+const InnerApp: React.FC = () => {
   const auth = useAuth()
-  return <RouterProvider router={router} context={{ auth, queryClient }} />
+  return (
+    <RouterProvider
+      router={router}
+      context={{
+        auth,
+        queryClient,
+      }}
+    />
+  )
 }
 
 const App: React.FC = () => (
@@ -19,6 +27,5 @@ const App: React.FC = () => (
     <ReactQueryDevtools initialIsOpen={false} />
   </Providers>
 )
-
 
 export default App

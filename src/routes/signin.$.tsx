@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router'
 import { useTheme } from '@/context/theme-context'
 
 import Lottie from 'lottie-react'
@@ -20,6 +20,11 @@ export const Route = createFileRoute('/signin/$')({
   validateSearch: z.object({
     redirect: z.string().optional(),
   }),
+  search: {
+    // Retain the usersView search param while navigating
+    // within or to this route (or it's children!)
+    middlewares: [retainSearchParams(['redirect'])],
+  },
   component: RouteComponent,
 })
 

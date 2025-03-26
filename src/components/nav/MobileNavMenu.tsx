@@ -115,10 +115,10 @@ const ThemeOptions = () => {
   const SignedOutMenuItems = () => (
     <>
       <DropdownMenuItem asChild>
-        <Link to="/signin/$">Sign up</Link>
+        <Link to="/signup/$">Sign up</Link>
       </DropdownMenuItem>
       <DropdownMenuItem asChild>
-        <Link to="/signup/$">Log in</Link>
+        <Link to="/signin/$">Log in</Link>
       </DropdownMenuItem>
     </>
   );

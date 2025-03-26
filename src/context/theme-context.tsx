@@ -23,7 +23,7 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  storageKey = "culinary-gpt-theme",
   ...props
 }) => {
   const [theme, setTheme] = useState<Theme>(
