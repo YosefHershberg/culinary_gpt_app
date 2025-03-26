@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, retainSearchParams, useLocation } from '@tanstack/react-router'
+import { createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router'
 import { useTheme } from '@/context/theme-context'
 
 import Lottie from 'lottie-react'
@@ -29,8 +29,8 @@ export const Route = createFileRoute('/signup/$')({
 })
 
 function RouteComponent() {
-  const { state } = useLocation()
   const { theme } = useTheme()
+  const search = Route.useSearch()
 
   return (
     <main
@@ -44,7 +44,7 @@ function RouteComponent() {
       </div>
       <section className='flex-1 flex justify-center items-center'>
         <SignUp
-          fallbackRedirectUrl={(state as any)?.from ?? '/create-recipe'}
+          fallbackRedirectUrl={search.redirect ?? '/create-recipe'}
           path="/signup"
           signInUrl='signin'
         />

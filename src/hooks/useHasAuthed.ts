@@ -7,7 +7,7 @@ const useHasAuthed = () => {
     useEffect(() => {
         const hasAuthFromStorage = localStorage.getItem('hasAuthed')
 
-        if (isSignedIn && !hasAuthFromStorage) {
+        if (isSignedIn && !hasAuthFromStorage) {``
             localStorage.setItem('hasAuthed', 'true')
         }
     }, [isSignedIn]);

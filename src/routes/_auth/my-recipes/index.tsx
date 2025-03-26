@@ -11,12 +11,11 @@ import useMyRecipes from '@/hooks/componentHooks/useMyRecipes';
 import { RecipeWithImage } from '@/lib/types';
 
 export const Route = createFileRoute('/_auth/my-recipes/')({
-  loaderDeps: ({ search: recipesView }) => recipesView,
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { recipesView } = Route.useLoaderDeps();
+  const { recipesView } = Route.useSearch();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
   const { query, sentinelRef } = useMyRecipes({
     searchQuery: recipesView?.q ?? '',
