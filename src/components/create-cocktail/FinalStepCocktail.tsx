@@ -1,9 +1,11 @@
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { useCreateCocktail } from "@/context/create-cocktail-context"
+import { useState } from "react"
 
 const FinalStep: React.FC = () => {
-  const { prompt, handlePromptChange, handleSubmit } = useCreateCocktail()
+  const [prompt, setPrompt] = useState<string>('')
+  const { handleSubmit } = useCreateCocktail()
 
   return (
     <div className='flex-1 flex flex-col items-center'>
@@ -18,14 +20,14 @@ const FinalStep: React.FC = () => {
               value={prompt}
               placeholder="Type your prompt here."
               id="message-2"
-              onChange={(e) => handlePromptChange(e.target.value)}
+              onChange={(e) => setPrompt(e.target.value)}
             />
             <p className="text-sm text-muted-foreground mt-2">
               Your prompt will be added to the recipe generation.
             </p>
           </div>
           <Button
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(prompt)}
             variant='secondary'
             className="bg-violet-500 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-violet-100 hover:text-violet-900 hover:border-violet-800 hover:border hover:scale-105"
           >

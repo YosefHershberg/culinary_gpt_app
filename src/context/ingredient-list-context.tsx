@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
 import { SortOptions } from '@/lib/enums'
 import { Ingredient } from '@/lib/types'
@@ -18,25 +18,27 @@ const IngredientListContextProvider = ({ children }: { children: React.ReactNode
     const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
     const [sortOption, setSortOptions] = useState<SortOptions>(SortOptions.Popularity)
 
-    const handleClicked = (ingredient: Ingredient) => {
+    const handleClicked = useCallback((ingredient: Ingredient) => {
         if (userIngredients?.some(item => item.id === ingredient.id)) {
             deleteUserIngredient(ingredient)
         } else {
             addUserIngredient(ingredient)
         }
-    }
+    }, [userIngredients, addUserIngredient, deleteUserIngredient])  
 
-    const changeSortOption = (value: string) => {
+    const changeSortOption = useCallback((value: string) => {
         setSortOptions(value as SortOptions)
-    }
+    }, [setSortOptions])
+
+    const value = useMemo(() => ({
+        userIngredientsSet: new Set(userIngredients.map(ingredient => ingredient.id)),
+        handleClicked,
+        changeSortOption,
+        sortOption
+    }), [userIngredients, handleClicked, changeSortOption, sortOption])
 
     return (
-        <IngredientListContext.Provider value={{
-            userIngredientsSet: new Set(userIngredients.map(ingredient => ingredient.id)),
-            handleClicked,
-            changeSortOption,
-            sortOption
-        }}>
+        <IngredientListContext.Provider value={value}>
             {children}
         </IngredientListContext.Provider>
     )

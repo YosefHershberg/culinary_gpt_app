@@ -1,32 +1,29 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { useUserData } from '@/context/user-data-context';
 import { toast } from '@/components/ui/use-toast';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
 import { useNavigate } from '@tanstack/react-router';
 import useCreateItemStream from '@/hooks/componentHooks/useCreateItemStream';
 
-type CreateCocktailState = {
-    handleSubmit: () => void,
-    handlePromptChange: (value: string) => void,
-    prompt: string
-}
+type CreateCocktailContextValue = {
+    handleSubmit: (prompt: string) => void;
+    isLoading: boolean;
+};
 
-export const CreateCocktailContext = createContext<CreateCocktailState>(undefined as any);
+export const CreateCocktailContext = createContext<CreateCocktailContextValue | undefined>(undefined);
 
 export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { userIngredients } = useUserData()
-    const [prompt, setPrompt] = useState<string>('')
-    const navigate = useNavigate()
+    const { userIngredients } = useUserData();
+    const [prompt, setPrompt] = useState<string>('');
+    const navigate = useNavigate();
 
     const { trigger, isLoadingItem } = useCreateItemStream<{
-        prompt: string
+        prompt: string;
     }>({
         endpoint: '/user/recipes/create-cocktail',
-        params: {
-            prompt
-        },
+        params: { prompt },
         onSuccess: (newCocktail) => {
-            setPrompt('')
+            setPrompt('');
             navigate({
                 to: '/recipe',
                 state: newCocktail as any,
@@ -40,43 +37,58 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
                 description: error?.response?.data?.message || `Failed to create cocktail.`,
             });
         }
+    });
 
-    })
+    const handlePromptChange = useCallback((value: string) => {
+        setPrompt(value);
+    }, []);
 
-    const handlePromptChange = (value: string) => {
-        setPrompt(value)
-    }
-
-    const handleSubmit = () => {
-        const foodIngredients = userIngredients.filter(ingredient => ingredient.type?.includes('drink'))
-        if (foodIngredients.length < 4) {
+    const handleSubmit = useCallback(() => {
+        const drinkIngredients = userIngredients.filter(ingredient => 
+            ingredient.type?.includes('drink')
+        );
+        
+        if (drinkIngredients.length < 4) {
             return toast({
                 variant: 'destructive',
                 title: 'Oops! You need more ingredients!',
-                description: 'You need at least 4 ingredients to create a recipe.'
-            })
+                description: 'You need at least 4 drink ingredients to create a cocktail.'
+            });
         }
 
-        trigger()
-    }
+        trigger();
+    }, [userIngredients, trigger]);
 
-    if (isLoadingItem) return <LoadingRecipePage duration={600} />
+    const contextValue = useMemo(() => ({
+        handleSubmit,
+        handlePromptChange,
+        prompt,
+        isLoading: isLoadingItem,
+    }), [
+        handleSubmit,
+        handlePromptChange,
+        prompt,
+        isLoadingItem,
+    ]);
+
+    if (isLoadingItem) return <LoadingRecipePage duration={600} />;
 
     return (
-        <CreateCocktailContext.Provider value={{
-            handleSubmit,
-            handlePromptChange,
-            prompt
-        }}>
+        <CreateCocktailContext.Provider value={contextValue}>
             {children}
         </CreateCocktailContext.Provider>
-    )
-}
+    );
+};
 
 export const useCreateCocktail = () => {
-    const context = useContext(CreateCocktailContext)
-    if (!context) {
-        throw new Error('useCreateCocktail must be used within a CreateCocktailProvider')
+    const context = useContext(CreateCocktailContext);
+    
+    if (context === undefined) {
+        throw new Error(
+            'useCreateCocktail must be used within a CreateCocktailProvider. ' +
+            'Make sure your component is wrapped in the provider.'
+        );
     }
-    return context
-}
+    
+    return context;
+};

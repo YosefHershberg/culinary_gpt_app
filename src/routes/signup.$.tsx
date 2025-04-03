@@ -30,7 +30,7 @@ export const Route = createFileRoute('/signup/$')({
 
 function RouteComponent() {
   const { theme } = useTheme()
-  const search = Route.useSearch()
+  const { redirect } = Route.useSearch()
 
   return (
     <main
@@ -44,7 +44,7 @@ function RouteComponent() {
       </div>
       <section className='flex-1 flex justify-center items-center'>
         <SignUp
-          fallbackRedirectUrl={search.redirect ?? '/create-recipe'}
+          fallbackRedirectUrl={redirect ?? '/create-recipe'}
           path="/signup"
           signInUrl='signin'
         />

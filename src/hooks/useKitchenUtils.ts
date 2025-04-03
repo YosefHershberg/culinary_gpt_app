@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import useOptToggleKitchenUtil from './optimistic/useOptToggleKitchenUtil'
@@ -23,9 +23,9 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
         if (error) throw error
     }, [error]);
 
-    const toggleKitchenUtil = async (util: KitchenUtil) => {
+    const toggleKitchenUtil = useCallback((util: KitchenUtil) => {
         addKitchenUtilMutation.mutate(util)
-    }
+    }, [addKitchenUtilMutation])
 
     return {
         kitchenUtils: kitchenUtils || initKitchenUtils,

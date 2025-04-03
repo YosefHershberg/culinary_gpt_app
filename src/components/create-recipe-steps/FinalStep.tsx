@@ -1,12 +1,14 @@
+import { useState } from "react"
+import { z } from "zod"
+import { useCreateRecipe } from "@/context/create-recipe-context"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { useCreateRecipe } from "@/context/create-recipe-context"
-import { z } from "zod"
 
 const textareaSchema = z.string().max(99, { message: 'Max 99 characters' })
 
 const FinalStep: React.FC = () => {
-  const { prompt, handlePromptChange, handleSubmit } = useCreateRecipe()
+  const [prompt, setPrompt] = useState<string>('')
+  const { handleSubmit } = useCreateRecipe()
 
   return (
     <div className='flex-1 flex flex-col items-center'>
@@ -21,7 +23,7 @@ const FinalStep: React.FC = () => {
               value={prompt}
               placeholder="Type your prompt here."
               id="message-2"
-              onChange={(e) => handlePromptChange(e.target.value)}
+              onChange={(e) => setPrompt(e.target.value)}
             />
 
             {!textareaSchema.safeParse(prompt).success && (
@@ -35,7 +37,7 @@ const FinalStep: React.FC = () => {
             </p>
           </div>
           <Button
-            onClick={handleSubmit}
+            onClick={() => handleSubmit(prompt)}
             variant='secondary'
             className="bg-amber-800 mt-10 h-12 w-[10rem] rounded-full text-md hover:bg-amber-100 hover:text-amber-900 hover:border-amber-800 hover:border hover:scale-105"
           >
