@@ -16,7 +16,7 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
 
   return (
-    <main>
+    <main className='overflow-x-hidden'>
       <section className="p-10 h-[calc(100vh-4rem)] w-full flex md:flex-row flex-col gap-5">
         <motion.div
           initial={{ x: '-100vw' }}
