@@ -2,7 +2,7 @@ import axiosClient from "@/config/axiosClient"
 import { MessageResponse, RecipeWithImage } from "@/lib/types"
 import { SortOptions, FilterOptions } from "@/routes/_auth/my-recipes/route"
 
-type GetUserRecipesProps = {
+type getUserRecipesAPIProps = {
     page: number,
     limit: number,
     query?: string,
@@ -10,7 +10,7 @@ type GetUserRecipesProps = {
     filter: FilterOptions
 }
 
-export const getUserRecipes = async ({ page, limit, query, filter, sort }: GetUserRecipesProps): Promise<RecipeWithImage[]> => {
+export const getUserRecipesAPI = async ({ page, limit, query, filter, sort }: getUserRecipesAPIProps): Promise<RecipeWithImage[]> => {
     const url = new URL('api/user/recipes', axiosClient.defaults.baseURL)
     url.searchParams.append('page', page.toString())
     url.searchParams.append('limit', limit.toString())
@@ -26,12 +26,12 @@ export const getUserRecipes = async ({ page, limit, query, filter, sort }: GetUs
     return data
 }
 
-export const deleteUserRecipe = async (id: string): Promise<MessageResponse> => {        
+export const deleteUserRecipeAPI = async (id: string): Promise<MessageResponse> => {        
     const { data } = await axiosClient.delete(`/user/recipes/${id}`)
     return data
 }
 
-export const getUserRecipe = async (id: string): Promise<RecipeWithImage> => {
+export const getUserRecipeAPI = async (id: string): Promise<RecipeWithImage> => {
     const { data } = await axiosClient.get(`/user/recipes/${id}`)
     return data
 }

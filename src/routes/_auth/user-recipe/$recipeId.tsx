@@ -1,6 +1,6 @@
 import SuspenseTrigger from '@/components/SuspenseTrigger'
 import RecipePage from '@/pages/RecipePage'
-import { getUserRecipe } from '@/services/recipe.service'
+import { getUserRecipeAPI } from '@/services/recipe.service'
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useLocation } from '@tanstack/react-router'
 import { z } from 'zod'
@@ -21,7 +21,7 @@ function RouteComponent() {
 
     const { data: recipe, isLoading } = useQuery({
         queryKey: ['userRecipe'],
-        queryFn: () => getUserRecipe(recipeId),
+        queryFn: () => getUserRecipeAPI(recipeId),
 
         // Disable the query when the recipe is already in the location state
         //@ts-expect-error

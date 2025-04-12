@@ -3,7 +3,7 @@ import { useLocation } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import IngredientsList from "@/components/create-components/IngredientList";
-import { getIngredientSuggestions } from '@/services/ingredient.service';
+import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 
 import { DrinksCategories } from "@/lib/enums";
 
@@ -12,7 +12,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.Spirits} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="spirits-ingredient-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.Spirits)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.Spirits)}
             />
         </TabsContent>
     ),
@@ -20,7 +20,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.Liqueurs} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="liqueurs-ingredient-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.Liqueurs)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.Liqueurs)}
             />
         </TabsContent>
     ),
@@ -28,7 +28,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.Bitters} className="flex flex-col flex-1">
             <IngredientsList
                 queryKey="biters-drinks-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.Bitters)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.Bitters)}
             />
         </TabsContent>
     ),
@@ -36,7 +36,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.MixersAndJuices} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="mixers-drinks-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.MixersAndJuices)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.MixersAndJuices)}
             />
         </TabsContent>
     ),
@@ -44,7 +44,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.SyrupsAndSweeteners} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="sweeteners-ingredient-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.SyrupsAndSweeteners)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.SyrupsAndSweeteners)}
             />
         </TabsContent>
     ),
@@ -52,7 +52,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.FruitsAndGarnishes} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="garnishes-ingredient-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.FruitsAndGarnishes)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.FruitsAndGarnishes)}
             />
         </TabsContent>
     ),
@@ -60,7 +60,7 @@ const TabsContentMap = {
         <TabsContent value={DrinksCategories.HerbsAndSpices} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey="herbs-spices-ingredient-suggestions"
-                queryFn={() => getIngredientSuggestions(DrinksCategories.HerbsAndSpices)}
+                queryFn={() => getIngredientSuggestionsAPI(DrinksCategories.HerbsAndSpices)}
             />
         </TabsContent>
     )

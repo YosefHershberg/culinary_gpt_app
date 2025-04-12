@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getUserSubscription } from '../services/user.service'
+import { getUserSubscriptionAPI } from '@/services/user.service'
 
 type UseFetchSubscriptionResponseType = {
   isSubscribed: boolean,
@@ -8,7 +8,7 @@ type UseFetchSubscriptionResponseType = {
 
 const useFetchSubscription = (): UseFetchSubscriptionResponseType => {
   const { data, isLoading } = useQuery({
-    queryFn: () => getUserSubscription(),
+    queryFn: () => getUserSubscriptionAPI(),
     queryKey: ['userSubscription'],
     throwOnError: true,
     refetchOnMount: true

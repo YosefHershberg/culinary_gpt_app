@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import useDeleteRecipe from '@/hooks/componentHooks/useDeleteRecipe';
-import useMyRecipes from '@/hooks/componentHooks/useMyRecipes';
+import useMyRecipesQuery from '@/hooks/componentHooks/useMyRecipesQuery';
 
 import { RecipeWithImage } from '@/lib/types';
 
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_auth/my-recipes/')({
 function RouteComponent() {
   const { recipesView } = Route.useSearch();
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
-  const { query, sentinelRef } = useMyRecipes({
+  const { query, sentinelRef } = useMyRecipesQuery({
     searchQuery: recipesView?.q ?? '',
     currentFilter: recipesView?.filterBy ?? 'all',
     currentSort: recipesView?.sortBy ?? 'newest',

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getIngredientSuggestions } from '@/services/ingredient.service';
+import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 import { IngredientCategories } from "@/lib/enums";
 import IngredientsList from "../create-components/IngredientList";
 import { Beef, Carrot, Croissant, EggFried, LeafyGreen, Milk } from "lucide-react";
@@ -45,7 +45,7 @@ const IngredientsTabs: React.FC = () => {
         <TabsContent value={category} className="flex-1 flex flex-col">
             <IngredientsList
                 queryKey={`${category}-ingredient-suggestions`}
-                queryFn={() => getIngredientSuggestions(category)}
+                queryFn={() => getIngredientSuggestionsAPI(category)}
             />
         </TabsContent>
     ), []);

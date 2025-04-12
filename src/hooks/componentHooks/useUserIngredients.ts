@@ -1,14 +1,17 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
-import useOptAddUserIngredient from '../optimistic/useOptAddUserIngredient'
-import useOptDeleteUserIngredient from '../optimistic/useOptDeleteUserIngredient'
-import useOptDeleteAllUserIngredients from '../optimistic/useOptDeleteAllUserIngredients'
-import useOptAddMultipleIngredients from '../optimistic/useOptAddMultipleIngredients'
-
-import { getUserIngredients } from '@/services/ingredient.service'
-import { Ingredient } from '@/lib/types'
+import { 
+    getUserIngredientsAPI, 
+    addUserIngredientAPI,
+    deleteUserIngredientAPI,
+    deleteAllUserIngredientsAPI,
+    addMultipleUserIngredientsAPI
+} from '@/services/ingredient.service'
+import { Ingredient, MessageResponse } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
+import useOptimisticMutation from '@/hooks/useOptimisticMutation'
+import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];
@@ -22,19 +25,46 @@ export type UseUserIngredientsReturnType = {
 const useUserIngredients = (): UseUserIngredientsReturnType => {
     const queryClient = useQueryClient()
 
-    const addUserIngredientMutation = useOptAddUserIngredient()
-    const deleteUserIngredientMutation = useOptDeleteUserIngredient()
-    const deleteAllUserIngredientsMutation = useOptDeleteAllUserIngredients()
-    const addMultipleIngredientsMutation = useOptAddMultipleIngredients()
-
-    const { data: userIngredients, error } = useSuspenseQuery({
-        queryKey: ['userIngredients'],
-        queryFn: () => getUserIngredients(),
+    const addUserIngredientMutation = useOptimisticMutation<Ingredient, Ingredient, Ingredient[]>({
+        queryKey: INGREDIENTS_QUERY_KEY,
+        mutation: (ingredient: Ingredient) => addUserIngredientAPI(ingredient),
+        optimisticUpdate: (ingredient, prevData = []) => {
+            return [...prevData, ingredient]
+        },
+        errorMessage: 'An error occurred while adding ingredient.'
+    })
+    
+    const deleteUserIngredientMutation = useOptimisticMutation<Ingredient, MessageResponse, Ingredient[]>({
+        queryKey: INGREDIENTS_QUERY_KEY,
+        mutation: (ingredient: Ingredient) => deleteUserIngredientAPI(ingredient),
+        optimisticUpdate: (ingredient, prevData = []) => {
+            return prevData.filter(ing => ing.id !== ingredient.id)
+        },
+        errorMessage: 'An error occurred while deleting ingredient.'
+    })
+    
+    const deleteAllUserIngredientsMutation = useOptimisticMutation<undefined, MessageResponse, Ingredient[]>({
+        queryKey: INGREDIENTS_QUERY_KEY,
+        mutation: () => deleteAllUserIngredientsAPI(),
+        optimisticUpdate: () => {
+            return []
+        },
+        errorMessage: 'An error occurred while deleting all ingredients.'
+    })
+    
+    const addMultipleIngredientsMutation = useOptimisticMutation<Ingredient[], Ingredient[], Ingredient[]>({
+        queryKey: INGREDIENTS_QUERY_KEY,
+        mutation: (ingredients: Ingredient[]) => addMultipleUserIngredientsAPI(ingredients),
+        optimisticUpdate: (ingredients, prevData = []) => {
+            return [...prevData, ...ingredients]
+        },
+        errorMessage: 'An error occurred while adding ingredients.'
     })
 
-    useEffect(() => {
-        if (error) throw error
-    }, [error]);
+    const { data: userIngredients } = useSuspenseQuery({
+        queryKey: INGREDIENTS_QUERY_KEY,
+        queryFn: () => getUserIngredientsAPI(),
+    })
 
     const addUserIngredient = useCallback((ingredient: Ingredient) => {
         console.log('adding ingredient', ingredient);
@@ -56,8 +86,8 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     const addCommonIngredients = useCallback(() => {
         console.log('adding common ingredients');
 
-        //Getting the common ingredients from the cache
-        const commonIngredients = queryClient.getQueryData(['common-ingredient-suggestions']) as Ingredient[]
+        // Getting the common ingredients from the cache
+        const commonIngredients = queryClient.getQueryData<Ingredient[]>(['common-ingredient-suggestions']) || [];
 
         addMultipleIngredients(commonIngredients)
     }, [queryClient, addMultipleIngredients])
@@ -68,7 +98,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
      * @returns 
      */
     const filterExistingIngredients = useCallback((ingredients: Ingredient[]): Ingredient[] => {
-        //using a set for faster lookup. O(n) instead of O(n^2)
+        // Using a set for faster lookup. O(n) instead of O(n^2)
         const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
         return ingredients.filter((ingredient: Ingredient) => !userIngredientIds.has(ingredient.id));
     }, [userIngredients])
@@ -80,7 +110,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
     const deleteAllUserIngredients = useCallback(() => {
         console.log('removing all ingredients');
-        deleteAllUserIngredientsMutation.mutate(null)
+        deleteAllUserIngredientsMutation.mutate(undefined)
     }, [deleteAllUserIngredientsMutation])
 
     return {

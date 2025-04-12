@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { getUserRecipes } from '@/services/recipe.service';
+import { getUserRecipesAPI } from '@/services/recipe.service';
 import { RecipeWithImage } from '@/lib/types';
 import useInfiniteScroll from './useInfiniteScroll';
 import { FilterOptions, SortOptions } from '@/routes/_auth/my-recipes/route';
+import { RECIPES_QUERY_KEY } from '@/lib/queryKeys';
 
 export const LIMIT = 4;
 
-type UseMyRecipesProps = {
+type useMyRecipesProps = {
     searchQuery: string;
     currentFilter: FilterOptions;
     currentSort: SortOptions;
 }
 
-type UseMyRecipesReturnType = {
+type useMyRecipesReturnType = {
     query: {
         recipes: RecipeWithImage[];
         isLoading: boolean;
@@ -26,13 +27,13 @@ type UseMyRecipesReturnType = {
     sentinelRef: React.MutableRefObject<HTMLDivElement | null>
 };
 
-const useMyRecipes = ({
+const useMyRecipesQuery = ({
     searchQuery, currentFilter, currentSort
-}: UseMyRecipesProps): UseMyRecipesReturnType => {
+}: useMyRecipesProps): useMyRecipesReturnType => {
 
     const { data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteQuery({
-        queryKey: ['userRecipes'],
-        queryFn: ({ pageParam = 1 }) => getUserRecipes({
+        queryKey: RECIPES_QUERY_KEY,
+        queryFn: ({ pageParam = 1 }) => getUserRecipesAPI({
             page: pageParam,
             limit: LIMIT,
             query: searchQuery,
@@ -75,4 +76,4 @@ const useMyRecipes = ({
     };
 };
 
-export default useMyRecipes;
+export default useMyRecipesQuery;
