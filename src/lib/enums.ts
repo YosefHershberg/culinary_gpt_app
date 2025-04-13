@@ -22,3 +22,16 @@ export enum SortIngredientsOptions {
     Alphabetical = 'alphabetical',
     None = ''
 }
+
+export enum SortRecipesOptions { 
+    Newest = 'newest',
+    Oldest = 'oldest',
+    Ascending = 'a-z',
+    Descending = 'z-a'
+}
+
+export enum FilterRecipesOptions {
+    Recipes = 'recipes',
+    Cocktails = 'cocktails',
+    All = 'all'
+}

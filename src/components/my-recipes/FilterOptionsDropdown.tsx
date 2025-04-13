@@ -1,11 +1,11 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { FilterOptions } from "@/hooks/componentHooks/useFilterRecipes";
+import { FilterRecipesOptions } from '@/lib/enums';
 import { Button } from "../ui/button";
 import { Filter } from "lucide-react";
 
 type FilterOptionsDropdownProps = {
-    handleFilterChange: (value: FilterOptions) => void,
-    currentFilter: FilterOptions
+    handleFilterChange: (value: FilterRecipesOptions) => void,
+    currentFilter: FilterRecipesOptions
 }
 
 const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFilterChange, currentFilter }) => {
@@ -24,7 +24,7 @@ const FilterOptionsDropdown: React.FC<FilterOptionsDropdownProps> = ({ handleFil
             <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Filter by..</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={currentFilter} onValueChange={(val) => handleFilterChange(val as FilterOptions)}>
+                <DropdownMenuRadioGroup value={currentFilter} onValueChange={(val) => handleFilterChange(val as FilterRecipesOptions)}>
                     <DropdownMenuRadioItem value="recipes">Recipes</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="cocktails">Cocktails</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>

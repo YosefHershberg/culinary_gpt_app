@@ -1,7 +1,8 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { ArrowDownWideNarrow } from "lucide-react";
-import { SortRecipesOptions } from "@/hooks/componentHooks/useSortRecipes";
+import { SortRecipesOptions } from '@/lib/enums';
+// Updated to use the SortRecipesOptions enum from enums.ts
 
 type SortOptionsDropdownProps = {
     handleSortChange: (value: SortRecipesOptions) => void,

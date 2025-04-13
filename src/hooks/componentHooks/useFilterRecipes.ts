@@ -1,17 +1,16 @@
+import { FilterRecipesOptions } from '@/lib/enums';
 import { useState } from 'react'
 
-export type FilterOptions = 'recipes' | 'cocktails' | 'all'
-
 export type UseFilterRecipesResponse = {
-    currentFilter: FilterOptions
-    handleFilterChange: (value: FilterOptions) => void
+    currentFilter: FilterRecipesOptions
+    handleFilterChange: (value: FilterRecipesOptions) => void
 }
 
 const useFilterRecipes = (): UseFilterRecipesResponse => {
-    const [currentFilter, setCurrentFilter] = useState<FilterOptions>('all')
+    const [currentFilter, setCurrentFilter] = useState<FilterRecipesOptions>(FilterRecipesOptions.All);
 
-    const handleFilterChange = (value: FilterOptions) => {
-        setCurrentFilter(value)
+    const handleFilterChange = (value: FilterRecipesOptions) => {
+        setCurrentFilter(value);
     }
 
     return {

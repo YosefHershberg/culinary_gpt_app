@@ -1,14 +1,13 @@
 import axiosClient from "@/config/axiosClient"
 import { MessageResponse, RecipeWithImage } from "@/lib/types"
-import { SortIngredientsOptions } from "@/lib/enums";
-import { FilterOptions } from "@/hooks/componentHooks/useFilterRecipes"
+import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 
 type getUserRecipesAPIProps = {
     page: number,
     limit: number,
     query?: string,
-    sort: SortIngredientsOptions;
-    filter: FilterOptions
+    sort: SortRecipesOptions;
+    filter: FilterRecipesOptions
 }
 
 export const getUserRecipesAPI = async ({ page, limit, query, filter, sort }: getUserRecipesAPIProps): Promise<RecipeWithImage[]> => {
