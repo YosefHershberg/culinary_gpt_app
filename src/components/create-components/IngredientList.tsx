@@ -1,10 +1,12 @@
-import { QueryKey, useSuspenseQuery } from "@tanstack/react-query"
-import { toast } from "@/components/ui/use-toast"
-import { Ingredient } from "@/lib/types"
-import { OptionCheckbox } from "../ui/OptionCheckbox"
-import { useIngredientList } from "@/context/ingredient-list-context"
 import { useEffect, useState } from "react"
+import { QueryKey, useSuspenseQuery } from "@tanstack/react-query"
+import { useIngredientList } from "@/context/ingredient-list-context"
+
+import { toast } from "@/components/ui/use-toast"
+import { OptionCheckbox } from "@/components/ui/OptionCheckbox"
+
 import { SortIngredientsOptions } from "@/lib/enums"
+import { Ingredient } from "@/lib/types"
 
 type UsualIngredientsContent = {
     queryKey: QueryKey,

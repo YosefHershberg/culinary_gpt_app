@@ -4,7 +4,7 @@ import { useLocation } from "@tanstack/react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import IngredientsList from "@/components/create-components/IngredientList";
 
-import LoadingSpinner from "../ui/LoadingSpinner";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { CategoryMapType } from "@/lib/types";
 
 type IngredientCategoryMap = { categoryMap: CategoryMapType }
@@ -33,7 +33,7 @@ const IngredientsTabs: React.FC<IngredientCategoryMap> = ({ categoryMap }) => {
 
     return (
         <Tabs
-            defaultValue={Object.keys(categoryMap)[0]}
+            defaultValue={activeTab}
             className="rounded-xl max-w-[60rem] w-full flex-1 flex flex-col"
         >
             <TabsList>

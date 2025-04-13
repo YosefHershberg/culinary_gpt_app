@@ -5,7 +5,7 @@ import useAddImageIngredients, { IngredientResultsState } from "@/hooks/componen
 import useImageDetector from "@/hooks/componentHooks/useImageDetector";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { LoadingState } from "./image-detection/LoadingState";
 import { UploadState } from "./image-detection/UploadState";

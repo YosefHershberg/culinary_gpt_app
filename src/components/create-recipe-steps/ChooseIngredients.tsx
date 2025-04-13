@@ -11,7 +11,6 @@ const placeholders = [
     "Pita Bread",
 ];
 
-
 const ChooseIngredients: React.FC = () => {
     
     return (
