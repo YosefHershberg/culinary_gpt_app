@@ -1,40 +1,39 @@
-import { useQuery } from "@tanstack/react-query"
-import { toast } from "../ui/use-toast"
-import LoadingSpinner from "../ui/LoadingSpinner"
+import { QueryKey, useSuspenseQuery } from "@tanstack/react-query"
+import { toast } from "@/components/ui/use-toast"
 import { Ingredient } from "@/lib/types"
 import { OptionCheckbox } from "../ui/OptionCheckbox"
 import { useIngredientList } from "@/context/ingredient-list-context"
 import { useEffect, useState } from "react"
-import { SortOptions } from "@/lib/enums"
+import { SortIngredientsOptions } from "@/lib/enums"
 
 type UsualIngredientsContent = {
-    queryKey: string,
-    queryFn: () => Promise<any>
+    queryKey: QueryKey,
+    queryFn: () => Promise<Ingredient[]>
 }
 
 const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn }) => {
     const { sortOption } = useIngredientList()
     const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>()
     
-    const { data: ingredients, isLoading, error } = useQuery({
-        queryKey: [`${queryKey}`],
+    const { data: ingredients, error } = useSuspenseQuery({
+        queryKey: queryKey,
         queryFn: queryFn,
     })
 
     useEffect(() => {
         if (ingredients) {
-            let filteredIngredients = [...ingredients]
+            let filteredIngredients = [...ingredients];
             switch (sortOption) {
-                case SortOptions.Popularity:
-                    filteredIngredients = filteredIngredients.sort((a, b) => b.popularity - a.popularity)
-                    break
-                case SortOptions.Alphabetical:
-                    filteredIngredients = filteredIngredients.sort((a, b) => a.name.localeCompare(b.name))
-                    break
-                case SortOptions.None:
-                    break
+                case SortIngredientsOptions.Popularity:
+                    filteredIngredients = filteredIngredients.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+                    break;
+                case SortIngredientsOptions.Alphabetical:
+                    filteredIngredients = filteredIngredients.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case SortIngredientsOptions.None:
+                    break;
             }
-            setFilteredIngredients(filteredIngredients)
+            setFilteredIngredients(filteredIngredients);
         }
     }, [sortOption, ingredients]);
 
@@ -45,15 +44,7 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
             //@ts-expect-error
             description: error?.response?.data?.message || "An error occurred while fetching ingredients.",
         })
-        return (<div>Error</div>) //TODO: add error image/ component
-    }
-
-    if (isLoading) {
-        return (
-            <div className="flex-1 flex justify-center items-center">
-                <LoadingSpinner className="size-16" />
-            </div>
-        )
+        return (<div>Error</div>)
     }
 
     return (

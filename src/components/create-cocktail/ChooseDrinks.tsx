@@ -1,6 +1,7 @@
 import IngredientListContextProvider from "@/context/ingredient-list-context"
 import IngredientSearchBar from "@/components/create-components/IngredientSearchBar"
-import DrinksTabs from "./DrinksTabs";
+import IngredientsTabs from "@/components/create-components/IngredientsTabs";
+import { DrinksCatgoriesMap } from "./DrinksCategoryMap";
 
 const placeholders = [
   'Vodka',
@@ -20,7 +21,9 @@ const ChooseDrinks: React.FC = () => {
           placeholders={placeholders}
           type='drink'
         />
-        <DrinksTabs />
+        <IngredientsTabs
+          categoryMap={DrinksCatgoriesMap}
+        />
       </div>
     </IngredientListContextProvider>
   )

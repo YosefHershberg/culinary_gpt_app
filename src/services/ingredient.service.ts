@@ -26,7 +26,7 @@ export const deleteUserIngredientAPI = async (ingredient: Ingredient): Promise<M
     return data
 }
 
-export const getIngredientSuggestionsAPI = async (category: string): Promise<Ingredient> => {
+export const getIngredientSuggestionsAPI = async (category: string): Promise<Ingredient[]> => {
     const { data } = await axiosClient.get(`/ingredients/suggestions/${category}`)
     return data
 }

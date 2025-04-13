@@ -1,16 +1,18 @@
-import { Button } from '../ui/button'
+import { memo, useState } from 'react'
+import { useUserData } from '@/context/user-data-context'
+import { useIngredientList } from '@/context/ingredient-list-context'
+
 import { ArrowDownWideNarrow, DiamondMinus, Menu, Plus } from 'lucide-react'
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuPortal, DropdownMenuSubContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from '../ui/dropdown-menu'
-import { SortOptions } from '@/lib/enums'
-import { useIngredientList } from '@/context/ingredient-list-context'
-import { memo, useState } from 'react'
-import ClearIngredientsModal from '../modals/ClearIngredientsModal'
-import { useUserData } from '@/context/user-data-context'
+import ClearIngredientsModal from '@/components/modals/ClearIngredientsModal'
+
+import { SortIngredientsOptions } from '@/lib/enums'
 
 // NOTE: This comp is memoized (in export) because its parent re-renders in searchbar key type.
 
@@ -69,9 +71,9 @@ const IngredientListMenuDropdown: React.FC = () => {
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
                                 <DropdownMenuRadioGroup value={sortOption} onValueChange={changeSortOption}>
-                                    <DropdownMenuRadioItem value={SortOptions.Alphabetical}>Name</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value={SortOptions.Popularity}>Popularity</DropdownMenuRadioItem>
-                                    <DropdownMenuRadioItem value={SortOptions.None}>None</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value={SortIngredientsOptions.Alphabetical}>Name</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value={SortIngredientsOptions.Popularity}>Popularity</DropdownMenuRadioItem>
+                                    <DropdownMenuRadioItem value={SortIngredientsOptions.None}>None</DropdownMenuRadioItem>
                                 </DropdownMenuRadioGroup>
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>

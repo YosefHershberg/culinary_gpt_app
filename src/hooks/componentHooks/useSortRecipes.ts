@@ -1,17 +1,17 @@
 import { useLayoutEffect, useState } from "react"
 import { RecipeWithImage as RecipeType } from '@/lib/types'
 
-export type SortOptions = 'newest' | 'oldest' | 'a-z' | 'z-a'
+export type SortRecipesOptions = 'newest' | 'oldest' | 'a-z' | 'z-a'
 
 export type UseSortRecipesResponse = {
     sortedRecipes: RecipeType[]
-    handleSortChange: (value: SortOptions) => void
-    currentSort: SortOptions
+    handleSortChange: (value: SortRecipesOptions) => void
+    currentSort: SortRecipesOptions
 }
 
 const useSortRecipes = (recipes: RecipeType[]): UseSortRecipesResponse => {
     const [sortedRecipes, setSortedRecipes] = useState<RecipeType[]>([]);
-    const [currentSort, setCurrentSort] = useState<SortOptions>('oldest');
+    const [currentSort, setCurrentSort] = useState<SortRecipesOptions>('oldest');
 
     useLayoutEffect(() => {
         if (!recipes) return;
@@ -50,7 +50,7 @@ const useSortRecipes = (recipes: RecipeType[]): UseSortRecipesResponse => {
         }
     }, [currentSort, recipes]);
 
-    const handleSortChange = (value: SortOptions) => {
+    const handleSortChange = (value: SortRecipesOptions) => {
         setCurrentSort(value);
     };
 

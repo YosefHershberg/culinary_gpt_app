@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     TanStackRouterVite({
       target: 'react',
-      // autoCodeSplitting: true
+      autoCodeSplitting: true
     }),
     react(),
   ],

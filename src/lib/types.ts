@@ -1,11 +1,13 @@
+import { getIngredientSuggestionsAPI } from "@/services/ingredient.service";
 import { IngredientCategories } from "./enums";
+import { QueryKeys } from "./queryKeys";
 
 export type Ingredient = {
     id: string;
     name: string;
-    category?: (typeof IngredientCategories)[keyof typeof IngredientCategories];
+    category: IngredientCategories;
     popularity?: number;
-    type?: IngredientType[];
+    type: IngredientType[];
 }
 
 export type RecipeWithImage = {
@@ -58,3 +60,9 @@ export type RecipeState = {
     prompt: string,
     numOfPeople: number,
 }
+
+export type CategoryMapType = Record<string, {
+    label: string;
+    queryKey: ReturnType<typeof QueryKeys.IngredientSuggestions>;
+    queryFn: () => ReturnType<typeof getIngredientSuggestionsAPI>;
+}>;

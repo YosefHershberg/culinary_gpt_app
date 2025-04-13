@@ -1,6 +1,7 @@
-import IngredientsTabs from '@/components/create-recipe-steps/IngredientsTabs';
+import IngredientsTabs from '@/components/create-components/IngredientsTabs';
 import IngredientSearchBar from '@/components/create-components/IngredientSearchBar';
 import IngredientListContextProvider from '@/context/ingredient-list-context';
+import { IngredientCatgoriesMap } from './IngredientsCategoriesMap';
 
 const placeholders = [
     "Cocoa Powder",
@@ -9,6 +10,7 @@ const placeholders = [
     "Barbecue Sauce",
     "Pita Bread",
 ];
+
 
 const ChooseIngredients: React.FC = () => {
     
@@ -20,7 +22,9 @@ const ChooseIngredients: React.FC = () => {
                     placeholders={placeholders}
                     type='food'
                 />
-                <IngredientsTabs />
+                <IngredientsTabs 
+                    categoryMap={IngredientCatgoriesMap}
+                />
             </div>
         </IngredientListContextProvider>
     )

@@ -17,7 +17,7 @@ export enum DrinksCategories {
     HerbsAndSpices = 'herbs',
 }
 
-export enum SortOptions {
+export enum SortIngredientsOptions {
     Popularity = 'popularity',
     Alphabetical = 'alphabetical',
     None = ''

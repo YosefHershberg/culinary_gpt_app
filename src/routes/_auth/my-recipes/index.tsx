@@ -9,8 +9,22 @@ import useDeleteRecipe from '@/hooks/componentHooks/useDeleteRecipe';
 import useMyRecipesQuery from '@/hooks/componentHooks/useMyRecipesQuery';
 
 import { RecipeWithImage } from '@/lib/types';
+import { getUserRecipesAPI } from '@/services/recipe.service';
 
 export const Route = createFileRoute('/_auth/my-recipes/')({
+  loader: async ({ context: { queryClient } }) => {    
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['userRecipes'],
+      queryFn: () => getUserRecipesAPI({
+        page: 1,
+        limit: 4,
+        query: '',
+        filter: 'all',
+        sort: 'newest',
+      }),
+      initialPageParam: 1,
+    });
+  },
   component: RouteComponent,
 });
 

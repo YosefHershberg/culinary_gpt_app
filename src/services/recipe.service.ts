@@ -1,12 +1,13 @@
 import axiosClient from "@/config/axiosClient"
 import { MessageResponse, RecipeWithImage } from "@/lib/types"
-import { SortOptions, FilterOptions } from "@/routes/_auth/my-recipes/route"
+import { SortIngredientsOptions } from "@/lib/enums";
+import { FilterOptions } from "@/hooks/componentHooks/useFilterRecipes"
 
 type getUserRecipesAPIProps = {
     page: number,
     limit: number,
     query?: string,
-    sort: SortOptions,
+    sort: SortIngredientsOptions;
     filter: FilterOptions
 }
 

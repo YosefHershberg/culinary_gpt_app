@@ -1,17 +1,19 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import useInfiniteScroll from './useInfiniteScroll';
+
 import { getUserRecipesAPI } from '@/services/recipe.service';
 import { RecipeWithImage } from '@/lib/types';
-import useInfiniteScroll from './useInfiniteScroll';
-import { FilterOptions, SortOptions } from '@/routes/_auth/my-recipes/route';
 import { RECIPES_QUERY_KEY } from '@/lib/queryKeys';
+import { FilterOptions } from '@/hooks/componentHooks/useFilterRecipes';
+import { SortIngredientsOptions } from "@/lib/enums";
 
 export const LIMIT = 4;
 
 type useMyRecipesProps = {
     searchQuery: string;
     currentFilter: FilterOptions;
-    currentSort: SortOptions;
+    currentSort: SortIngredientsOptions;
 }
 
 type useMyRecipesReturnType = {

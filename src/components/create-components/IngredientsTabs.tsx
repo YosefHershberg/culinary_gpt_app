@@ -1,20 +1,20 @@
-import { Suspense, useState } from "react";
+import { Suspense, useCallback, useState } from "react";
 import { useLocation } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import IngredientsList from "@/components/create-components/IngredientList";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 
-import { DrinksCategories } from "@/lib/enums";
-import { QueryKeys } from "@/lib/queryKeys";
+import LoadingSpinner from "../ui/LoadingSpinner";
+import { CategoryMapType } from "@/lib/types";
 
-const IngredientsTabs: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<DrinksCategories>(DrinksCategories.Spirits);
+type IngredientCategoryMap = { categoryMap: CategoryMapType }
+
+const IngredientsTabs: React.FC<IngredientCategoryMap> = ({ categoryMap }) => {
+    const [activeTab, setActiveTab] = useState<string>(Object.keys(categoryMap)[0]);
     const { pathname } = useLocation();
 
-    const renderTabsContent = (category: DrinksCategories) => {
-        const activeTabConfig = tabConfig[category];
+    const renderTabsContent = useCallback((category: string) => {
+        const activeTabConfig = categoryMap[category];
         return (
             <TabsContent value={category} className="flex-1 flex flex-col">
                 <Suspense fallback={(
@@ -29,21 +29,21 @@ const IngredientsTabs: React.FC = () => {
                 </Suspense>
             </TabsContent>
         );
-    };
+    }, [categoryMap])
 
     return (
         <Tabs
-            defaultValue={DrinksCategories.Spirits}
+            defaultValue={Object.keys(categoryMap)[0]}
             className="rounded-xl max-w-[60rem] w-full flex-1 flex flex-col"
         >
             <TabsList>
                 <div className={`${pathname.startsWith('/my-ingredients') && 'lg:w-[calc(100vw-310px)]'} w-[90vw] min-w-0 flex overflow-x-auto overflow-y-hidden`}>
                     {/* NOTICE: ^^^^ Change When width/padding/margin blocks surrounding this element changes*/}
 
-                    {Object.entries(tabConfig).map(([key, tab]) => (
+                    {Object.entries(categoryMap).map(([key, tab]) => (
                         <TabsTrigger
                             key={key}
-                            onClick={() => setActiveTab(key as DrinksCategories)}
+                            onClick={() => setActiveTab(key)}
                             className="flex-1"
                             value={key}
                         >
@@ -54,7 +54,7 @@ const IngredientsTabs: React.FC = () => {
             </TabsList>
             {renderTabsContent(activeTab)}
         </Tabs>
-    )
+    );
 }
 
-export default IngredientsTabs
+export default IngredientsTabs;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { createLazyFileRoute } from '@tanstack/react-router'
-
+import { createFileRoute } from '@tanstack/react-router'
 import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
@@ -8,8 +7,31 @@ import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional'
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
 
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
+import { IngredientCategories } from '@/lib/enums';
+import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
+import { QueryKeys } from '@/lib/queryKeys';
+import { IngredientCatgoriesMap } from '@/components/create-recipe-steps/IngredientsCategoriesMap';
 
-export const Route = createLazyFileRoute('/_auth/create-recipe')({
+export const Route = createFileRoute('/_auth/create-recipe')({
+  loader: async ({ context: { queryClient } }) => {
+    // Prefetching ingredient suggestions for the recipe creation process
+    Promise.all([
+      Object.entries(IngredientCatgoriesMap).map(([key]) => {
+        const category = key as IngredientCategories;
+        const queryKey = QueryKeys.IngredientSuggestions(category);
+        
+        // Check if query data already exists before fetching
+        const existingData = queryClient.getQueryData(queryKey);
+        if (!existingData) {
+          return queryClient.prefetchQuery({
+            queryKey,
+            queryFn: () => getIngredientSuggestionsAPI(category),
+          });
+        }
+        return Promise.resolve();
+      }),
+    ])
+  },
   component: RouteComponent,
 })
 
@@ -21,7 +43,7 @@ const steps = [
 
 function RouteComponent() {
   const [activeStep, setActiveStep] = useState(0);
-  
+
   return (
     <main className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
       <div className='w-dvw flex flex-col items-center'>

@@ -1,11 +1,11 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { ArrowDownWideNarrow } from "lucide-react";
-import { SortOptions } from "@/hooks/componentHooks/useSortRecipes";
+import { SortRecipesOptions } from "@/hooks/componentHooks/useSortRecipes";
 
 type SortOptionsDropdownProps = {
-    handleSortChange: (value: SortOptions) => void,
-    currentSort: SortOptions
+    handleSortChange: (value: SortRecipesOptions) => void,
+    currentSort: SortRecipesOptions
 }
 
 const SortOptionsDropdown: React.FC<SortOptionsDropdownProps> = ({ handleSortChange, currentSort }) => {
@@ -24,7 +24,7 @@ const SortOptionsDropdown: React.FC<SortOptionsDropdownProps> = ({ handleSortCha
             <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>Sort by..</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioGroup value={currentSort} onValueChange={(val) => handleSortChange(val as SortOptions)}>
+                <DropdownMenuRadioGroup value={currentSort} onValueChange={(val) => handleSortChange(val as SortRecipesOptions)}>
                     <DropdownMenuRadioItem value="newest">Newest</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="oldest">Oldest</DropdownMenuRadioItem>
                     <DropdownMenuRadioItem value="a-z">A - Z</DropdownMenuRadioItem>
