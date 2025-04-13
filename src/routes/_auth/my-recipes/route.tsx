@@ -5,18 +5,17 @@ import { z } from 'zod';
 import useSearchRecipes from '@/hooks/componentHooks/useSearchRecipes';
 import FilterOptionsDropdown from '@/components/my-recipes/FilterOptionsDropdown';
 import SortOptionsDropdown from '@/components/my-recipes/SortOptionsDropdown';
+import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 
 const recipesViewSchema = z.object({
   recipesView: z.object({
-    sortBy: z.enum(['newest', 'oldest', 'a-z', 'z-a']).optional(),
-    filterBy: z.enum(['recipes', 'cocktails', 'all']).optional(),
+    sortBy: z.nativeEnum(SortRecipesOptions).optional(),
+    filterBy: z.nativeEnum(FilterRecipesOptions).optional(),
     q: z.string().optional(),
   }).optional(),
 });
 
 export type RecipesView = z.infer<typeof recipesViewSchema>;
-export type SortOptions = 'newest' | 'oldest' | 'a-z' | 'z-a'
-export type FilterOptions = 'recipes' | 'cocktails' | 'all'
 
 export const Route = createFileRoute('/_auth/my-recipes')({
   validateSearch: recipesViewSchema.parse,
@@ -31,8 +30,8 @@ export const Route = createFileRoute('/_auth/my-recipes')({
 function RouteComponent() {
   const { recipesView } = Route.useSearch();
   const searchBar = useSearchRecipes(recipesView?.q ?? '');
-  const [currentSort, setCurrentSort] = useState<SortOptions>(recipesView?.sortBy ?? 'newest');
-  const [currentFilter, setCurrentFilter] = useState<FilterOptions>(recipesView?.filterBy ?? 'all');
+  const [currentSort, setCurrentSort] = useState<SortRecipesOptions>(recipesView?.sortBy ?? SortRecipesOptions.Newest);
+  const [currentFilter, setCurrentFilter] = useState<FilterRecipesOptions>(recipesView?.filterBy ?? FilterRecipesOptions.All);
 
   const navigate = useNavigate({ from: Route.fullPath });
 
@@ -63,11 +62,11 @@ function RouteComponent() {
           {!searchBar.isSearchBarFocused && (
             <>
               <FilterOptionsDropdown
-                handleFilterChange={(value: FilterOptions) => setCurrentFilter(value)}
+                handleFilterChange={(value: FilterRecipesOptions) => setCurrentFilter(value)}
                 currentFilter={currentFilter}
               />
               <SortOptionsDropdown
-                handleSortChange={(value: SortOptions) => setCurrentSort(value)}
+                handleSortChange={(value: SortRecipesOptions) => setCurrentSort(value)}
                 currentSort={currentSort}
               />
             </>

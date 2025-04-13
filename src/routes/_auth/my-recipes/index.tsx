@@ -10,6 +10,7 @@ import useMyRecipesQuery from '@/hooks/componentHooks/useMyRecipesQuery';
 
 import { RecipeWithImage } from '@/lib/types';
 import { getUserRecipesAPI } from '@/services/recipe.service';
+import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 
 export const Route = createFileRoute('/_auth/my-recipes/')({
   loader: async ({ context: { queryClient } }) => {    
@@ -19,8 +20,8 @@ export const Route = createFileRoute('/_auth/my-recipes/')({
         page: 1,
         limit: 4,
         query: '',
-        filter: 'all',
-        sort: 'newest',
+        filter: FilterRecipesOptions.All,
+        sort: SortRecipesOptions.Newest,
       }),
       initialPageParam: 1,
     });
@@ -33,8 +34,8 @@ function RouteComponent() {
   const { isOpen, handleDelete, handleOpenModal, handleCloseModal } = useDeleteRecipe();
   const { query, sentinelRef } = useMyRecipesQuery({
     searchQuery: recipesView?.q ?? '',
-    currentFilter: recipesView?.filterBy ?? 'all',
-    currentSort: recipesView?.sortBy ?? 'newest',
+    currentFilter: recipesView?.filterBy ?? FilterRecipesOptions.All,
+    currentSort: recipesView?.sortBy ?? SortRecipesOptions.Newest,
   });
 
   return (
