@@ -3,21 +3,21 @@ import useSSE from '../useSSE';
 
 import type { Recipe, RecipeWithImage } from '@/lib/types';
 
-type UseCreateItemStreamProps<T extends Record<string, any>> = {
+type UseCreateItemStreamProps = {
     endpoint: string;
-    params: T;
     onSuccess?: (item: RecipeWithImage) => void;
     onError?: (error: Error) => void;
 };
 
-const useCreateItemStream = <T extends Record<string, any>>({
-    endpoint, params, onSuccess, onError
-}: UseCreateItemStreamProps<T>) => {
+const useCreateItemStream = ({
+    endpoint, onSuccess, onError
+}: UseCreateItemStreamProps) => {
     const [item, setItem] = useState<RecipeWithImage | null>(null);
     const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false);
+    const [currentParams, setCurrentParams] = useState<Record<string, any> | null>(null);
 
-    const { stream, error, triggerStream, clearStreamAndError } = useSSE(endpoint, params);
+    const { stream, error, triggerStream, clearStreamAndError } = useSSE(endpoint, currentParams ?? undefined);
 
     useEffect(() => {
         if (stream.length === 0) return;
@@ -49,13 +49,15 @@ const useCreateItemStream = <T extends Record<string, any>>({
         }
     }, [error]);
 
-    const trigger = () => {
+    // Renamed trigger to execute, and it now takes params
+    const execute = (params: Record<string, any>) => {
+        setCurrentParams(params);
         triggerStream();
         setIsLoadingItem(true);
     };
 
     return {
-        error, trigger, item, isLoadingItem, isLoadingImage
+        error, execute, item, isLoadingItem, isLoadingImage
     };
 };
 

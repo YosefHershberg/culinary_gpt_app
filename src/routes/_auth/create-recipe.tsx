@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { FormProvider } from 'react-hook-form';
+import { useCreateRecipe } from '@/context/create-recipe-context';
 
 import { createFileRoute } from '@tanstack/react-router'
 import IconStepper from '@/components/create-components/Stepper';
@@ -44,6 +46,7 @@ const steps = [
 
 function RouteComponent() {
   const [activeStep, setActiveStep] = useState(0);
+  const { form } = useCreateRecipe();
 
   return (
     <main className="w-screen flex-1 flex justify-center lg:mt-0 mt-4 pb-4 px-3">
@@ -56,18 +59,20 @@ function RouteComponent() {
           />
         </div>
 
-        <section className='relative flex-1 max-w-[80rem] w-full p-3 flex'>
-          <div className='absolute left-3 top-3 size-24 rounded-full bg-orange/20 lg:flex hidden items-center justify-center text-white text-5xl'>{activeStep + 1}</div>
-          {activeStep === 0 &&
-            <ChooseIngredients />
-          }
-          {activeStep === 1 &&
-            <ChooseAdditional />
-          }
-          {activeStep === 2 &&
-            <FinalStep />
-          }
-        </section>
+        <FormProvider {...form}>
+          <section className='relative flex-1 max-w-[80rem] w-full p-3 flex'>
+            <div className='absolute left-3 top-3 size-24 rounded-full bg-orange/20 lg:flex hidden items-center justify-center text-white text-5xl'>{activeStep + 1}</div>
+            {activeStep === 0 &&
+              <ChooseIngredients />
+            }
+            {activeStep === 1 &&
+              <ChooseAdditional />
+            }
+            {activeStep === 2 &&
+              <FinalStep />
+            }
+          </section>
+        </FormProvider>
 
         <div className='flex w-full justify-around'>
           <Button

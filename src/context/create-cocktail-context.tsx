@@ -18,11 +18,8 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     const [prompt, setPrompt] = useState<string>('');
     const navigate = useNavigate();
 
-    const { trigger, isLoadingItem } = useCreateItemStream<{
-        prompt: string;
-    }>({
+    const { execute, isLoadingItem } = useCreateItemStream({
         endpoint: '/user/recipes/create-cocktail',
-        params: { prompt },
         onSuccess: (newCocktail) => {
             setPrompt('');
             navigate({
@@ -57,8 +54,8 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
             });
         }
 
-        trigger();
-    }, [userIngredients, trigger]);
+        execute({ prompt });
+    }, [userIngredients, execute, prompt]);
 
     const contextValue = useMemo(() => ({
         handleSubmit,
