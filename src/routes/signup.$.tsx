@@ -1,10 +1,10 @@
-import { createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router'
 import { useTheme } from '@/context/theme-context'
 
 import Lottie from 'lottie-react'
 import { LargeLogo } from '@/components/Logo'
 import { SignUp } from '@clerk/clerk-react'
 
+import { createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router'
 import signUpPageAnimation from '@/assets/animations/signup-page-animation.json'
 import bgimage from '@/assets/sign-up-background.webp'
 import bgimageDark from '@/assets/sign-up-background-dark.webp'

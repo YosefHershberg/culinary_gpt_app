@@ -6,7 +6,7 @@ import { toast } from "@/components/ui/use-toast"
 import { OptionCheckbox } from "@/components/ui/OptionCheckbox"
 
 import { SortIngredientsOptions } from "@/lib/enums"
-import { Ingredient } from "@/lib/types"
+import type { Ingredient } from "@/lib/types"
 
 type UsualIngredientsContent = {
     queryKey: QueryKey,

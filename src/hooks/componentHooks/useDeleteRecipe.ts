@@ -1,11 +1,11 @@
 import { useState } from "react"
 import useOptimisticMutation from "@/hooks/useOptimisticMutation"
 
-import { RecipeWithImage } from "@/lib/types"
 import { toast } from "@/components/ui/use-toast"
 import { deleteUserRecipeAPI } from "@/services/recipe.service"
-import { InfiniteData } from "@tanstack/react-query"
+import { type InfiniteData } from "@tanstack/react-query"
 import { RECIPES_QUERY_KEY } from "@/lib/queryKeys"
+import type { RecipeWithImage } from "@/lib/types"
 
 type UseDeleteRecipeResponse = {
     handleDelete: () => void,

@@ -1,9 +1,10 @@
-import { DrinksCategories } from "@/lib/enums";
-import { QueryKeys } from "@/lib/queryKeys";
 import { getIngredientSuggestionsAPI } from "@/services/ingredient.service";
-import { CategoryMapType } from "@/lib/types";
+import { QueryKeys } from "@/lib/queryKeys";
 
-export const DrinksCatgoriesMap: CategoryMapType = {
+import { DrinksCategories } from "@/lib/enums";
+import type { CategoryMapType } from "@/lib/types";
+
+export const DrinksCategoriesMap: CategoryMapType = {
     [DrinksCategories.Spirits]: {
         label: DrinksCategories.Spirits,
         queryKey: QueryKeys.DrinksSuggestions(DrinksCategories.Spirits),

@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react'
+
 import { UserProfile } from '@clerk/clerk-react'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Button } from '../ui/button'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
 
 type UserProfileModalProps = {

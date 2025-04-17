@@ -1,7 +1,8 @@
 import useHttpClient from "../useHttpClient";
-import { RecipeWithImage } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "@tanstack/react-router";
+
+import type { RecipeWithImage } from "@/lib/types";
 
 type SaveRecipeResponse = {
     responseStatus: number | null,

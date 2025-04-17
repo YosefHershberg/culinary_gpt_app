@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
+
+import { z } from 'zod'
+import { createFileRoute, useLocation } from '@tanstack/react-router'
+import { getUserRecipeAPI } from '@/services/recipe.service'
 import SuspenseTrigger from '@/components/SuspenseTrigger'
 import RecipePage from '@/pages/RecipePage'
-import { getUserRecipeAPI } from '@/services/recipe.service'
-import { useQuery } from '@tanstack/react-query'
-import { createFileRoute, useLocation } from '@tanstack/react-router'
-import { z } from 'zod'
 
 export const Route = createFileRoute('/_auth/user-recipe/$recipeId')({
   params: {

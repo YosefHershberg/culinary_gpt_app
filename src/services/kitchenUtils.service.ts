@@ -1,5 +1,5 @@
 import axiosClient from "@/config/axiosClient"
-import { KitchenUtils } from "@/lib/types"
+import type { KitchenUtils } from "@/lib/types"
 
 export const getUserKitchenUtilsAPI = async (): Promise<KitchenUtils> => {
     const { data } = await axiosClient.get('/user/kitchen-utils')

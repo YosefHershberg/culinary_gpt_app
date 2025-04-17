@@ -1,7 +1,8 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { FilterRecipesOptions } from '@/lib/enums';
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
+
+import { FilterRecipesOptions } from '@/lib/enums';
 
 type FilterOptionsDropdownProps = {
     handleFilterChange: (value: FilterRecipesOptions) => void,

@@ -9,7 +9,8 @@ import RecipeImageModal from '@/components/modals/RecipeImageModal'
 import Lottie from 'lottie-react'
 import { Share2 } from 'lucide-react'
 import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
-import { RecipeWithImage } from '@/lib/types'
+
+import type { RecipeWithImage } from '@/lib/types'
 
 type RecipePageProps = {
     createdRecipe: RecipeWithImage

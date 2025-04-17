@@ -1,11 +1,12 @@
 import { createContext, useContext, useLayoutEffect } from 'react'
 import { useUser, useAuth as useClerkAuth } from '@clerk/clerk-react'
-import { SignOut, UserResource } from '@clerk/types';
+import useHasAuthed from '@/hooks/componentHooks/useHasAuthed';
 
 import axiosClient from '@/config/axiosClient';
 import { toast } from '@/components/ui/use-toast';
 import LoadingPage from '@/pages/LoadingPage';
-import useHasAuthed from '@/hooks/componentHooks/useHasAuthed';
+
+import type { SignOut, UserResource } from '@clerk/types';
 
 export type AuthProviderState = {
     user: UserResource | null | undefined | any, // NOTE: any is because the clerk type isn't compatible to updated clerk version

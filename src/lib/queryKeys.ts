@@ -1,4 +1,4 @@
-import { QueryKey } from "@tanstack/react-query";
+import { type QueryKey } from "@tanstack/react-query";
 
 const INGREDIENTS_QUERY_KEY: QueryKey = ['userIngredients']
 const RECIPES_QUERY_KEY: QueryKey = ['userRecipes']

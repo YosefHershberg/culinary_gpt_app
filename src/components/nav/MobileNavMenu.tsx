@@ -12,7 +12,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 
 import { Menu, Sun, Moon, LaptopMinimal, Beef, CookingPot, Plus, Martini } from 'lucide-react';
 import UserButton from './UserButton';

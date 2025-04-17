@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 
 import { 
     getUserIngredientsAPI, 
@@ -8,10 +9,10 @@ import {
     deleteAllUserIngredientsAPI,
     addMultipleUserIngredientsAPI
 } from '@/services/ingredient.service'
-import { Ingredient, MessageResponse } from '@/lib/types'
 import { toast } from '@/components/ui/use-toast'
-import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
+
+import type { Ingredient, MessageResponse } from '@/lib/types'
 
 export type UseUserIngredientsReturnType = {
     userIngredients: Ingredient[];

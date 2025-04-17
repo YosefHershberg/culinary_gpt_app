@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, type AxiosResponse } from 'axios';
 import axiosClient from '@/config/axiosClient';
 
 type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';

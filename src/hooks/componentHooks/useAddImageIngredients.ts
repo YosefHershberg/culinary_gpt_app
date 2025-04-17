@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useUserData } from '@/context/user-data-context';
-import { Ingredient } from '@/lib/types'
+import type { Ingredient } from '@/lib/types'
 
 type UseAddImageIngredientsResponse = {
     ingredientResults: IngredientResultsState[] | null;

@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 
 import { getUserKitchenUtilsAPI, toggleUserKitchenUtilAPI } from '@/services/kitchenUtils.service'
-import { KitchenUtil, KitchenUtils } from '@/lib/types'
+import type { KitchenUtil, KitchenUtils } from '@/lib/types'
 import { KITCHEN_UTILS_QUERY_KEY } from '@/lib/queryKeys'
 
 export type UseKitchenUtilsReturnType = {

@@ -1,8 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { useTheme } from '@/context/theme-context'
 import { LaptopMinimal, Moon, Sun } from 'lucide-react'
-import { Button } from '../ui/button'
-
+import { Button } from '@/components/ui/button'
 
 const ThemeButton: React.FC = () => {
   const { theme, setTheme } = useTheme()

@@ -1,9 +1,9 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+import { useUserData } from './user-data-context'
 
 import { SortIngredientsOptions } from '@/lib/enums'
-import { Ingredient } from '@/lib/types'
+import type { Ingredient } from '@/lib/types'
 
-import { useUserData } from './user-data-context'
 
 type IngredientListContextType = {
     handleClicked: (ingredient: Ingredient) => void,

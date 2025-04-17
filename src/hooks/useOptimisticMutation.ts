@@ -1,5 +1,5 @@
 import { toast } from "@/components/ui/use-toast"
-import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
+import { type QueryKey, useMutation, useQueryClient } from "@tanstack/react-query"
 
 type UseOptimisticMutationProps<TData, TResult, TCachedData = unknown> = {
     queryKey: QueryKey,

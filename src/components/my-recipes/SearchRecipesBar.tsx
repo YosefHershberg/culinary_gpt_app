@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { Input } from '../ui/input'
-import LoadingSpinner from '../ui/LoadingSpinner'
+
+import { Input } from '@/components/ui/input'
+import LoadingSpinner from '@/components/ui/LoadingSpinner'
 
 type SearchRecipesBarProps = {
     setIsSearchBarFocused: (value: boolean) => void,

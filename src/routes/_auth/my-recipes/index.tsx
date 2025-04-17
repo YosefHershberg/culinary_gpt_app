@@ -8,9 +8,9 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import useDeleteRecipe from '@/hooks/componentHooks/useDeleteRecipe';
 import useMyRecipesQuery from '@/hooks/componentHooks/useMyRecipesQuery';
 
-import { RecipeWithImage } from '@/lib/types';
 import { getUserRecipesAPI } from '@/services/recipe.service';
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
+import type { RecipeWithImage } from '@/lib/types';
 
 export const Route = createFileRoute('/_auth/my-recipes/')({
   loader: async ({ context: { queryClient } }) => {    

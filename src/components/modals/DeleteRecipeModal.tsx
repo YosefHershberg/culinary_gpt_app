@@ -8,7 +8,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { X } from "lucide-react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 
 type DeleteRecipeModalProps = {
     isOpen: boolean,

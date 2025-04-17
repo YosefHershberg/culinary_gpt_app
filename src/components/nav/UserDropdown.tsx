@@ -1,3 +1,6 @@
+import { useState } from "react"
+import { useAuth } from "@/context/auth-context"
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -5,9 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
 import UserProfileModal from "../modals/UserProfileModal"
-import { useAuth } from "@/context/auth-context"
 import { LogOut, Settings } from "lucide-react"
 import { SmallLogo } from "../Logo"
 

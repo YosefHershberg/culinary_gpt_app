@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { toast } from '@/components/ui/use-toast';
 import useHttpClient from '@/hooks/useHttpClient';
-import { Ingredient, IngredientType } from '@/lib/types';
 import { useUserData } from '@/context/user-data-context';
+import { toast } from '@/components/ui/use-toast';
+
+import type { Ingredient, IngredientType } from '@/lib/types';
 
 type UseIngredientSearchResponseType = {
     searchValue: string;

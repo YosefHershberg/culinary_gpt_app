@@ -7,8 +7,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Copy, X } from "lucide-react"
-import { Button } from "../ui/button"
-import { toast } from "../ui/use-toast"
+import { Button } from "@/components/ui/button"
+import { toast } from "@/components/ui/use-toast"
 
 import facebookLogo from '@/assets/logos/facebook-logo.webp'
 import whatsappLogo from '@/assets/logos/whatsapp-logo.webp'

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 //@ts-expect-error
 import html2pdf from 'html2pdf.js'
-import { RecipeWithImage } from '@/lib/types';
+import type { RecipeWithImage } from '@/lib/types';
 
 type UseRecipePDFReturnType = {
     contentRef: React.LegacyRef<HTMLElement>

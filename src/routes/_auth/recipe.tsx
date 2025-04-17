@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import RecipePage from '@/pages/RecipePage';
 
-import { RecipeWithImage } from '@/lib/types';
+import type { RecipeWithImage } from '@/lib/types';
 
 export const Route = createFileRoute('/_auth/recipe')({ 
     beforeLoad: ({ location }) => {

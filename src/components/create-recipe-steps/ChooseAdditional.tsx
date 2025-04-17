@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { Slider } from "@/components/ui/slider"
 import { Input } from "@/components/ui/input"
-import { KitchenUtil, KitchenUtils } from "@/lib/types";
+
+import type { KitchenUtil, KitchenUtils } from "@/lib/types";
 
 const inputSchema = z.number().int().positive().min(1).max(99)
 

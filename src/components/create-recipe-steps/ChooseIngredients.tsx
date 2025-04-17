@@ -1,7 +1,7 @@
 import IngredientsTabs from '@/components/create-components/IngredientsTabs';
 import IngredientSearchBar from '@/components/create-components/IngredientSearchBar';
 import IngredientListContextProvider from '@/context/ingredient-list-context';
-import { IngredientCatgoriesMap } from './IngredientsCategoriesMap';
+import { IngredientCategoriesMap } from './IngredientsCategoriesMap';
 
 const placeholders = [
     "Cocoa Powder",
@@ -22,7 +22,7 @@ const ChooseIngredients: React.FC = () => {
                     type='food'
                 />
                 <IngredientsTabs 
-                    categoryMap={IngredientCatgoriesMap}
+                    categoryMap={IngredientCategoriesMap}
                 />
             </div>
         </IngredientListContextProvider>

@@ -1,5 +1,5 @@
 import axiosClient from "@/config/axiosClient"
-import { Ingredient, MessageResponse } from "@/lib/types"
+import type { Ingredient, MessageResponse } from "@/lib/types"
 
 export const getUserIngredientsAPI = async (): Promise<Ingredient[]> => {
     const { data } = await axiosClient.get('/user/ingredients')

@@ -5,18 +5,18 @@ import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseDrinks from '@/components/create-cocktail/ChooseDrinks';
 import FinalStepCocktail from '@/components/create-cocktail/FinalStepCocktail';
+import { DrinksCategoriesMap } from '@/components/create-cocktail/DrinksCategoryMap';
 import { Martini, ArrowLeft, ArrowRight, Milk } from 'lucide-react';
+import { QueryKeys } from '@/lib/queryKeys';
 
 import { IngredientCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
-import { QueryKeys } from '@/lib/queryKeys';
-import { DrinksCatgoriesMap } from '@/components/create-cocktail/DrinksCategoryMap';
 
 export const Route = createFileRoute('/_auth/create-cocktail')({
     loader: async ({ context: { queryClient } }) => {
         // Prefetching ingredient suggestions for the cocktail creation process
         Promise.all([
-            Object.entries(DrinksCatgoriesMap).map(([key]) => {
+            Object.entries(DrinksCategoriesMap).map(([key]) => {
                 const category = key as IngredientCategories;
                 const queryKey = QueryKeys.DrinksSuggestions(category);
 

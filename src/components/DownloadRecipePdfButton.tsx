@@ -1,7 +1,7 @@
-import { Button } from './ui/button'
-import { RecipeWithImage } from '@/lib/types'
-import Logo from './Logo'
 import useCreateRecipePDF from '@/hooks/componentHooks/useCreateRecipePDF'
+import { Button } from './ui/button'
+import type { RecipeWithImage } from '@/lib/types'
+import Logo from './Logo'
 
 const DownloadRecipePdfButton = ({ createdRecipe }: { createdRecipe: RecipeWithImage }) => {
     const { generatePDF, contentRef, imageUrl } = useCreateRecipePDF(createdRecipe)

@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react'
 
 import { useAuth } from '@/context/auth-context'
-import useKitchenUtils, { UseKitchenUtilsReturnType } from '@/hooks/componentHooks/useKitchenUtils'
-import useUserIngredients, { UseUserIngredientsReturnType } from '@/hooks/componentHooks/useUserIngredients'
+import useKitchenUtils, { type UseKitchenUtilsReturnType } from '@/hooks/componentHooks/useKitchenUtils'
+import useUserIngredients, { type UseUserIngredientsReturnType } from '@/hooks/componentHooks/useUserIngredients'
 
 type UserDataState = UseKitchenUtilsReturnType & UseUserIngredientsReturnType
 

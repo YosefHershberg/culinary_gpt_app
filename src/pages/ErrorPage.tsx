@@ -1,8 +1,8 @@
-import { FallbackProps } from 'react-error-boundary';
+import { useNavigate } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
 
 import errorPic from '@/assets/error-pic.webp';
-import { Button } from '@/components/ui/button';
-import { useNavigate } from '@tanstack/react-router';
+import { type FallbackProps } from 'react-error-boundary';
 
 
 const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetErrorBoundary, error, status, message }) => {

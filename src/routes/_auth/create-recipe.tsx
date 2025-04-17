@@ -1,22 +1,23 @@
 import { useState } from 'react';
+
 import { createFileRoute } from '@tanstack/react-router'
 import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
 import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional';
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
-
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
+
+import { IngredientCategoriesMap } from '@/components/create-recipe-steps/IngredientsCategoriesMap';
 import { IngredientCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 import { QueryKeys } from '@/lib/queryKeys';
-import { IngredientCatgoriesMap } from '@/components/create-recipe-steps/IngredientsCategoriesMap';
 
 export const Route = createFileRoute('/_auth/create-recipe')({
   loader: async ({ context: { queryClient } }) => {
     // Prefetching ingredient suggestions for the recipe creation process
     Promise.all([
-      Object.entries(IngredientCatgoriesMap).map(([key]) => {
+      Object.entries(IngredientCategoriesMap).map(([key]) => {
         const category = key as IngredientCategories;
         const queryKey = QueryKeys.IngredientSuggestions(category);
         

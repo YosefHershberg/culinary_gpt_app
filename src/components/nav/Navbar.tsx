@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link } from '@tanstack/react-router'
-
 import { useUserData } from '@/context/user-data-context'
 import { useAuth } from '@/context/auth-context'
 
+import { Link } from '@tanstack/react-router'
 import MobileNavMenu from '@/components/nav/MobileNavMenu'
 import Logo from '@/components/Logo'
 

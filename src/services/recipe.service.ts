@@ -1,6 +1,6 @@
 import axiosClient from "@/config/axiosClient"
-import { MessageResponse, RecipeWithImage } from "@/lib/types"
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
+import type { MessageResponse, RecipeWithImage } from "@/lib/types"
 
 type getUserRecipesAPIProps = {
     page: number,

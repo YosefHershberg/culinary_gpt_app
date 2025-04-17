@@ -1,7 +1,8 @@
+import { useState } from "react"
+import { useCreateCocktail } from "@/context/create-cocktail-context"
+
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
-import { useCreateCocktail } from "@/context/create-cocktail-context"
-import { useState } from "react"
 
 const FinalStep: React.FC = () => {
   const [prompt, setPrompt] = useState<string>('')

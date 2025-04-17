@@ -1,8 +1,10 @@
-import { X } from "lucide-react";
-import { RecipeWithImage } from "@/lib/types";
-import LazyImage from "../ui/LazyImage";
-import { Button } from "../ui/button";
 import { useNavigate } from "@tanstack/react-router";
+
+import { X } from "lucide-react";
+import LazyImage from "@/components/ui/LazyImage";
+import { Button } from "@/components/ui/button";
+
+import type { RecipeWithImage } from "@/lib/types";
 
 type RecipeProps = {
     recipe: RecipeWithImage

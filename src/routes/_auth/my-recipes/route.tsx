@@ -1,10 +1,12 @@
-import { createFileRoute, Outlet, retainSearchParams, useNavigate } from '@tanstack/react-router'
-import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
 import { useEffect, useState } from 'react';
-import { z } from 'zod';
+import { createFileRoute, Outlet, retainSearchParams, useNavigate } from '@tanstack/react-router'
 import useSearchRecipes from '@/hooks/componentHooks/useSearchRecipes';
+
+import { z } from 'zod';
+import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
 import FilterOptionsDropdown from '@/components/my-recipes/FilterOptionsDropdown';
 import SortOptionsDropdown from '@/components/my-recipes/SortOptionsDropdown';
+
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 
 const recipesViewSchema = z.object({

@@ -3,7 +3,7 @@ import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { useUserData } from "./user-data-context";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
-import { Meals, RecipeState, RecipeWithImage } from "@/lib/types";
+import type { Meals, RecipeState, RecipeWithImage } from "@/lib/types";
 import { useNavigate } from "@tanstack/react-router";
 
 type CreateRecipeContextValue = {

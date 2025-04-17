@@ -3,9 +3,9 @@ import { useLocation } from "@tanstack/react-router";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import IngredientsList from "@/components/create-components/IngredientList";
-
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { CategoryMapType } from "@/lib/types";
+
+import type { CategoryMapType } from "@/lib/types";
 
 type IngredientCategoryMap = { categoryMap: CategoryMapType }
 

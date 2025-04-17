@@ -3,7 +3,7 @@ import * as React from 'react';
 import Stepper from '@mui/joy/Stepper';
 import Step, { stepClasses } from '@mui/joy/Step';
 import StepIndicator, { stepIndicatorClasses } from '@mui/joy/StepIndicator';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 
 type IconStepperProps = {
     setActiveStep: (step: number) => void;

@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/auth-context"
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import UserDropdown from "./UserDropdown";
 
 const UserButton: React.FC = () => {

@@ -1,9 +1,10 @@
-import { IngredientCategories } from "@/lib/enums";
 import { QueryKeys } from "@/lib/queryKeys";
-import { CategoryMapType } from "@/lib/types";
 import { getIngredientSuggestionsAPI } from "@/services/ingredient.service";
 
-export const IngredientCatgoriesMap: CategoryMapType = {
+import { IngredientCategories } from "@/lib/enums";
+import type { CategoryMapType } from "@/lib/types";
+
+export const IngredientCategoriesMap: CategoryMapType = {
     [IngredientCategories.Common]: {
         label: IngredientCategories.Common,
         queryKey: QueryKeys.IngredientSuggestions(IngredientCategories.Common),

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import useSSE from '../useSSE';
-import { Recipe, RecipeWithImage } from '@/lib/types';
+
+import type { Recipe, RecipeWithImage } from '@/lib/types';
 
 type UseCreateItemStreamProps<T extends Record<string, any>> = {
     endpoint: string;

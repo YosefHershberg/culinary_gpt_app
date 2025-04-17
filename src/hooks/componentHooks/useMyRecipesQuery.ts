@@ -3,8 +3,9 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import useInfiniteScroll from './useInfiniteScroll';
 
 import { getUserRecipesAPI } from '@/services/recipe.service';
-import { RecipeWithImage } from '@/lib/types';
 import { RECIPES_QUERY_KEY } from '@/lib/queryKeys';
+
+import type { RecipeWithImage } from '@/lib/types';
 import { FilterRecipesOptions, SortRecipesOptions } from "@/lib/enums";
 
 export const LIMIT = 4;

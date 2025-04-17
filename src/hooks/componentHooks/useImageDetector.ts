@@ -2,7 +2,7 @@ import { Dispatch, useState } from 'react'
 import { AxiosError } from 'axios';
 import { toast } from '@/components/ui/use-toast';
 import useHttpClient from '../useHttpClient';
-import { Ingredient } from '@/lib/types';
+import type { Ingredient } from '@/lib/types';
 
 type UseImageDetectorResponse = {
     base64Image: string;

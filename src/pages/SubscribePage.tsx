@@ -1,8 +1,9 @@
-import PlanTabs from "@/components/subscriptions/PlanTabs";
 import { useAuth } from "@/context/auth-context";
-import env from "@/utils/env";
-import { useNavigate } from "@tanstack/react-router";
 import { useLayoutEffect } from "react";
+import { useNavigate } from "@tanstack/react-router";
+
+import PlanTabs from "@/components/subscriptions/PlanTabs";
+import env from "@/utils/env";
 
 export type Plan = {
     id: string;

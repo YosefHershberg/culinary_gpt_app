@@ -1,12 +1,12 @@
 import React from 'react'
+import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
-import { Ingredient, IngredientType } from '@/lib/types';
 import IngredientListMenuDropdown from '@/components/create-components/IngredientListMenuDropdown';
-import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 import ImageDetectorModal from './ImageDetectorModal';
+
+import type { Ingredient, IngredientType } from '@/lib/types';
 
 type IngredientSearchBarProps = {
     placeholders: string[];
