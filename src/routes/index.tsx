@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { motion } from 'framer-motion'
-
 import { Button } from '@/components/ui/button'
 import About from '@/components/About'
 import Footer from '@/components/Footer'

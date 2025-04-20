@@ -7,15 +7,15 @@ type UseCreateItemStreamProps = {
     endpoint: string;
     onSuccess?: (item: RecipeWithImage) => void;
     onError?: (error: Error) => void;
+    onExecute?: (item: RecipeWithImage) => void
 };
 
 const useCreateItemStream = ({
-    endpoint, onSuccess, onError
+    endpoint, onSuccess, onError, onExecute
 }: UseCreateItemStreamProps) => {
     const [item, setItem] = useState<RecipeWithImage | null>(null);
     const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false);
-    // const [currentParams, setCurrentParams] = useState<Record<string, any> | null>(null);
 
     const { stream, error, executeStream, clearStreamAndError } = useSSE(endpoint);
 
@@ -50,7 +50,7 @@ const useCreateItemStream = ({
     }, [error]);
 
     const execute = (params: Record<string, any>) => {
-        // setCurrentParams(params);
+        onExecute && onExecute(item as RecipeWithImage);
         executeStream(params);
         setIsLoadingItem(true);
     };

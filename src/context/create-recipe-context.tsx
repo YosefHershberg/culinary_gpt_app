@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useCallback } from "react";
 import { useUserData } from "./user-data-context";
 import { useForm, SubmitHandler } from "react-hook-form";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
@@ -38,6 +38,7 @@ export const CreateRecipeContext = createContext<CreateRecipeContextValue | unde
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
+  const router = useRouter();
   const { userIngredients } = useUserData();
 
   const form = useForm<RecipeFormValues>({
@@ -50,11 +51,13 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     endpoint: '/user/recipes/create',
     onSuccess: (newRecipe) => {
       form.reset(initialFormValues);
-      // prefetch route here
       navigate({
         to: '/recipe',
         state: newRecipe as any,
       });
+    },
+    onExecute: () => {
+      router.preloadRoute({ to: '/recipe' })
     },
     onError: (error) => {
       toast({

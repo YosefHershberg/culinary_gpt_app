@@ -7,8 +7,9 @@ import RecipePage from '@/pages/RecipePage';
 
 import type { RecipeWithImage } from '@/lib/types';
 
-export const Route = createFileRoute('/_auth/recipe')({ 
-    beforeLoad: ({ location }) => {
+export const Route = createFileRoute('/_auth/recipe')({
+    // NOTE: this should no be the beforeLoad because it interrupts the preloading of the route
+    loader: ({ location }) => {
         const state = location.state as { recipe?: RecipeWithImage };
         if (!state.recipe) {
             throw redirect({ to: '/' });
