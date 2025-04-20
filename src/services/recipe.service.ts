@@ -35,3 +35,8 @@ export const getUserRecipeAPI = async (id: string): Promise<RecipeWithImage> => 
     const { data } = await axiosClient.get(`/user/recipes/${id}`)
     return data
 }
+
+export const saveUserRecipeAPI = async (recipe: RecipeWithImage): Promise<MessageResponse> => {
+    const { data } = await axiosClient.post('/user/recipes', recipe)
+    return data
+}

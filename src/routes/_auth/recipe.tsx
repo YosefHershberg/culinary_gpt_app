@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_auth/recipe')({
 
 function RouteComponent() {
     const recipe = useLocation().state as unknown as RecipeWithImage
-    const { isLoading, handleSaveRecipe } = useSaveRecipe(recipe)
+    const { isLoading, saveRecipe } = useSaveRecipe()
 
     return (
         <RecipePage
@@ -28,7 +28,7 @@ function RouteComponent() {
             addToRecipesBtn={
                 <Button
                     disabled={!recipe?.image_url}
-                    onClick={handleSaveRecipe}
+                    onClick={() => saveRecipe(recipe)}
                     variant='secondary'
                     className='min-w-[8rem] h-12 rounded-full px-5 hover:scale-105 transition duration-300 ease-in-out disabled:cursor-not-allowed'
                 >

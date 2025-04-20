@@ -1,23 +1,21 @@
-import useHttpClient from "../useHttpClient";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "@tanstack/react-router";
 
+import { saveUserRecipeAPI } from "@/services/recipe.service";
 import type { RecipeWithImage } from "@/lib/types";
 
 type SaveRecipeResponse = {
-    responseStatus: number | null,
     isLoading: boolean,
-    error: any,
-    handleSaveRecipe: () => void
+    error: Error | null,
+    saveRecipe: (recipe: RecipeWithImage) => void
 }
 
-const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
+const useSaveRecipe = (): SaveRecipeResponse => {
     const navigate = useNavigate()
 
-    const { responseStatus, isLoading, error, triggerHttpReq } = useHttpClient({
-        endpoint: '/user/recipes',
-        method: 'POST',
-        body: recipe,
+    const { mutate, isPending, error } = useMutation({
+        mutationFn: saveUserRecipeAPI,
         onSuccess: () => {
             toast({
                 title: 'Recipe added!',
@@ -33,14 +31,12 @@ const useSaveRecipe = (recipe: RecipeWithImage): SaveRecipeResponse => {
                 description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
             })
         }
-
     })
 
     return {
-        responseStatus,
-        isLoading,
+        isLoading: isPending,
         error,
-        handleSaveRecipe: () => triggerHttpReq()
+        saveRecipe: mutate
     }
 }
 
