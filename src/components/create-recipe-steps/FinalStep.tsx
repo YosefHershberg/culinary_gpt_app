@@ -1,8 +1,10 @@
 import { useFormContext } from "react-hook-form"
 import { useCreateRecipe } from "@/context/create-recipe-context"
-import type { RecipeFormValues } from "@/context/create-recipe-context"
+
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
+
+import type { RecipeFormValues } from "@/context/create-recipe-context"
 
 const FinalStep: React.FC = () => {
   const { onSubmit } = useCreateRecipe()

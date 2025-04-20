@@ -15,9 +15,9 @@ const useCreateItemStream = ({
     const [item, setItem] = useState<RecipeWithImage | null>(null);
     const [isLoadingItem, setIsLoadingItem] = useState<boolean>(false);
     const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false);
-    const [currentParams, setCurrentParams] = useState<Record<string, any> | null>(null);
+    // const [currentParams, setCurrentParams] = useState<Record<string, any> | null>(null);
 
-    const { stream, error, triggerStream, clearStreamAndError } = useSSE(endpoint, currentParams ?? undefined);
+    const { stream, error, executeStream, clearStreamAndError } = useSSE(endpoint);
 
     useEffect(() => {
         if (stream.length === 0) return;
@@ -49,10 +49,9 @@ const useCreateItemStream = ({
         }
     }, [error]);
 
-    // Renamed trigger to execute, and it now takes params
     const execute = (params: Record<string, any>) => {
-        setCurrentParams(params);
-        triggerStream();
+        // setCurrentParams(params);
+        executeStream(params);
         setIsLoadingItem(true);
     };
 

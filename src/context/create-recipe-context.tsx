@@ -50,6 +50,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
     endpoint: '/user/recipes/create',
     onSuccess: (newRecipe) => {
       form.reset(initialFormValues);
+      // prefetch route here
       navigate({
         to: '/recipe',
         state: newRecipe as any,

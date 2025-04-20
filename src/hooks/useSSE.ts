@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { useAuth as useClerkAuth } from '@clerk/clerk-react'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
 import env from '@/utils/env'
@@ -11,34 +11,21 @@ type EventSourceMessage = {
 type UseSSEReturn = {
     stream: EventSourceMessage[],
     error: Error | null,
-    triggerStream: () => void,
+    executeStream: (body?: Record<string, any>) => void,
     clearStreamAndError: () => void,
 }
 
-const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
+const useSSE = (endpoint: string): UseSSEReturn => {
     const { getToken } = useClerkAuth();
 
     const activeHttpRequest = useRef<AbortController[]>([])
-
-    const [trigger, setTrigger] = useState<boolean>(false)
+    
     const [stream, setStream] = useState<EventSourceMessage[]>([])
     const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
         return () => terminateStream()
     }, []);
-
-    useEffect(() => {
-        if (trigger) {
-            try {
-                streamFnc()
-            } finally {
-                setTrigger(false)
-            }
-        }
-    }, [trigger]);
-
-    const triggerStream = () => setTrigger(true)
 
     const clearStreamAndError = () => {
         setStream([])
@@ -48,11 +35,10 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
     const terminateStream = (error?: Error) => {
         activeHttpRequest.current.forEach(ctrl => ctrl.abort())
         setStream([])
-        setTrigger(false)
         error && setError(error)
     }
 
-    const streamFnc = async () => {
+    const executeStream = useCallback(async (body?: Record<string, any>) => {
         const ctrl = new AbortController();
 
         activeHttpRequest.current.push(ctrl)
@@ -85,10 +71,13 @@ const useSSE = (endpoint: string, body?: Record<string, any>): UseSSEReturn => {
                 )
             }
         });
-    }
+    }, [endpoint, getToken, terminateStream]);
 
     return {
-        stream, error, triggerStream, clearStreamAndError
+        stream,
+        error,
+        executeStream,
+        clearStreamAndError
     }
 }
 
