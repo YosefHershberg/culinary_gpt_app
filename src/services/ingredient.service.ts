@@ -35,3 +35,8 @@ export const detectImageForIngredientsAPI = async (base64Image: string): Promise
     const { data } = await axiosClient.post('/ingredients/image-detect', { imageUrl: base64Image })
     return data
 }
+
+export const searchIngredientsAPI = async (query: string, type: string): Promise<Ingredient[]> => {
+    const { data } = await axiosClient.get('/ingredients/search', { params: { query, type } });
+    return data;
+};

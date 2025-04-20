@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useIngredientSearch } from '@/hooks/componentHooks/useIngredientSearch';
 
 import { PlaceholdersAndVanishInput } from '@/components/ui/placeholders-and-vanish-input';
@@ -14,16 +14,31 @@ type IngredientSearchBarProps = {
 }
 
 const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders, type }) => {
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
     const {
         searchValue,
         setSearchValue,
         isDropdownOpen,
-        dropdownRef,
         results,
         isLoading,
         handleSubmit,
-        handleSelectIngredient
+        handleSelectIngredient,
+        setIsDropdownOpen
     } = useIngredientSearch(type);
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside, { signal: controller.signal });
+        return () => controller.abort();
+    }, []);
+
 
     return (
         <div className='max-w-[35rem] w-full mb-4 flex flex-col'>

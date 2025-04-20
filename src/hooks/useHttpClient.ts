@@ -1,42 +1,19 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { AxiosError, type AxiosResponse } from 'axios';
-import axiosClient from '@/config/axiosClient';
+import { AxiosError } from 'axios';
 
-type HttpMethod = 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH';
-
-type BaseUseHttpClientProps<TResponse> = {
-    endpoint: string;
-    method: HttpMethod;
-    params?: Record<string, any>;
-    headers?: Record<string, any>;
-    onSuccess?: (data: TResponse) => void;
-    onError?: (error: AxiosError) => void;
-};
-
-type UseHttpClientProps<TResponse> =
-    | (BaseUseHttpClientProps<TResponse> & { method: 'GET' | 'DELETE'; body?: never })
-    | (BaseUseHttpClientProps<TResponse> & { method: 'POST' | 'PUT' | 'PATCH'; body: Record<string, any> });
-
-type UseHttpClientResponseType<TResponse> = {
-    data: TResponse | null;
-    error: AxiosError | null;
-    isLoading: boolean;
-    triggerHttpReq: () => void;
-    responseStatus: number | null;
-};
-
-const useHttpClient = <TResponse extends Record<string, any>>({
-    endpoint,
-    method,
-    body,
-    params,
-    headers,
-    onSuccess,
-    onError,
-}: UseHttpClientProps<TResponse>): UseHttpClientResponseType<TResponse> => {
+// Accepts an object with a fn property (API function) and options
+const useHttpClient = <TResponse, TArgs extends any[]>(
+    {
+        fn: apiFn,
+        onSuccess,
+        onError
+    }: {
+        fn: (...args: TArgs) => Promise<TResponse>;
+        onSuccess?: (data: TResponse) => void;
+        onError?: (error: AxiosError) => void;
+    }
+) => {
     const activeHttpRequests = useRef<AbortController[]>([]);
-    const [trigger, setTrigger] = useState<boolean>(false);
-
     const [state, setState] = useState<{
         data: TResponse | null;
         error: AxiosError | null;
@@ -49,75 +26,30 @@ const useHttpClient = <TResponse extends Record<string, any>>({
         responseStatus: null,
     });
 
-    const triggerHttpReq = () => setTrigger(true);
-
-    const fetcher = useCallback(async () => {
+    const execute = useCallback(async (...args: TArgs) => {
         const httpAbortCtrl = new AbortController();
         activeHttpRequests.current.push(httpAbortCtrl);
-
-        const options = {
-            signal: httpAbortCtrl.signal,
-            headers,
-        };
-
-        let response: AxiosResponse<TResponse>;
+        setState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            switch (method) {
-                case 'GET':
-                    response = await axiosClient.get(endpoint, { params, ...options });
-                    break;
-                case 'POST':
-                    response = await axiosClient.post(endpoint, body, options);
-                    break;
-                case 'DELETE':
-                    response = await axiosClient.delete(endpoint, options);
-                    break;
-                case 'PUT':
-                    response = await axiosClient.put(endpoint, body, options);
-                    break;
-                case 'PATCH':
-                    response = await axiosClient.patch(endpoint, body, options);
-                    break;
-                default:
-                    throw new Error(`Unsupported HTTP method: ${method}`);
-            }
-
-            return response;
+            const res = await apiFn(...args);
+            setState((prev) => ({
+                ...prev,
+                data: res as any,
+                responseStatus: (res as any)?.status || null,
+            }));
+            onSuccess && onSuccess(res);
+            return res;
+        } catch (error: any) {
+            setState((prev) => ({ ...prev, error }));
+            onError && onError(error);
+            throw error;
         } finally {
+            setState((prev) => ({ ...prev, isLoading: false }));
             activeHttpRequests.current = activeHttpRequests.current.filter(
                 (reqCtrl) => reqCtrl !== httpAbortCtrl,
             );
         }
-    }, [endpoint, method, body, params, headers]);
-
-    useEffect(() => {
-        const innerFetcher = async () => {
-            try {
-                setState((prev) => ({ ...prev, isLoading: true, error: null }));
-
-                const res = await fetcher();
-                if (res) {
-                    setState((prev) => ({
-                        ...prev,
-                        data: res.data,
-                        responseStatus: res.status,
-                    }));
-                }
-                onSuccess && onSuccess(res.data);
-            } catch (error: AxiosError | any) { //TODO: fix this any
-                console.error(error);
-                setState((prev) => ({ ...prev, error }));
-                onError && onError(error);
-            } finally {
-                setState((prev) => ({ ...prev, isLoading: false }));
-                setTrigger(false);
-            }
-        };
-
-        if (trigger) {
-            innerFetcher();
-        }
-    }, [trigger]);
+    }, [apiFn, onSuccess, onError]);
 
     useEffect(() => {
         return () => {
@@ -130,7 +62,7 @@ const useHttpClient = <TResponse extends Record<string, any>>({
         data: state.data,
         error: state.error,
         isLoading: state.isLoading,
-        triggerHttpReq,
+        execute,
         responseStatus: state.responseStatus,
     };
 };

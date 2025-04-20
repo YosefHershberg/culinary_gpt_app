@@ -2,6 +2,7 @@ import { Dispatch, useState } from 'react'
 import { AxiosError } from 'axios';
 import { toast } from '@/components/ui/use-toast';
 import useHttpClient from '../useHttpClient';
+import { detectImageForIngredientsAPI } from '@/services/ingredient.service';
 import type { Ingredient } from '@/lib/types';
 
 type UseImageDetectorResponse = {
@@ -15,10 +16,8 @@ type UseImageDetectorResponse = {
 const useImageDetector = (): UseImageDetectorResponse => {
     const [base64Image, setBase64Image] = useState<string>('')
 
-    const { data, ...imageDetect } = useHttpClient<Ingredient[]>({
-        endpoint: '/ingredients/image-detect',
-        method: 'POST',
-        body: { imageUrl: base64Image },
+    const { data, isLoading, execute } = useHttpClient({
+        fn: detectImageForIngredientsAPI,
         onError: (error: AxiosError) => {
             setBase64Image('');
             toast({
@@ -37,9 +36,9 @@ const useImageDetector = (): UseImageDetectorResponse => {
         ingredientResults: data || null,
         base64Image,
         setBase64Image,
-        handleTriggerImageDetect: imageDetect.triggerHttpReq,
-        isLoading: imageDetect.isLoading,
-    }
+        handleTriggerImageDetect: () => execute(base64Image),
+        isLoading,
+    };
 }
 
 export default useImageDetector

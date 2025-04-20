@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import useHttpClient from '@/hooks/useHttpClient';
 import { useUserData } from '@/context/user-data-context';
 import { toast } from '@/components/ui/use-toast';
-
+import { searchIngredientsAPI } from '@/services/ingredient.service';
 import type { Ingredient, IngredientType } from '@/lib/types';
 
 type UseIngredientSearchResponseType = {
@@ -10,7 +10,6 @@ type UseIngredientSearchResponseType = {
     setSearchValue: React.Dispatch<React.SetStateAction<string>>;
     isDropdownOpen: boolean;
     setIsDropdownOpen: (value: boolean) => void;
-    dropdownRef: React.RefObject<HTMLDivElement>;
     results: Ingredient[] | null;
     isLoading: boolean;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -21,12 +20,9 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
     const { addUserIngredient, userIngredients } = useUserData();
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const { data: results, isLoading, triggerHttpReq } = useHttpClient<Ingredient[]>({
-        endpoint: '/ingredients/search',
-        method: 'GET',
-        params: { query: searchValue, type },
+    
+    const { data: results, isLoading, execute } = useHttpClient({
+        fn: searchIngredientsAPI,
         onError: (error) => {
             setIsDropdownOpen(false);
             toast({
@@ -38,22 +34,10 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
         },
         onSuccess: () => setIsDropdownOpen(true)
     });
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setIsDropdownOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside, { signal: controller.signal });
-        return () => controller.abort();
-    }, []);
-
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        triggerHttpReq();
+        execute(searchValue, type);
     };
 
     const handleSelectIngredient = (ingredient: Ingredient) => {
@@ -78,7 +62,6 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
         setSearchValue,
         isDropdownOpen,
         setIsDropdownOpen,
-        dropdownRef,
         results,
         isLoading,
         handleSubmit,
