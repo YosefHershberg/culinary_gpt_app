@@ -39,7 +39,6 @@ const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders,
         return () => controller.abort();
     }, []);
 
-
     return (
         <div className='max-w-[35rem] w-full mb-4 flex flex-col'>
             <div className='flex items-center gap-3'>

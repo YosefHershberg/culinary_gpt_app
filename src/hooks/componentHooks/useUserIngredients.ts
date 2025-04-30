@@ -10,7 +10,7 @@ import {
     addMultipleUserIngredientsAPI
 } from '@/services/ingredient.service'
 import { toast } from '@/components/ui/use-toast'
-import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
+import { INGREDIENTS_QUERY_KEY, QueryKeys } from '@/lib/queryKeys'
 
 import type { Ingredient, MessageResponse } from '@/lib/types'
 
@@ -72,9 +72,10 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         addUserIngredientMutation.mutate(ingredient)
     }, [addUserIngredientMutation])
 
-    const addMultipleIngredients = useCallback((ingredients: Ingredient[]) => {
-        const missingIngredients = filterExistingIngredients(ingredients)
 
+    const addMultipleIngredients = useCallback((ingredients: Ingredient[]) => {
+        const missingIngredients = filterExistingIngredients(ingredients)      
+        
         if (missingIngredients.length === 0) {
             return toast({
                 variant: 'default',
@@ -88,7 +89,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         console.log('adding common ingredients');
 
         // Getting the common ingredients from the cache
-        const commonIngredients = queryClient.getQueryData<Ingredient[]>(['common-ingredient-suggestions']) || [];
+        const commonIngredients = queryClient.getQueryData<Ingredient[]>(QueryKeys.IngredientSuggestions('common')) || [];
 
         addMultipleIngredients(commonIngredients)
     }, [queryClient, addMultipleIngredients])
