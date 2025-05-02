@@ -2,8 +2,8 @@ import { useCallback } from 'react'
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 
-import { 
-    getUserIngredientsAPI, 
+import {
+    getUserIngredientsAPI,
     addUserIngredientAPI,
     deleteUserIngredientAPI,
     deleteAllUserIngredientsAPI,
@@ -34,7 +34,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         },
         errorMessage: 'An error occurred while adding ingredient.'
     })
-    
+
     const deleteUserIngredientMutation = useOptimisticMutation<Ingredient, MessageResponse, Ingredient[]>({
         queryKey: INGREDIENTS_QUERY_KEY,
         mutation: (ingredient: Ingredient) => deleteUserIngredientAPI(ingredient),
@@ -43,7 +43,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         },
         errorMessage: 'An error occurred while deleting ingredient.'
     })
-    
+
     const deleteAllUserIngredientsMutation = useOptimisticMutation<undefined, MessageResponse, Ingredient[]>({
         queryKey: INGREDIENTS_QUERY_KEY,
         mutation: () => deleteAllUserIngredientsAPI(),
@@ -52,14 +52,21 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         },
         errorMessage: 'An error occurred while deleting all ingredients.'
     })
-    
+
     const addMultipleIngredientsMutation = useOptimisticMutation<Ingredient[], Ingredient[], Ingredient[]>({
         queryKey: INGREDIENTS_QUERY_KEY,
         mutation: (ingredients: Ingredient[]) => addMultipleUserIngredientsAPI(ingredients),
         optimisticUpdate: (ingredients, prevData = []) => {
             return [...prevData, ...ingredients]
         },
-        errorMessage: 'An error occurred while adding ingredients.'
+        errorMessage: 'An error occurred while adding ingredients.',
+        onSuccess: (data) => {
+            toast({
+                variant: 'default',
+                title: 'Ingredients added!',
+                description: `${data.length} ingredients added.`
+            })
+        }
     })
 
     const { data: userIngredients } = useSuspenseQuery({
@@ -74,8 +81,8 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
 
     const addMultipleIngredients = useCallback((ingredients: Ingredient[]) => {
-        const missingIngredients = filterExistingIngredients(ingredients)      
-        
+        const missingIngredients = filterExistingIngredients(ingredients)
+
         if (missingIngredients.length === 0) {
             return toast({
                 variant: 'default',
