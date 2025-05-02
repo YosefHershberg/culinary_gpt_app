@@ -2,6 +2,7 @@ import IngredientsTabs from '@/components/create-components/IngredientsTabs';
 import IngredientSearchBar from '@/components/create-components/IngredientSearchBar';
 import IngredientListContextProvider from '@/context/ingredient-list-context';
 import { IngredientCategoriesMap } from './IngredientsCategoriesMap';
+import AddCommonIngredientModal from '../modals/AddCommonIngredientModal';
 
 const placeholders = [
     "Cocoa Powder",
@@ -25,6 +26,7 @@ const ChooseIngredients: React.FC = () => {
                     categoryMap={IngredientCategoriesMap}
                 />
             </div>
+            <AddCommonIngredientModal />
         </IngredientListContextProvider>
     )
 }

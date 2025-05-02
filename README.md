@@ -22,7 +22,7 @@ CulinaryGPT is a recipe generation application that allows the user to generate 
 - **React**: A JavaScript library for building user interfaces.
 - **React Query**: For data fetching and state management.
 - **Clerk**: Authentication and user management.
-- **Tanstack Router**: Routing, prefetching & lazy loading.
+- **Tanstack Router**: Routing, prefetching, code-splitting & params handling.
 - **Tailwind CSS**: Utility-first CSS framework.
 - **Shadcn-UI**: Component library for consistent UI.
 - **TypeScript**: Static type checking for JavaScript.
