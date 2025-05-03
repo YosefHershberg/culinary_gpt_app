@@ -9,7 +9,7 @@ import { DrinksCategoriesMap } from '@/components/create-cocktail/DrinksCategory
 import { Martini, ArrowLeft, ArrowRight, Milk } from 'lucide-react';
 import { QueryKeys } from '@/lib/queryKeys';
 
-import { IngredientCategories } from '@/lib/enums';
+import { DrinksCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 
 export const Route = createFileRoute('/_auth/create-cocktail')({
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_auth/create-cocktail')({
         // Prefetching ingredient suggestions for the cocktail creation process
         Promise.all([
             Object.entries(DrinksCategoriesMap).map(([key]) => {
-                const category = key as IngredientCategories;
+                const category = key as DrinksCategories;
                 const queryKey = QueryKeys.DrinksSuggestions(category);
 
                 // Check if query data already exists before fetching

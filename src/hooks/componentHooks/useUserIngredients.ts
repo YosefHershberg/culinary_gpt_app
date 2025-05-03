@@ -13,6 +13,7 @@ import { toast } from '@/components/ui/use-toast'
 import { INGREDIENTS_QUERY_KEY, QueryKeys } from '@/lib/queryKeys'
 
 import type { Ingredient, MessageResponse } from '@/lib/types'
+import { IngredientCategories } from '@/lib/enums'
 
 export type UseUserIngredientsReturnType = {
     addUserIngredient: (ingredient: Ingredient) => void;
@@ -95,7 +96,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         console.log('adding common ingredients');
 
         // Getting the common ingredients from the cache
-        const commonIngredients = queryClient.getQueryData<Ingredient[]>(QueryKeys.IngredientSuggestions('common')) || [];
+        const commonIngredients = queryClient.getQueryData<Ingredient[]>(QueryKeys.IngredientSuggestions(IngredientCategories.Common)) || [];
 
         addMultipleIngredients(commonIngredients)
     }, [queryClient, addMultipleIngredients])
@@ -106,7 +107,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
      * @returns 
      */
     const filterExistingIngredients = useCallback((ingredients: Ingredient[]): Ingredient[] => {
-        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || [];
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY);
 
         // Using a set for faster lookup. O(n) instead of O(n^2)
         const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
