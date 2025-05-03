@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
+import { useUserData } from "@/context/user-data-context"
 
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog"
 import { X } from "lucide-react"
@@ -7,16 +8,15 @@ import { INGREDIENTS_QUERY_KEY } from "@/lib/queryKeys"
 import { Button } from "@/components/ui/button"
 
 import type { Ingredient } from "@/lib/types"
-import { useUserData } from "@/context/user-data-context"
 
 const AddCommonIngredientModal = () => {
     const queryClient = useQueryClient()
+    const { addCommonIngredients } = useUserData()
     const contentRef = useRef<HTMLDivElement>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const { addCommonIngredients } = useUserData()
 
     useEffect(() => {
-        const userIngredients = queryClient.getQueryData(INGREDIENTS_QUERY_KEY) as Ingredient[]
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || []
         if (userIngredients.length < 5) {
             setIsOpen(true)
         }

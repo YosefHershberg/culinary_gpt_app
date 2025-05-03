@@ -3,6 +3,7 @@ import useHttpClient from '@/hooks/useHttpClient';
 import { useUserData } from '@/context/user-data-context';
 import { toast } from '@/components/ui/use-toast';
 import { searchIngredientsAPI } from '@/services/ingredient.service';
+import { useQueryClient } from '@tanstack/react-query';
 import type { Ingredient, IngredientType } from '@/lib/types';
 
 type UseIngredientSearchResponseType = {
@@ -17,7 +18,8 @@ type UseIngredientSearchResponseType = {
 };
 
 export const useIngredientSearch = (type: IngredientType): UseIngredientSearchResponseType => {
-    const { addUserIngredient, userIngredients } = useUserData();
+    const queryClient = useQueryClient();
+    const { addUserIngredient } = useUserData();
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     
@@ -41,6 +43,7 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
     };
 
     const handleSelectIngredient = (ingredient: Ingredient) => {
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(['userIngredients']) || [];
         if (userIngredients.some((ing) => ing.id === ingredient.id)) {
             toast({
                 title: 'Ingredient already added!',

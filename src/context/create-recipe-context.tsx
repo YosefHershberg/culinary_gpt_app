@@ -1,15 +1,16 @@
 import { createContext, useContext, useMemo, useCallback } from "react";
-import { useUserData } from "./user-data-context";
 import { useForm, SubmitHandler } from "react-hook-form";
-import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
 import { toast } from "@/components/ui/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import type { RecipeWithImage } from "@/lib/types";
+import type { Ingredient, RecipeWithImage } from "@/lib/types";
+import { INGREDIENTS_QUERY_KEY } from "@/lib/queryKeys";
 
 export const recipeFormSchema = z.object({
   mealSelected: z.enum(["breakfast", "lunch", "dinner", "snack", "dessert"]),
@@ -39,7 +40,7 @@ export const CreateRecipeContext = createContext<CreateRecipeContextValue | unde
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
   const router = useRouter();
-  const { userIngredients } = useUserData();
+  const queryClient = useQueryClient();
 
   const form = useForm<RecipeFormValues>({
     resolver: zodResolver(recipeFormSchema),
@@ -70,6 +71,8 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
   });
 
   const onSubmit: SubmitHandler<RecipeFormValues> = useCallback((data) => {
+    const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || [];
+
     const foodIngredients = userIngredients.filter(ingredient => ingredient.type?.includes('food'));
     if (foodIngredients.length < 4) {
       return toast({
@@ -86,7 +89,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
       });
     }
     execute(data);
-  }, [userIngredients, execute]);
+  }, [execute]);
 
   const contextValue = useMemo(() => ({
     form,

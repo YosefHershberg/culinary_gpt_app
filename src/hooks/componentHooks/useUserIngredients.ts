@@ -15,7 +15,6 @@ import { INGREDIENTS_QUERY_KEY, QueryKeys } from '@/lib/queryKeys'
 import type { Ingredient, MessageResponse } from '@/lib/types'
 
 export type UseUserIngredientsReturnType = {
-    userIngredients: Ingredient[];
     addUserIngredient: (ingredient: Ingredient) => void;
     addCommonIngredients: () => void;
     addMultipleIngredients: (ingredients: Ingredient[]) => void;
@@ -69,7 +68,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
         }
     })
 
-    const { data: userIngredients } = useSuspenseQuery({
+    useSuspenseQuery({
         queryKey: INGREDIENTS_QUERY_KEY,
         queryFn: () => getUserIngredientsAPI(),
     })
@@ -107,10 +106,12 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
      * @returns 
      */
     const filterExistingIngredients = useCallback((ingredients: Ingredient[]): Ingredient[] => {
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || [];
+
         // Using a set for faster lookup. O(n) instead of O(n^2)
         const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
         return ingredients.filter((ingredient: Ingredient) => !userIngredientIds.has(ingredient.id));
-    }, [userIngredients])
+    }, [])
 
     const deleteUserIngredient = useCallback((ingredient: Ingredient) => {
         console.log('deleting ingredient', ingredient);
@@ -123,7 +124,6 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     }, [deleteAllUserIngredientsMutation])
 
     return {
-        userIngredients: userIngredients || [],
         addUserIngredient,
         addCommonIngredients,
         addMultipleIngredients,

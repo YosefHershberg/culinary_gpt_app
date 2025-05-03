@@ -1,9 +1,10 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import { useUserData } from './user-data-context'
+import { useQueryClient } from '@tanstack/react-query'
 
 import { SortIngredientsOptions } from '@/lib/enums'
 import type { Ingredient } from '@/lib/types'
-
+import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
 
 type IngredientListContextType = {
     handleClicked: (ingredient: Ingredient) => void,
@@ -15,11 +16,15 @@ type IngredientListContextType = {
 export const IngredientListContext = createContext<IngredientListContextType>(null as any)
 
 const IngredientListContextProvider = ({ children }: { children: React.ReactNode }) => {
-    const { addUserIngredient, deleteUserIngredient, userIngredients } = useUserData()
+    const queryClient = useQueryClient();
+    const { addUserIngredient, deleteUserIngredient } = useUserData();
     const [sortOption, setSortOptions] = useState<SortIngredientsOptions>(SortIngredientsOptions.Popularity)
 
+    // Get userIngredients from queryClient
+    const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || [];
+
     const handleClicked = useCallback((ingredient: Ingredient) => {
-        if (userIngredients?.some(item => item.id === ingredient.id)) {
+        if (userIngredients.some(item => item.id === ingredient.id)) {
             deleteUserIngredient(ingredient)
         } else {
             addUserIngredient(ingredient)

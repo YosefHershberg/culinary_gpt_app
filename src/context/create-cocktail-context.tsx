@@ -1,10 +1,13 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useUserData } from '@/context/user-data-context';
 import useCreateItemStream from '@/hooks/componentHooks/useCreateItemStream';
 
 import { toast } from '@/components/ui/use-toast';
 import LoadingRecipePage from '@/pages/LoadingRecipePage';
+
+import type { Ingredient } from '@/lib/types';
+import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys';
+import { useQueryClient } from '@tanstack/react-query';
 
 type CreateCocktailContextValue = {
     handleSubmit: (prompt: string) => void;
@@ -14,10 +17,10 @@ type CreateCocktailContextValue = {
 export const CreateCocktailContext = createContext<CreateCocktailContextValue | undefined>(undefined);
 
 export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { userIngredients } = useUserData();
-    const [prompt, setPrompt] = useState<string>('');
     const navigate = useNavigate();
-
+    const queryClient = useQueryClient();
+    const [prompt, setPrompt] = useState<string>('');
+    
     const { execute, isLoadingItem } = useCreateItemStream({
         endpoint: '/user/recipes/create-cocktail',
         onSuccess: (newCocktail) => {
@@ -42,6 +45,8 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
     }, []);
 
     const handleSubmit = useCallback(() => {
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY) || [];
+
         const drinkIngredients = userIngredients.filter(ingredient => 
             ingredient.type?.includes('drink')
         );
@@ -55,7 +60,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
         }
 
         execute({ prompt });
-    }, [userIngredients, execute, prompt]);
+    }, [execute, prompt]);
 
     const contextValue = useMemo(() => ({
         handleSubmit,
