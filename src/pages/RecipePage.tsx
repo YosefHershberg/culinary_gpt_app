@@ -14,7 +14,7 @@ import type { RecipeWithImage } from '@/lib/types'
 
 type RecipePageProps = {
     createdRecipe: RecipeWithImage
-    addToRecipesBtn?: JSX.Element
+    addToRecipesBtn?: React.ReactNode
 }
 
 const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn }) => {
