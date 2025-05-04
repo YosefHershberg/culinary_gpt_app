@@ -1,5 +1,5 @@
 import { getIngredientSuggestionsAPI } from "@/services/ingredient.service";
-import { IngredientCategories } from "./enums";
+import { DrinksCategories, IngredientCategories } from "./enums";
 import { QueryKey } from "@tanstack/react-query";
 
 export type Ingredient = {
@@ -62,7 +62,7 @@ export type RecipeState = {
 }
 
 export type CategoryMapType = Record<string, {
-    label: string;
+    label: IngredientCategories | DrinksCategories;
     queryKey: QueryKey;
     queryFn: () => ReturnType<typeof getIngredientSuggestionsAPI>;
 }>;
