@@ -21,7 +21,7 @@ export const Route = createFileRoute('/signup/$')({
     redirect: z.string().optional(),
   }),
   search: {
-    // Retain the usersView search param while navigating
+    // Retain the redirect search param while navigating
     // within or to this route (or it's children!)
     middlewares: [retainSearchParams(['redirect'])],
   },
@@ -44,7 +44,7 @@ function RouteComponent() {
       </div>
       <section className='flex-1 flex justify-center items-center'>
         <SignUp
-          fallbackRedirectUrl={redirect ?? '/create-recipe'}
+          fallbackRedirectUrl={redirect ?? '/'}
           path="/signup"
           signInUrl='signin'
         />
