@@ -6,19 +6,19 @@ import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import useDeleteRecipe from '@/hooks/componentHooks/useDeleteRecipe';
-import useMyRecipesQuery from '@/hooks/componentHooks/useMyRecipesQuery';
+import useMyRecipesQuery, { LIMIT } from '@/hooks/componentHooks/useMyRecipesQuery';
 
 import { getUserRecipesAPI } from '@/services/recipe.service';
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 import type { RecipeWithImage } from '@/lib/types';
 
 export const Route = createFileRoute('/_auth/my-recipes/')({
-  loader: async ({ context: { queryClient } }) => {    
+  loader: async ({ context: { queryClient } }) => {
     await queryClient.prefetchInfiniteQuery({
       queryKey: ['userRecipes'],
       queryFn: () => getUserRecipesAPI({
         page: 1,
-        limit: 4,
+        limit: LIMIT,
         query: '',
         filter: FilterRecipesOptions.All,
         sort: SortRecipesOptions.Newest,
@@ -38,19 +38,21 @@ function RouteComponent() {
     currentSort: recipesView?.sortBy ?? SortRecipesOptions.Newest,
   });
 
+  const isLoading = query.isLoading || query.isFetchingNextPage
+
   return (
     <section className="w-full max-w-[40rem]">
       {query.recipes.map((recipe: RecipeWithImage) => (
         <Recipe key={recipe.id} recipe={recipe} handleOpenModal={handleOpenModal} />
       ))}
 
-      {(query.isLoading || query.isFetchingNextPage) && (
+      {isLoading && (
         <div className="flex justify-center items-center w-full h-[10rem]" role="status" aria-label="Loading">
           <LoadingSpinner />
         </div>
       )}
 
-      {query.recipes.length === 0 && (
+      {query.recipes.length === 0 && !isLoading && (
         <NoResultsMessage isCocktailFilter={recipesView?.filterBy === 'cocktails'} />
       )}
 
@@ -66,7 +68,7 @@ const NoResultsMessage = ({ isCocktailFilter }: { isCocktailFilter: boolean }) =
       {isCocktailFilter ? 'No cocktails found' : 'No recipes found'}
     </p>
     <Link to={isCocktailFilter ? '/create-cocktail' : '/create-recipe'}>
-      <Button className="bg-emerald-400 hover:bg-emerald-400 transition-all duration-200 hover:scale-105 text-primary">
+      <Button className={`${isCocktailFilter ? 'bg-emerald-400 hover:bg-emerald-400' : 'bg-orange hover:bg-orange'}  transition-all duration-200 hover:scale-105 text-primary`}>
         {isCocktailFilter ? 'Create a cocktail' : 'Create a recipe'}
       </Button>
     </Link>

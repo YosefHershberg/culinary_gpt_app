@@ -5,8 +5,11 @@ import UserDropdown from "./UserDropdown";
 const UserButton: React.FC = () => {
     const { user } = useAuth()
 
+    // NOTE: This is to fix a bug when there is a translation extension in browser.
+    const initials = (user.firstName?.[0] ?? '').toUpperCase() + (user.lastName?.[0] ?? '').toUpperCase()
+
     return (
-        <>
+        <div translate="no">
             <UserDropdown>
                 <Button
                     size='icon'
@@ -16,17 +19,17 @@ const UserButton: React.FC = () => {
                     {user.hasImage ?
                         <img
                             src={user.imageUrl}
-                            alt={user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
+                            alt={initials}
                             className="rounded-full object-cover"
                         /> : (
                             <span className="text-xl">
-                                {user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
+                                {initials}
                             </span>
                         )
                     }
                 </Button>
-            </UserDropdown>  
-        </>
+            </UserDropdown>
+        </div>
     )
 }
 

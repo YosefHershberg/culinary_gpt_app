@@ -31,12 +31,12 @@ export const getIngredientSuggestionsAPI = async (category: string): Promise<Ing
     return data
 }
 
-export const detectImageForIngredientsAPI = async (base64Image: string): Promise<Ingredient[]> => {
-    const { data } = await axiosClient.post('/ingredients/image-detect', { imageUrl: base64Image })
+export const detectImageForIngredientsAPI = async (base64Image: string, signal?: AbortSignal): Promise<Ingredient[]> => {
+    const { data } = await axiosClient.post('/ingredients/image-detect', { imageUrl: base64Image }, { signal })
     return data
 }
 
-export const searchIngredientsAPI = async (query: string, type: string): Promise<Ingredient[]> => {
-    const { data } = await axiosClient.get('/ingredients/search', { params: { query, type } });
+export const searchIngredientsAPI = async (query: string, type: string, signal?: AbortSignal): Promise<Ingredient[]> => {
+    const { data } = await axiosClient.get('/ingredients/search', { params: { query, type }, signal });
     return data;
 };

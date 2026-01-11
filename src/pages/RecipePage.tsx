@@ -20,6 +20,8 @@ type RecipePageProps = {
 const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn }) => {
     const navigate = useNavigate()
 
+    // FIX: this seams unnecessary. the route loader handles this redirection. 
+    // see src/routes/_auth/recipe.tsx
     useLayoutEffect(() => {
         if (!createdRecipe) navigate({ to: '/create-recipe' })
     }, []);

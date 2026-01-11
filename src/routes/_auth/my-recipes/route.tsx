@@ -9,6 +9,7 @@ import SortOptionsDropdown from '@/components/my-recipes/SortOptionsDropdown';
 
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 
+// url search params schema
 const recipesViewSchema = z.object({
   recipesView: z.object({
     sortBy: z.nativeEnum(SortRecipesOptions).optional(),
@@ -22,7 +23,7 @@ export type RecipesView = z.infer<typeof recipesViewSchema>;
 export const Route = createFileRoute('/_auth/my-recipes')({
   validateSearch: recipesViewSchema.parse,
   search: {
-    // Retain the usersView search param while navigating
+    // Retain the recipesView search param while navigating
     // within or to this route (or it's children!)
     middlewares: [retainSearchParams(['recipesView'])],
   },
