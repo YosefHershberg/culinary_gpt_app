@@ -29,7 +29,7 @@ const LazyImage: React.FC<LazyImageProps> = ({ src, placeholder, alt, ...props }
   return (
     <img
       ref={imgRef}
-      src={isVisible ? src : placeholder || ""}
+      src={isVisible ? src : placeholder || "dish_image.png"}
       alt={alt}
       {...props}
       onLoad={() => setIsLoaded(true)}

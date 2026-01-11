@@ -38,19 +38,21 @@ function RouteComponent() {
     currentSort: recipesView?.sortBy ?? SortRecipesOptions.Newest,
   });
 
+  const isLoading = query.isLoading || query.isFetchingNextPage
+
   return (
     <section className="w-full max-w-[40rem]">
       {query.recipes.map((recipe: RecipeWithImage) => (
         <Recipe key={recipe.id} recipe={recipe} handleOpenModal={handleOpenModal} />
       ))}
 
-      {(query.isLoading || query.isFetchingNextPage) && (
+      {isLoading && (
         <div className="flex justify-center items-center w-full h-[10rem]" role="status" aria-label="Loading">
           <LoadingSpinner />
         </div>
       )}
 
-      {query.recipes.length === 0 && (
+      {query.recipes.length === 0 && !isLoading && (
         <NoResultsMessage isCocktailFilter={recipesView?.filterBy === 'cocktails'} />
       )}
 

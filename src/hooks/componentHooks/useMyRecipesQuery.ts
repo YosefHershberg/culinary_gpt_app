@@ -26,7 +26,7 @@ type useMyRecipesReturnType = {
         hasNextPage: boolean;
         hasData: boolean;
     },
-    sentinelRef: React.MutableRefObject<HTMLDivElement | null>
+    sentinelRef: React.RefObject<HTMLDivElement | null>
 };
 
 const useMyRecipesQuery = ({

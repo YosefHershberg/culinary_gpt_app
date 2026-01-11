@@ -8,7 +8,7 @@ const useHttpClient = <TResponse, TArgs extends any[]>(
         onSuccess,
         onError
     }: {
-        fn: (...args: TArgs) => Promise<TResponse>;
+        fn: (...args: [...TArgs, AbortSignal]) => Promise<TResponse>;
         onSuccess?: (data: TResponse) => void;
         onError?: (error: AxiosError) => void;
     }
@@ -31,7 +31,7 @@ const useHttpClient = <TResponse, TArgs extends any[]>(
         activeHttpRequests.current.push(httpAbortCtrl);
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            const res = await apiFn(...args);
+            const res = await apiFn(...args, httpAbortCtrl.signal);
             setState((prev) => ({
                 ...prev,
                 data: res as any,
