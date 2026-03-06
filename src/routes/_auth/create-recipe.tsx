@@ -10,30 +10,19 @@ import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional'
 import FinalStep from '@/components/create-recipe-steps/FinalStep';
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
 
-import { IngredientCategoriesMap } from '@/components/create-recipe-steps/IngredientsCategoriesMap';
 import { IngredientCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 import { QueryKeys } from '@/lib/queryKeys';
 
 export const Route = createFileRoute('/_auth/create-recipe')({
   loader: async ({ context: { queryClient } }) => {
-    // Prefetching ingredient suggestions for the recipe creation process
-    Promise.all([
-      Object.entries(IngredientCategoriesMap).map(([key]) => {
-        const category = key as IngredientCategories;
-        const queryKey = QueryKeys.IngredientSuggestions(category);
-        
-        // Check if query data already exists before fetching
-        const existingData = queryClient.getQueryData(queryKey);
-        if (!existingData) {
-          return queryClient.prefetchQuery({
-            queryKey,
-            queryFn: () => getIngredientSuggestionsAPI(category),
-          });
-        }
-        return Promise.resolve();
-      }),
-    ])
+    const existingData = queryClient.getQueryData(QueryKeys.IngredientSuggestions(IngredientCategories.Common));
+    if (!existingData) {
+      await queryClient.prefetchQuery({
+        queryKey: QueryKeys.IngredientSuggestions(IngredientCategories.Common),
+        queryFn: () => getIngredientSuggestionsAPI(IngredientCategories.Common),
+      });
+    }
   },
   component: RouteComponent,
 })

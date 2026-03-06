@@ -5,7 +5,6 @@ import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseDrinks from '@/components/create-cocktail/ChooseDrinks';
 import FinalStepCocktail from '@/components/create-cocktail/FinalStepCocktail';
-import { DrinksCategoriesMap } from '@/components/create-cocktail/DrinksCategoryMap';
 import { Martini, ArrowLeft, ArrowRight, Milk } from 'lucide-react';
 import { QueryKeys } from '@/lib/queryKeys';
 
@@ -15,23 +14,14 @@ import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 export const Route = createFileRoute('/_auth/create-cocktail')({
     loader: async ({ context: { queryClient } }) => {
         // Prefetching ingredient suggestions for the cocktail creation process
-        Promise.all([
-            Object.entries(DrinksCategoriesMap).map(([key]) => {
-                const category = key as DrinksCategories;
-                const queryKey = QueryKeys.DrinksSuggestions(category);
+        const existingData = queryClient.getQueryData(QueryKeys.DrinksSuggestions(DrinksCategories.Spirits));
 
-                // Check if query data already exists before fetching
-                const existingData = queryClient.getQueryData(queryKey);
-                if (!existingData) {
-                    return queryClient.prefetchQuery({
-                        queryKey,
-                        queryFn: () => getIngredientSuggestionsAPI(category),
-                    });
-                }
-                return Promise.resolve();
-            }),
-        ])
-
+        if (!existingData) {
+            await queryClient.prefetchQuery({
+                queryKey: QueryKeys.DrinksSuggestions(DrinksCategories.Spirits),
+                queryFn: () => getIngredientSuggestionsAPI(DrinksCategories.Spirits),
+            });
+        }
     },
     component: RouteComponent,
 })
