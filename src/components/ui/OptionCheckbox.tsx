@@ -6,8 +6,8 @@ type OptionCheckboxProps = {
   ingredient: Ingredient,
 }
 
-const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
-  const { handleClicked, userIngredientsSet } = useIngredientList()
+export const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
+  const { userIngredientsSet } = useIngredientList()
 
   return (
     <label
@@ -15,7 +15,6 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
       className={"cursor-pointer flex items-center h-10 px-3 bg-zinc-200 dark:bg-zinc-700 rounded shadow-md"}
     >
       <Checkbox
-        onCheckedChange={() => handleClicked(ingredient)}
         id={ingredient.id as string}
         checked={userIngredientsSet.has(ingredient.id)}
       />
@@ -27,5 +26,4 @@ const OptionCheckbox: React.FC<OptionCheckboxProps> = ({ ingredient }) => {
 }
 
 
-export { OptionCheckbox }
 

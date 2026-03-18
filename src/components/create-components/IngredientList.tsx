@@ -14,9 +14,9 @@ type UsualIngredientsContent = {
 }
 
 const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn }) => {
-    const { sortOption } = useIngredientList()
+    const { sortOption, handleClicked } = useIngredientList()
     const [filteredIngredients, setFilteredIngredients] = useState<Ingredient[]>()
-    
+
     const { data: ingredients, error } = useSuspenseQuery({
         queryKey: queryKey,
         queryFn: queryFn,
@@ -39,6 +39,16 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
         }
     }, [sortOption, ingredients]);
 
+    const handleClickedWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
+        const ingredientId = (e.target as HTMLElement).id;
+        if (ingredientId) {
+            const ingredient = ingredients?.find(ing => ing.id.toString() === ingredientId);
+            if (ingredient) {
+                handleClicked(ingredient);
+            }
+        }
+    }
+
     if (error) {
         toast({
             variant: "destructive",
@@ -49,8 +59,12 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
         return (<div>Error</div>)
     }
 
+
     return (
-        <div className="flex-[1_1_0] flex gap-3 flex-wrap overflow-y-auto">
+        <div
+            className="flex-[1_1_0] flex gap-3 flex-wrap overflow-y-auto"
+            onClick={handleClickedWrapper}
+        >
             {filteredIngredients?.map((ingredient: Ingredient) => (
                 <OptionCheckbox
                     key={ingredient.id}
