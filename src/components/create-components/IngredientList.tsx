@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { QueryKey, useSuspenseQuery } from "@tanstack/react-query"
 import { useIngredientList } from "@/context/ingredient-list-context"
 
@@ -39,7 +39,7 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
         }
     }, [sortOption, ingredients]);
 
-    const handleClickedWrapper = (e: React.MouseEvent<HTMLDivElement>) => {
+    const   = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const ingredientId = (e.target as HTMLElement).id;
         if (ingredientId) {
             const ingredient = ingredients?.find(ing => ing.id.toString() === ingredientId);
@@ -47,7 +47,7 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
                 handleClicked(ingredient);
             }
         }
-    }
+    }, [handleClicked])
 
     if (error) {
         toast({
