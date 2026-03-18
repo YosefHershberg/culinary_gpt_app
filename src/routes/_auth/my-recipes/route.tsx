@@ -3,9 +3,9 @@ import { createFileRoute, Outlet, retainSearchParams, useNavigate } from '@tanst
 import useSearchRecipes from '@/hooks/componentHooks/useSearchRecipes';
 
 import { z } from 'zod';
-import SearchRecipesBar from "@/components/my-recipes/SearchRecipesBar";
-import FilterOptionsDropdown from '@/components/my-recipes/FilterOptionsDropdown';
-import SortOptionsDropdown from '@/components/my-recipes/SortOptionsDropdown';
+import SearchRecipesBar from "./-components/SearchRecipesBar";
+import FilterOptionsDropdown from './-components/FilterOptionsDropdown';
+import SortOptionsDropdown from './-components/SortOptionsDropdown';
 
 import { FilterRecipesOptions, SortRecipesOptions } from '@/lib/enums';
 

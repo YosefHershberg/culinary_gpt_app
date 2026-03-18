@@ -1,7 +1,7 @@
 import React from 'react'
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { X } from 'lucide-react'
-import Logo from '../Logo'
+import Logo from '@/components/Logo'
 
 const MoreInfoModal: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return (

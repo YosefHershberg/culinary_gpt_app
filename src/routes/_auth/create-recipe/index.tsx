@@ -6,15 +6,15 @@ import { createFileRoute } from '@tanstack/react-router'
 import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseIngredients from '@/components/create-recipe-steps/ChooseIngredients';
-import ChooseAdditional from '@/components/create-recipe-steps/ChooseAdditional';
-import FinalStep from '@/components/create-recipe-steps/FinalStep';
+import ChooseAdditional from './-components/ChooseAdditional';
+import FinalStep from './-components/FinalStep';
 import { CookingPot, Soup, Milk, ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { IngredientCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 import { QueryKeys } from '@/lib/queryKeys';
 
-export const Route = createFileRoute('/_auth/create-recipe')({
+export const Route = createFileRoute('/_auth/create-recipe/')({
   loader: async ({ context: { queryClient } }) => {
     const existingData = queryClient.getQueryData(QueryKeys.IngredientSuggestions(IngredientCategories.Common));
     if (!existingData) {

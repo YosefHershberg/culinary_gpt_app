@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-import DeleteRecipeModal from '@/components/modals/DeleteRecipeModal';
-import Recipe from '@/components/my-recipes/Recipe';
+import DeleteRecipeModal from './-components/DeleteRecipeModal';
+import Recipe from './-components/Recipe';
 import { Button } from '@/components/ui/button';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 

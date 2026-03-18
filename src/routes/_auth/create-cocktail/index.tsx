@@ -4,14 +4,14 @@ import { createFileRoute } from '@tanstack/react-router'
 import IconStepper from '@/components/create-components/Stepper';
 import { Button } from '@/components/ui/button';
 import ChooseDrinks from '@/components/create-cocktail/ChooseDrinks';
-import FinalStepCocktail from '@/components/create-cocktail/FinalStepCocktail';
+import FinalStepCocktail from './-components/FinalStepCocktail';
 import { Martini, ArrowLeft, ArrowRight, Milk } from 'lucide-react';
 import { QueryKeys } from '@/lib/queryKeys';
 
 import { DrinksCategories } from '@/lib/enums';
 import { getIngredientSuggestionsAPI } from '@/services/ingredient.service';
 
-export const Route = createFileRoute('/_auth/create-cocktail')({
+export const Route = createFileRoute('/_auth/create-cocktail/')({
     loader: async ({ context: { queryClient } }) => {
         // Prefetching ingredient suggestions for the cocktail creation process
         const existingData = queryClient.getQueryData(QueryKeys.DrinksSuggestions(DrinksCategories.Spirits));

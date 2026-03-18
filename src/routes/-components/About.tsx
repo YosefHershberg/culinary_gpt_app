@@ -1,5 +1,6 @@
 import { HoverEffect } from "./card-hover-effect"
 
+
 const About: React.FC = () => {
 
     return (
