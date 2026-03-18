@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 
-import { getUserKitchenUtilsAPI, toggleUserKitchenUtilAPI } from '@/services/kitchenUtils.service'
+import { toggleUserKitchenUtilAPI } from '@/services/kitchenUtils.service'
 import type { KitchenUtil, KitchenUtils } from '@/lib/types'
 import { KITCHEN_UTILS_QUERY_KEY } from '@/lib/queryKeys'
 
@@ -12,6 +12,8 @@ export type UseKitchenUtilsReturnType = {
 }
 
 const useKitchenUtils = (): UseKitchenUtilsReturnType => {
+    const queryClient = useQueryClient()
+
     const addKitchenUtilMutation = useOptimisticMutation({
         queryKey: KITCHEN_UTILS_QUERY_KEY,
         mutation: (util: KitchenUtil) => toggleUserKitchenUtilAPI(util),
@@ -21,17 +23,14 @@ const useKitchenUtils = (): UseKitchenUtilsReturnType => {
         errorMessage: "An error occurred while adding kitchen util.",
     })
 
-    const { data: kitchenUtils } = useSuspenseQuery({
-        queryKey: KITCHEN_UTILS_QUERY_KEY,
-        queryFn: () => getUserKitchenUtilsAPI(),
-    })
+    const kitchenUtils = queryClient.getQueryData<{ [key: string]: boolean }>(KITCHEN_UTILS_QUERY_KEY) || initKitchenUtils
 
     const toggleKitchenUtil = useCallback((util: KitchenUtil) => {
         addKitchenUtilMutation.mutate(util)
     }, [addKitchenUtilMutation])
 
     return {
-        kitchenUtils: kitchenUtils || initKitchenUtils,
+        kitchenUtils,
         toggleKitchenUtil,
     }
 }

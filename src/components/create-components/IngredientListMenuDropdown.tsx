@@ -1,5 +1,5 @@
 import { memo, useState } from 'react'
-import { useUserData } from '@/context/user-data-context'
+import useUserIngredients from '@/hooks/componentHooks/useUserIngredients'
 import { useIngredientList } from '@/context/ingredient-list-context'
 
 import { ArrowDownWideNarrow, DiamondMinus, Menu, Plus } from 'lucide-react'
@@ -19,7 +19,7 @@ import { SortIngredientsOptions } from '@/lib/enums'
 const IngredientListMenuDropdown: React.FC = () => {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
     const { changeSortOption, sortOption } = useIngredientList()
-    const { deleteAllUserIngredients, addCommonIngredients } = useUserData()
+    const { deleteAllUserIngredients, addCommonIngredients } = useUserIngredients()
 
     const handleClickClearIngredients = () => {
         deleteAllUserIngredients()

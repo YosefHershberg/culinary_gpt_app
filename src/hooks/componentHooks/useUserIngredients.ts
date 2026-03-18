@@ -1,9 +1,8 @@
 import { useCallback } from 'react'
-import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import useOptimisticMutation from '@/hooks/useOptimisticMutation'
 
 import {
-    getUserIngredientsAPI,
     addUserIngredientAPI,
     deleteUserIngredientAPI,
     deleteAllUserIngredientsAPI,
@@ -67,11 +66,6 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
                 description: `${data.length} ingredients added.`
             })
         }
-    })
-
-    useSuspenseQuery({
-        queryKey: INGREDIENTS_QUERY_KEY,
-        queryFn: () => getUserIngredientsAPI(),
     })
 
     const addUserIngredient = useCallback((ingredient: Ingredient) => {

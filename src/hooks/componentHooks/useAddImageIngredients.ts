@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useUserData } from '@/context/user-data-context';
+import useUserIngredients from '@/hooks/componentHooks/useUserIngredients';
 import type { Ingredient } from '@/lib/types'
 
 type UseAddImageIngredientsResponse = {
@@ -18,7 +18,7 @@ export type IngredientResultsState = {
 
 const useAddImageIngredients = (ingredients: Ingredient[] | null): UseAddImageIngredientsResponse => {
     const [ingredientResults, setIngredientResults] = useState<IngredientResultsState[] | null>(null);
-    const { addMultipleIngredients } = useUserData();
+    const { addMultipleIngredients } = useUserIngredients();
 
     useEffect(() => {
         if (ingredients) {

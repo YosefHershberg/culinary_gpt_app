@@ -35,7 +35,7 @@ type CreateRecipeContextValue = {
   onSubmit: SubmitHandler<RecipeFormValues>;
 };
 
-export const CreateRecipeContext = createContext<CreateRecipeContextValue | undefined>(undefined);
+export const CreateRecipeContext = createContext<CreateRecipeContextValue>(null as any);
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
 export const useCreateRecipe = () => {
   const context = useContext(CreateRecipeContext);
-  if (context === undefined) {
+  if (context === null) {
     throw new Error(
       "useCreateRecipe must be used within a CreateRecipeProvider. " +
       "Make sure your component is wrapped in the provider."

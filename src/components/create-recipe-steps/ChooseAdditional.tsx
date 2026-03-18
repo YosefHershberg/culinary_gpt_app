@@ -1,5 +1,5 @@
 import { useFormContext, Controller } from "react-hook-form";
-import { useUserData } from "@/context/user-data-context";
+import useKitchenUtils from "@/hooks/componentHooks/useKitchenUtils";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from '@/components/ui/separator';
@@ -12,7 +12,7 @@ import { type RecipeFormValues } from "@/context/create-recipe-context";
 import type { KitchenUtil, KitchenUtils } from "@/lib/types";
 
 const ChooseAdditional: React.FC = () => {
-    const { kitchenUtils, toggleKitchenUtil } = useUserData();
+    const { kitchenUtils, toggleKitchenUtil } = useKitchenUtils();
     const { control, register, formState: { errors }, watch } = useFormContext<RecipeFormValues>();
     const selectedTime = watch('selectedTime');
 

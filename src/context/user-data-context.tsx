@@ -1,12 +1,10 @@
-import React, { createContext, useContext } from 'react'
+import React from 'react'
 
+import { useSuspenseQueries } from '@tanstack/react-query'
 import { useAuth } from '@/context/auth-context'
-import useKitchenUtils, { type UseKitchenUtilsReturnType } from '@/hooks/componentHooks/useKitchenUtils'
-import useUserIngredients, { type UseUserIngredientsReturnType } from '@/hooks/componentHooks/useUserIngredients'
-
-type UserDataState = UseKitchenUtilsReturnType & UseUserIngredientsReturnType
-
-export const UserDataContext = createContext<UserDataState>(null as any)
+import { getUserIngredientsAPI } from '@/services/ingredient.service'
+import { getUserKitchenUtilsAPI } from '@/services/kitchenUtils.service'
+import { INGREDIENTS_QUERY_KEY, KITCHEN_UTILS_QUERY_KEY } from '@/lib/queryKeys'
 
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isSignedIn } = useAuth()
@@ -15,25 +13,22 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return <>{children}</>
   }
 
-  const userIngredientsServices = useUserIngredients()
-  const userKitchenUtilsServices = useKitchenUtils()
-
-  return (
-    <UserDataContext.Provider value={{
-      ...userIngredientsServices,
-      ...userKitchenUtilsServices
-    }}>
-      {children}
-    </UserDataContext.Provider>
-  )
+  return <UserDataFetcher>{children}</UserDataFetcher>
 }
 
-export const useUserData = () => {
-  const context = useContext(UserDataContext)
+const UserDataFetcher: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  useSuspenseQueries({
+    queries: [
+      {
+        queryKey: INGREDIENTS_QUERY_KEY,
+        queryFn: () => getUserIngredientsAPI(),
+      },
+      {
+        queryKey: KITCHEN_UTILS_QUERY_KEY,
+        queryFn: () => getUserKitchenUtilsAPI(),
+      },
+    ],
+  })
 
-  if (context === undefined) {
-    throw new Error('useUserData must be used within a UserDataProvider')
-  }
-
-  return context
+  return <>{children}</>
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useHttpClient from '@/hooks/useHttpClient';
-import { useUserData } from '@/context/user-data-context';
+import useUserIngredients from '@/hooks/componentHooks/useUserIngredients';
 import { toast } from '@/components/ui/use-toast';
 import { searchIngredientsAPI } from '@/services/ingredient.service';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ type UseIngredientSearchResponseType = {
 
 export const useIngredientSearch = (type: IngredientType): UseIngredientSearchResponseType => {
     const queryClient = useQueryClient();
-    const { addUserIngredient } = useUserData();
+    const { addUserIngredient } = useUserIngredients();
     const [searchValue, setSearchValue] = useState<string>('');
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     

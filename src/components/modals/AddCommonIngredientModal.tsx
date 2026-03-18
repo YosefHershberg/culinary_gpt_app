@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
-import { useUserData } from "@/context/user-data-context"
+import useUserIngredients from "@/hooks/componentHooks/useUserIngredients"
 
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog"
 import { X } from "lucide-react"
@@ -11,7 +11,7 @@ import type { Ingredient } from "@/lib/types"
 
 const AddCommonIngredientModal = () => {
     const queryClient = useQueryClient()
-    const { addCommonIngredients } = useUserData()
+    const { addCommonIngredients } = useUserIngredients()
     const contentRef = useRef<HTMLDivElement>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false)
 

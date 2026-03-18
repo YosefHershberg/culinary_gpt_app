@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { useUserData } from './user-data-context'
+import useUserIngredients from '@/hooks/componentHooks/useUserIngredients'
 import { useQueryClient } from '@tanstack/react-query'
 
 import { SortIngredientsOptions } from '@/lib/enums'
@@ -17,7 +17,7 @@ export const IngredientListContext = createContext<IngredientListContextType>(nu
 
 const IngredientListContextProvider = ({ children }: { children: React.ReactNode }) => {
     const queryClient = useQueryClient();
-    const { addUserIngredient, deleteUserIngredient } = useUserData();
+    const { addUserIngredient, deleteUserIngredient } = useUserIngredients();
     const [sortOption, setSortOptions] = useState<SortIngredientsOptions>(SortIngredientsOptions.Popularity)
 
     // Get userIngredients from queryClient
