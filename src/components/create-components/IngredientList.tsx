@@ -39,7 +39,7 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
         }
     }, [sortOption, ingredients]);
 
-    const   = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const handleClickedWrapper = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
         const ingredientId = (e.target as HTMLElement).id;
         if (ingredientId) {
             const ingredient = ingredients?.find(ing => ing.id.toString() === ingredientId);
