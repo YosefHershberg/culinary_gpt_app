@@ -4,13 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- **Dev server**: `npm run dev`
-- **Build**: `npm run build` (runs tsc then vite build)
-- **Lint**: `npm run lint` (ESLint with zero warnings enforced)
-- **Test**: `npm run test` (Vitest)
+- **Dev server**: `pnpm run dev`
+- **Build**: `pnpm run build` (tsc + vite build)
+- **Lint**: `pnpm run lint` (ESLint with zero warnings enforced)
+- **Test**: `pnpm run test` (Vitest)
 - **Test single file**: `npx vitest run src/path/to/file.test.ts`
-- **Test with coverage**: `npm run test:coverage`
-- **Test UI**: `npm run test:ui`
+- **Test with coverage**: `pnpm run test:coverage`
 - **Package manager**: pnpm (enforced via preinstall hook)
 - **Path alias**: `@` maps to `./src` (configured in vite.config.ts and tsconfig.json)
 
@@ -20,50 +19,71 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - TanStack Router (file-based routing with automatic code-splitting)
 - TanStack React Query v5 (server state)
 - Tailwind CSS + shadcn/ui (Radix primitives)
-- Clerk for authentication
+- Supabase Auth for authentication
 - Axios for HTTP with interceptor-based auth
 - React Hook Form + Zod for form validation
-- Framer Motion for animations
+- Framer Motion + Lottie for animations
 - `@microsoft/fetch-event-source` for SSE streaming
 - `html2pdf.js` for PDF export
 
 ## Architecture
 
 ### Routing
-File-based routing in `src/routes/`. The `_auth/` directory contains protected routes that require authentication. Route files use TanStack Router conventions with loaders and preloading.
 
-**Protected routes** (`_auth/`): create-recipe, create-cocktail, my-recipes, my-ingredients (food/drinks tabs), user-recipe/$recipeId, recipe.
-**Public routes**: landing page (`/`), signin, signup.
+File-based routing in `src/routes/`. The `_auth/` directory contains protected routes that require a Supabase session.
 
-Route protection uses `beforeLoad` hook in `_auth/route.tsx` — checks `context.auth.user` and redirects to signin/signup based on `localStorage.hasAuthed`.
+**Protected routes** (`_auth/`): `create-recipe`, `create-cocktail`, `my-recipes`, `my-ingredients` (food/drinks tabs), `user-recipe/$recipeId`, `recipe`.
+**Public routes**: landing page (`/`), `signin`.
 
-Router config (`src/router.tsx`): preload on `intent`, scroll restoration enabled.
+Route protection uses `beforeLoad` hook in `_auth/route.tsx` — checks `context.auth.user` and redirects to `signin` if no session.
 
 ### State Management
+
 - **Server state**: React Query with centralized query keys in `src/lib/queryKeys.ts`
-- **Auth state**: Custom AuthProvider wrapping Clerk in `src/context/auth-context.tsx`
-- **Feature contexts**: CreateRecipeProvider, CreateCocktailProvider, UserDataProvider in `src/context/`
+- **Auth state**: Custom `AuthProvider` wrapping Supabase in `src/context/auth-context.tsx`
+- **Feature contexts**: `CreateRecipeProvider`, `CreateCocktailProvider`, `UserDataProvider` in `src/context/`
+
+### Authentication
+
+**Supabase Auth** — session-based.
+
+```typescript
+// auth-context.tsx
+supabase.auth.getSession()          // get session on mount
+supabase.auth.onAuthStateChange()   // listen for changes
+supabase.auth.signOut()             // sign out
+```
+
+Axios interceptor in `src/config/axiosClient.ts` injects `Authorization: Bearer {session.access_token}` on every request. Also handles 429 responses with a toast.
+
+`AppUser` is mapped from the Supabase `User` object (reads `user_metadata.full_name`, `user_metadata.avatar_url`).
 
 ### API Layer
-Services in `src/services/` handle API calls. Axios client in `src/config/axiosClient.ts` automatically injects auth tokens and handles rate limiting (429 responses).
 
-**Services**: `ingredient.service.ts` (CRUD + image detection + search), `recipe.service.ts` (CRUD + pagination), `kitchenUtils.service.ts` (toggle utils), `user.service.ts` (subscription status).
+Services in `src/services/` handle all API calls via the Axios client. Each service function accepts an optional `signal` (AbortSignal) for cancellation.
 
-SSE streaming for recipe/image generation uses `@microsoft/fetch-event-source` via the `useSSE` hook → consumed by `useCreateItemStream` → exposed through context providers.
+**Services**: `recipe.service.ts`, `ingredient.service.ts`, `kitchenUtils.service.ts`, `user.service.ts`
 
-**Environment variables** validated with Zod in `src/utils/env.ts`: `VITE_API_URL`, `VITE_CLERK_PUBLISHABLE_KEY`, `NODE_ENV`.
+SSE streaming for recipe/cocktail generation uses `@microsoft/fetch-event-source` via the `useSSE` hook → consumed by `useCreateItemStream` → exposed through context providers.
+
+### Environment Variables
+
+Validated at runtime with Zod in `src/utils/env.ts`. Throws on startup if invalid.
+
+Required: `VITE_API_URL` (URL), `VITE_SUPABASE_URL` (URL), `VITE_SUPABASE_ANON_KEY`
 
 ### Component Organization
-- `src/components/ui/` - Reusable shadcn/Radix primitives
-- `src/components/` - Feature components (create-recipe, my-recipes, modals, nav)
-- `src/pages/` - Route-level page components
-- `src/hooks/componentHooks/` - Feature-specific hooks
-- `src/hooks/` - Cross-cutting utility hooks (useSSE, useDebounce, useOptimisticMutation)
+
+- `src/components/ui/` — Reusable shadcn/Radix primitives
+- `src/components/` — Feature components (create-recipe, my-recipes, modals, nav)
+- `src/hooks/componentHooks/` — Feature-specific hooks
+- `src/hooks/` — Cross-cutting hooks (useSSE, useDebounce, useOptimisticMutation, useHttpClient)
 
 ### Context Provider Hierarchy
+
 Critical ordering in `src/Providers.tsx`:
 ```
-QueryClientProvider → ThemeProvider → ClerkProvider → AuthProvider → TooltipProvider
+QueryClientProvider → ThemeProvider → AuthProvider → TooltipProvider
 ```
 Feature providers (inside auth-protected routes):
 ```
@@ -74,7 +94,7 @@ UserDataProvider → CreateRecipeProvider → CreateCocktailProvider
 
 **Optimistic mutations** (`src/hooks/useOptimisticMutation.ts`): cancel pending queries → update cache → mutate → rollback on error → invalidate on settle. Used for ingredient add/delete, kitchen utils toggle, recipe delete.
 
-**HTTP client hook** (`src/hooks/useHttpClient.ts`): wraps service functions with loading/error state and AbortSignal support. Service functions accept an optional `signal` parameter for cancellation.
+**HTTP client hook** (`src/hooks/useHttpClient.ts`): wraps service functions with loading/error state and AbortSignal support.
 
 **SSE streaming chain**: `useSSE` (raw stream) → `useCreateItemStream` (tracks `recipe` + `image` events with separate loading states) → context provider (form validation + submission).
 
@@ -83,11 +103,13 @@ UserDataProvider → CreateRecipeProvider → CreateCocktailProvider
 **Form pattern**: React Hook Form + Zod schema + `<FormProvider>`. Recipe creation uses multi-step form (ingredients → kitchen utils → meal options).
 
 ### Types
+
 - Centralized TypeScript types in `src/lib/types.ts`
 - Zod schemas for runtime validation in context providers
 - Enums for categories in `src/lib/enums.ts`
 
 ### Features
+
 - **Recipe creation**: 3-step form, SSE streaming generation, min 4 food ingredients
 - **Cocktail creation**: prompt-based, SSE streaming, min 4 drink ingredients
 - **My Recipes**: infinite scroll, search (debounced 500ms), filter (All/Recipes/Cocktails), sort (newest/oldest/A-Z/Z-A)

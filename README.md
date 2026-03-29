@@ -1,85 +1,80 @@
-# CulinaryGPT Frontend
+# CulinaryGPT - Client
 
 ## Description
 
-CulinaryGPT is a recipe generation application that allows the user to generate recipes based on the user's ingredients and kitchen utensils. This application is build with scalability, re-usability & maintainability in mind by implementing a clean and layard architecture.
+React SPA for AI-powered recipe and cocktail generation. Users manage their ingredient pantry and kitchen equipment, then generate personalized recipes with real-time streaming and AI-generated images.
 
-## Features
+## Tech Stack
 
-- Easy onboarding with google account (using Clerk)
-- Recipe generation and display
-- Save recipes, filter, sort & query through them
-- Share recipes on social platforms
-- Cocktails too !
-- image upload and detection of appearing ingredients
-- Optimistic updates with React Query caching
-- Styling & Responsive design with Tailwind CSS
-- Component library with Shadcn-UI
-- Clean layered architecture for maintainability, scalability & team work
-
-## Technologies Used
-
-- **React**: A JavaScript library for building user interfaces.
-- **React Query**: For data fetching and state management.
-- **Clerk**: Authentication and user management.
-- **Tanstack Router**: Routing, prefetching, code-splitting & params handling.
-- **Tailwind CSS**: Utility-first CSS framework.
-- **Shadcn-UI**: Component library for consistent UI.
-- **TypeScript**: Static type checking for JavaScript.
+- **Framework:** React 19 + TypeScript 5.2 + Vite 5.4
+- **Routing:** TanStack Router (file-based, auto code-split)
+- **Server State:** TanStack React Query v5
+- **Styling:** Tailwind CSS + shadcn/ui (Radix primitives)
+- **Auth:** Supabase Auth (session-based)
+- **HTTP:** Axios (interceptor-based Bearer token injection)
+- **Forms:** React Hook Form + Zod
+- **Streaming:** `@microsoft/fetch-event-source` (SSE)
+- **Animations:** Framer Motion + Lottie
+- **PDF Export:** html2pdf.js
+- **Package Manager:** pnpm (enforced)
 
 ## Get Started
 
-To install the dependencies run - 
-
-```console
-npm install
+```bash
+pnpm install
+cp .env.example .env   # fill in your values
+pnpm run dev           # Vite dev server (http://localhost:5173)
 ```
 
-To start the server run - 
+## Commands
 
-```console
-npm start
+```bash
+pnpm run dev           # Vite dev server
+pnpm run build         # tsc + vite build
+pnpm run lint          # ESLint (zero warnings enforced)
+pnpm run test          # Vitest
+pnpm run test:coverage # coverage report
+pnpm run preview       # preview production build
 ```
 
-To run development server -
+## Environment Variables
 
-```console
-npm run dev
-```
+See `.env.example`.
 
+| Variable | Purpose |
+|---|---|
+| `VITE_API_URL` | Backend API base URL |
+| `VITE_SUPABASE_URL` | Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon key (safe to expose) |
 
 ## Project Structure
 
-```plaintext
-├── public
-├── src
-│   ├── assets
-│   ├── components
-│   ├── config
-│   ├── context
-│   ├── hooks
-│   ├── lib
-│   ├── pages
-│   ├── routes
-│   ├── services
-│   ├── utils
-│   ├── App.tsx
-│   ├── index.css
-│   ├── main.ts
-│   ├── Providers.ts
-│   ├── router.ts
-│   ├── routerTree.gen.ts
-│   └── vite-end.d.ts
-├── .env
-├── .eslintrc.cjs
-├── .gitignore
-├── components.json
-├── index.html
-├── package.json
-├── pnpm-lock.yaml
-├── postcss.config.js
-├── README.md
-├── tailwind.config.js
-├── tsconfig.json
-├── vercel.json
-└── README.md
+```
+src/
+├── routes/                  # File-based routing (TanStack Router)
+│   ├── index.tsx            # Landing page (/)
+│   ├── signin.$.tsx         # Sign in
+│   └── _auth/               # Protected routes (require Supabase session)
+│       ├── route.tsx        # Auth guard (beforeLoad)
+│       ├── create-recipe/   # 3-step recipe wizard
+│       ├── create-cocktail/ # 2-step cocktail wizard
+│       ├── my-recipes/      # Browse & manage saved recipes
+│       ├── my-ingredients/  # Ingredient pantry (food + drinks tabs)
+│       ├── recipe.tsx       # View newly generated recipe
+│       └── user-recipe/     # View saved recipe by ID
+├── components/
+│   ├── ui/                  # shadcn/Radix primitives
+│   ├── nav/                 # Navbar
+│   ├── create-recipe-steps/ # Step 1/2/3 components
+│   ├── create-cocktail/     # Cocktail creation components
+│   ├── create-components/   # Shared ingredient pickers
+│   ├── my-recipes/          # Recipe cards & list
+│   └── modals/              # Dialog components
+├── context/                 # Auth, CreateRecipe, CreateCocktail, UserData providers
+├── hooks/                   # useSSE, useOptimisticMutation, useHttpClient, useDebounce, etc.
+├── services/                # API service functions (recipe, ingredient, kitchenUtils, user)
+├── config/                  # Axios client, Supabase client, React Query client
+├── lib/                     # Types, enums, query keys
+└── utils/
+    └── env.ts               # Zod env validation
+```
