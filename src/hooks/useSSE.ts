@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { useAuth as useClerkAuth } from '@clerk/clerk-react'
+import { supabase } from '@/config/supabase'
 import { fetchEventSource } from '@microsoft/fetch-event-source'
 import env from '@/utils/env'
 
@@ -16,10 +16,8 @@ type UseSSEReturn = {
 }
 
 const useSSE = (endpoint: string): UseSSEReturn => {
-    const { getToken } = useClerkAuth();
-
     const activeHttpRequest = useRef<AbortController[]>([])
-    
+
     const [stream, setStream] = useState<EventSourceMessage[]>([])
     const [error, setError] = useState<Error | null>(null)
 
@@ -43,11 +41,14 @@ const useSSE = (endpoint: string): UseSSEReturn => {
 
         activeHttpRequest.current.push(ctrl)
 
+        const { data: { session } } = await supabase.auth.getSession();
+        const token = session?.access_token;
+
         await fetchEventSource(`${env.VITE_API_URL}${endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${await getToken()}`
+                'Authorization': `Bearer ${token}`
             },
             openWhenHidden: true,
             signal: ctrl.signal,
@@ -71,7 +72,7 @@ const useSSE = (endpoint: string): UseSSEReturn => {
                 )
             }
         });
-    }, [endpoint, getToken, terminateStream]);
+    }, [endpoint, terminateStream]);
 
     return {
         stream,

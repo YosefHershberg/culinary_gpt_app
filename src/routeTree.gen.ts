@@ -13,7 +13,6 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/_auth/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as SignupSplatImport } from './routes/signup.$'
 import { Route as SigninSplatImport } from './routes/signin.$'
 import { Route as AuthRecipeImport } from './routes/_auth/recipe'
 import { Route as AuthMyRecipesRouteImport } from './routes/_auth/my-recipes/route'
@@ -35,12 +34,6 @@ const AuthRouteRoute = AuthRouteImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SignupSplatRoute = SignupSplatImport.update({
-  id: '/signup/$',
-  path: '/signup/$',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -150,13 +143,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigninSplatImport
       parentRoute: typeof rootRoute
     }
-    '/signup/$': {
-      id: '/signup/$'
-      path: '/signup/$'
-      fullPath: '/signup/$'
-      preLoaderRoute: typeof SignupSplatImport
-      parentRoute: typeof rootRoute
-    }
     '/_auth/my-ingredients/drinks': {
       id: '/_auth/my-ingredients/drinks'
       path: '/drinks'
@@ -260,7 +246,6 @@ export interface FileRoutesByFullPath {
   '/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/recipe': typeof AuthRecipeRoute
   '/signin/$': typeof SigninSplatRoute
-  '/signup/$': typeof SignupSplatRoute
   '/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
@@ -275,7 +260,6 @@ export interface FileRoutesByTo {
   '/my-ingredients': typeof AuthMyIngredientsRouteRouteWithChildren
   '/recipe': typeof AuthRecipeRoute
   '/signin/$': typeof SigninSplatRoute
-  '/signup/$': typeof SignupSplatRoute
   '/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
@@ -292,7 +276,6 @@ export interface FileRoutesById {
   '/_auth/my-recipes': typeof AuthMyRecipesRouteRouteWithChildren
   '/_auth/recipe': typeof AuthRecipeRoute
   '/signin/$': typeof SigninSplatRoute
-  '/signup/$': typeof SignupSplatRoute
   '/_auth/my-ingredients/drinks': typeof AuthMyIngredientsDrinksRoute
   '/_auth/my-ingredients/food': typeof AuthMyIngredientsFoodRoute
   '/_auth/user-recipe/$recipeId': typeof AuthUserRecipeRecipeIdRoute
@@ -310,7 +293,6 @@ export interface FileRouteTypes {
     | '/my-recipes'
     | '/recipe'
     | '/signin/$'
-    | '/signup/$'
     | '/my-ingredients/drinks'
     | '/my-ingredients/food'
     | '/user-recipe/$recipeId'
@@ -324,7 +306,6 @@ export interface FileRouteTypes {
     | '/my-ingredients'
     | '/recipe'
     | '/signin/$'
-    | '/signup/$'
     | '/my-ingredients/drinks'
     | '/my-ingredients/food'
     | '/user-recipe/$recipeId'
@@ -339,7 +320,6 @@ export interface FileRouteTypes {
     | '/_auth/my-recipes'
     | '/_auth/recipe'
     | '/signin/$'
-    | '/signup/$'
     | '/_auth/my-ingredients/drinks'
     | '/_auth/my-ingredients/food'
     | '/_auth/user-recipe/$recipeId'
@@ -353,14 +333,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   SigninSplatRoute: typeof SigninSplatRoute
-  SignupSplatRoute: typeof SignupSplatRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
   SigninSplatRoute: SigninSplatRoute,
-  SignupSplatRoute: SignupSplatRoute,
 }
 
 export const routeTree = rootRoute
@@ -375,8 +353,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
-        "/signin/$",
-        "/signup/$"
+        "/signin/$"
       ]
     },
     "/": {
@@ -414,9 +391,6 @@ export const routeTree = rootRoute
     },
     "/signin/$": {
       "filePath": "signin.$.tsx"
-    },
-    "/signup/$": {
-      "filePath": "signup.$.tsx"
     },
     "/_auth/my-ingredients/drinks": {
       "filePath": "_auth/my-ingredients/drinks.tsx",

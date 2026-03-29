@@ -21,22 +21,13 @@ const AuthNavButtons: React.FC = () => {
             <UserButton />
         </Button>
     ) : (
-        <>
-            <Button
-                className="hover:scale-105 rounded-full"
-                variant="ghost"
-                asChild
-            >
-                <Link to='/signin/$'>Sign in</Link>
-            </Button>
-            <Button
-                className="hover:scale-105 rounded-full"
-                variant="secondary"
-                asChild
-            >
-                <Link to='/signup/$'>Sign up</Link>
-            </Button>
-        </>
+        <Button
+            className="hover:scale-105 rounded-full"
+            variant="secondary"
+            asChild
+        >
+            <Link to='/signin/$'>Sign In</Link>
+        </Button>
     );
 };
 

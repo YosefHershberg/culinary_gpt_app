@@ -6,7 +6,7 @@ export const Route = createFileRoute('/_auth')({
       const hasAuthed = localStorage.getItem('hasAuthed')
 
       throw redirect({
-        to: hasAuthed ? '/signin/$' : '/signup/$',
+        to: '/signin/$',
         search: {
           redirect: location.href,
         },

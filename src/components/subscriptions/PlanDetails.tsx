@@ -18,7 +18,7 @@ const PlanDetails: React.FC<{ plan: Plan }> = ({ plan }) => {
                 asChild
             >
                 <a
-                    href={`${plan.link}?prefilled_email=${user.emailAddresses[0].emailAddress}&client_reference_id=${user.id}`}
+                    href={`${plan.link}?prefilled_email=${user?.email}&client_reference_id=${user?.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >

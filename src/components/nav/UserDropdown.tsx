@@ -8,15 +8,13 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import UserProfileModal from "../modals/UserProfileModal"
 import { LogOut, Settings } from "lucide-react"
 import { SmallLogo } from "../Logo"
-
-// const costumerPortalLink = 'https://billing.stripe.com/p/login/test_28o9DOfMm7NK9vWfYY'
+import ManageSettingsModal from "@/components/modals/ManageSettingsModal"
 
 const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { user, signOut } = useAuth()
+    const [settingsOpen, setSettingsOpen] = useState(false)
 
     return (
         <>
@@ -28,23 +26,30 @@ const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                     className="min-w-72 mx-4"
                 >
                     <div className="flex gap-4 cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <img
-                            src={user.imageUrl}
-                            alt={user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
-                            className="rounded-full object-cover size-10"
-                        />
+                        {user?.hasImage ? (
+                            <img
+                                src={user.imageUrl!}
+                                alt={user.firstName[0]?.toUpperCase() + user.lastName[0]?.toUpperCase()}
+                                className="rounded-full object-cover size-10"
+                            />
+                        ) : (
+                            <div className="rounded-full bg-primary text-primary-foreground flex items-center justify-center size-10 text-sm font-bold">
+                                {(user?.firstName?.[0] ?? '').toUpperCase() + (user?.lastName?.[0] ?? '').toUpperCase()}
+                            </div>
+                        )}
                         <div className="flex flex-col justify-evenly">
-                            <span className="font-bold">{user.fullName}</span>
-                            <span>{user.emailAddresses[0].emailAddress}</span>
+                            <span className="font-bold">{user?.fullName}</span>
+                            <span>{user?.email}</span>
                         </div>
                     </div>
                     <DropdownMenuSeparator />
-                    <div onClick={() => setIsModalOpen(true)}>
-                        <DropdownMenuItem className="flex items-center gap-4">
-                            <Settings className="size-5" />
-                            Manage Account
-                        </DropdownMenuItem>
-                    </div>
+                    <DropdownMenuItem
+                        className="flex items-center gap-4"
+                        onClick={() => setSettingsOpen(true)}
+                    >
+                        <Settings className='size-5' />
+                        Manage Settings
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                         className="flex items-center gap-4"
                         onClick={() => signOut()}
@@ -52,20 +57,6 @@ const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                         <LogOut className='size-5' />
                         Sign out
                     </DropdownMenuItem>
-                    {/* <a
-                        href={
-                            costumerPortalLink + '?prefilled_email=' + user.emailAddresses[0].emailAddress
-                        }
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        <DropdownMenuItem
-                            className="flex items-center gap-4"
-                        >
-                            <WalletCards className='size-5' />
-                            Subscriptions
-                        </DropdownMenuItem>
-                    </a> */}
                     <DropdownMenuSeparator />
                     <footer className="flex justify-center gap-4 cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                         <SmallLogo />
@@ -73,10 +64,10 @@ const UserDropdown: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 </DropdownMenuContent>
             </DropdownMenu>
 
-            {isModalOpen && <UserProfileModal
-                isOpen={isModalOpen}
-                close={() => setIsModalOpen(false)}
-            />}
+            <ManageSettingsModal
+                isOpen={settingsOpen}
+                close={() => setSettingsOpen(false)}
+            />
         </>
     )
 }

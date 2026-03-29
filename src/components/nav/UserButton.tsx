@@ -5,7 +5,8 @@ import UserDropdown from "./UserDropdown";
 const UserButton: React.FC = () => {
     const { user } = useAuth()
 
-    // NOTE: This is to fix a bug when there is a translation extension in browser.
+    if (!user) return null;
+
     const initials = (user.firstName?.[0] ?? '').toUpperCase() + (user.lastName?.[0] ?? '').toUpperCase()
 
     return (
@@ -18,7 +19,7 @@ const UserButton: React.FC = () => {
                 >
                     {user.hasImage ?
                         <img
-                            src={user.imageUrl}
+                            src={user.imageUrl!}
                             alt={initials}
                             className="rounded-full object-cover"
                         /> : (

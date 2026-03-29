@@ -4,7 +4,8 @@ const envData = import.meta.env
 
 const envSchema = z.object({
     VITE_API_URL: z.string().url(),
-    VITE_CLERK_PUBLISHABLE_KEY: z.string(),
+    VITE_SUPABASE_URL: z.string().url(),
+    VITE_SUPABASE_ANON_KEY: z.string(),
 })
 
 const parsedResults = envSchema.safeParse(envData)
