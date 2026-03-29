@@ -60,9 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setSession(session);
 
-            if (session) {
-                localStorage.setItem('hasAuthed', 'true');
-            }
+
         });
 
         return () => subscription.unsubscribe();
