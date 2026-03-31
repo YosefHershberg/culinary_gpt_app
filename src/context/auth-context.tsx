@@ -3,6 +3,7 @@ import { supabase } from '@/config/supabase'
 import axiosClient from '@/config/axiosClient'
 import { toast } from '@/components/ui/use-toast'
 import LoadingPage from '@/pages/LoadingPage'
+import { useRouter } from '@tanstack/react-router'
 
 import type { Session } from '@supabase/supabase-js'
 
@@ -50,6 +51,7 @@ function mapSupabaseUser(session: Session | null): AppUser | null {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [session, setSession] = useState<Session | null>(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
@@ -102,6 +104,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const signOut = async () => {
         await supabase.auth.signOut();
         setSession(null);
+        router.navigate({ to: '/' });
     };
 
     if (!isLoaded) {

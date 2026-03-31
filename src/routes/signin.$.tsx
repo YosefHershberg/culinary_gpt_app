@@ -27,10 +27,14 @@ function RouteComponent() {
   const { redirect: redirectUrl } = Route.useSearch()
 
   const handleGoogleAuth = async () => {
+    const absoluteRedirect = redirectUrl
+      ? new URL(redirectUrl, window.location.origin).href
+      : window.location.origin
+
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: redirectUrl || window.location.origin,
+        redirectTo: absoluteRedirect,
       },
     })
   }
