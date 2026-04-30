@@ -35,6 +35,9 @@ function RouteComponent() {
       provider: 'google',
       options: {
         redirectTo: absoluteRedirect,
+        queryParams: {
+          prompt: 'select_account',
+        },
       },
     })
   }
