@@ -16,25 +16,25 @@ React SPA for AI-powered recipe and cocktail generation. Users manage their ingr
 - **Streaming:** `@microsoft/fetch-event-source` (SSE)
 - **Animations:** Framer Motion + Lottie
 - **PDF Export:** html2pdf.js
-- **Package Manager:** pnpm (enforced)
+- **Package Manager:** npm
 
 ## Get Started
 
 ```bash
-pnpm install
+npm install
 cp .env.example .env   # fill in your values
-pnpm run dev           # Vite dev server (http://localhost:5173)
+npm run dev            # Vite dev server (http://localhost:5173)
 ```
 
 ## Commands
 
 ```bash
-pnpm run dev           # Vite dev server
-pnpm run build         # tsc + vite build
-pnpm run lint          # ESLint (zero warnings enforced)
-pnpm run test          # Vitest
-pnpm run test:coverage # coverage report
-pnpm run preview       # preview production build
+npm run dev            # Vite dev server
+npm run build          # tsc -b + vite build
+npm run lint           # ESLint (zero warnings enforced)
+npm test               # Vitest
+npm run test:coverage  # coverage report
+npm run preview        # preview production build
 ```
 
 ## Environment Variables

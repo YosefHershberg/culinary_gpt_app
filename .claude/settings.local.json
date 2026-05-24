@@ -3,7 +3,19 @@
     "allow": [
       "Bash(cp:*)",
       "Bash(npm run:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_app\" status --short)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_app\" branch -a)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_server\" status --short)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_server\" branch -a)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_app\" fetch origin)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_app\" checkout -b dev --track origin/dev)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_server\" fetch origin)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_server\" checkout -b dev --track origin/dev)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_app\" status -sb)",
+      "Bash(git -C \"C:/Users/yosefh/OneDrive - hms.co.il/Desktop/CGPT/culinary_gpt_server\" status -sb)",
+      "PowerShell(npm install *)",
+      "PowerShell(pnpm *)"
     ]
   }
 }

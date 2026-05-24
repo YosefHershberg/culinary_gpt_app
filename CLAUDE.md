@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-- **Dev server**: `pnpm run dev`
-- **Build**: `pnpm run build` (tsc + vite build)
-- **Lint**: `pnpm run lint` (ESLint with zero warnings enforced)
-- **Test**: `pnpm run test` (Vitest)
+- **Dev server**: `npm run dev`
+- **Build**: `npm run build` (tsc -b + vite build)
+- **Lint**: `npm run lint` (ESLint with zero warnings enforced)
+- **Test**: `npm test` (Vitest)
 - **Test single file**: `npx vitest run src/path/to/file.test.ts`
-- **Test with coverage**: `pnpm run test:coverage`
-- **Package manager**: pnpm (enforced via preinstall hook)
+- **Test with coverage**: `npm run test:coverage`
+- **Package manager**: npm (peer-dep resolution relaxed via `.npmrc` `legacy-peer-deps=true`)
 - **Path alias**: `@` maps to `./src` (configured in vite.config.ts and tsconfig.json)
 
 ## Tech Stack
