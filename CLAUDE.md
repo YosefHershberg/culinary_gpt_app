@@ -26,6 +26,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `@microsoft/fetch-event-source` for SSE streaming
 - `html2pdf.js` for PDF export
 
+## Deployment
+
+Deployed to **Vercel** (auto-deploys: production on `main`, previews on PRs). See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deploy + CI/CD guide and **when to use the Vercel connector** (deployments, build/runtime logs, env vars, domains).
+
 ## Architecture
 
 ### Routing
