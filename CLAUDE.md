@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 
-- React 19 + TypeScript 5.2 + Vite 5.4
+- React 19 + TypeScript 5.2 + Vite 8 (Rolldown-powered)
 - TanStack Router (file-based routing with automatic code-splitting)
 - TanStack React Query v5 (server state)
 - Tailwind CSS + shadcn/ui (Radix primitives)
@@ -25,6 +25,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Framer Motion + Lottie for animations
 - `@microsoft/fetch-event-source` for SSE streaming
 - `html2pdf.js` for PDF export
+
+## Deployment
+
+Deployed to **Vercel** (auto-deploys: production on `main`, previews on PRs). See [DEPLOYMENT.md](DEPLOYMENT.md) for the full deploy + CI/CD guide and **when to use the Vercel connector** (deployments, build/runtime logs, env vars, domains).
 
 ## Architecture
 

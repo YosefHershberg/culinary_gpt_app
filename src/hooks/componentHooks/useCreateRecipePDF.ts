@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-//@ts-expect-error
 import html2pdf from 'html2pdf.js'
 import type { RecipeWithImage } from '@/lib/types';
 
@@ -23,6 +22,7 @@ const useRecipePDFPage = (recipe: RecipeWithImage): UseRecipePDFReturnType => {
     }, [recipe]);
 
     const generatePDF = async () => {
+        if (!contentRef.current) return;
         html2pdf().from(contentRef.current).toContainer().toCanvas().toImg().save(recipe.recipe.title);
     };
 
