@@ -15,7 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 
-- React 19 + TypeScript 5.2 + Vite 5.4
+- React 19 + TypeScript 5.2 + Vite 8 (Rolldown-powered)
 - TanStack Router (file-based routing with automatic code-splitting)
 - TanStack React Query v5 (server state)
 - Tailwind CSS + shadcn/ui (Radix primitives)
