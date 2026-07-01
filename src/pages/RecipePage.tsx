@@ -6,9 +6,9 @@ import { Button } from '@/components/ui/button'
 import DownloadRecipePdfButton from '@/components/DownloadRecipePdfButton'
 import RecipeImageModal from '@/components/modals/RecipeImageModal'
 
-import Lottie from 'lottie-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { Share2 } from 'lucide-react'
-import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json'
+import loadingRecipeAnimation from '@/assets/animations/loading-page-animation.json?url'
 
 import type { RecipeWithImage } from '@/lib/types'
 
@@ -44,7 +44,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
                             />
                         </RecipeImageModal>
                         :
-                        <Lottie animationData={loadingRecipeAnimation} className='size-full p-10' />
+                        <DotLottieReact src={loadingRecipeAnimation} loop autoplay className='size-full p-10' />
                     }
                 </div>
                 {!createdRecipe.image_url &&

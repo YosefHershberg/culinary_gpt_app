@@ -1,12 +1,12 @@
 import { z } from 'zod'
-import Lottie from 'lottie-react'
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { LargeLogo } from '@/components/Logo'
 import { supabase } from '@/config/supabase'
 import { Button } from '@/components/ui/button'
 import { PageBackground } from '@/components/PageBackground'
 
 import { createFileRoute, redirect, retainSearchParams } from '@tanstack/react-router'
-import signUpPageAnimation from '@/assets/animations/signup-page-animation.json'
+import signUpPageAnimation from '@/assets/animations/signup-page-animation.json?url'
 
 export const Route = createFileRoute('/signin/$')({
   beforeLoad: ({ context }) => {
@@ -69,7 +69,7 @@ function RouteComponent() {
       <div className='relative z-10 lg:flex hidden max-w-[40rem] flex-1 flex-col justify-center items-center bg-amber-200 dark:bg-zinc-800'>
         <LargeLogo />
         <p className='mt-5 text-lg'>We'll find you perfect dish to prepare!</p>
-        <Lottie animationData={signUpPageAnimation} className='size-[30rem]' />
+        <DotLottieReact src={signUpPageAnimation} loop autoplay className='size-[30rem]' />
       </div>
     </main>
   )
