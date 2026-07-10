@@ -4,6 +4,7 @@ import { useNavigate } from "@tanstack/react-router";
 
 import { saveUserRecipeAPI } from "@/services/recipe.service";
 import type { RecipeWithImage } from "@/lib/types";
+import type { AxiosError } from "axios";
 
 type SaveRecipeResponse = {
     isLoading: boolean,
@@ -27,8 +28,7 @@ const useSaveRecipe = (): SaveRecipeResponse => {
             toast({
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
-                //@ts-ignore
-                description: error.response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
+                description: (error as AxiosError<{ message?: string }>).response?.data?.message || 'An error occurred while adding your recipe to My Recipes.'
             })
         }
     })

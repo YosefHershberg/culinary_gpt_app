@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from "react";
+import React, { memo, useCallback, useMemo } from "react";
 import { Camera } from "lucide-react";
 
 import useAddImageIngredients, { IngredientResultsState } from "@/hooks/componentHooks/useAddImageIngredients";
@@ -29,10 +29,10 @@ const ImageDetectorModal: React.FC = () => {
     clearIngredientsResults,
   } = useAddImageIngredients(data);
 
-  const clearImageDetector = () => {
+  const clearImageDetector = useCallback(() => {
     setBase64Image("");
     clearIngredientsResults();
-  };
+  }, [setBase64Image, clearIngredientsResults]);
 
   const renderContent = useMemo(() => {
     if (ingredientResults && ingredientResults.length > 0) {

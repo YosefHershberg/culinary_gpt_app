@@ -13,7 +13,7 @@ type IngredientListContextType = {
     sortOption: SortIngredientsOptions
 }
 
-export const IngredientListContext = createContext<IngredientListContextType>(null as any)
+export const IngredientListContext = createContext<IngredientListContextType | null>(null)
 
 const IngredientListContextProvider = ({ children }: { children: React.ReactNode }) => {
     const { addUserIngredient, deleteUserIngredient } = useUserIngredients();
@@ -55,7 +55,7 @@ export default IngredientListContextProvider
 
 export const useIngredientList = () => {
     const context = useContext(IngredientListContext)
-    if (context === undefined) {
+    if (context === null) {
         throw new Error('useIngredientList must be used within a IngredientListProvider')
     }
     return context

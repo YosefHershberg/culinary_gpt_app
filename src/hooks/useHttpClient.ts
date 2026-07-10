@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { AxiosError } from 'axios';
 
 // Accepts an object with a fn property (API function) and options
-const useHttpClient = <TResponse, TArgs extends any[]>(
+const useHttpClient = <TResponse, TArgs extends unknown[]>(
     {
         fn: apiFn,
         onSuccess,
@@ -34,14 +34,15 @@ const useHttpClient = <TResponse, TArgs extends any[]>(
             const res = await apiFn(...args, httpAbortCtrl.signal);
             setState((prev) => ({
                 ...prev,
-                data: res as any,
-                responseStatus: (res as any)?.status || null,
+                data: res,
+                responseStatus: (res as { status?: number } | null | undefined)?.status || null,
             }));
             onSuccess && onSuccess(res);
             return res;
-        } catch (error: any) {
-            setState((prev) => ({ ...prev, error }));
-            onError && onError(error);
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            setState((prev) => ({ ...prev, error: axiosError }));
+            onError && onError(axiosError);
             throw error;
         } finally {
             setState((prev) => ({ ...prev, isLoading: false }));

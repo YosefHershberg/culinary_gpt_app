@@ -40,7 +40,7 @@ function RouteComponent() {
 
   useEffect(() => {
     navigate({
-      search: (_old: RecipesView) => ({
+      search: () => ({
         recipesView: {
           filterBy: currentFilter,
           sortBy: currentSort,
@@ -49,7 +49,7 @@ function RouteComponent() {
       }),
       replace: true,
     })
-  }, [searchBar.debouncedValue, currentFilter, currentSort]);
+  }, [searchBar.debouncedValue, currentFilter, currentSort, navigate]);
 
   return (
     <main className="w-screen flex-1 flex flex-col items-center bg-amber-100 dark:bg-zinc-700 px-4">
@@ -79,4 +79,4 @@ function RouteComponent() {
       </div>
     </main>
   );
-};
+}

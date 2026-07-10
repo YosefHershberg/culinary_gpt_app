@@ -74,6 +74,19 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
     }, [addUserIngredientMutation])
 
 
+    /**
+     * @description Filters out ingredients that are already in the user's ingredients
+     * @param ingredients
+     * @returns
+     */
+    const filterExistingIngredients = useCallback((ingredients: Ingredient[]): Ingredient[] => {
+        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY);
+
+        // Using a set for faster lookup. O(n) instead of O(n^2)
+        const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
+        return ingredients.filter((ingredient: Ingredient) => !userIngredientIds.has(ingredient.id));
+    }, [queryClient])
+
     const addMultipleIngredients = useCallback((ingredients: Ingredient[]) => {
         const missingIngredients = filterExistingIngredients(ingredients)
 
@@ -84,7 +97,7 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
             })
         }
         addMultipleIngredientsMutation.mutate(missingIngredients)
-    }, [addMultipleIngredientsMutation])
+    }, [addMultipleIngredientsMutation, filterExistingIngredients])
 
     const addCommonIngredients = useCallback(() => {
         console.log('adding common ingredients');
@@ -94,19 +107,6 @@ const useUserIngredients = (): UseUserIngredientsReturnType => {
 
         addMultipleIngredients(commonIngredients)
     }, [queryClient, addMultipleIngredients])
-
-    /**
-     * @description Filters out ingredients that are already in the user's ingredients
-     * @param ingredients 
-     * @returns 
-     */
-    const filterExistingIngredients = useCallback((ingredients: Ingredient[]): Ingredient[] => {
-        const userIngredients = queryClient.getQueryData<Ingredient[]>(INGREDIENTS_QUERY_KEY);
-
-        // Using a set for faster lookup. O(n) instead of O(n^2)
-        const userIngredientIds = new Set(userIngredients?.map((ingredient: Ingredient) => ingredient.id));
-        return ingredients.filter((ingredient: Ingredient) => !userIngredientIds.has(ingredient.id));
-    }, [])
 
     const deleteUserIngredient = useCallback((ingredient: Ingredient) => {
         console.log('deleting ingredient', ingredient);

@@ -6,6 +6,8 @@ import { getUserRecipeAPI } from '@/services/recipe.service'
 import SuspenseTrigger from '@/components/SuspenseTrigger'
 import RecipePage from '@/pages/RecipePage'
 
+import type { RecipeWithImage } from '@/lib/types'
+
 export const Route = createFileRoute('/_auth/user-recipe/$recipeId')({
   params: {
     parse: (params) => ({
@@ -20,21 +22,22 @@ function RouteComponent() {
   const { recipeId } = Route.useParams()
     const location = useLocation()
 
+    // The create flows pass the full RecipeWithImage through history state
+    const locationState = location.state as unknown as RecipeWithImage | undefined
+
     const { data: recipe, isLoading } = useQuery({
         queryKey: ['userRecipe'],
         queryFn: () => getUserRecipeAPI(recipeId),
 
         // Disable the query when the recipe is already in the location state
-        //@ts-expect-error
-        enabled: !location.state.recipe,
+        enabled: !locationState?.recipe,
         throwOnError: true,
     })
 
-    //@ts-expect-error
-    if (location.state.recipe) {
+    if (locationState?.recipe) {
         return (
             <RecipePage
-                createdRecipe={location.state as any}
+                createdRecipe={locationState}
             />
         )
     } else {

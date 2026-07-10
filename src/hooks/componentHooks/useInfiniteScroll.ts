@@ -24,13 +24,15 @@ const useInfiniteScroll = ({ isLoading, nextPage }: UseInfiniteScrollProps): Use
           }
         );
     
-        if (sentinelRef.current) {
-          observer.observe(sentinelRef.current);
+        // Copy the ref value so the cleanup unobserves the same node it observed
+        const sentinel = sentinelRef.current;
+        if (sentinel) {
+          observer.observe(sentinel);
         }
-    
+
         return () => {
-          if (sentinelRef.current) {
-            observer.unobserve(sentinelRef.current);
+          if (sentinel) {
+            observer.unobserve(sentinel);
           }
         };
       }, [isLoading, nextPage]);

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import PlanDetails from "./PlanDetails";
-import { Plan, plans } from "@/pages/SubscribePage";
+import { Plan, plans } from "@/lib/plans";
 
 const PlanTabs: React.FC = () => {
     const [activeTab, setActiveTab] = useState<string>(plans[0].id);

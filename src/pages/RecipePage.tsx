@@ -24,7 +24,7 @@ const RecipePage: React.FC<RecipePageProps> = ({ createdRecipe, addToRecipesBtn 
     // see src/routes/_auth/recipe.tsx
     useLayoutEffect(() => {
         if (!createdRecipe) navigate({ to: '/create-recipe' })
-    }, []);
+    }, [createdRecipe, navigate]);
 
     if (createdRecipe.recipe) return (
         <main className='flex flex-col w-screen items-center bg-amber-100 dark:bg-zinc-700 pb-5'>

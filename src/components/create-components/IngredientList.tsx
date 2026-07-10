@@ -7,6 +7,7 @@ import { OptionCheckbox } from "@/components/ui/OptionCheckbox"
 
 import { SortIngredientsOptions } from "@/lib/enums"
 import type { Ingredient } from "@/lib/types"
+import type { AxiosError } from "axios"
 
 type UsualIngredientsContent = {
     queryKey: QueryKey,
@@ -47,14 +48,13 @@ const IngredientsList: React.FC<UsualIngredientsContent> = ({ queryKey, queryFn 
                 handleClicked(ingredient);
             }
         }
-    }, [handleClicked])
+    }, [handleClicked, ingredients])
 
     if (error) {
         toast({
             variant: "destructive",
             title: "Oops! Something went wrong!",
-            //@ts-expect-error
-            description: error?.response?.data?.message || "An error occurred while fetching ingredients.",
+            description: (error as AxiosError<{ message?: string }>)?.response?.data?.message || "An error occurred while fetching ingredients.",
         })
         return (<div>Error</div>)
     }

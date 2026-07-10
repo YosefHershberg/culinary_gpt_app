@@ -3,9 +3,16 @@ import { Button } from '@/components/ui/button';
 
 import errorPic from '@/assets/error-pic.webp';
 import { type FallbackProps } from 'react-error-boundary';
+import type { AxiosError } from 'axios';
 
+type ErrorPageProps = {
+    resetErrorBoundary?: FallbackProps['resetErrorBoundary'];
+    error?: Error;
+    status?: number | string;
+    message?: string;
+};
 
-const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetErrorBoundary, error, status, message }) => {
+const ErrorPage: React.FC<ErrorPageProps> = ({ resetErrorBoundary, error, status, message }) => {
     const navigate = useNavigate();
 
     return (
@@ -15,7 +22,7 @@ const ErrorPage: React.FC<React.ComponentType<FallbackProps> | any> = ({ resetEr
                 <h1 className='absolute top-[6rem] right-1/4 text-3xl text-red-600'>{status || 'Oops!'}</h1>
                 <img className='h-full object-contain' src={errorPic} alt="Error" />
             </div>
-            <h2 className='text-red-600 text-lg'>{error?.response?.data?.message}</h2>
+            <h2 className='text-red-600 text-lg'>{(error as AxiosError<{ message?: string }> | undefined)?.response?.data?.message}</h2>
             <div className='flex items-center gap-4'>
                 <Button
                     className='font-bold h-12 w-32 rounded-full text-lg transition-all duration-200 hover:scale-105'

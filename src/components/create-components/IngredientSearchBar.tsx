@@ -37,7 +37,7 @@ const IngredientSearchBar: React.FC<IngredientSearchBarProps> = ({ placeholders,
         };
         document.addEventListener("mousedown", handleClickOutside, { signal: controller.signal });
         return () => controller.abort();
-    }, []);
+    }, [setIsDropdownOpen]);
 
     return (
         <div className='max-w-[35rem] w-full mb-4 flex flex-col'>

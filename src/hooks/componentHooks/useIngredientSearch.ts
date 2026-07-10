@@ -5,6 +5,7 @@ import { toast } from '@/components/ui/use-toast';
 import { searchIngredientsAPI } from '@/services/ingredient.service';
 import { useQueryClient } from '@tanstack/react-query';
 import type { Ingredient, IngredientType } from '@/lib/types';
+import type { AxiosError } from 'axios';
 
 type UseIngredientSearchResponseType = {
     searchValue: string;
@@ -30,8 +31,7 @@ export const useIngredientSearch = (type: IngredientType): UseIngredientSearchRe
             toast({
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
-                //@ts-expect-error
-                description: error.response?.data?.message || 'An error occurred while searching for ingredients.'
+                description: (error as AxiosError<{ message?: string }>).response?.data?.message || 'An error occurred while searching for ingredients.'
             });
         },
         onSuccess: () => setIsDropdownOpen(true)

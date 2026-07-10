@@ -15,7 +15,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Tech Stack
 
-- React 19 + TypeScript 5.2 + Vite 8 (Rolldown-powered)
+- React 19 + TypeScript 7 (native compiler) + Vite 8 (Rolldown-powered)
+  - TS 7 ships no JS compiler API, so the `typescript` package name is aliased to `@typescript/typescript6` (TS 6 API for ESLint tooling) and the real TS 7 compiler is installed as `typescript7` — build/typecheck scripts invoke `node node_modules/typescript7/bin/tsc` explicitly. Don't "fix" these aliases.
 - TanStack Router (file-based routing with automatic code-splitting)
 - TanStack React Query v5 (server state)
 - Tailwind CSS + shadcn/ui (Radix primitives)

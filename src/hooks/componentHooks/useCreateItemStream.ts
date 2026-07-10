@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useSSE from '../useSSE';
 
 import type { Recipe, RecipeWithImage } from '@/lib/types';
@@ -19,6 +19,16 @@ const useCreateItemStream = ({
 
     const { stream, error, executeStream, clearStreamAndError } = useSSE(endpoint);
 
+    // Keep the latest callbacks in refs so the effects below can depend only on
+    // the values that should trigger them (item/error) without re-firing when a
+    // parent re-renders and passes new callback identities.
+    const onSuccessRef = useRef(onSuccess);
+    const onErrorRef = useRef(onError);
+    useEffect(() => {
+        onSuccessRef.current = onSuccess;
+        onErrorRef.current = onError;
+    }, [onSuccess, onError]);
+
     useEffect(() => {
         if (stream.length === 0) return;
         if (stream[0]?.event === 'recipe') {
@@ -31,25 +41,23 @@ const useCreateItemStream = ({
             setIsLoadingImage(false);
             clearStreamAndError();
         }
-    }, [stream]);
+    }, [stream, clearStreamAndError]);
 
     useEffect(() => {
-        if (item && onSuccess) {
-            onSuccess(item);
+        if (item) {
+            onSuccessRef.current?.(item);
         }
     }, [item]);
 
     useEffect(() => {
         if (error) {
-            if (onError) {
-                onError(error);
-            }
+            onErrorRef.current?.(error);
             setIsLoadingImage(false);
             setIsLoadingItem(false);
         }
     }, [error]);
 
-    const execute = (params: Record<string, any>) => {
+    const execute = (params: Record<string, unknown>) => {
         onExecute && onExecute(item as RecipeWithImage);
         executeStream(params);
         setIsLoadingItem(true);

@@ -1,6 +1,6 @@
 import FeatureList from "./FeatureList";
 import { Button } from "../ui/button";
-import { Plan } from "@/pages/SubscribePage";
+import { Plan } from "@/lib/plans";
 import { useAuth } from "@/context/auth-context";
 
 const PlanDetails: React.FC<{ plan: Plan }> = ({ plan }) => {

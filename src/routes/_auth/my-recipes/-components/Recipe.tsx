@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
+import type { HistoryState } from "@tanstack/react-router";
 
 import { X } from "lucide-react";
 import LazyImage from "@/components/ui/LazyImage";
@@ -22,7 +23,7 @@ const Recipe: React.FC<RecipeProps> = ({ recipe, handleOpenModal }) => {
     return (
         <div
             // Note: this isn't a Link because on the delete btn click it navigates although the stopPropagation
-            onClick={() => navigate({ to: `/user-recipe/${recipe.id}`, state: recipe as any })}
+            onClick={() => navigate({ to: `/user-recipe/${recipe.id}`, state: recipe as unknown as HistoryState })}
             className="relative cursor-pointer mt-6 p-5 w-full bg-orange/20 flex flex-col sm:flex-row items-center rounded-xl shadow-md"
             key={recipe.id}
         >

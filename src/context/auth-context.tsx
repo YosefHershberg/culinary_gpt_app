@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { supabase } from '@/config/supabase'
 import axiosClient from '@/config/axiosClient'
+import type { AxiosError } from 'axios'
 import { toast } from '@/components/ui/use-toast'
 import LoadingPage from '@/pages/LoadingPage'
 import { useRouter } from '@tanstack/react-router'
@@ -24,7 +25,7 @@ export type AuthProviderState = {
     signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthProviderState>(undefined as any);
+const AuthContext = createContext<AuthProviderState | undefined>(undefined);
 
 function mapSupabaseUser(session: Session | null): AppUser | null {
     if (!session?.user) return null;
@@ -82,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         const interceptorResponses = axiosClient.interceptors.response.use(
             (res) => res,
-            (error: any) => {
+            (error: AxiosError) => {
                 if (error.response?.status === 429) {
                     toast({
                         variant: 'destructive',

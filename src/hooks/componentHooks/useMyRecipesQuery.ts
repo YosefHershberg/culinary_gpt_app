@@ -54,7 +54,7 @@ const useMyRecipesQuery = ({
         if (searchQuery || searchQuery === '') {
             refetch();
         }
-    }, [searchQuery, currentFilter, currentSort]);
+    }, [searchQuery, currentFilter, currentSort, refetch]);
 
     const nextPage = () => {
         if (hasNextPage) {

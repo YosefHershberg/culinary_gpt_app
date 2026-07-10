@@ -47,7 +47,7 @@ const useSortRecipes = (recipes: RecipeWithImage[]): UseSortRecipesResponse => {
         if (JSON.stringify(sorted) !== JSON.stringify(sortedRecipes)) {
             setSortedRecipes(sorted);
         }
-    }, [currentSort, recipes]);
+    }, [currentSort, recipes, sortedRecipes]);
 
     const handleSortChange = (value: SortRecipesOptions) => {
         setCurrentSort(value);

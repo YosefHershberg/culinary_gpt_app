@@ -16,7 +16,7 @@ function RouteComponent() {
     if (window.location.pathname === '/my-ingredients') {
       navigate({ to: '/my-ingredients/food' });
     }
-  }, [])
+  }, [navigate])
 
   return (
     <main className="flex-1 flex flex-col justify-center items-center w-screen">

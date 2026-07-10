@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import type { HistoryState } from '@tanstack/react-router';
+import type { AxiosError } from 'axios';
 import useCreateItemStream from '@/hooks/componentHooks/useCreateItemStream';
 
 import { toast } from '@/components/ui/use-toast';
@@ -27,15 +29,14 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
             setPrompt('');
             navigate({
                 to: '/recipe',
-                state: newCocktail as any,
+                state: newCocktail as unknown as HistoryState,
             });
         },
         onError: (error) => {
             toast({
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
-                //@ts-expect-error
-                description: error?.response?.data?.message || `Failed to create cocktail.`,
+                description: (error as AxiosError<{ message?: string }>)?.response?.data?.message || `Failed to create cocktail.`,
             });
         }
     });
@@ -60,7 +61,7 @@ export const CreateCocktailProvider: React.FC<{ children: React.ReactNode }> = (
         }
 
         execute({ prompt });
-    }, [execute, prompt]);
+    }, [execute, prompt, queryClient]);
 
     const contextValue = useMemo(() => ({
         handleSubmit,

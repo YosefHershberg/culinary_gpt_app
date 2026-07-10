@@ -2,6 +2,8 @@ import { createContext, useContext, useMemo, useCallback } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
+import type { HistoryState } from "@tanstack/react-router";
+import type { AxiosError } from "axios";
 import useCreateRecipeStream from "@/hooks/componentHooks/useCreateItemStream";
 
 import LoadingRecipePage from "@/pages/LoadingRecipePage";
@@ -35,7 +37,7 @@ type CreateRecipeContextValue = {
   onSubmit: SubmitHandler<RecipeFormValues>;
 };
 
-export const CreateRecipeContext = createContext<CreateRecipeContextValue>(null as any);
+export const CreateRecipeContext = createContext<CreateRecipeContextValue | null>(null);
 
 export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
@@ -54,7 +56,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
       form.reset(initialFormValues);
       navigate({
         to: '/recipe',
-        state: newRecipe as any,
+        state: newRecipe as unknown as HistoryState,
       });
     },
     onExecute: () => {
@@ -64,8 +66,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
       toast({
         variant: 'destructive',
         title: 'Oops! Something went wrong!',
-        //@ts-expect-error
-        description: error?.response?.data?.message || `Failed to create recipe.`,
+        description: (error as AxiosError<{ message?: string }>)?.response?.data?.message || `Failed to create recipe.`,
       });
     }
   });
@@ -89,7 +90,7 @@ export const CreateRecipeProvider: React.FC<{ children: React.ReactNode }> = ({ 
       });
     }
     execute(data);
-  }, [execute]);
+  }, [execute, queryClient]);
 
   const contextValue = useMemo(() => ({
     form,

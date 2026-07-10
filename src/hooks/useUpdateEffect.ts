@@ -9,6 +9,9 @@ const useUpdateEffect = (effect: React.EffectCallback, deps?: React.DependencyLi
         } else {
             return effect();
         }
+        // This generic wrapper forwards the caller's deps list; `effect` is
+        // intentionally excluded so callers can pass inline closures.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, deps);
 };
 

@@ -23,8 +23,7 @@ const useImageDetector = (): UseImageDetectorResponse => {
             toast({
                 variant: 'destructive',
                 title: 'Oops! Something went wrong!',
-                //@ts-expect-error
-                description: error.response?.data?.message || 'An error occurred while processing your image.'
+                description: (error as AxiosError<{ message?: string }>).response?.data?.message || 'An error occurred while processing your image.'
             });
         },
         onSuccess: (data) => {

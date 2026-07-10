@@ -11,7 +11,7 @@ type EventSourceMessage = {
 type UseSSEReturn = {
     stream: EventSourceMessage[],
     error: Error | null,
-    executeStream: (body?: Record<string, any>) => void,
+    executeStream: (body?: Record<string, unknown>) => void,
     clearStreamAndError: () => void,
 }
 
@@ -21,22 +21,22 @@ const useSSE = (endpoint: string): UseSSEReturn => {
     const [stream, setStream] = useState<EventSourceMessage[]>([])
     const [error, setError] = useState<Error | null>(null)
 
-    useEffect(() => {
-        return () => terminateStream()
-    }, []);
-
-    const clearStreamAndError = () => {
+    const clearStreamAndError = useCallback(() => {
         setStream([])
         setError(null)
-    }
+    }, [])
 
-    const terminateStream = (error?: Error) => {
+    const terminateStream = useCallback((error?: Error) => {
         activeHttpRequest.current.forEach(ctrl => ctrl.abort())
         setStream([])
         error && setError(error)
-    }
+    }, [])
 
-    const executeStream = useCallback(async (body?: Record<string, any>) => {
+    useEffect(() => {
+        return () => terminateStream()
+    }, [terminateStream]);
+
+    const executeStream = useCallback(async (body?: Record<string, unknown>) => {
         const ctrl = new AbortController();
 
         activeHttpRequest.current.push(ctrl)

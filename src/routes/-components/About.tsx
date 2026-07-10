@@ -18,7 +18,7 @@ const About: React.FC = () => {
 
 export default About
 
-export const cardDetails = [
+const cardDetails = [
     {
         title: "AI-Powered Recipe Suggestions",
         description:
