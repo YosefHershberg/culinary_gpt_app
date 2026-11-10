@@ -8,8 +8,7 @@ import Logo from '@/components/Logo'
 
 import ThemeButton from './ThemeButton'
 import AuthNavButtons from './AuthNavButtons'
-import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
-import type { Ingredient } from '@/lib/types'
+import { userIngredientsQueryOptions } from '@/lib/queryOptions'
 
 const Navbar: React.FC = () => {
     const { isSignedIn } = useAuth()
@@ -38,7 +37,7 @@ const Navbar: React.FC = () => {
 export default Navbar
 
 const IsSignedInNav: React.FC = () => {
-    const { data: userIngredients = [] } = useQuery<Ingredient[]>({ queryKey: INGREDIENTS_QUERY_KEY })
+    const { data: userIngredients = [] } = useQuery(userIngredientsQueryOptions)
     const [isAnimating, setIsAnimating] = useState(false)
 
     useEffect(() => {

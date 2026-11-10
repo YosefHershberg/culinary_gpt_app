@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { SortIngredientsOptions } from '@/lib/enums'
 import type { Ingredient } from '@/lib/types'
-import { INGREDIENTS_QUERY_KEY } from '@/lib/queryKeys'
+import { userIngredientsQueryOptions } from '@/lib/queryOptions'
 
 type IngredientListContextType = {
     handleClicked: (ingredient: Ingredient) => void,
@@ -20,7 +20,7 @@ const IngredientListContextProvider = ({ children }: { children: React.ReactNode
     const [sortOption, setSortOptions] = useState<SortIngredientsOptions>(SortIngredientsOptions.Popularity)
 
     // Subscribe to userIngredients cache so the UI re-renders on bulk add/remove
-    const { data: userIngredients = [] } = useQuery<Ingredient[]>({ queryKey: INGREDIENTS_QUERY_KEY });
+    const { data: userIngredients = [] } = useQuery(userIngredientsQueryOptions);
 
     // This is for the child UI Checkboxes so they can check if ingredient exists in user's ingredient list in O(1) time.
     const userIngredientsSet = useMemo(() => new Set(userIngredients.map(ingredient => ingredient.id)), [userIngredients]);
